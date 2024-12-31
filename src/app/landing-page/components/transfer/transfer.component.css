@@ -1,0 +1,89 @@
+.transfer {
+    background: linear-gradient(to bottom, #fffbeb, #fffbeb);
+    padding: 1rem;
+}
+
+.containertransfer{
+    display: flex;
+    flex-direction: column;
+    width: 82.5%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+
+/* Header Section */
+.header-section {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    font-family: 'ui-serif','Georgia','Cambria','Times New Roman','Times,serif';
+}
+
+/* Icon and Title Layout */
+.icon-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Icon Wrapper */
+.icon-wrapper {
+    background-color: rgba(254, 243, 199, 0.5); /* Equivalent to bg-amber-100/50 */
+    padding: 0.75rem;
+    border-radius: 50%;
+}
+
+/* Icon Style */
+.icon {
+    width: 1.5rem;   /* Default width */
+    height: 1.5rem;  /* Default height */
+    color: #b45309;  /* Equivalent to text-amber-700 */
+}
+
+/* Responsive Icon Sizes */
+@media (min-width: 640px) {
+    .icon {
+        width: 2rem;  /* sm:w-8 */
+        height: 2rem; /* sm:h-8 */
+    }
+}
+
+/* Title Styling */
+.title {
+    font-size: 1.5rem; /* Default text-2xl */
+    font-family: serif;
+    color: #78350f;    /* Equivalent to text-amber-900 */
+    margin: 0;
+}
+
+/* Responsive Title Sizes */
+@media (min-width: 640px) {
+    .title {
+        font-size: 1.875rem; /* sm:text-3xl */
+    }
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 2.25rem; /* md:text-4xl */
+    }
+}
+
+/* Description Text */
+.description {
+    color: #4b5563;      /* Equivalent to text-gray-600 */
+    max-width: 42rem;    /* Equivalent to max-w-2xl */
+    margin: 0 auto;      /* Centers the text */
+    font-size: 0.875rem; /* Default text-sm */
+    font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+/* Responsive Description Size */
+@media (min-width: 640px) {
+    .description {
+        font-size: 1rem; /* sm:text-base */
+    }
+}

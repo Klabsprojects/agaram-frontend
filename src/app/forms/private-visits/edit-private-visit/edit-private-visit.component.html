@@ -1,0 +1,290 @@
+<!-- <div class="modal fade" id="createPrivateVisitModal" tabindex="-1" role="dialog" aria-labelledby="createPrivateVisitModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPrivateVisitModalLabel">Create Private Visit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="privateVisitForm" (ngSubmit)="Submit()">
+      <div class="modal-body">
+        
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Officer Name <span> * </span></label>
+          <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="name"
+              [ngStyle]="{'border': (submitted && privateVisitForm.get('name')?.invalid && privateVisitForm.get('name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Country <span> * </span></label>
+          <div class="col-sm-12">
+            <select class="form-control" style="border: 1px solid #ccc;" formControlName="country" 
+            [ngStyle]="{'border': (submitted && privateVisitForm.get('country')?.invalid && privateVisitForm.get('country')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+              <option value="">Select</option>
+              <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group pl-0">
+          <label class="col-sm-12 col-form-label mt-2 pl-0"> Type<span>*</span></label>
+          <div class="col-sm-12 pl-0">
+            <label class="radio-inline mr-2">
+              <input type="radio" formControlName="type" class="mt-1 mr-1 float-left" value="Self">Self
+          </label>
+          <label class="radio-inline">
+              <input type="radio" formControlName="type" class="mt-1 mr-1 float-left" value="Family">Family
+          </label>
+          </div>
+        </div>
+
+
+        <div class="col-md-6 form-group pl-0">
+          <label class="col-sm-12 col-form-label mt-2 pl-0"> Leave Type<span>*</span></label>
+          <div class="col-sm-12 pl-0">
+            <label class="radio-inline mr-2">
+              <input type="radio" formControlName="leaveType" class="mt-1 mr-1 float-left" value="Leave Availed EL">Leave Availed EL
+          </label>
+          <label class="radio-inline">
+              <input type="radio" formControlName="leaveType" class="mt-1 mr-1 float-left" value="CL">CL
+          </label>
+          </div>
+        </div>  
+        <div class="clearfix"></div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Expenses<span> * </span></label>
+          <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="expenses"
+              [ngStyle]="{'border': (submitted && privateVisitForm.get('expenses')?.invalid && privateVisitForm.get('expenses')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+          </div>
+        </div>
+        
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div> -->
+
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/private-visits">Private Visit</a></li>
+    <li class="breadcrumb-item"><a><b>Edit Private Visit</b></a></li>
+  </ul>
+  <div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">Edit Private Visit <span class="float-right">(*) Required</span></h4>
+        <form [formGroup]="privateVisitForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-1 mt-2">
+  
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Full Name <span>*</span></label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('officerName')?.invalid && privateVisitForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    <div class="autocomplete-items" *ngIf="showDropdown">
+                      <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                          {{ option.name }}
+                      </div>
+                  </div>
+                  </div>
+               </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Department </label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="department"  readonly
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('department')?.invalid && privateVisitForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Designation</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="designation" readonly
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('designation')?.invalid && privateVisitForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+  
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">From <span>*</span></label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" formControlName="fromDate" (change)="fromDateValue($event)"
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('fromDate')?.invalid && privateVisitForm.get('fromDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+  
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">To <span>*</span></label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" formControlName="toDate" [min]="fromValue" [readonly]="toDateValue"
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('toDate')?.invalid && privateVisitForm.get('toDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+  
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Proposed Place of Visit <span>*</span></label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="proposedCountry" 
+                  [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('proposedCountry')?.invalid && privateVisitForm.get('proposedCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="">Select</option>
+                    <option *ngFor="let countryData of country" [value]="countryData.label">{{countryData.label}}</option>
+                  </select>
+                  <!-- <input type="text" class="form-control" formControlName="proposedCountry" 
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('proposedCountry')?.invalid && privateVisitForm.get('proposedCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> -->
+                </div>
+               </div>
+            </div>
+            <!-- <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Fund Source <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="fundSource" 
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('fundSource')?.invalid && privateVisitForm.get('fundSource')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+              </div>
+            </div> -->
+  
+  
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label"> Self / Family <span>*</span></label>
+                <div class="col-sm-12">
+                  <select class="form-control ml-0" formControlName="selfOrFamily" 
+                  [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('selfOrFamily')?.invalid && privateVisitForm.get('selfOrFamily')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="">Select</option>
+                    <option value="Self">Self</option>
+                    <option value="Family">Family</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderType" 
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('orderType')?.invalid && privateVisitForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
+                    [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('orderNo')?.invalid && privateVisitForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                  </div>
+                </div>
+              </div>
+            
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="orderFor" (change)="changeOrderFor($event)" 
+                  [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('orderFor')?.invalid && privateVisitForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                      {{ orderForData.label }}
+                    </option>
+                  </select>            
+                </div>
+              </div>
+            </div>
+  
+  
+                <div class="col-md-2">
+                    <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                    <div class="col-sm-12">
+                        <input type="date" class="form-control"  formControlName="dateOfOrder"
+                        [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('dateOfOrder')?.invalid && privateVisitForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                      </div>
+                    </div>
+                </div>
+  
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label"> Status<span>*</span></label>
+                    <div class="col-sm-12">
+                      <!-- <input type="text" class="form-control" formControlName="status"
+                        [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('status')?.invalid && privateVisitForm.get('status')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> -->
+                      
+                      <select class="form-control" formControlName="status" 
+                      [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('status')?.invalid && privateVisitForm.get('status')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order File <span>*</span>
+                      <a href="{{url}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                    </label>
+                    <div class="col-sm-12">
+                      <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)">                  </div>
+                      <div *ngIf="privateVisitForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                      <div *ngIf="privateVisitForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Proposed amount of Expenditure to be taken as per Rule 16(4) of A/S (CR)<span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="number" class="form-control" formControlName="proposedAmountOfExpenditure"
+                        [ngStyle]="{'border-bottom': (submitted && privateVisitForm.get('proposedAmountOfExpenditure')?.invalid && privateVisitForm.get('proposedAmountOfExpenditure')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-md-5" style="margin-top: 13px;">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Remarks</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="remarks" />
+                      </div>
+                    </div>
+                  </div>
+    
+            <div class="mt-3 float-left w-100">
+              <button type="submit" class="btn btn-primary mr-2">Update</button>
+              <button type="reset" class="btn btn-light">Cancel</button>
+            </div>
+            </div>
+        </form>
+    </div>
+  </div>
+  </div>
+  

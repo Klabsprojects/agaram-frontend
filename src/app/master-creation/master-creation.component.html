@@ -1,0 +1,973 @@
+<div class="col-12">
+    <div class="card px-2">
+      <div class="card-body">
+        <h4 class="card-title mb-0">Master Creation
+          <!-- <button type="button" class="btn btn-info btn-add float-right p-2" data-toggle="modal" data-target="#addMasterDetails">Add New</button> -->
+        </h4>
+        <!-- <table class="table table-bordered table-hover my-4 float-left">
+            <thead>
+              <tr>
+                <th style="width: 6%;">#</th>
+                <th>Master Title</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let masterDetails of masterData; let i=index">
+              <tr>
+                <td>{{i+1}}</td>
+                <td>{{masterDetails.category_type}}</td>
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" [attr.data-target]="'#' + masterDetails.category_type">
+                    Add  
+                  </button>
+                  <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" data-toggle="modal" [attr.data-target]="'#viewDetails-' + masterDetails.category_type">
+                    View
+                  </button>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table> -->
+
+          <table class="table table-bordered table-hover my-4 float-left">
+            <thead>
+              <tr>
+                <th style="width: 6%;">#</th>
+                <th>Master Title</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <!-- <tbody *ngFor="let masterDetails of masterData; let i=index"> -->
+              <tbody>
+               <tr>
+                <td>1.</td>
+                <td>Posting In</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addPostingIn" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewPosting()" data-toggle="modal" data-target="#viewDetails" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>2.</td>
+                <td>Department</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDepartment" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDepartment()" data-toggle="modal" data-target="#viewDepartment" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>3.</td>
+                <td>Designation</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDesignation" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDesignation()" data-toggle="modal" data-target="#viewDesignation" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>4.</td>
+                <td>Payscale</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addPayscale" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewPayscale()" data-toggle="modal" data-target="#viewPayscale" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>5.</td>
+                <td>District</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDistrict" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDistrict()" data-toggle="modal" data-target="#viewDistrict" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>6.</td>
+                <td>Country</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addCountry" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewCountry()" data-toggle="modal" data-target="#viewCountry" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>7.</td>
+                <td>Degree</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDegree" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDegree()" data-toggle="modal" data-target="#viewDegree" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>8.</td>
+                <td>Order Type</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addOrderType" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewOrderType()" data-toggle="modal" data-target="#viewOrderType" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>9.</td>
+                <td>Order For</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addOrderFor" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewOrderFor()" data-toggle="modal" data-target="#viewOrderFor" *ngIf="showView">View</button>
+                </td>
+              </tr> 
+              
+              
+            </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal Template -->
+<div class="modal fade"  tabindex="-1" aria-labelledby="addMasterLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMasterLabel">Add</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="masterCreationForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label">Title<span> * </span></label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="title" 
+              [ngStyle]="{'border': (submitted && masterCreationForm.get('title')?.invalid && masterCreationForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success p-2">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addMasterDetails" tabindex="-1" aria-labelledby="addMasterLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMasterLabel">Add</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="masterCreationForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Title<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="title" 
+            [ngStyle]="{'border': (submitted && masterCreationForm.get('title')?.invalid && masterCreationForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+
+        
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addMasterDetails" tabindex="-1" aria-labelledby="addMasterLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMasterLabel">Add</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="masterCreationForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Title<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="title" 
+            [ngStyle]="{'border': (submitted && masterCreationForm.get('title')?.invalid && masterCreationForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <!-- <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="code" 
+            [ngStyle]="{'border': (submitted && masterCreationForm.get('code')?.invalid && masterCreationForm.get('code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div> -->
+
+        
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<!-- Posting In Start -->
+ <div class="modal fade" id="addPostingIn" tabindex="-1" aria-labelledby="addPostingInLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPostingInLabel">Add Posting In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="postingInForm" (ngSubmit)="onPostingSubmit()">
+        <div class="modal-body">
+
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label">Title<span> * </span></label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="title" 
+              [ngStyle]="{'border': (submitted && postingInForm.get('title')?.invalid && postingInForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="code" 
+              [ngStyle]="{'border': (submitted && postingInForm.get('code')?.invalid && postingInForm.get('code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+            </div>
+          </div>
+
+          
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success p-2">Submit</button>
+        </div>
+    </form>
+      </div>
+    </div>
+</div> 
+
+<div class="modal fade" id="viewDetails" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailLabel">Posting In Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <th>#</th>
+                <th>Posting In</th>
+                <th>Code</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let postingData of postingin; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{postingData.category_name}}</td>
+                  <td>{{postingData.category_code}}</td>
+                </tr>
+                <tr *ngIf="postingin.length === 0">
+                  <td colspan="3">No data available</td>
+                </tr>
+              </tbody>
+            </table>
+            
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Posting In End -->
+
+
+<!-- Department Start -->
+<div class="modal fade" id="addDepartment" tabindex="-1" aria-labelledby="addDepartmentLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDepartmentLabel">Add Department</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="departmentForm" (ngSubmit)="onDepartmentSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Posting In<span> * </span></label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="category_code"  
+            [ngStyle]="{'border': (departmentSubmitted && departmentForm.get('category_code')?.invalid && departmentForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+              <option value="">Select</option>
+              <option *ngFor="let postingData of postingin" [value]="postingData.value">{{postingData.label}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Department<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="department_name" 
+            [ngStyle]="{'border': (departmentSubmitted && departmentForm.get('department_name')?.invalid && departmentForm.get('department_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+
+        <!-- <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Department Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="departmentCode" 
+            [ngStyle]="{'border': (departmentSubmitted && departmentForm.get('departmentCode')?.invalid && departmentForm.get('departmentCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewDepartment" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1" style="max-width:600px;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="detailLabel">Department Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3" style="height:300px; overflow-y: scroll;">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th>#</th>
+              <th>Posting In</th>
+              <th>Department </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let departmentData of department; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{departmentData.category_code}}</td>
+                <td>{{departmentData.department_name}}</td>
+              </tr>
+              <tr *ngIf="department.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Department End -->
+
+
+<!-- Designation Start -->
+<div class="modal fade" id="addDesignation" tabindex="-1" aria-labelledby="addDesignationLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDesignationLabel">Add Designation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="designationForm" (ngSubmit)="onDesignationSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Posting In<span> * </span></label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="category_code"  
+            [ngStyle]="{'border': (submitted && designationForm.get('category_code')?.invalid && designationForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+              <option value="">Select</option>
+              <option *ngFor="let postingData of postingin" [value]="postingData.value">{{postingData.label}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Designation<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="designation_name" 
+            [ngStyle]="{'border': (submitted && designationForm.get('designation_name')?.invalid && designationForm.get('designation_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewDesignation" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="detailLabel">Designation Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3" style="height: 300px; overflow-y: scroll;">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th>#</th>
+              <th>Posting In</th>
+              <th>Designation </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let designationData of designation; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{designationData.category_code}}</td>
+                <td>{{designationData.designation_name}}</td>
+              </tr>
+              <tr *ngIf="designation.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Designation End -->
+
+<!-- Payscale Start -->
+<div class="modal fade" id="addPayscale" tabindex="-1" aria-labelledby="addPayscaleLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPayscaleLabel">Add Payscale</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="payscaleForm" (ngSubmit)="onPayscaleSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Promotion Grade<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && payscaleForm.get('category_name')?.invalid && payscaleForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+         <div class="form-group row">
+          <label class="col-sm-12 col-form-label"> Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && payscaleForm.get('category_code')?.invalid && payscaleForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label"> Payscale (Rs)<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="payscale" 
+            [ngStyle]="{'border': (submitted && payscaleForm.get('payscale')?.invalid && payscaleForm.get('payscale')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewPayscale" tabindex="-1" aria-labelledby="payscaleLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="payscaleLabel">Payscale Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>Promotion Grade</th>
+              <th>Code</th>
+              <th>Payscale</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let payscaleData of payscale; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{payscaleData.category_name}}</td>
+                <td>{{payscaleData.category_code}}</td>
+                <td>{{payscaleData.payscale}}</td>
+              </tr>
+              <tr *ngIf="payscale.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Payscale End -->
+
+
+<!-- District Start -->
+<div class="modal fade" id="addDistrict" tabindex="-1" aria-labelledby="addDistrictLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDistrictLabel">Add District</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form [formGroup]="districtForm" (ngSubmit)="onDistrictSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">District<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="title" 
+            [ngStyle]="{'border': (submitted && districtForm.get('title')?.invalid && districtForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+         <div class="form-group row">
+          <label class="col-sm-12 col-form-label">District Code<span> * </span></label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="code" 
+              [ngStyle]="{'border': (submitted && districtForm.get('code')?.invalid && districtForm.get('code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+            </div>
+          </div> 
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewDistrict" tabindex="-1" aria-labelledby="districtLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="districtLabel">District Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>District Name</th>
+              <th>Code</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let districtData of district; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{districtData.category_name}}</td>
+                <td>{{districtData.category_code}}</td>
+              </tr>
+              <tr *ngIf="district.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- District End -->
+
+
+<!-- Country Start -->
+<div class="modal fade" id="addCountry" tabindex="-1" aria-labelledby="addCountryLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCountryLabel">Add Country</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="countryForm" (ngSubmit)="onCountrySubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Country<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="title" 
+            [ngStyle]="{'border': (submitted && countryForm.get('title')?.invalid && countryForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+         <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Country Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="code" 
+            [ngStyle]="{'border': (submitted && countryForm.get('code')?.invalid && countryForm.get('code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div> 
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewCountry" tabindex="-1" aria-labelledby="countryLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="countryLabel">Country Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>Country Name</th>
+              <th>Code</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let countryData of country; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{countryData.category_name}}</td>
+                <td>{{countryData.category_code}}</td>
+              </tr>
+              <tr *ngIf="country.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Country End -->
+
+
+<!-- Degree Start -->
+<div class="modal fade" id="addDegree" tabindex="-1" aria-labelledby="addDegreeLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDegreeLabel">Add Degree</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="degreeForm" (ngSubmit)="onDegreeSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Degree<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="degree_name" 
+            [ngStyle]="{'border': (submitted && degreeForm.get('degree_name')?.invalid && degreeForm.get('degree_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <!-- <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Degree Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="degreeCode" 
+            [ngStyle]="{'border': (submitted && degreeForm.get('degreeCode')?.invalid && degreeForm.get('degreeCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div> -->
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewDegree" tabindex="-1" aria-labelledby="degreeLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="degreeLabel">Degree Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3 degree-body">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>Degree</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let degreeData of degree; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{degreeData.degree_name}}</td>
+              </tr>
+              <tr *ngIf="degree.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Degree End -->
+
+<!-- Order Type Start -->
+<div class="modal fade" id="addOrderType" tabindex="-1" aria-labelledby="addOrderTypeLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addOrderTypeLabel">Add Order Type</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="orderTypeForm" (ngSubmit)="onOrderTypeSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Order Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && orderTypeForm.get('category_name')?.invalid && orderTypeForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && orderTypeForm.get('category_code')?.invalid && orderTypeForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewOrderType" tabindex="-1" aria-labelledby="orderTypeLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="orderTypeLabel">Order Type Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>Order Type</th>
+              <th>Code</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let orderTypeData of orderType; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{orderTypeData.category_name}}</td>
+                <td>{{orderTypeData.category_code}}</td>
+              </tr>
+              <tr *ngIf="orderType.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Order Type End -->
+
+
+
+<!-- Order For Start -->
+<div class="modal fade" id="addOrderFor" tabindex="-1" aria-labelledby="addOrderForLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addOrderForLabel">Add Order For</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="orderForForm" (ngSubmit)="onOrderForSubmit()">
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Order For<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && orderForForm.get('category_name')?.invalid && orderForForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && orderForForm.get('category_code')?.invalid && orderForForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewOrderFor" tabindex="-1" aria-labelledby="orderForLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog1">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="orderForLabel">Order For Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body p-3">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>Order For</th>
+              <th>Code</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let orderForData of orderFor; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{orderForData.category_name}}</td>
+                <td>{{orderForData.category_code}}</td>
+              </tr>
+              <tr *ngIf="orderFor.length === 0">
+                <td colspan="3">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+          
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Order For End -->
+

@@ -1,0 +1,134 @@
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h5>SAF Games Village Application<button type="button" class="btn btn-success btn-add float-right p-2"
+          data-toggle="modal" data-target="#createSafVillageModal" *ngIf="showAdd">Add New</button></h5>
+
+      <div class="col-md-12 p-0 mt-2">
+        <div class="col-md-3 px-0 mt-2 mb-0">
+          <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+        </div>
+
+        <app-shared></app-shared>
+      </div>
+
+
+      <div class="table-responsive">
+        <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th> Name</th>
+              <!-- <th>Department</th> -->
+              <th>Designation</th>
+              <th>Batch</th>
+              <th>Applied On </th>
+              <!-- <th>Applied Time</th> -->
+              <th>Seniority No.</th>
+              <th>Waiting Period</th>
+              <th>Status</th>
+              <th>Submitted By</th>
+              <th>Approved By</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+              <tr *ngFor="let data of pagedData(); let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{data.officerName}}</td>
+                <!-- <td>{{data.department}}</td> -->
+                <td>{{data.designation}}</td>
+                <td>{{data.employeeProfileId?.batch}}</td>
+                <td>{{data.appliedOn | date:'dd-MM-yyyy'}} {{data.appliedTime}}</td>
+                <td>{{data.seniorityNumber}}</td>
+                <td>{{data.waitingPeriod}}</td>
+                <td>{{data.applicationStatus}}</td>
+                <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+                <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{
+                    data.approvedBy?.loginAs}})</span> </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-info p-2" style="font-size: 12px;" *ngIf="showEdit"
+                    data-toggle="modal" data-target="#editSafVillageModal"
+                    (click)="editSafApplication(data._id)">Edit</button>
+                </td>
+
+              </tr>
+            </ng-container>
+            <ng-template #noRecords>
+              <tr>
+                <td colspan="9" style="color: red;">No records found</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-create-saf-games-village></app-create-saf-games-village>
+
+
+
+<div class="modal fade" id="editSafVillageModal" tabindex="-1" role="dialog" aria-labelledby="editSafModalLabel"
+  aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editSafModalLabel">Edit SAF Games Village Application</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="safForm" (ngSubmit)="Submit()">
+        <div class="modal-body">
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Officer Name <span>*</span></label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="officerName"
+                  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                  [ngStyle]="{'border': (submitted && safForm.get('officerName')?.invalid && safForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+
+                <div class="autocomplete-items" *ngIf="showDropdown">
+                  <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                    {{ option.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Department <span>*</span></label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="department" readonly
+                  [ngStyle]="{'border': (submitted && safForm.get('department')?.invalid && safForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Designation <span>*</span></label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="designation" readonly
+                  [ngStyle]="{'border': (submitted && safForm.get('designation')?.invalid && safForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success p-2">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

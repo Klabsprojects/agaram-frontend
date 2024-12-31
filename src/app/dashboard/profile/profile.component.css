@@ -1,0 +1,109 @@
+.chart-container {
+    height: 400px !important;
+}
+.card-title{
+    font-size: 22px;
+}
+h6{
+    font-size: 15px !important;
+}
+.option{
+    float: left;
+    width:100%;
+    padding:5px;
+}
+.autocomplete-items{
+    float: left;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+.autocomplete-items:hover{
+    cursor: pointer;
+}
+.option:hover{
+    background: #3d97ff;
+    color:#fff;
+}
+.col-md-2{
+    float: left;
+    padding-right: 0px;
+    margin: 20px 0px 10px 0px;
+    max-width: 20%;
+}
+.card-xs{
+    padding:20px 10px;   
+    text-align: left;
+}
+.card-xs p{
+    text-align: center;
+    color: #FFA53D;
+    font-weight: 600;
+}
+.col-md-6{
+    border-right:3px solid #ccc;
+}
+.col-md-6:hover,.col-md-3:hover{
+    cursor: pointer;
+}
+.col-md-7{
+    text-align: right;
+}
+.col-md-7 img{
+    width: 30%;
+    height: auto;
+    margin-bottom: 10px;
+    margin-right:10px;
+}
+.card-xs{
+    border-left:3px solid #3d97ff;
+}
+.split{
+    float: left;
+    width: 50%;
+}
+.col-md-2, .col-md-3, .col-md-4, .col-md-5{
+    padding: 0px 5px !important;
+}
+.back:hover{
+    cursor: pointer;
+}
+.modal-dialog{
+    /* max-width:700px; */
+}
+.profile-img{
+    float: left;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.typcn{
+    float: left;
+    transform: rotate(90deg);
+    font-size: 20px;
+    color: #ffa53d;
+}
+  
+@media print {
+    .sidebar, body *:not(.printable-content):not(select) {
+        display: none !important;
+    }
+    .printable-content {
+       display: block !important;
+    }
+}
+.col-md-4 b, .col-md-6 b, .profile-data{
+    font-size: 13px;
+}
+.profile-data{
+    line-height: 1.8;
+}
+.btn:hover{
+    text-decoration: none;
+}
+
+.card-xs{
+    margin-top:0px;
+}
+.card1{
+    margin-top:60px;
+}

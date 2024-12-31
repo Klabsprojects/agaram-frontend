@@ -1,0 +1,9 @@
+.modal-dialog {
+    max-width: 600px;
+}
+.modal-body{
+    font-size: 13px;
+}
+label b{
+    font-weight: 500;
+}

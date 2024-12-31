@@ -1,0 +1,161 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/promotion">Promotion</a></li>
+    <li class="breadcrumb-item"><a><b>Edit Promotion</b></a></li>
+</ul>
+
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">Promotion<span class="float-right">( * ) Required</span></h4>
+        
+        <!-- HTML Template -->
+        <form [formGroup]="promotionForm" (ngSubmit)="onSubmit()" class="form-sample">
+          <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-form-label">Full Name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="fullName" (input)="onInput($event, 'fullName')" [value]="selectedOption"
+                                [ngStyle]="{'border-bottom': (submitted && promotionForm.get('fullName')?.invalid && promotionForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                                
+                            <div class="autocomplete-items" *ngIf="showDropdown">
+                                <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                                    {{ option.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-3">
+                      <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Officer ID</label>
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="employeeId" (input)="onInput($event, 'empId')" [value]="selectedEmpOption"
+                            [ngStyle]="{'border-bottom': (submitted && promotionForm.get('employeeId')?.invalid && promotionForm.get('employeeId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                            
+                        <div class="autocomplete-items" *ngIf="showDropdown">
+                            <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                                {{ option.id }}
+                            </div>
+                        </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Current Grade <span>*</span></label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="promotionGrade"
+                        [ngStyle]="{'border-bottom': (submitted && promotionForm.get('promotionGrade')?.invalid && promotionForm.get('promotionGrade')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value=""> Select</option>
+                            <option *ngFor="let promotionGradeData of promotionGrade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Promoted to Grade <span>*</span></label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="promotedGrade"
+                        [ngStyle]="{'border-bottom': (submitted && promotionForm.get('promotionGrade')?.invalid && promotionForm.get('promotionGrade')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value=""> Select</option>
+                            <option *ngFor="let promotionGradeData of promotionGrade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+             
+                <div class="sub-title  float-left w-100 pl-2 mt-4">Order Info</div>
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="orderTypeCategoryCode" 
+                        [ngStyle]="{'border-bottom': (submitted && promotionForm.get('orderTypeCategoryCode')?.invalid && promotionForm.get('orderTypeCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value="">Select</option>
+                            <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                      <div class="col-sm-12">
+                        <input type="text" maxlength="4" class="form-control" formControlName="orderNumber" (keydown)="onKeyDown($event)"
+                        [ngStyle]="{'border-bottom': (submitted && promotionForm.get('orderNumber')?.invalid && promotionForm.get('orderNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                    <div class="col-sm-12">
+                      <select class="form-control" formControlName="orderForCategoryCode" (change)="changeOrderFor($event)" 
+                      [ngStyle]="{'border-bottom': (submitted && promotionForm.get('orderForCategoryCode')?.invalid && promotionForm.get('orderForCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="" selected>Select</option>
+                        <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                          {{ orderForData.label }}
+                        </option>
+                      </select>            
+                    </div>
+                  </div>
+                </div>
+    
+    
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                        <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                        <div class="col-sm-12">
+                            <input type="date" class="form-control" [max]="getCurrentDate()" formControlName="dateOfOrder"
+                            [ngStyle]="{'border-bottom': (submitted && promotionForm.get('dateOfOrder')?.invalid && promotionForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                          </div>
+                        </div>
+                    </div>
+    
+    
+                    <div class="col-md-3" *ngIf="showAdditionalCharge">
+                      <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Additional Charge <span>*</span></label>
+                      <div class="col-sm-12">
+                          <input type="text" class="form-control" formControlName="additionalCharge"
+                          [ngStyle]="{'border-bottom': (submitted && promotionForm.get('dateOfOrder')?.invalid && promotionForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                      </div>
+                  </div>
+    
+
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order File <span>*</span><a href="{{url}}" target="_blank" class="btn btn-primary py-2 px-1 ml-3">View</a></label>
+                <div class="col-sm-12">
+                  
+
+                  <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)">                  </div>
+                  <div *ngIf="promotionForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                  <div *ngIf="promotionForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Remarks</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="remarks" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2 mt-2">Update</button>
+            <button type="button" class="btn btn-light mt-2">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>

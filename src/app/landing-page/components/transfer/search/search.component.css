@@ -1,0 +1,104 @@
+*{
+    font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+/* Container */
+.container {
+    margin: 0 auto;
+}
+
+/* Card styles */
+.search-filter-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid #fde68a;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Content layout */
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+/* Flex layout for input and filter in larger screens */
+@media (min-width: 640px) {
+    .content {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Input container with search icon */
+.input-container {
+    position: relative;
+    flex: 1;
+}
+
+.input-container .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    color: #d97706;
+}
+
+/* Search input field */
+.search-input {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid #fde68a;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
+}
+
+/* Filter container */
+.filter-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Date filter select */
+.date-filter {
+    padding: 0.5rem 1rem;
+    border: 1px solid #fde68a;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #b45309;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.date-filter:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
+}
+
+/* Filter button */
+.filter-button {
+    padding: 0.5rem 1rem;
+    background-color: #d97706;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+    background-color: #b45309;
+}

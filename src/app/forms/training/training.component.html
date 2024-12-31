@@ -1,0 +1,121 @@
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h5>Training <button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()"
+          *ngIf="showAdd">Add New</button></h5>
+
+
+      <div class="col-md-12 p-0 mt-2">
+        <div class="col-md-3 px-0 mt-2 mb-0">
+          <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+        </div>
+
+        <app-shared></app-shared>
+      </div>
+
+      <div class="table-responsive">
+        <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th> Name</th>
+              <th>Officer ID</th>
+              <th>Batch</th>
+              <th>Type of <br> Training</th>
+              <th>From Date</th>
+              <th>End Date</th>
+              <th>Foreign Visit / <br> DEFT Country </th>
+              <th>Name of Training <br> Institute </th>
+              <th>Submitted By </th>
+              <th>Approved By</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+              <tr *ngFor="let data of pagedData(); let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{data.fullName}}</td>
+                <td>{{data.employeeId}}</td>
+                <td>{{data.employeeProfileId?.batch}}</td>
+                <td>{{data.typeOfTraining}}</td>
+                <td>{{data.fromDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{data.endDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{data.foreignVisitOrDeftCountry}}</td>
+                <td>{{data.nameOfInstitute}}</td>
+                <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+                <td><span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{
+                    data.approvedBy?.loginAs}})</span></td>
+                <td>{{data.approvalStatus ? 'Approved' : 'Not Approved'}}</td>
+                <td>
+                  <button type="button" class="btn btn-info p-2 mr-2" (click)="editTraining(data._id)"
+                    *ngIf="showEdit && !data.approvalStatus">Edit</button>
+                  <button type="button" class="btn btn-info p-2" data-toggle="modal" data-target="#viewTraining"
+                    (click)="viewTraining(data._id)" *ngIf="showView">View</button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noRecords>
+              <tr>
+                <td colspan="13" style="color: red;">No records found</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewTraining" tabindex="-1" aria-labelledby="viewTrainingLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewTrainingLabel">View Training</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewTrainingData.name}}</div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Officer ID </b></label>
+            <br>{{viewTrainingData.employeeId}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Type of
+                Training</b></label><br>{{viewTrainingData.typeOfTraining}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>From </b></label><br>{{viewTrainingData.fromDate |
+            date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>End </b></label><br>{{viewTrainingData.endDate |
+            date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Foreign Visit / DEFT Country
+              </b></label><br>{{viewTrainingData.foreignVisitOrDeftCountry}}</div>
+          <div class="col-md-12 px-0 mt-3"><label class="w-100"><b>Name of Training
+                Institute</b></label><br>{{viewTrainingData.nameOfInstitute}}</div>
+
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br>
+            {{viewTrainingData.orderType}}</div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br>
+            {{viewTrainingData.orderNo}}</div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br>
+            {{viewTrainingData.orderFor}}</div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br>
+            {{viewTrainingData.dateOfOrder | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
+            <a href="{{url}}{{viewTrainingData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewTrainingData.remarks}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewTrainingData.approvalStatus"
+          (click)="approveTraining(viewTrainingData)">Approve</button>
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

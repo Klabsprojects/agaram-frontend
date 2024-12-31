@@ -1,0 +1,26 @@
+.modal-content{
+    border-radius: 0px;
+}
+.modal-title{
+    color: #3d97ff;
+}
+.form-control{
+    padding-left: 5px;
+}
+.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.modal-dialog{
+    max-width: 400px;
+}
+.modal-dialog1{
+    max-width: 500px;
+}
+.btn{
+    font-size: 12px !important;
+}
+.degree-body{
+    max-height: 400px;
+    overflow-y: scroll;
+}

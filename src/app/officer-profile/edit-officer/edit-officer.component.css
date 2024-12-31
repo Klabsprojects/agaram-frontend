@@ -1,0 +1,38 @@
+label span, h4 span{
+    color: #dc3545;
+    font-size: 11px;
+}
+.col-md-5,.col-md-2,.col-md-3,.col-md-4{
+    padding-right:15px;
+}
+.readonly {
+    color: #666; 
+    pointer-events: none; 
+    touch-action: none; 
+}
+.profile-img{
+    float: left;
+    width: 100%;
+    border:1px solid #ccc;
+}
+
+  .card .form-control {
+    border-radius: 0;
+    font-size: 13px !important;
+  }
+  .card label{
+    font-size: 13px !important;
+  }
+  
+  .typcn-trash {
+    cursor: pointer;
+    color: red;
+  }
+  
+  .typcn-trash:hover {
+    color: darkred;
+  }
+  label b{
+    font-weight: 500;
+  }
+

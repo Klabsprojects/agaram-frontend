@@ -1,0 +1,29 @@
+label span, h4 span{
+    color: #dc3545;
+    font-size: 11px;
+}
+.sub-title{
+    color:#FFA53D;
+    font-weight: 500;
+}
+.option{
+    float: left;
+    width:100%;
+    padding:5px;
+}
+.autocomplete-items{
+    float: left;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+.autocomplete-items:hover{
+    cursor: pointer;
+}
+.option:hover{
+    background: #3d97ff;
+    color:#fff;
+}
+.col-md-6, .col-md-3, .col-md-4, .col-md-2, .col-md-5{
+    float: left;
+}

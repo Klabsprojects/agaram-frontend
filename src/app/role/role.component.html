@@ -1,0 +1,87 @@
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body pb-0">
+        <h4 class="card-title">Roles<button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()" *ngIf="showAdd">Add New</button></h4>
+      </div>
+
+      <table class="table table-bordered table-hover table-striped mb-4">
+        <thead>
+          <th style="width: 40px;">#</th>
+          <th>Role</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <!-- <tr>
+            <td>1.</td>
+            <td>Spl A - SO</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2.</td>
+            <td>Spl B - SO</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>3.</td>
+            <td>IAS Officer</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>4.</td>
+            <td>Super Admin</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>5.</td>
+            <td>Spl A - ASO</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr>
+
+          <tr>
+            <td>6.</td>
+            <td>Spl B - ASO</td>
+            <td>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Entry">Entry</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="Edit">Edit</label>
+              <label class="radio-inline mr-4"><input type="checkbox" class="mr-1 float-left" value="View">View</label>
+            </td>
+          </tr> -->
+          <tr *ngFor="let role of roleData; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{role.roleName}}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-info p-2" (click)="viewRole(role.roleName)" *ngIf="showEdit"> Edit</button>
+            </td>
+          </tr>
+          <tr *ngIf="roleData.length === 0">
+            <td colspan="3" style="color: red;">No Records Found</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+</div>

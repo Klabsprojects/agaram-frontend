@@ -1,0 +1,271 @@
+<div class="col-12">
+    <div class="card px-2">
+      <div class="card-body">
+        <form [formGroup]="filterForm">
+  <h5>Advance Search
+    <button type="button" class="btn btn-danger p-2 float-right" (click)="clearAll()">Clear</button>
+  </h5>
+
+  <div class="col-md-12 mt-2 p-0">
+    <div class="col-md-3 float-left pl-0">
+      <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Search</label>
+             <div class="col-sm-12">
+               <input type="text" class="form-control" formControlName="search" /> 
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Date of Birth </label>
+          <div class="col-sm-12">
+            <input type="date" class="form-control pl-0" formControlName="dateOfBirth" (change)="getValue($event,'dateOfBirth')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Home State</label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="state" (change)="getValue($event,'state')">
+              <option value="">Select</option>
+              <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Class</label>
+          <div class="col-sm-12">
+              <select class="form-control" formControlName="community" (change)="getValue($event,'class')">
+                  <option value="">Select</option>
+                  <option *ngFor="let communityData of community" [value]="communityData.value">{{communityData.label}}</option>
+                </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Degree </label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="degree" (change)="getValue($event,'degree')">
+                <option value="">Select</option>
+                <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
+            </select>
+         </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 pl-0 mt-3">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Date of Joining </label>
+          <div class="col-sm-12">
+            <input type="date" class="form-control pl-0" formControlName="dateOfJoining" (change)="getValue($event,'dateOfJoining')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 pl-0 mt-3">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Date of Retirement </label>
+          <div class="col-sm-12">
+            <input type="date" class="form-control pl-0" formControlName="dateOfRetirement" (change)="getValue($event,'dateOfRetirement')" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mt-3">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Recruitment Type </label>
+          <div class="col-sm-12">
+              <select class="form-control" formControlName="recruitmentType" (change)="getValue($event,'recruitmentType')">
+                  <option value="">Select</option>
+                  <option *ngFor="let recruitmentData of recruitment" [value]="recruitmentData.value">{{recruitmentData.label}}</option>
+                </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2  mt-3">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label"> Posting In</label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="postingIn" (change)="getValue($event,'postingIn')">
+             <option value="">Select</option>
+             <option *ngFor="let postingData of postingIn" [value]="postingData.value">{{postingData.label}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mt-3">
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label"> Department</label>
+            <div class="col-sm-12">
+                <select class="form-control" formControlName="department" (change)="getValue($event,'department')">
+                  <option value="">Select</option>
+                  <option *ngFor="let departmentData of department" [value]="departmentData.value">{{departmentData.label}}</option>
+                </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2 mt-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Designation</label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="designation" (change)="getValue($event,'designation')">
+                    <option value="">Select</option>
+                    <option *ngFor="let designationData of designation" [value]="designationData.value">{{designationData.label}}</option>
+                  </select>
+              </div>
+            </div> 
+          </div>
+        </div>
+        </form>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover my-4 float-left">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Batch</th>
+                <th>Posting</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Location</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tableData; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.fullName}}</td>
+                <td>{{data.genderLabel}}</td>
+                <td>{{data.batch}}</td>
+                <td>{{data.postingInLabel}}</td>
+                <td>{{data.departmentLabel}}</td>
+                <td>{{data.designationLabel}}</td>
+                <td>{{data.city}}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-info p-2" (click)="viewInfo(data._id)" data-toggle="modal" data-target="#viewInfo">View</button>
+                </td>
+              </tr>
+              <tr *ngIf="tableData.length === 0">
+                <td colspan="9" style="color: red;">No records found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    
+  </div>
+  </div>
+  </div>
+
+
+  <div class="modal fade" id="viewInfo" tabindex="-1" aria-labelledby="addviewInfoLabel" aria-hidden="true" *ngIf="popupVisible">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addviewInfoLabel">Profile</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body p-3">
+         <div class="col-md-12">
+          <div class="col-md-3">
+           <img [src]="getImageSource(base64ImageData)" alt="Profile" class="profile-img"> 
+          </div>
+          <div class="col-md-9">
+          <div class="col-md-12 border-0"><h5 class="float-left"><label style="color: black;" class="mb-0">{{employeeHistory.fullName}} - {{employeeHistory.employeeId}}</label></h5> &nbsp; <span> - ( {{employeeHistory.batch}} ) </span></div>  
+          <div class="col-md-12 pb-2" *ngIf="firstIndex">  {{ firstIndex.toDesignationId }}, {{ firstIndex.toDepartmentId }}</div>
+          <!-- <div class="col-md-4"><label><b>Posting In:</b> <br> {{ firstIndex.posting }}</label></div>
+          <div class="col-md-4"><label><b>Department:</b> <br>{{ firstIndex.toDepartmentId }}</label></div>
+          <div class="col-md-4"><label><b>Designation:</b> <br>{{ firstIndex.toDesignationId }}</label></div> -->
+          <div class="col-md-12 border-0"><i class="typcn typcn-phone"></i><label class="pt-1 pl-2">{{employeeHistory.mobileNo1}}, {{employeeHistory.mobileNo2}}, {{employeeHistory.mobileNo3}}</label></div> 
+         <div class="col-md-12 border-0"><i class="typcn typcn-mail" style="transform: rotate(0deg);"></i><label class="pt-2 pl-2" style="width:90%;">{{employeeHistory.personalEmail}}, {{employeeHistory.officeEmail}}</label></div>
+         <div class="col-md-12 border-0" style="line-height: 1.9;"><i class="typcn typcn-location" style="transform: rotate(0deg);"></i>
+          <label class="pt-2 pl-2">
+              {{employeeHistory.addressLine}},{{employeeHistory.city}} <br>
+              {{employeeHistory.state}},
+              {{employeeHistory.pincode}}
+          </label></div>
+         <div class="col-md-12 border-0 my-2">
+            <div class="col-md-4"><label> <b>DOB :</b> {{employeeHistory.dateOfBirth}}</label></div>
+            <div class="col-md-4"><label> <b>DOJ :</b> {{employeeHistory.dateOfJoining}}</label></div>
+            <div class="col-md-4"><label> <b>DOR :</b> {{employeeHistory.dateOfRetirement}}</label></div>
+         </div> 
+        </div>
+
+        <!-- <div class="col-md-4 profile-data"><b>Recruitment Type :</b> <br> <span> {{employeeHistory.recruitmentType}}</span></div>
+        <div class="col-md-4 profile-data"><b>Service Status Type : </b> <br>  <span>  {{employeeHistory.serviceStatus}}</span></div>
+        <div class="col-md-4 profile-data"><b>Community : </b> <br> <span>  {{employeeHistory.community}}</span></div>
+        <div class="col-md-4 profile-data"><b>Caste :</b> <br> <span> {{employeeHistory.caste}}</span></div>
+        <div class="col-md-4 profile-data"><b>Religion :</b> <br> <span> {{employeeHistory.religion}}</span></div>
+        <div class="col-md-4 profile-data"><b>Promotion Grade : </b><br>  <span> {{employeeHistory.promotionGrade}}</span></div>
+       <div class="clearfix"></div> -->
+        <!-- <div class="col-md-4 profile-data"><b>Payscale :</b> <br> <span> {{employeeHistory.payscale}}</span></div> -->
+        <!-- <div class="col-md-4 profile-data"><b>Official Email : </b> <br>  <span></span></div> -->
+
+        <!-- <div class="col-md-6 profile-data p-0 border-0"><b>Qualification : </b></div> -->
+        <h5 class="modal-title col-md-12 pl-0 pt-2 mb-2">Employee History</h5>
+        
+
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header p-0" id="headingTwo" style="background-color: #007bff;">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed p-2 w-100 text-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: #fff;">
+                  Previous Details <i class="mdi mdi-chevron-down float-right"></i>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                <div *ngIf="remainingIndices.length > 0; else noPreviousDetails">
+                  <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Posting In</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let detail of remainingIndices; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{ detail.postingIn }}</td>
+                        <td>{{ detail.department }}</td>
+                        <td>{{ detail.designation }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+                <ng-template #noPreviousDetails>
+                  <div style="color: red;">No previous details available.</div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>

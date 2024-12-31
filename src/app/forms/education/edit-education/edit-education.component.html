@@ -1,0 +1,462 @@
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+  <li class="breadcrumb-item"><a routerLink="/education">Education</a></li>
+  <li class="breadcrumb-item"><a><b>Edit Education</b></a></li>
+</ul>
+<div class="col-12 grid-margin">
+  <div class="card px-3 mt-2">
+    <div class="card-body">
+      <h4 class="card-title">Edit Education <span class="float-right">(*) Required</span></h4>
+      <form [formGroup]="educationForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-1 mt-2">
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Officer Name <span>*</span></label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                  [ngStyle]="{'border-bottom': (submitted && educationForm.get('officerName')?.invalid && educationForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  <div class="autocomplete-items" *ngIf="showDropdown">
+                    <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                        {{ option.name }}
+                    </div>
+                </div>
+              </div>
+             </div>
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Department </label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="department"  readonly
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('department')?.invalid && educationForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Designation</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="designation" readonly
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('designation')?.invalid && educationForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+         
+          <!-- <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Details of Course<span> * </span></label>
+              <select class="form-control ml-2" formControlName="detailsOfCourse" 
+                  [ngStyle]="{'border-bottom': (submitted && educationForm.get('detailsOfCourse')?.invalid && educationForm.get('detailsOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option value="PG">PG</option>
+                      <option value="Online Course">Online Course</option>
+                      <option value="Fellowship">Fellowship</option>
+                  </select>
+             </div>
+          </div>
+
+          <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Place<span> * </span></label>
+                <select class="form-control ml-2" formControlName="place" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('place')?.invalid && educationForm.get('place')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let districtData of place" [value]="districtData.value">{{districtData.label}}</option>
+                    </select>
+               </div>
+            </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Tenure <span> * </span></label>
+              <div class="col-sm-12">
+                  <select class="form-control ml-2" formControlName="tenure" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('tenure')?.invalid && educationForm.get('tenure')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let value of tenureOptions" [value]="value">{{ value }}</option>
+                    </select>
+              </div>
+             </div>
+          </div>
+
+          <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Fund <span> * </span></label>
+                <div class="col-sm-12">
+                    <select class="form-control ml-2" formControlName="fundSource" 
+                      [ngStyle]="{'border-bottom': (submitted && educationForm.get('fundSource')?.invalid && educationForm.get('fundSource')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option value="Self">Self</option>
+                          <option value="State Government">State Government</option>
+                          <option value="Central Government">Central Government</option> 
+                          <option value="Organisation">Organisation</option>  
+                          <option value="University">University</option>  
+                          <option value="Others">Others</option>  
+                      </select>
+                </div>
+               </div>
+            </div>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Approximate Fund<span>  * </span></label>
+              <div class="col-sm-12">
+                <input type="number" class="form-control" formControlName="approximateFund" 
+                  [ngStyle]="{'border-bottom': (submitted && educationForm.get('approximateFund')?.invalid && educationForm.get('approximateFund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </div>
+             </div>
+          </div> -->
+
+          <div class="col-md-12 mb-4" *ngIf="showTable">
+          <div class="card p-3">
+            <h4 class="sub-title" style="font-size: 15px;"> <b>Education Details</b> </h4>
+            <div class="table-responsive">
+            <table class="table existing mt-2">
+              <thead>
+                <tr>
+                  <th class="py-2 coursew"><label class="col-form-label pt-0">Course Level</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0">Specialisation</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0">Institute Name</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> State</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Country</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Duration of Course</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Fund</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Fee</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Completed Year</label></th>
+                  <th class="py-2 tdw"><label class="col-form-label pt-0"> Completed Date</label></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let tableData of educationDet">
+                <tr>
+                  <td>{{tableData.courseLevel}}</td>
+                  <td>{{tableData.specialisation}}</td>
+                  <td>{{tableData.instituteName}}</td>
+                  <td>{{tableData.locationState}}</td>
+                  <td>{{tableData.locationCountry}}</td>
+                  <td>{{tableData.durationOfCourse}}</td>
+                  <td>{{tableData.fund}}</td>
+                  <td>{{tableData.fees}}</td>
+                  <td>{{tableData.courseCompletedYear}}</td>
+                  <td>{{tableData.courseCompletedDate | date:'dd/MM/yyyy'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+
+          
+            <div class="col-md-12">
+              <div class="sub-title float-left w-100  mx-2 my-2">Education
+                <button type="button" class="btn btn-success px-2 py-2 float-right" style="font-size: 13px;" (click)="addRow()">Add</button>
+
+              </div>
+
+            
+            <div class="table-responsive">
+            <!-- <table class="table">
+              <thead>
+                <tr>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Course Level</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Specialisation</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Institute Name</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> State</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Country</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Duration of Course</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Fund</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Fee</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Completed Year</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Completed Date</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Action</b></label></th>
+                </tr>
+              </thead>
+              <tbody formArrayName="degreeData">
+                <tr *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i">
+                  
+                  <td class="coursew">
+                    <select class="form-control" formControlName="courseLevel" 
+                  [ngStyle]="{'border-bottom': (submitted && educationForm.get('courseLevel')?.invalid && educationForm.get('courseLevel')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option value="UG">UG</option>
+                      <option value="PG">PG</option>
+                      <option value="Certificate Course">Certificate Course</option>
+                  </select>
+                  </td>
+
+                  <td class="tdw">
+                    <input type="text" class="form-control  float-left" formControlName="specialisation">
+                  </td>
+
+                  <td class="tdw">
+                    <input type="text" class="form-control  float-left" formControlName="instituteName">
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control" formControlName="locationState" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('locationState')?.invalid && educationForm.get('locationState')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                    </select>
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control" formControlName="locationCountry" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('locationCountry')?.invalid && educationForm.get('locationCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+                    </select>
+                  </td>
+
+                  <td class="durationw">
+                    <select class="form-control" formControlName="durationOfCourse" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('durationOfCourse')?.invalid && educationForm.get('durationOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
+                    </select>
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control ml-2" formControlName="fund" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('fund')?.invalid && educationForm.get('fund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="State Government">State Government</option>
+                        <option value="Central Government">Central Government</option> 
+                        <option value="Organisation">Organisation</option>  
+                        <option value="University">University</option>  
+                        <option value="Others">Others</option>  
+                    </select>
+                  </td>
+
+
+                  <td class="tdw">
+                    <input type="number" class="form-control  float-left" formControlName="fees">
+                  </td>
+
+                  <td class="tdw">
+                    <input type="number" class="form-control float-left" formControlName="courseCompletedYear"  placeholder="YYYY">
+                  </td>
+
+                  <td>
+                    <input type="date" class="form-control  float-left" formControlName="courseCompletedDate">
+                  </td>
+
+                  <td>
+                    <i class="typcn typcn-trash float-left trash" *ngIf="i !== 0" (click)="removeRow(i)"></i>
+
+                  </td>
+                </tr>
+              </tbody>
+              
+            </table> -->
+
+            <div formArrayName="degreeData">
+              <div *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i" class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 mb-2 text-right" *ngIf="i !== 0">
+                      <button type="button" class="btn btn-danger p-2"  (click)="removeRow(i)">Delete</button>
+                      <!-- <i class="typcn typcn-trash trash" *ngIf="i !== 0" (click)="removeRow(i)"></i> -->
+                    </div>
+                    <div class="col-md-2 mb-2">
+                      <label><b>Course Level</b></label>
+                      <select class="form-control" formControlName="courseLevel"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('courseLevel')?.invalid && educationForm.get('courseLevel')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="UG">UG</option>
+                        <option value="PG">PG</option>
+                        <option value="Certificate Course">Certificate Course</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                      <label><b>Degree</b></label>
+                      <select class="form-control" formControlName="degree">
+                        <option value="">Select</option>
+                        <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-3 mb-2">
+                      <label><b>Specialisation</b></label>
+                      <input type="text" class="form-control" formControlName="specialisation">
+                    </div>
+            
+                    <div class="col-md-4 mb-2">
+                      <label><b>Institute Name</b></label>
+                      <input type="text" class="form-control" formControlName="instituteName">
+                    </div>
+            
+                    <div class="col-md-3 mt-2">
+                      <label><b>State</b></label>
+                      <select class="form-control" formControlName="locationState"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('locationState')?.invalid && educationForm.get('locationState')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-3 mt-2">
+                      <label><b>Country</b></label>
+                      <select class="form-control" formControlName="locationCountry"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('locationCountry')?.invalid && educationForm.get('locationCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Duration of Course</b></label>
+                      <select class="form-control" formControlName="durationOfCourse"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('durationOfCourse')?.invalid && educationForm.get('durationOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Fund</b></label>
+                      <select class="form-control" formControlName="fund"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('fund')?.invalid && educationForm.get('fund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="State Government">State Government</option>
+                        <option value="Central Government">Central Government</option>
+                        <option value="Organisation">Organisation</option>
+                        <option value="University">University</option>
+                        <option value="Others">Others</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Fee</b></label>
+                      <input type="number" class="form-control" formControlName="fees">
+                    </div>
+            
+                    <div class="col-md-3 mt-4">
+                      <label><b>Completed Date & Year</b></label>
+                      <input type="date" class="form-control date-input" formControlName="courseCompletedDate" [max]="hideFutureDate()" (change)="getCompletedYear(i)">
+                      <input type="number" class="form-control year-input" formControlName="courseCompletedYear" readonly="true" placeholder="YYYY">
+                    </div>
+            
+                    <!-- <div class="col-md-2 mt-3">
+                      <label><b>Completed Year</b></label>
+                      <input type="number" class="form-control" formControlName="courseCompletedYear" readonly="true" placeholder="YYYY">
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          </div>
+          
+
+       
+            <div class="sub-title float-left w-100  mx-2 mt-4">Order Info</div>
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderType" 
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('orderType')?.invalid && educationForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
+                    [ngStyle]="{'border-bottom': (submitted && educationForm.get('orderNo')?.invalid && educationForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                  </div>
+                </div>
+              </div>
+            
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="orderFor"  
+                  [ngStyle]="{'border-bottom': (submitted && educationForm.get('orderFor')?.invalid && educationForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                      {{ orderForData.label }}
+                    </option>
+                  </select>            
+                </div>
+              </div>
+            </div>
+
+
+                <div class="col-md-2">
+                    <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                    <div class="col-sm-12">
+                        <input type="date" class="form-control"  formControlName="dateOfOrder"
+                        [ngStyle]="{'border-bottom': (submitted && educationForm.get('dateOfOrder')?.invalid && educationForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order File <span>*</span>
+                      <a href="{{url}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                    </label>
+                    <div class="col-sm-12">
+                      <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)">                  </div>
+                      <div *ngIf="educationForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                      <div *ngIf="educationForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                    </div>
+                </div>
+
+                  <!-- <div class="col-md-3">
+                    <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Course Completed Year <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" (keydown)="onKeyDown($event)" class="form-control" formControlName="courseCompletedYear"
+                      [min]="minYear" [max]="maxYear"  placeholder="YYYY" maxlength="4"
+                      [ngStyle]="{'border-bottom': (submitted && educationForm.get('courseCompletedYear')?.invalid && educationForm.get('courseCompletedYear')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                      </div>
+                    </div>
+                </div>
+
+              <div class="col-md-2">
+                  <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Completed Date <span>*</span></label>
+                  <div class="col-sm-12">
+                      <input type="date" class="form-control"  formControlName="courseCompletedDate"
+                      [ngStyle]="{'border-bottom': (submitted && educationForm.get('courseCompletedDate')?.invalid && educationForm.get('courseCompletedDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    </div>
+                  </div>
+              </div>   -->
+
+              <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Remarks</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="remarks" />
+                    </div>
+                  </div>
+                </div>
+          
+          
+          <div class="mt-3 float-left w-100">
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            <button type="reset" class="btn btn-light">Cancel</button>
+          </div>
+          </div>
+      </form>
+  </div>
+</div>
+</div>
+

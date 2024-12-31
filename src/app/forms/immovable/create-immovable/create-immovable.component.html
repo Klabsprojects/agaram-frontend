@@ -1,0 +1,255 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item" *ngIf="!ifuserlogin"><a routerLink="/immovable">Immovable Assets</a></li>
+    <li class="breadcrumb-item"><a><b>Create Immovable Assets</b></a></li>
+  </ul>
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">Create Immovable Assets<span class="float-right">(*) Required</span></h4>
+        <form [formGroup]="immvovableForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-1 mt-2">
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Officer Name <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('officerName')?.invalid && immvovableForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    <div class="autocomplete-items" *ngIf="showDropdown">
+                      <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                          {{ option.name }}
+                      </div>
+                  </div>
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Department </label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="department"  readonly
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('department')?.invalid && immvovableForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Designation</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="designation" readonly
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('designation')?.invalid && immvovableForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+           
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Type of Immovable property<span> * </span></label>
+                <select class="form-control ml-2" formControlName="typeOfImmovableProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('typeOfImmovableProperty')?.invalid && immvovableForm.get('typeOfImmovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="House">House</option>
+                        <option value="Land">Land</option>
+                        <option value="Flat">Flat</option>
+                        <option value="Plot">Plot</option>
+                    </select>
+               </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Details of Property <span> * </span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="detailsOfImovableProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('detailsOfImovableProperty')?.invalid && immvovableForm.get('detailsOfImovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Source of Funding<span>  * </span></label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="sourceOfFunding" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('sourceOfFunding')?.invalid && immvovableForm.get('sourceOfFunding')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Total Cost <span> * </span></label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" formControlName="totalCostOfProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('totalCostOfProperty')?.invalid && immvovableForm.get('totalCostOfProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Bought From Name <span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromName" 
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('boughtFromName')?.invalid && immvovableForm.get('boughtFromName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Contact No. <span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromContactNumber" maxlength="10" (keydown)="onKeyDown($event)"
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('boughtFromContactNumber')?.invalid && immvovableForm.get('boughtFromContactNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Address<span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromAddress" 
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('boughtFromAddress')?.invalid && immvovableForm.get('boughtFromAddress')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Property Shown in IPR<span> * </span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="propertyShownInIpr" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('propertyShownInIpr')?.invalid && immvovableForm.get('propertyShownInIpr')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label"> Self / Family <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="selfOrFamily" 
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('selfOrFamily')?.invalid && immvovableForm.get('selfOrFamily')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="Family">Family</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Remarks</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="remarks" />
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-2">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date  <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="date" class="form-control"  formControlName="immovableDateOfOrder"
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('immovableDateOfOrder')?.invalid && immvovableForm.get('immovableDateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Previous Sanction Order  <span>*</span></label>
+                <div class="col-sm-12">
+                    <!-- <select class="form-control" formControlName="previousSanctionOrder" 
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('previousSanctionOrder')?.invalid && immvovableForm.get('previousSanctionOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value=" ">Select</option>
+                      </select> -->
+                      <input type="text" class="form-control"  formControlName="previousSanctionOrder"
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('previousSanctionOrder')?.invalid && immvovableForm.get('previousSanctionOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+            </div>
+
+              <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="orderType" 
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('orderType')?.invalid && immvovableForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-2">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
+                      [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('orderNo')?.invalid && immvovableForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderFor"  
+                    [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('orderFor')?.invalid && immvovableForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="" selected>Select</option>
+                      <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                        {{ orderForData.label }}
+                      </option>
+                    </select>            
+                  </div>
+                </div>
+              </div>
+  
+  
+                  <div class="col-md-2">
+                      <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                      <div class="col-sm-12">
+                          <input type="date" class="form-control"  formControlName="dateOfOrder"
+                          [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('dateOfOrder')?.invalid && immvovableForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
+                      <div class="col-sm-12">
+                        <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)" required>                  </div>
+                        <div *ngIf="immvovableForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                        <div *ngIf="immvovableForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                      </div>
+                  </div>
+            
+            
+            <div class="mt-3 float-left w-100">
+              <button type="submit" class="btn btn-primary mr-2">Submit</button>
+              <button type="reset" class="btn btn-light">Cancel</button>
+            </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>

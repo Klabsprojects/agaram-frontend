@@ -1,0 +1,33 @@
+<section class="home">
+    <div class="containerhome">
+        <div class="header">
+            <h1 class="heading">Tamil Nadu Administrative Excellence Portal</h1>
+            <p class="sub-title">Pioneering Digital Governance | Empowering Administration | Serving Excellence</p>
+        </div>
+        <div class="row mb-5">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
+                <app-detail [title]="texts[0]" [subHeading]="subHeading[0]" [greenText]="greenbox[0]" />
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3 col-sm-6">
+                <app-detail [title]="texts[1]" [subHeading]="subHeading[1]" [greenText]="greenbox[1]" />
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3 col-sm-6">
+                <app-detail [title]="texts[2]" [subHeading]="subHeading[2]" [greenText]="greenbox[2]" />
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3 col-sm-6">
+                <app-detail [title]="texts[3]" [subHeading]="subHeading[3]" [greenText]="greenbox[3]" />
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-xl-6 col-lg-6 col-md-6 mb-2"><app-announcements-updates [updatedetails]="announcements"
+                    [title]="'Important Announcements'" /></div>
+            <div class="col-xl-6 col-lg-6 col-md-6"><app-announcements-updates [updatedetails]="updates" [title]="'Latest Updates'" /></div>
+        </div>
+    
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-2"><app-overview-card [title]="'Priority Initiatives'" [details]="overview[0]" /></div>
+            <div class="col-xl-4 col-lg-4 col-md-4 mb-2"><app-overview-card [title]="'Recent Achievements'" [details]="overview[1]" /></div>
+            <div class="col-xl-4 col-lg-4 col-md-4"><app-overview-card [title]="'Upcoming Events'" [details]="overview[2]" /></div>
+        </div>
+    </div>
+</section>

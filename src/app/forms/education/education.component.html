@@ -1,0 +1,164 @@
+
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Education<button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()" *ngIf="showAdd">Add New</button></h5>
+
+        <div class="col-md-12 p-0 mt-2">
+          <div class="col-md-3 px-0 mt-2 mb-0">
+            <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+          </div>
+  
+          <app-shared></app-shared>
+        </div>
+
+<div class="table-responsive">
+  <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Batch</th>
+        <!-- <th>Course Type</th>
+        <th>Institute Name</th>
+        <th>Duration</th>
+        <th>Fund</th>
+        <th>Fees</th> -->
+        <th>Submitted By </th>
+        <th>Approved By</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+        <tr *ngFor="let data of pagedData(); let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{data.officerName}}</td>
+          <td>{{data.department}}</td>
+          <td>{{data.designation}}</td>
+          <td>{{data.employeeProfileId?.batch}}</td>
+          <!-- <td>{{data.degreeData[0]?.courseLevel}}</td>
+          <td>{{data.degreeData[0]?.instituteName}}</td>
+          <td>{{data.degreeData[0]?.durationOfCourse}}</td>
+          <td>{{data.degreeData[0]?.fund}}</td>
+          <td>{{data.degreeData[0]?.fees}}</td> -->
+          <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+          <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
+          <td>{{data.approvalStatus? 'Approved':'Not Approved'}}</td>
+          <td>
+            <button type="button" class="btn btn-info p-2 mr-2" (click)="editEducation(data._id)" *ngIf="showEdit && !data.approvalStatus">Edit</button>
+            <button type="button" class="btn btn-info p-2" data-toggle="modal" data-target="#viewEducation" (click)="viewEducation(data._id)" *ngIf="showView">View</button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #noRecords>
+        <tr>
+          <td colspan="14" style="color: red;">No records found</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > pageSizeOptions[0]">
+    <div class="dropdown col-md-8">
+      <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Items Per Page: {{ pageSize }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option }}</a>
+      </div>
+    </div>
+    <div class="col-md-4" style="border: 0px;">
+    <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+      <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+    <ng-container *ngFor="let page of pages">
+      <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }" (click)="goToPage(page)">{{ page }}</button>
+    </ng-container>
+    <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+       Next <i class="mdi mdi-chevron-double-right"></i> </button>
+    
+  </div>
+</div>  
+  
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="viewEducation" tabindex="-1" aria-labelledby="viewEducationLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewEducationLabel">View Education</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+            <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewEducationData.name}}</div>  
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewEducationData.department}}</div>  
+            <div class="col-md-5 pr-0 mb-2"><label class="w-100"><b>Designation </b></label><br>{{viewEducationData.designation}}</div>  
+          
+            <div class="col-md-12 px-0 mt-3"><label class="w-100"><b>Education Details </b></label> </div>  
+           <div class="table-responsive">
+            <table class="table existing mt-2">
+              <thead>
+                <tr>
+                  <th class="py-2"><label class="col-form-label pt-0">S.No</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0">Course Level</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0">Degree</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0">Specialisation</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0">Institute Name</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> State</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Country</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Duration of Course</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Fund</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Fee</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Completed Year</label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"> Completed Date</label></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let tableData of viewEducationData.educationdetails; let i = index">
+                <tr>
+                  <td>{{i+1}}</td>
+                  <td>{{tableData.courseLevel}}</td>
+                  <td>{{tableData.degree}}</td>
+                  <td>{{tableData.specialisation}}</td>
+                  <td>{{tableData.instituteName}}</td>
+                  <td>{{tableData.locationStateName}}</td>
+                  <td>{{tableData.locationCountryName}}</td>
+                  <td>{{tableData.durationOfCourse}}</td>
+                  <td>{{tableData.fund}}</td>
+                  <td>{{tableData.fees}}</td>
+                  <td>{{tableData.courseCompletedYear}}</td>
+                  <td>{{tableData.courseCompletedDate | date:'dd/MM/YYYY'}}</td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewEducationData.orderType}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewEducationData.orderNo}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewEducationData.orderFor}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br> {{viewEducationData.dateOfOrder | date:'dd/MM/yyyy'}}</div>  
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>     
+            <a href="{{url}}{{viewEducationData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>  
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewEducationData.remarks}}</div>  
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewEducationData.approvalStatus" (click)="approveEducation(viewEducationData)">Approve</button>
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  

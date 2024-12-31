@@ -1,0 +1,125 @@
+/**************************/
+/* FOOTER */
+/**************************/
+.footer {
+  border-top: 1px solid #fde68a;
+  background: linear-gradient(to bottom, #fffbeb, #fef3c7);
+}
+
+.footer-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 3rem 12rem;
+  column-gap: 3rem;
+}
+
+.logo-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo {
+  display: flex;
+  gap: 0.5rem;
+  color: rgb(120 53 15/var(--tw-text-opacity,1));
+}
+
+.footer-logo h3{
+  font-size: 1.25rem;
+  font-family: serif;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.lucide{
+  color: rgb(180 83 9/var(--tw-text-opacity,1));
+}
+
+.social-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.social-icon {
+  height: 24px;
+  width: 24px;
+}
+
+.copyright {
+  font-size: .875rem;
+  line-height: 1.625;
+  color: rgb(75 85 99/var(--tw-text-opacity,1));
+  font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+.copyright-gov{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 0;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  border-top: 1px solid #fde68a;
+  font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+.footer-heading {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: rgb(120 53 15/var(--tw-text-opacity,1));
+  font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+.contacts {
+  font-style: normal;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.address {
+  margin-bottom: 24px;
+}
+
+.footer-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-nav-connect{
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-link:link,
+.footer-link:visited,
+.footer-link-contact:link,
+.footer-link-contact:visited,
+.footer-link-connect:link,
+.footer-link-connect:visited {
+  text-decoration: none;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  color: rgb(75 85 99/var(--tw-text-opacity,1));
+  transition: all 0.3s;
+}
+.footer-link-connect:link,
+.footer-link-connect:visited{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color:rgb(254 243 199/var(--tw-bg-opacity,1));
+}
+
+.footer-link:hover,
+.footer-link:active {
+  /* color: #555; */
+  /* color: rgb(120 53 15/var(--tw-text-opacity,1)); */
+  color: #e67e22;
+}
+
+.logo{
+  width: 40% !important;
+}

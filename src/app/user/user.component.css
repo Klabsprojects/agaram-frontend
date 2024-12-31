@@ -1,0 +1,17 @@
+.mdi{
+    position: absolute;
+    right: 22px;
+    font-size: 19px;
+    bottom: 4px;
+}
+.btn-active {
+    background-color: green;
+  }
+  
+  .btn-inactive {
+    background-color: red;
+  }
+.toggle-button{
+  color:white;
+  font-size: 12px;
+}

@@ -1,0 +1,571 @@
+<ul class="breadcrumb">
+  <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+  <li class="breadcrumb-item"><a routerLink="/officer-profile-list">Officer Profile</a></li>
+  <li class="breadcrumb-item"><a><b>Edit Officer Profile</b></a></li>
+</ul>
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-0">
+      <div class="card-body">
+        <h4 class="card-title float-left w-100 mb-0">Update Officer Profile<span>
+          <div class="col-md-1 float-right" style="max-width:12%;">
+          <img [src]="getImageSource(base64ImageData)" alt="Profile" class="profile-img">
+        </div></span></h4>
+        <div class="clearfix"></div>
+       
+        <form class="form-sample" [formGroup]="officerForm" (ngSubmit)="onSubmit()">
+
+          <div class="sub-title  float-left w-100 pl-0">Personal Details</div>
+         
+          
+          <div class="row mb-1 mt-2">
+            <div class="col-md-5">
+              <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Full Name <span>*</span></label>
+                     <div class="col-sm-12">
+                      <input type="text" class="form-control" name="fullName" formControlName="fullName" [readonly]="isReadOnly" 
+                          [ngStyle]="{'border-bottom': (submitted && officerForm.get('fullName')?.invalid && officerForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                           <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('name')"></i> 
+                      </div>
+                  </div>
+              </div>
+          
+          
+          <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Gender</label>
+                <div class="col-sm-12">
+                    <select class="form-control readonly" formControlName="gender">
+                      <option value="">Select</option>
+                      <option *ngFor="let genderData of gender" [value]="genderData.value">{{genderData.label}}</option>
+                  </select>
+                
+                </div>
+              </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Date of Birth </label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control pl-0" formControlName="dateOfBirth" readonly />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Home State </label>
+              <div class="col-sm-12">
+                <select class="form-control readonly" formControlName="state">
+                  <option value="">Select</option>
+                  <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="form-group row">
+
+                <label class="col-sm-12 col-form-label">Seniority Number</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" name="seniority" formControlName="seniority" maxlength="10"  [readonly]="seniorityReadOnly"
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('seniority')?.invalid && officerForm.get('seniority')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('seniority')"></i> 
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+          <div class="row mb-1 mt-2">
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Class </label>
+              <div class="col-sm-12">
+                  <select class="form-control readonly" formControlName="community">
+                      <option value="">Select</option>
+                      <option *ngFor="let communityData of community" [value]="communityData.value">{{communityData.label}}</option>
+                    </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Religion</label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="religion">
+                      <option value="">Select</option>
+                      <option *ngFor="let  ReligionData of religion" [value]="ReligionData.value">{{ReligionData.label}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+        
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Caste </label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="caste" readonly />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Mobile No 1 (Whatsapp) <span>*</span></label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" name="mobileNo1" formControlName="mobileNo1" maxlength="10"  [readonly]="mobileReadOnly"
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('mobileNo1')?.invalid && officerForm.get('mobileNo1')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('mobile')"></i> 
+                </div>
+            </div>
+          </div>
+          </div>
+
+
+          <div class="row mb-1 mt-2">
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Mobile No 2</label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" maxlength="10" [readonly]="mobileReadOnly2" name="mobileNo2" formControlName="mobileNo2" maxlength="10" />
+                  <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('mobileTwo')"></i> 
+                </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Landline Number</label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" maxlength="20" [readonly]="mobileReadOnly3" name="mobileNo3" formControlName="mobileNo3" />
+                  <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('mobileThree')"></i> 
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Email ID <span>*</span></label>
+              <div class="col-sm-12">
+                  <input type="email" class="form-control" formControlName="personalEmail" [readonly]="emailIsReadOnly"
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('personalEmail')?.invalid && officerForm.get('personalEmail')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  <i class="typcn typcn-pencil position-absolute icon" (click)="emailToggleReadOnly()"></i> 
+              </div>
+            </div>
+          </div>
+        </div>
+
+          
+          <!-- <div class="row mb-1 mt-2">
+            <div class="col-md-12">
+            <label class="col-form-label mt-2">Qualification</label>
+            <div class="form-group row float-right">
+              <div class="col-sm-10">
+                <button type="button" class="btn btn-success p-2" (click)="addRow()">Add</button>
+              </div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <td class="py-2"><label class="col-form-label pt-0"><b>Degree</b></label></td>
+                  <td class="py-2"><label class="col-form-label pt-0"><b>Stream</b></label></td>
+                </tr>
+              </thead>
+              <tbody formArrayName="degreeData">
+                <tr *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i">
+                  <td>
+                    <select class="form-control" formControlName="degree">
+                      <option value="">Select</option>
+                      <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control w-75 float-left" formControlName="stream">
+                    <i class="typcn typcn-trash float-left trash" *ngIf="i !== 0" (click)="removeRow(i)"></i>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div> -->
+
+          <div class="col-md-12 p-0 my-4">
+            <label class="col-form-label my-2">Qualification</label>
+            <div class="form-group row float-right">
+              <div class="col-sm-10">
+                <button type="button" class="btn btn-success px-2 py-2" style="font-size: 13px;" (click)="addRow()">Add</button>
+              </div>
+            </div>
+
+          <div class="table-responsive">
+            <!-- <table class="table">
+              <thead>
+                <tr>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Course Level</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Specialisation</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b>Institute Name</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> State</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Country</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Duration of Course</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Fund</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Fee</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Completed Year</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Completed Date</b></label></th>
+                  <th class="py-2"><label class="col-form-label pt-0"><b> Action</b></label></th>
+                </tr>
+              </thead>
+              <tbody formArrayName="degreeData">
+                <tr *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i">
+                  
+                  <td class="coursew">
+                    <select class="form-control" formControlName="courseLevel" 
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('courseLevel')?.invalid && officerForm.get('courseLevel')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option value="UG">UG</option>
+                      <option value="PG">PG</option>
+                      <option value="Certificate Course">Certificate Course</option>
+                  </select>
+                  </td>
+
+                  <td class="tdw">
+                    <input type="text" class="form-control  float-left" formControlName="specialisation">
+                  </td>
+
+                  <td class="tdw">
+                    <input type="text" class="form-control  float-left" formControlName="instituteName">
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control" formControlName="locationState" 
+                    [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationState')?.invalid && officerForm.get('locationState')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                    </select>
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control" formControlName="locationCountry" 
+                    [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationCountry')?.invalid && officerForm.get('locationCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+                    </select>
+                  </td>
+
+                  <td class="durationw">
+                    <select class="form-control" formControlName="durationOfCourse"
+                    [ngStyle]="{'border-bottom': (submitted && officerForm.get('durationOfCourse')?.invalid && officerForm.get('durationOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" >
+                      <option value="">Select</option>
+                      <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
+                    </select>
+                  </td>
+
+                  <td class="tdw">
+                    <select class="form-control ml-2" formControlName="fund" 
+                    [ngStyle]="{'border-bottom': (submitted && officerForm.get('fund')?.invalid && officerForm.get('fund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="State Government">State Government</option>
+                        <option value="Central Government">Central Government</option> 
+                        <option value="Organisation">Organisation</option>  
+                        <option value="University">University</option>  
+                        <option value="Others">Others</option>  
+                    </select>
+                  </td>
+
+
+                  <td class="tdw">
+                    <input type="number" class="form-control  float-left" formControlName="fees">
+                  </td>
+
+                  <td class="tdw">
+                    <input type="number" class="form-control float-left" formControlName="courseCompletedYear"  placeholder="YYYY">
+                  </td>
+
+                  <td>
+                    <input type="date" class="form-control  float-left" formControlName="courseCompletedDate" >
+                  </td>
+
+                  <td>
+                    <i class="typcn typcn-trash float-left trash" *ngIf="i !== 0" (click)="removeRow(i)"></i>
+
+                  </td>
+                </tr>
+              </tbody>
+              
+            </table> -->
+            <div formArrayName="degreeData">
+              <div *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i" class="card mb-3 mt-2">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 mb-2 text-right" *ngIf="i !== 0">
+                      <button type="button" class="btn btn-danger p-2"  (click)="removeRow(i)">Delete</button>
+                      <!-- <i class="typcn typcn-trash trash" *ngIf="i !== 0" (click)="removeRow(i)"></i> -->
+                    </div>
+                    <div class="col-md-2 mb-2">
+                      <label><b>Course Level</b></label>
+                      <select class="form-control" formControlName="courseLevel"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('courseLevel')?.invalid && officerForm.get('courseLevel')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="UG">UG</option>
+                        <option value="PG">PG</option>
+                        <option value="Certificate Course">Certificate Course</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                      <label><b>Degree</b></label>
+                      <select class="form-control" formControlName="degree"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('degree')?.invalid && officerForm.get('degree')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-3 mb-2">
+                      <label><b>Specialisation</b></label>
+                      <input type="text" class="form-control" formControlName="specialisation">
+                    </div>
+            
+                    <div class="col-md-4 mb-2">
+                      <label><b>Institute Name</b></label>
+                      <input type="text" class="form-control" formControlName="instituteName">
+                    </div>
+            
+                    <div class="col-md-3 mt-2">
+                      <label><b>State</b></label>
+                      <select class="form-control" formControlName="locationState"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationState')?.invalid && officerForm.get('locationState')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-3 mt-2">
+                      <label><b>Country</b></label>
+                      <select class="form-control" formControlName="locationCountry"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationCountry')?.invalid && officerForm.get('locationCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Duration of Course</b></label>
+                      <select class="form-control" formControlName="durationOfCourse"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('durationOfCourse')?.invalid && officerForm.get('durationOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Fund</b></label>
+                      <select class="form-control" formControlName="fund"
+                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('fund')?.invalid && officerForm.get('fund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="State Government">State Government</option>
+                        <option value="Central Government">Central Government</option>
+                        <option value="Organisation">Organisation</option>
+                        <option value="University">University</option>
+                        <option value="Others">Others</option>
+                      </select>
+                    </div>
+            
+                    <div class="col-md-2 mt-2">
+                      <label><b>Fee</b></label>
+                      <input type="number" class="form-control" formControlName="fees">
+                    </div>
+            
+                    <div class="col-md-3 mt-4">
+                      <label><b>Completed Date & Year</b></label>
+                      <input type="date" class="form-control date-input" formControlName="courseCompletedDate" [max]="hideFutureDate()" (change)="getCompletedYear(i)">
+                      <input type="number" class="form-control year-input" formControlName="courseCompletedYear" readonly="true" placeholder="YYYY">
+                    </div>
+            
+                    <!-- <div class="col-md-2 mt-3">
+                      <label><b>Completed Year</b></label>
+                      <input type="number" class="form-control" formControlName="courseCompletedYear" readonly="true" placeholder="YYYY">
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          
+          
+
+          <div class="row mb-1 mt-2">
+            <div class="sub-title  float-left w-100 mb-2 pl-2">Residential Address</div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Address Line </label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="addressLine" readonly />
+              </div>
+            </div>
+          </div>
+          
+          
+
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">City </label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="city" readonly />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Pincode </label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="pincode" maxlength="6" readonly
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('pincode')?.invalid && officerForm.get('pincode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-3 px-0 float-left">
+          <label class="col-form-label px-0 float-left">Photo <span>*</span></label>
+          <input type="file" class="form-control float-left" formControlName="photo" (change)="onFileSelected($event)" style="border: none;" accept="image" />
+        </div>  -->
+        
+
+
+      <div class="row mb-1 mt-3 float-left w-100">
+        <div class="sub-title  float-left w-100 pl-2">Officer Details</div>
+
+        <div class="col-md-3">
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label">Officer ID </label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="employeeId"  maxlength="6" name="officerId"
+                [ngStyle]="{'border-bottom': (submitted && officerForm.get('employeeId')?.invalid && officerForm.get('employeeId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('officerId')"></i> 
+              </div>
+           </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group row">
+            <label class="col-sm-12 col-form-label">IFHRMS ID </label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" formControlName="ifhrmsId"   />
+            </div>
+           </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Date of Joining </label>
+                <!-- <div class="col-sm-12">
+                  <input type="text" class="form-control pl-0" formControlName="dateOfJoining" readonly />              
+                </div> -->
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" name="dateOfJoining" formControlName="dateOfJoining" maxlength="10"  [readonly]="dateOfJoiningReadOnly"
+                    [ngStyle]="{'border-bottom': (submitted && officerForm.get('dateOfJoining')?.invalid && officerForm.get('dateOfJoining')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('dateOfJoining')"></i> 
+                </div>
+          </div>
+      </div>
+ 
+          <div class="col-md-2">
+              <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Date of Retirement</label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control pl-0" formControlName="dateOfRetirement" readonly />
+                </div>
+              </div>
+          </div>
+          
+
+          <div class="col-md-2">
+              <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Batch</label>
+              <div class="col-sm-12">
+                  <input type="text" readonly formControlName="batch" class="form-control"/>
+              </div>
+              </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Recruitment Type </label>
+              <div class="col-sm-12">
+                  <select class="form-control readonly" formControlName="recruitmentType" 
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('recruitmentType')?.invalid && officerForm.get('recruitmentType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option *ngFor="let recruitmentData of recruitment" [value]="recruitmentData.value">{{recruitmentData.label}}</option>
+                    </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Official Mail ID </label>
+              <div class="col-sm-12">
+                  <input type="email" class="form-control" formControlName="officeEmail" readonly />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Service Status </label>
+              <div class="col-sm-12">
+                  <select class="form-control readonly" formControlName="serviceStatus" 
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('serviceStatus')?.invalid && officerForm.get('serviceStatus')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option *ngFor="let serviceStatusData of serviceStatus" [value]="serviceStatusData.value">{{serviceStatusData.label}}</option>
+                    </select>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Grade</label>
+              <div class="col-sm-12">
+                  <select class="form-control readonly" formControlName="promotionGrade">
+                      <option value="">Select</option>
+                      <option *ngFor="let promotionGradeData of grade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                    </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Payscale</label>
+              <div class="col-sm-12">
+                  <input type="text" class="form-control" readonly formControlName="payscale" >
+                     
+              </div>
+            </div>
+          </div>
+         
+          </div>
+       
+          <div class="my-3 float-left w-100">
+        <button type="button" class="btn btn-light mr-3" (click)="goBack()">Back</button>
+        <button type="submit" class="btn btn-primary mr-2">Update</button>
+        
+      </div>
+      </form>
+      </div>
+    </div>
+  </div>

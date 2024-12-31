@@ -1,0 +1,252 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item" *ngIf="!ifuserlogin"><a routerLink="/movable">Movable Assets</a></li>
+    <li class="breadcrumb-item"><a><b>Create Movable Assets</b></a></li>
+  </ul>
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">Create Movable Assets<span class="float-right">(*) Required</span></h4>
+        <form [formGroup]="movableForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-1 mt-2">
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Officer Name <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('officerName')?.invalid && movableForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    <div class="autocomplete-items" *ngIf="showDropdown">
+                      <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                          {{ option.name }}
+                      </div>
+                  </div>
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Department </label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="department"  readonly
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('department')?.invalid && movableForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Designation</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="designation" readonly
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('designation')?.invalid && movableForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+           
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Type of Movable property<span> * </span></label>
+                <select class="form-control ml-2" formControlName="typeOfMovableProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('typeOfMovableProperty')?.invalid && movableForm.get('typeOfMovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Car">Car</option>
+                        <option value="Tv">Tv</option>
+                    </select>
+               </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Details of Movable Property <span> * </span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="detailsOfMovableProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('detailsOfMovableProperty')?.invalid && movableForm.get('detailsOfMovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Source of Funding<span>  * </span></label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="sourceOfFunding" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('sourceOfFunding')?.invalid && movableForm.get('sourceOfFunding')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Total Cost <span> * </span></label>
+                <div class="col-sm-12">
+                  <input type="number" class="form-control" formControlName="totalCostOfProperty" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('totalCostOfProperty')?.invalid && movableForm.get('totalCostOfProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Bought From Name <span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromName" 
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('boughtFromName')?.invalid && movableForm.get('boughtFromName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Contact No. <span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromContactNumber" maxlength="10"
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('boughtFromContactNumber')?.invalid && movableForm.get('boughtFromContactNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Address<span> * </span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="boughtFromAddress" 
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('boughtFromAddress')?.invalid && movableForm.get('boughtFromAddress')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Property Shown in IPR<span> * </span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="propertyShownInIpr" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('propertyShownInIpr')?.invalid && movableForm.get('propertyShownInIpr')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                  </div>
+                 </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label"> Self / Family <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="selfOrFamily" 
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('selfOrFamily')?.invalid && movableForm.get('selfOrFamily')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option value="Self">Self</option>
+                        <option value="Family">Family</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Remarks</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="remarks" />
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-2">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date  <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="date" class="form-control"  formControlName="movableDateOfOrder"
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('movableDateOfOrder')?.invalid && movableForm.get('movableDateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Previous Sanction Order  <span>*</span></label>
+                <div class="col-sm-12">
+                    <!-- <select class="form-control" formControlName="previousSanctionOrder" 
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('previousSanctionOrder')?.invalid && movableForm.get('previousSanctionOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value=" ">Select</option>
+                      </select> -->
+                      <input type="text" class="form-control"  formControlName="previousSanctionOrder"
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('previousSanctionOrder')?.invalid && movableForm.get('previousSanctionOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+            </div>
+
+              <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="orderType" 
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('orderType')?.invalid && movableForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
+                      [ngStyle]="{'border-bottom': (submitted && movableForm.get('orderNo')?.invalid && movableForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderFor"  
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('orderFor')?.invalid && movableForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="" selected>Select</option>
+                      <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                        {{ orderForData.label }}
+                      </option>
+                    </select>            
+                  </div>
+                </div>
+              </div>
+  
+  
+                  <div class="col-md-2">
+                      <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                      <div class="col-sm-12">
+                          <input type="date" class="form-control"  formControlName="dateOfOrder"
+                          [ngStyle]="{'border-bottom': (submitted && movableForm.get('dateOfOrder')?.invalid && movableForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
+                      <div class="col-sm-12">
+                        <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)" required>                  </div>
+                        <div *ngIf="movableForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                        <div *ngIf="movableForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                      </div>
+                  </div>
+            
+            
+            <div class="mt-3 float-left w-100">
+              <button type="submit" class="btn btn-primary mr-2">Submit</button>
+              <button type="reset" class="btn btn-light">Cancel</button>
+            </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>

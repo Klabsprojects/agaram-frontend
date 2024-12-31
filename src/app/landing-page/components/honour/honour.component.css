@@ -1,0 +1,89 @@
+.honour {
+    background: linear-gradient(to bottom, #fffbeb, #fffbeb);
+    padding: 1rem;
+}
+
+.containerhonour{
+    display: flex;
+    flex-direction: column;
+    width: 82.5%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-top: 3rem;
+}
+
+.heading, .subHeading {
+    color: rgb(120 53 15 / var(--tw-text-opacity, 1));
+    font-size: 3rem;
+    line-height: 1;
+    font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
+    margin: 0;
+}
+
+.f-head{
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.subHeading{
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.lucide{
+    color: #b45309;
+}
+
+.lucide-star{
+    color:#fbbf24;
+}
+
+.description{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    color: #4b5563;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon-img{
+    background-color: #fef3c780;
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.star-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+.gradient-bar {
+    height: 2px; /* Equivalent to Tailwind's h-0.5 */
+    width: 3rem; /* Default width (48px) */
+    background: linear-gradient(to right, transparent, #fde68a, transparent); /* Gradient: from-transparent via-amber-200 to-transparent */
+  }
+  
+  /* Small screen (>=640px) */
+  @media (min-width: 640px) {
+    .gradient-bar {
+      width: 4rem; /* 64px */
+    }
+  }
+  
+  /* Medium screen (>=768px) */
+  @media (min-width: 768px) {
+    .gradient-bar {
+      width: 6rem; /* 96px */
+    }
+  }
+  

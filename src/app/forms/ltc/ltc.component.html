@@ -1,0 +1,134 @@
+<div class="col-12 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <h5>Leave Travel Concession<button type="button" class="btn btn-success btn-add float-right p-2"
+          (click)="addNew()" *ngIf="showAdd">Add New</button></h5>
+
+
+      <div class="col-md-12 p-0 mt-2">
+        <div class="col-md-3 px-0 mt-2 mb-0">
+          <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+        </div>
+
+        <app-shared></app-shared>
+      </div>
+
+      <div class="table-responsive">
+        <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name </th>
+              <!-- <th>Designation</th> -->
+              <th>Batch</th>
+              <th>LTC Availed for <br>the Block Year</th>
+              <th>From Place</th>
+              <th>To Place</th>
+              <th>From </th>
+              <th>To</th>
+              <th>Self / Family</th>
+              <th>Submitted By </th>
+              <th>Approved By</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+              <tr *ngFor="let data of pagedData(); let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{data.officerName}}</td>
+                <!-- <td>{{data.designation}}</td> -->
+                <td>{{data.employeeProfileId?.batch}}</td>
+                <td>{{data.blockYear}}</td>
+                <td>{{data.fromPlace}}</td>
+                <td>{{data.toPlace}}</td>
+                <td>{{data.fromDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{data.toDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{data.selfOrFamily}}</td>
+                <td>{{ data.submittedBy?.username}} {{ data.submittedBy?.loginAs}}</td>
+                <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} {{
+                    data.approvedBy?.loginAs}}</span> </td>
+                <td>{{data.approvalStatus ? 'Approve':'Not Approved'}}</td>
+                <td>
+                  <button type="button" class="btn btn-info p-2 mr-2" (click)="editLtc(data._id)"
+                    *ngIf="showEdit && !data.approvalStatus">Edit</button>
+                  <button type="button" class="btn btn-info p-2" data-toggle="modal" data-target="#viewLtc"
+                    (click)="viewLtc(data._id)" *ngIf="showView">View</button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noRecords>
+              <tr>
+                <td colspan="13" style="color: red;">No records found</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewLtc" tabindex="-1" aria-labelledby="viewLtcLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewLtcLabel">View LTC</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewLtcData.name}}</div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewLtcData.department}}
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Designation
+              </b></label><br>{{viewLtcData.designation}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>From </b></label><br>{{viewLtcData.fromDate |
+            date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>To</b></label><br>{{viewLtcData.toDate |
+            date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Proposed Place of Visit
+              </b></label><br>{{viewLtcData.proposedPlaceOfVisit}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Block Year</b></label><br>{{viewLtcData.blockYear}}
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Self /
+                Family</b></label><br>{{viewLtcData.selfOrFamily}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Leave
+                Availed</b></label><br>{{viewLtcData.leaveAvailed}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Category</b></label><br>{{viewLtcData.category}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Place From</b></label><br>{{viewLtcData.fromPlace}}
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Place To</b></label><br>{{viewLtcData.toPlace}}</div>
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewLtcData.orderType}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewLtcData.orderNo}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewLtcData.orderFor}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br>
+            {{viewLtcData.dateOfOrder | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
+            <a href="{{url}}{{viewLtcData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewLtcData.remarks}}
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewLtcData.approvalStatus"
+          (click)="approveLtc(viewLtcData)">Approve</button>
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

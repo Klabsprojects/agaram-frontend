@@ -1,0 +1,9 @@
+.modal-dialog{
+    max-width:800px;
+}
+.mb-2{
+    margin-bottom: 10px;
+}
+label b{
+    font-weight: 500;
+}

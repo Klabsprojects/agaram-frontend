@@ -1,0 +1,14 @@
+.modal-dialog{
+    max-width: 400px;
+}
+.form-control {
+    border: 1px solid #ccc;
+    padding-left:5px;
+}
+.col-md-6.form-group.pl-0 input[type="date"]::placeholder {
+    color: #999 !important;
+}
+
+
+
+

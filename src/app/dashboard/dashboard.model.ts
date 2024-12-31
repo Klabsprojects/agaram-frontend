@@ -1,0 +1,28 @@
+export class employeeHistory{
+    personalEmail:any;
+    fullName:string='';
+    gender:string='';
+    dateOfBirth:any;
+    dateOfJoining:any;
+    dateOfRetirement:any;
+    state:string='';
+    batch:number=0;
+    recruitmentType:string='';
+    serviceStatus:string='';
+    community:string='';
+    degreeData:any[]=[];
+    caste:string='';
+    religion:string='';
+    promotionGrade:string='';
+    payscale:string='';
+    officeEmail:string='';
+    mobileNo1:number=0;
+    mobileNo2:number=0;
+    mobileNo3:number=0;
+    addressLine:string='';
+    city:string='';
+    pincode:number=0;
+    employeeId:string='';
+    employeeHistory:any[]=[];
+    photo:any;
+}

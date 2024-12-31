@@ -1,0 +1,48 @@
+
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>House Building Advance </h5>
+
+        <div class="col-md-12 p-0 mt-2">
+          <div class="col-md-3 px-0 mt-2 mb-0">
+            <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+          </div>
+  
+          <div class="col-md-2 px-0 mt-2 mb-0 float-right">
+            <label><b>Export as : </b></label>
+            <select class="form-control w-50 float-right pt-0" (change)="changeValue($event)">
+              <option value="">Select</option>
+              <option value="PDF">PDF</option>
+              <option value="Excel">Excel</option>
+              <option value="Word">Word</option>
+              <option value="Print">Print</option>
+            </select>
+          </div>
+        </div>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-hover my-4 float-left">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name of the Officer</th>
+      <th>HBA Availed <br> Amount</th>
+      <th>Place Nerkundram <br>Phase I / Phase II / <br>TNHB / Construction</th>
+      <th>G.O Date</th>
+      <th>Installments <br> Availed</th>
+      <th>Pending <br> Installments</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td colspan="7" style="color: red; padding: 15px;">No Records Found</td>
+      </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+  

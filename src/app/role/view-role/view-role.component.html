@@ -1,0 +1,91 @@
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/role">Role</a></li>
+    <li class="breadcrumb-item"><a><b>View Role</b></a></li>
+  </ul>
+
+  <div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">View Role <span class="float-right">(*) Required</span></h4>
+         <form [formGroup]="roleForm" (ngSubmit)="onRoleSubmit()">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">User Type<span> * </span></label>
+              <div class="col-sm-3 mb-3">
+                <input type="text" class="form-control" formControlName="roleName" readonly />
+              </div>
+          
+              <div class="col-sm-9">
+                <label class="radio-inline mr-4 float-right">
+                  <input type="checkbox" class="mr-1 mt-1 float-left" formControlName="checkAll" (change)="onCheckAllChange()">Check All
+                </label>
+              </div>
+            </div>
+          
+            <div class="col-md-12 pl-0">
+              <div class="form-group row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-hover table-striped mb-4">
+                        <thead>
+                          <tr>
+                            <th style="width: 20px;">#</th>
+                            <th style="width:50%;"><b>Role</b></th>
+                            <th><b>Access</b></th>
+                          </tr>
+                        </thead>
+                        <tbody formArrayName="roles">
+                          <tr *ngFor="let roleGroup of roleFormArray.controls; let i = index" [formGroupName]="i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ roleGroup.get('menu')?.value }}</td>
+                            <td>
+                              <ng-container *ngIf="roleGroup.get('menu')?.value === 'Dashboard'; else allCheckboxes">
+                                <label class="radio-inline mr-4">
+                                  <input type="checkbox" class="mr-1 float-left" formControlName="viewAccess">View
+                                </label>
+                              </ng-container>
+                              <ng-template #allCheckboxes>
+                                <label class="radio-inline mr-4">
+                                  <input type="checkbox" class="mr-1 float-left" formControlName="allAccess" (change)="onAllChange(i)">All
+                                </label>
+
+                                <label class="radio-inline mr-4">
+                                  <input type="checkbox" class="mr-1 float-left" formControlName="entryAccess">Entry
+                                </label>
+
+                                <ng-container *ngIf="!['Master Creation'].includes(roleGroup.get('menu')?.value)">
+                                  <label class="radio-inline mr-4">
+                                    <input type="checkbox" class="mr-1 float-left" formControlName="editAccess" (click)="preventCheck($event, i)" [readonly]="readonly">Edit
+                                  </label>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="!['Role'].includes(roleGroup.get('menu')?.value)">
+                                    <label class="radio-inline mr-4">
+                                      <input type="checkbox" class="mr-1 float-left" formControlName="viewAccess" (click)="preventCheck($event, i)" [readonly]="readonly">View
+                                    </label>
+                                    </ng-container>
+
+                                <ng-container *ngIf="!['Master Creation', 'User', 'Role'].includes(roleGroup.get('menu')?.value)">
+                                  <label class="radio-inline mr-4">
+                                    <input type="checkbox" class="mr-1 float-left" formControlName="approveAccess">Approve
+                                  </label>
+                                </ng-container>
+                              </ng-template>
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table>
+
+                      <div class="mt-3 float-left w-100">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="button" class="btn btn-light" click="resetValues()">Cancel</button>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+       </div>
+    </div>
+</div>
+

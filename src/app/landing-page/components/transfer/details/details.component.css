@@ -1,0 +1,85 @@
+*{
+    font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+.card {
+    background: linear-gradient(to bottom right, #ffffff, #fffbeb);
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid #fde68a;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 0 auto;
+}
+
+.card:hover {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Content Container */
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.content .date-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 130px;
+}
+
+/* Date Text */
+.date-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #92400e;
+}
+
+/* Icon Style */
+.icon {
+    width: 1rem;
+    height: 1rem;
+    color: #d97706;
+}
+
+/* Title Container */
+.title-container {
+    flex: 1;
+    margin: 0;
+    margin-left: 5%;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #92400e;
+    transition: color 0.3s ease;
+    margin: 0;
+}
+
+.card:hover .title {
+    color: #b45309;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.button-container .icon-button {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 0.5rem;
+    color: #b45309;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container .icon-button:hover {
+    background-color: #fef3c7;
+}

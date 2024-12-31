@@ -1,0 +1,31 @@
+<!-- <div *ngIf="Showmenu">
+  <div class="container-scroller">
+      <app-sidebar></app-sidebar>
+          <div class="main-panel">
+              <div class="content-wrapper">
+                  <router-outlet></router-outlet>
+              </div>
+          </div>
+  </div>   
+</div>
+  
+<app-login *ngIf="showLogin"></app-login>
+<app-landing-page *ngIf="showLanding"></app-landing-page> -->
+
+<!-- app.component.html -->
+<app-header *ngIf="showLanding"></app-header>
+
+<div *ngIf="Showmenu">
+  <div class="container-scroller">
+    <app-sidebar></app-sidebar>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet *ngIf="!Showmenu"></router-outlet>
+
+<app-footer *ngIf="showLanding"></app-footer>

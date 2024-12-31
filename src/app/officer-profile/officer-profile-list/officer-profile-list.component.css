@@ -1,0 +1,18 @@
+.tabletd{
+    padding:2px 10px;
+}
+.table-td{
+    padding: 10px !important;
+}
+.modal-dialog{
+    max-width: 800px;
+}
+label b{
+    font-weight: 500;
+}
+.profile-img{
+    height: 78px;
+    width: 93px;
+    float: right;
+    margin-bottom: 20px;
+}

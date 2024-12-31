@@ -1,0 +1,123 @@
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body pb-0">
+        <h4 class="card-title">Users List<button type="button" class="btn btn-success btn-add float-right p-2" data-toggle="modal" data-target="#createUser" (click)="addUser()" *ngIf="showAdd">Add New</button></h4>
+      </div>
+
+      <table class="table table-bordered table-hover table-striped mb-4">
+        <thead>
+          <tr>
+            <th style="width: 50px;">#</th>
+            <th>User Type</th>
+            <th>User Name</th>
+            <!-- <th>Status</th> -->
+            <th>Status (Click to change)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="userData.length > 0; else noRecords">
+            <tr *ngFor="let user of userData; let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.loginAs }}</td>
+              <td>{{user.username}}</td>
+              <!-- <td>{{ user.activeStatus ? 'Active' : 'Inactive' }}</td> -->
+              <td class="text-center">
+                <button class="btn p-2 toggle-button" *ngIf="showEdit"
+        [ngClass]="{ 'true': user.activeStatus, 'false': !user.activeStatus }"
+        [ngStyle]="{ 'background-color': user.activeStatus ? 'green' : 'red' }"
+        (click)="toggleStatus(user)">
+  {{ user.activeStatus ? 'Active' : 'Inactive' }}
+</button>
+</td> 
+            </tr>
+          </ng-container>
+          <ng-template #noRecords>
+            <tr>
+              <td colspan="4" style="color: red;">No Records Found</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+      
+      <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUserLabel" aria-hidden="true" *ngIf="showPopup">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createUserLabel">Add New User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <label class="col-md-6 radio-inline">
+                      <input type="radio" class="mr-1 mt-1 float-left" value="New" formControlName="checkValue" (click)="checkType($event)">New User Type
+                  </label>
+                  
+                  <label class="col-md-6 radio-inline">
+                    <input type="radio" class="mr-1 mt-1 float-left" value="Existing" formControlName="checkValue" (click)="checkType($event)">Existing User Type
+                  </label>
+                </div>
+              </div>
+    
+              <div *ngIf="showFields">
+              <div class="form-group row" *ngIf="showNew">
+                <label class="col-sm-12 col-form-label">User Type<span> * </span></label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control pl-2" formControlName="loginAs" 
+                  [ngStyle]="{'border': (submitted && userForm.get('loginAs')?.invalid && userForm.get('loginAs')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                </div>
+              </div>
+
+              <div class="form-group row" *ngIf="showExisting">
+                <label class="col-sm-12 col-form-label">User Type<span> * </span></label>
+                <div class="col-sm-12">
+                  <!--<select class="form-control" style="border: 1px solid #ccc;" [ngStyle]="{'border': (submitted && userForm.get('loginAs')?.invalid && userForm.get('loginAs')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}"> -->
+                    <select class="form-control" style="border: 1px solid #ccc;" formControlName="loginAs" (change)="userType($event)" [ngStyle]="{'border': (submitted && userForm.get('loginAs')?.invalid && userForm.get('loginAs')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let users of userTypeData" [value]="users.loginAs">{{users.loginAs}}</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">User Name<span> * </span></label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control pl-2" formControlName="username"  *ngIf="showName"
+                  [ngStyle]="{'border': (submitted && userForm.get('username')?.invalid && userForm.get('username')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+               
+                  <select class="form-control" style="border: 1px solid #ccc;" formControlName="username" (change)="getUsername($event)" *ngIf="showDropdownUsername" [ngStyle]="{'border': (submitted && userForm.get('loginAs')?.invalid && userForm.get('loginAs')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let officer of officerDet" [value]="officer._id">{{officer.fullName}}</option>
+                  </select>
+               
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Password<span> * </span></label>
+                <div class="col-sm-12 position-relative">
+                  <input type="{{showPassword ? 'text' : 'password'}}" class="form-control pl-2" formControlName="password" 
+                  [ngStyle]="{'border': (submitted && userForm.get('password')?.invalid && userForm.get('password')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                  <i class="mdi" [ngClass]="{'mdi-eye': !showPassword, 'mdi-eye-off': showPassword}"  (click)="togglePasswordVisibility()"></i>
+                </div>
+              </div>
+              </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary p-2" data-dismiss="modal" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-success p-2">Submit</button>
+            </div>
+        </form>
+          </div>
+        </div>
+    </div>
+    
+    </div>
+</div>

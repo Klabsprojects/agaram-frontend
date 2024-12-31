@@ -1,0 +1,74 @@
+<!-- <div class="AnounceUpdates">
+    <div class="title-box">
+        <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-bell w-5 h-5 text-amber-700">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+            </svg>
+        </div>
+        <h3 class="title">{{title}}</h3>
+    </div>
+    <div class="bottom-box">
+        <ul class="list-box">
+            <ng-container *ngFor="let detail of updatedetails;let i = index">
+                <li class="list-item">{{detail}}</li>
+            </ng-container>
+        </ul>
+    </div>
+</div> -->
+<div class="announcement-card">
+  <h3 class="announcement-title">
+    <div class="icon-container">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-bell">
+        <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+        <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+      </svg>
+    </div>
+    {{title}}
+  </h3>
+  <div class="announcement-container">
+    <div class="announcement-list">
+      <ng-container *ngFor="let detail of updatedetails;let i = index">
+        <div class="announcement-item">
+          <div class="bullet-point"></div>
+          <p class="announcement-text">
+            {{detail}}
+          </p>
+        </div>
+      </ng-container>
+      <!-- <div class="announcement-item">
+        <div class="bullet-point"></div>
+        <p class="announcement-text">
+          National Conference on Digital Governance: Tamil Nadu to Host Key Sessions
+        </p>
+      </div>
+      <div class="announcement-item">
+        <div class="bullet-point"></div>
+        <p class="announcement-text">
+          Smart City Implementation: Phase 3 Launch in Metropolitan Areas
+        </p>
+      </div>
+      <div class="announcement-item">
+        <div class="bullet-point"></div>
+        <p class="announcement-text">
+          International Delegation: Singapore Officials to Study TN e-Governance
+        </p>
+      </div>
+      <div class="announcement-item">
+        <div class="bullet-point"></div>
+        <p class="announcement-text">
+          Chief Secretary Announces Major Administrative Reforms Package
+        </p>
+      </div>
+      <div class="announcement-item">
+        <div class="bullet-point"></div>
+        <p class="announcement-text">
+          State Receives Award for Best e-Governance Implementation
+        </p>
+      </div> -->
+    </div>
+  </div>
+</div>

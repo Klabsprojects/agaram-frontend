@@ -1,0 +1,633 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* font-size: 10px; */
+
+  /* 10px / 16px = 0.625 = 62.5% */
+  /* Percentage of user's browser font-size setting */
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  color: #555;
+
+  /* Only works if there is nothing absolutely positioned in relation to body */
+  overflow-x: hidden;
+}
+
+.container {
+  /* 1140px */
+  max-width: 1200px;
+  padding: 0 32px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  column-gap: 64px;
+  row-gap: 96px;
+
+  /* margin-bottom: 96px; */
+}
+
+/* .grid:last-child {
+    margin-bottom: 0;
+} */
+
+.grid:not(:last-child) {
+  margin-bottom: 96px;
+}
+
+.grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* .grid--5-cols {
+    grid-template-columns: repeat(5, 1fr);
+} */
+
+.grid--center-v {
+  align-items: center;
+}
+
+.heading-primary,
+.heading-secondary,
+.heading-tertiary {
+  font-weight: 700;
+  color: #333;
+  /* color: #45260a; */
+  /* color: #343a40; */
+  letter-spacing: -0.5px;
+}
+
+.heading-primary {
+  font-size: 52px;
+  line-height: 1.05;
+  margin-bottom: 32px;
+}
+
+.heading-secondary {
+  font-size: 44px;
+  line-height: 1.2;
+  margin-bottom: 96px;
+}
+
+.heading-tertiary {
+  font-size: 30px;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+
+.subheading {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #cf711f;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  letter-spacing: 0.75px;
+}
+
+.btn,
+.btn:link,
+.btn:visited {
+  display: inline-block;
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 9px;
+
+  /* Only necessary for .btn */
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+
+  /* Put transition on original "state" */
+  /* transition: background-color 0.3s; */
+  transition: all 0.3s;
+}
+
+.btn--full:link,
+.btn--full:visited {
+  background-color: #e67e22;
+  color: #fff;
+}
+
+.btn--full:hover,
+.btn--full:active {
+  background-color: #cf711f;
+}
+
+.btn--outline:link,
+.btn--outline:visited {
+  background-color: #fff;
+  color: #555;
+}
+
+.btn--outline:hover,
+.btn--outline:active {
+  background-color: #fdf2e9;
+
+  /* border: 3px solid #fff; */
+
+  /* Trick to add border inside */
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.btn--form {
+  background-color: #45260a;
+  color: #fdf2e9;
+  align-self: end;
+  padding: 12px;
+}
+
+.btn--form:hover {
+  background-color: #fff;
+  color: #555;
+}
+
+.link:link,
+.link:visited {
+  display: inline-block;
+  color: #e67e22;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: all 0.3s;
+}
+
+.link:hover,
+.link:active {
+  color: #cf711f;
+  border-bottom: 1px solid transparent;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list-item {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  line-height: 1.2;
+}
+
+.list-icon {
+  width: 30px;
+  height: 30px;
+  color: #e67e22;
+}
+
+*:focus {
+  outline: none;
+  /* outline: 4px dotted #e67e22; */
+  /* outline-offset: 8px; */
+  /* box-shadow: 0 0 0 8px rgba(230, 125, 34, 0.5); */
+}
+
+/* HELPER/SETTINGS CLASSES */
+.margin-right-sm {
+  margin-right: 16px !important;
+}
+
+.margin-bottom-md {
+  margin-bottom: 48px !important;
+}
+
+.center-text {
+  text-align: center;
+}
+
+strong {
+  font-weight: 500;
+}
+
+/**************************/
+/* BELOW 1344px (Smaller desktops) */
+/**************************/
+
+@media (max-width: 84em) {
+  .hero {
+    max-width: 1200px;
+    /* 120rem to px */
+  }
+
+  .heading-primary {
+    font-size: 44px;
+    /* 4.4rem to px */
+  }
+  .main-nav-list{
+    gap: 20px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/**************************/
+/* BELOW 1200px (Landscape Tablets) */
+/**************************/
+
+@media (max-width: 75em) {
+  html {
+    /* 9px / 16px */
+    font-size: 56.25%;
+  }
+
+  .grid {
+    column-gap: 48px;
+    /* 4.8rem to px */
+    row-gap: 64px;
+    /* 6.4rem to px */
+  }
+
+  .footer-grid{
+    padding: 3rem 3rem;
+  }
+
+  .heading-secondary {
+    font-size: 36px;
+    /* 3.6rem to px */
+  }
+
+  .heading-tertiary {
+    font-size: 24px;
+    /* 2.4rem to px */
+  }
+
+  .header {
+    padding: 0 32px;
+    /* 3.2rem to px */
+    gap: 50px;
+  }
+
+  .main-nav-list {
+    gap: 20px;
+    /* 3.2rem to px */
+  }
+
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    font-size: 12px;
+  }
+
+
+  .hero {
+    gap: 48px;
+    /* 4.8rem to px */
+  }
+
+  .testimonials-container {
+    padding: 96px 32px;
+    /* 9.6rem to px and 3.2rem to px */
+  }
+}
+
+/**************************/
+/* BELOW 944px (Tablets) */
+/**************************/
+
+@media (max-width: 59em) {
+  html {
+    /* 8px / 16px = 0.5 = 50% */
+    font-size: 50%;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 0 80px;
+    /* 8rem to px */
+    gap: 64px;
+    /* 6.4rem to px */
+  }
+  .footer-grid{
+    grid-template-columns: repeat(2,1fr);
+    row-gap: 2rem;
+  }
+
+  .hero-text-box,
+  .hero-img-box {
+    text-align: center;
+  }
+
+  .hero-img {
+    width: 60%;
+  }
+
+  .delivered-meals {
+    justify-content: center;
+    margin-top: 32px;
+    /* 3.2rem to px */
+  }
+
+  .logos img {
+    height: 24px;
+    /* 2.4rem to px */
+  }
+
+  .step-number {
+    font-size: 74px;
+    /* 7.4rem to px */
+  }
+
+  .meal-content {
+    padding: 24px 32px 32px 32px;
+    /* 2.4rem to px and 3.2rem to px */
+  }
+
+  .section-testimonials {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .cta {
+    grid-template-columns: 3fr 2fr;
+    /* 3/5 = 60% + 2/5 = 40% */
+  }
+
+  .cta-form {
+    grid-template-columns: 1fr;
+  }
+
+  .btn--form {
+    margin-top: 12px;
+    /* 1.2rem to px */
+  }
+
+  /* MOBILE NAVIGATION */
+  .btn-mobile-nav {
+    display: block;
+    z-index: 9999;
+  }
+
+  .main-nav {
+    background-color: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transform: translateX(100%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in;
+
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .nav-open .main-nav {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: translateX(0);
+    z-index: 1;
+  }
+
+  .nav-open .icon-mobile-nav[name="close-outline"] {
+    display: block;
+  }
+
+  .nav-open .icon-mobile-nav[name="menu-outline"] {
+    display: none;
+  }
+
+  .main-nav-list {
+    flex-direction: column;
+    gap: 15px;
+    /* 4.8rem to px */
+  }
+
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    font-size: 15px;
+    /* 3rem to px */
+  }
+}
+/**************************/
+/* BELOW 769px (actual tablets) */
+/**************************/
+@media (max-width: 49em) {
+  .grid--footer{
+    padding: 3rem 1rem;
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+/**************************/
+
+/**************************/
+/* BELOW 704px (Smaller tablets) */
+/**************************/
+
+@media (max-width: 44em) {
+  .grid--3-cols,
+  .grid--4-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .diets {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .heading-secondary {
+    margin-bottom: 48px;
+    /* 4.8rem to px */
+  }
+
+  .pricing-plan {
+    width: 100%;
+  }
+
+  .grid--footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/**************************/
+/* BELOW 544px (Phones) */
+/**************************/
+
+@media (max-width: 34em) {
+  .grid {
+    row-gap: 48px;
+    /* 4.8rem to px */
+  }
+
+  .grid--2-cols,
+  .grid--3-cols,
+  .grid--4-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .btn,
+  .btn:link,
+  .btn:visited {
+    padding: 24px 16px;
+    /* 2.4rem to px and 1.6rem to px */
+  }
+
+  .section-hero {
+    padding: 24px 0 64px 0;
+    /* 2.4rem to px and 6.4rem to px */
+  }
+
+  .hero {
+    padding: 0 32px;
+    /* 3.2rem to px */
+  }
+
+  .hero-img {
+    width: 80%;
+  }
+
+  .logos img {
+    height: 12px;
+    /* 1.2rem to px */
+  }
+
+  .step-img-box:nth-child(2) {
+    grid-row: 1;
+  }
+
+  .step-img-box:nth-child(6) {
+    grid-row: 5;
+  }
+
+  .step-img-box {
+    transform: translateY(24px);
+    /* 2.4rem to px */
+  }
+
+  .testimonials {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    /* 1.2rem to px */
+  }
+
+  .cta {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-text-box {
+    padding: 32px;
+    /* 3.2rem to px */
+  }
+
+  .cta-img-box {
+    height: 320px;
+    /* 32rem to px */
+    grid-row: 1;
+  }
+  .footer-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 
+- Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+/**************************/
+/* Fixing Safari flexbox gap */
+/**************************/
+
+.no-flexbox-gap .main-nav-list li:not(:last-child) {
+  margin-right: 48px;
+  /* 4.8rem to px */
+}
+
+.no-flexbox-gap .list-item:not(:last-child) {
+  margin-bottom: 16px;
+  /* 1.6rem to px */
+}
+
+.no-flexbox-gap .list-icon:not(:last-child) {
+  margin-right: 16px;
+  /* 1.6rem to px */
+}
+
+.no-flexbox-gap .delivered-faces {
+  margin-right: 16px;
+  /* 1.6rem to px */
+}
+
+.no-flexbox-gap .meal-attribute:not(:last-child) {
+  margin-bottom: 20px;
+  /* 2rem to px */
+}
+
+.no-flexbox-gap .meal-icon {
+  margin-right: 16px;
+  /* 1.6rem to px */
+}
+
+.no-flexbox-gap .footer-row div:not(:last-child) {
+  margin-right: 64px;
+  /* 6.4rem to px */
+}
+
+.no-flexbox-gap .social-links li:not(:last-child) {
+  margin-right: 24px;
+  /* 2.4rem to px */
+}
+
+.no-flexbox-gap .footer-nav li:not(:last-child) {
+  margin-bottom: 24px;
+  /* 2.4rem to px */
+}
+
+@media (max-width: 75em) {
+  .no-flexbox-gap .main-nav-list li:not(:last-child) {
+    margin-right: 32px;
+    /* 3.2rem to px */
+  }
+}
+
+@media (max-width: 59em) {
+  .no-flexbox-gap .main-nav-list li:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 48px;
+    /* 4.8rem to px */
+  }
+}

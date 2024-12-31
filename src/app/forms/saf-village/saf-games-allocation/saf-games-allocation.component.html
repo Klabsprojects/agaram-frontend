@@ -1,0 +1,152 @@
+
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>SAF  Games Village Allocation<button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()" *ngIf="showAdd">Add New</button></h5>
+
+        <div class="col-md-12 p-0 mt-2">
+          <div class="col-md-3 px-0 mt-2 mb-0">
+            <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+          </div>
+  
+          <app-shared></app-shared>
+        </div>
+  
+
+<div class="table-responsive">
+<table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th> Name</th>
+      <th>Officer ID</th>
+      <!-- <th>Department</th> -->
+      <th>Designation</th>
+      <th>Batch</th>
+      <th>Blocks</th>
+      <th>DOA</th>
+      <th>DOV</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+    <tr *ngFor="let data of pagedData(); let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{data.officerName}}</td>
+      <td>{{data.employeeId}}</td>
+      <!-- <td>{{data.department}}</td> -->
+      <td>{{data.designation}}</td>
+      <td>{{data.employeeProfileId?.batch}}</td>
+      <td>{{data.blockId.FlatNumber}}</td>
+      <td>{{data.dateOfAccomodation | date:'dd/MM/yyyy'}}</td>
+      <td>{{data.dateOfVacating | date:'dd/MM/yyyy' }}</td>
+      <td class="text-center">
+        <!-- <button type="button" *ngIf="!data.dateOfVacating" class="btn btn-info btn-sm btn-icon-text mr-3" style="font-size: 13px;" 
+  data-toggle="modal" data-target="#updateVacating" (click)="updateVacating(data._id)">Edit</button> -->
+  <button type="button" *ngIf="showEdit" class="btn btn-info btn-sm btn-icon-text mr-2" style="font-size: 13px;" 
+  data-toggle="modal" data-target="#updateVacating" (click)="updateVacating(data._id)">Edit</button>
+<button type="button" class="btn btn-info p-2"  data-toggle="modal" data-target="#viewSafAllocation" (click)="viewSafAllocation(data._id)" *ngIf="showView">View</button>
+      </td>
+    </tr>
+  </ng-container>
+  <ng-template #noRecords>
+    <tr>
+      <td colspan="9" style="color: red;">No records found</td>
+    </tr>
+  </ng-template>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="updateVacating" tabindex="-1" aria-labelledby="addupdateVacatingLabel" aria-hidden="true" *ngIf="popupVisible">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addupdateVacatingLabel">Update SAF Games Village</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="updateVacateForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="col-md-12 border-0 p-0">
+          <div class="col-md-12 border-0 mb-4"><h5 class="float-left"><label class="mb-0">{{employeeAllocationHistory.officerName}} - {{employeeAllocationHistory.employeeId}}</label></h5></div>  
+
+          <div class="col-md-6"><label> <b>Department :</b> <br>{{employeeAllocationHistory.department}} </label></div>
+          <div class="col-md-6"><label> <b>Designation :</b> <br> {{employeeAllocationHistory.designation}}</label></div>
+          <div class="col-md-6"><label> <b>Block : <br></b> {{employeeAllocationHistory.blockId.FlatNumber}}</label></div>
+          <div class="col-md-6"><label> <b>Date of Accomdation :<br> </b> {{employeeAllocationHistory.dateOfAccomodation | date:'dd/MM/yyyy'}}</label></div>
+
+          
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date of Vacating <span>*</span></label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" formControlName="dateOfVacating" 
+                    [ngStyle]="{'border-bottom': (submitted && updateVacateForm.get('dateOfVacating')?.invalid && updateVacateForm.get('dateOfVacating')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+               </div>
+            </div>
+          
+
+        </div> 
+      </div>
+   
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2" >Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="viewSafAllocation" tabindex="-1" aria-labelledby="viewSafAllocationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewSafAllocationLabel">View SAF Games Village Allocation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewSafAllocationData.name}}</div>  
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Officer ID </b></label> <br> {{viewSafAllocationData.employeeId}}</div>  
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewSafAllocationData.department}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Designation </b></label><br>{{viewSafAllocationData.designation}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Block </b></label><br>{{viewSafAllocationData.blockId}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Allocation</b></label><br>{{viewSafAllocationData.dateOfAccomodation | date:'dd/MM/YYYY'}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Vacate</b></label><br>{{viewSafAllocationData.dateOfVacating | date:'dd/MM/YYYY'}}</div>  
+
+            <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewSafAllocationData.orderType}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewSafAllocationData.orderNo}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewSafAllocationData.orderFor}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br> {{viewSafAllocationData.dateOfOrder | date:'dd/MM/yyyy'}}</div>  
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>     
+            <a href="{{url}}{{viewSafAllocationData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>  
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewSafAllocationData.remarks}}</div>  
+
+        </div>
+        
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove">Approve</button>
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

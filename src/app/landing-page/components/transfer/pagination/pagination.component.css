@@ -1,0 +1,66 @@
+*{
+    font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+/* Pagination Section */
+.pagination-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* max-width: 600px; */
+    width: 100%;
+}
+
+/* Entry Info Text */
+.entry-info {
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    color: #4b5563;      /* Equivalent to text-gray-600 */
+    margin: 0;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Pagination Button Styling */
+.page-button {
+    padding: 0.25rem 0.75rem; /* Equivalent to px-3 py-1 */
+    border: 1px solid #fde68a; /* Equivalent to border-amber-200 */
+    color: #b45309;           /* Equivalent to text-amber-700 */
+    background-color: #ffffff;
+    border-radius: 0.25rem;   /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover Effect for Pagination Buttons */
+.page-button:hover {
+    background-color: #fef3c7; /* Equivalent to hover:bg-amber-50 */
+}
+
+/* Current Page Button Styling */
+.current-page {
+    background-color: #d97706;   /* Equivalent to bg-amber-600 */
+    color: #ffffff;              /* Equivalent to text-white */
+    border-color: #d97706;       /* Equivalent to border-amber-600 */
+}
+
+/* Disabled Button Styling */
+.page-button:disabled {
+    opacity: 0.5;   /* Equivalent to disabled:opacity-50 */
+    cursor: not-allowed;
+}
+
+/* SVG Icon Styling */
+.icon {
+    width: 1rem;    /* Equivalent to w-4 */
+    height: 1rem;   /* Equivalent to h-4 */
+    stroke: #b45309; /* Matching the text color */
+}

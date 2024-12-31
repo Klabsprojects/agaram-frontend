@@ -1,0 +1,346 @@
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" *ngIf="selectedItem === 'Leave'">Leave<span class="float-right">(*) Required</span></h4>
+        <h4 class="card-title" *ngIf="selectedItem === 'Promotion'">Promotion<span class="float-right">(*) Required</span></h4>
+        <h4 class="card-title" *ngIf="selectedItem === 'Transfer / Posting'">Transfer / Posting<span class="float-right">(*) Required</span></h4>
+        <h4 class="card-title" *ngIf="selectedItem === 'Training'">Training<span class="float-right">(*) Required</span></h4>
+
+        <!-- HTML Template -->
+        <form [formGroup]="transferForm" (ngSubmit)="onSubmit()" class="form-sample">
+          <div class="row">
+            
+            <!-- <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Full Name</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control"  formControlName="fullName" (input)="onInput($event)" [value]="selectedOption"
+                    [ngStyle]="{'border-bottom': (submitted && transferForm.get('fullName')?.invalid && transferForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                      
+                    <div class="autocomplete-items" *ngIf="showDropdown">
+                      <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                        {{ option }}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            
+        <div class="col-md-6">
+            <div class="form-group row">
+            <label class="col-sm-12 col-form-label">Emp ID</label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="empId" (input)="onEmpId($event)" [value]="selectedEmpOption"
+                [ngStyle]="{'border-bottom': (submitted && transferForm.get('fullName')?.invalid && transferForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                <div class="autocomplete-items" *ngIf="showEmpDropdown">
+                  <div class="option" *ngFor="let option of filteredEmpOptions" (click)="selectEmpOption(option)">
+                    {{ option }}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div> -->
+
+       
+        
+            <div class="sub-title  float-left w-100 pl-2">Order Info</div>
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderTypeCategoryCode" 
+                    [ngStyle]="{'border-bottom': (submitted && transferForm.get('orderTypeCategoryCode')?.invalid && transferForm.get('orderTypeCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" maxlength="4" class="form-control" formControlName="orderNumber" (keydown)="onKeyDown($event)"
+                    [ngStyle]="{'border-bottom': (submitted && transferForm.get('orderNumber')?.invalid && transferForm.get('orderNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                  </div>
+                </div>
+              </div>
+            
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="orderForCategoryCode" (change)="changeOrderFor($event)" 
+                  [ngStyle]="{'border-bottom': (submitted && transferForm.get('orderForCategoryCode')?.invalid && transferForm.get('orderForCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                      {{ orderForData.label }}
+                    </option>
+                  </select>            
+                </div>
+              </div>
+            </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                    <div class="col-sm-12">
+                        <input type="date" class="form-control" [max]="getCurrentDate()" formControlName="dateOfOrder"
+                        [ngStyle]="{'border-bottom': (submitted && transferForm.get('dateOfOrder')?.invalid && transferForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                      </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3" *ngIf="showAdditionalCharge">
+                  <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Additional Charge <span>*</span></label>
+                  <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="additionalCharge"
+                      [ngStyle]="{'border-bottom': (submitted && transferForm.get('dateOfOrder')?.invalid && transferForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    </div>
+                  </div>
+              </div>
+
+              
+                <div class="col-md-8">
+                  <div class="card p-2">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-form-label">Full Name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="fullName" (input)="onInput($event, 'fullName')" [value]="selectedOption"
+                                [ngStyle]="{'border-bottom': (submitted && transferForm.get('fullName')?.invalid && transferForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                                
+                            <div class="autocomplete-items" *ngIf="showDropdown">
+                                <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                                    {{ option.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-6">
+                      <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Officer ID</label>
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="employeeId" (input)="onInput($event, 'empId')" [value]="selectedEmpOption"
+                            [ngStyle]="{'border-bottom': (submitted && transferForm.get('employeeId')?.invalid && transferForm.get('employeeId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" /> 
+                            
+                        <div class="autocomplete-items" *ngIf="showDropdown">
+                            <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                                {{ option.id }}
+                            </div>
+                        </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- <div class="row col-md-12 pl-2">
+                    <div class="sub-title  float-left w-100 pl-2">From</div>            
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="col-sm-12 col-form-label"> Posting In </label>
+                        <div class="col-sm-12">
+                            <select class="form-control" formControlName="fromPostingInCategoryCode"  (change)="getDepartment($event)" *ngIf="hideField">
+                                <option value="">Select</option>
+                                <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-12 col-form-label"> Department</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" formControlName="fromDepartmentId" (change)="getDesignation($event)" *ngIf="hideField">
+                                <option value="">Select</option>
+                                <option *ngFor="let departmentData of department" [value]="departmentData.value">{{departmentData.label}}</option>
+                              </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                
+                      <div class="col-md-4 pr-0">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label"> Designation</label>
+                          <div class="col-sm-12">
+                          <select class="form-control" formControlName="fromDesignationId" *ngIf="hideField">
+                            <option value="">Select</option>
+                            <option *ngFor="let designationData of designation" [value]="designationData.value">{{designationData.label}}</option>
+                          </select>
+                        </div>
+                        </div>
+                      </div>
+                  </div> -->
+
+                  <div *ngIf="showTo" class="row col-md-12 pl-2">
+                    <div class="sub-title  float-left w-100 pl-2 mt-2">To</div>            
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-12 col-form-label"> Posting In <span>*</span></label>
+                        <div class="col-sm-12">
+                          <select class="form-control" formControlName="toPostingInCategoryCode" (change)="toGetDepartment($event)"
+                          [ngStyle]="{'border-bottom': (submitted && transferForm.get('toPostingInCategoryCode')?.invalid && transferForm.get('toPostingInCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                            <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 px-0">
+                      <div class="form-group row">
+                        <label class="col-sm-12 col-form-label"> Department <span>*</span></label>
+                        <div class="col-sm-12">
+                            <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event)"
+                            [ngStyle]="{'border-bottom': (submitted && transferForm.get('toDepartmentId')?.invalid && transferForm.get('toDepartmentId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                              <option value="">Select</option>
+                              <option *ngFor="let departmentData of toDepartment" [value]="departmentData.value">{{departmentData.label}}</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 pr-0">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"> Designation <span>*</span></label>
+                      <div class="col-sm-12">
+                          <select class="form-control" formControlName="toDesignationId"
+                          [ngStyle]="{'border-bottom': (submitted && transferForm.get('toDesignationId')?.invalid && transferForm.get('toDesignationId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                              <option value="">Select</option>
+                              <option *ngFor="let designationData of toDesignation" [value]="designationData.value">{{designationData.label}}</option>
+                          </select>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+
+
+                <div class="col-md-4" *ngIf="showPromotion">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Promotion Grade <span>*</span></label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="promotionGrade"
+                        [ngStyle]="{'border-bottom': (submitted && transferForm.get('promotionGrade')?.invalid && transferForm.get('promotionGrade')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value=""> Select</option>
+                            <option *ngFor="let promotionGradeData of promotionGrade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4" *ngIf="showPromotion">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Promoted to Grade <span>*</span></label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="promotedGrade"
+                        [ngStyle]="{'border-bottom': (submitted && transferForm.get('promotionGrade')?.invalid && transferForm.get('promotionGrade')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value=""> Select</option>
+                            <option *ngFor="let promotionGradeData of promotionGrade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="col-md-6" *ngIf="showPost">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Post Type <span>*</span> </label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="postTypeCategoryCode"
+                        [ngStyle]="{'border-bottom': (submitted && transferForm.get('postTypeCategoryCode')?.invalid && transferForm.get('postTypeCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value="">Select</option>
+                            <option *ngFor="let postTypeData of postType" [value]="postTypeData.value">{{postTypeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="showLocation">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Location Change <span>*</span> </label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="locationChangeCategoryId"
+                        [ngStyle]="{'border-bottom': (submitted && transferForm.get('locationChangeCategoryId')?.invalid && transferForm.get('locationChangeCategoryId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value="">Select</option>
+                            <option *ngFor="let locationChangeData of locationChange" [value]="locationChangeData.value">{{locationChangeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary float-right p-2" (click)="addOfficer()">Add Officer</button>
+
+              </div>
+            </div>
+
+            <div class="col-md-4 px-0">
+              <div class="card p-3">
+                <h6>From </h6>
+                <p><span class="left">Posting In</span> <span class="right">: {{fromPostingIn}} </span></p>
+                <p><span class="left">Department</span><span class="right"> : {{fromDepartment}} </span> </p>
+                <p><span class="left">Designation</span><span class="right">: {{fromDesignation}} </span> </p>
+                <hr>
+                <h6>Department Details </h6>
+                <p><span class="left">Address</span><span class="right">:</span></p>
+                <p><span class="left">Phone</span><span class="right">:</span></p>
+                <p><span class="left">Email</span><span class="right">:</span></p>
+                <p><span class="left">Fax</span><span class="right">:</span></p>
+              </div>
+            </div>
+
+            <table class="col-md-12 table mx-2 mt-4" *ngIf="showTable">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name & ID </th>
+                  <th>Posting In</th>
+                  <th>Department</th>
+                  <th>Designation</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let officer of selectedOfficers; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{ officer.fullName }} - {{ officer.employeeId }}</td>
+                  <td>{{ officer.toPostingInCategoryCode }}</td>
+                  <td>{{ officer.toDepartmentId }}</td>
+                  <td>{{ officer.toDesignationId }}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger p-2" (click)="removeOfficer(i)">
+                      <i class="typcn typcn-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr></tr>
+              </tbody>
+            </table>
+           
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
+                <div class="col-sm-12">
+                  <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)">                  </div>
+                  <div *ngIf="transferForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                  <div *ngIf="transferForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Remarks</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="remarks" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2 mt-2">Submit</button>
+            <button type="button" class="btn btn-light mt-2">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>

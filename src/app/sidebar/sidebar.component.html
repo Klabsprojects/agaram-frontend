@@ -1,0 +1,156 @@
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex justify-content-center">
+          <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+            <a class="navbar-brand brand-logo">Agaram</a>
+            <a class="navbar-brand brand-logo-mini">Agaram</a>
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <span class="typcn typcn-th-menu"></span>
+            </button>
+          </div>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-profile dropdown">
+              
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item">
+                  <i class="typcn typcn-cog-outline text-primary"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item">
+                  <i class="typcn typcn-eject text-primary"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+            
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            
+            
+            <li class="nav-item dropdown mr-0">
+              <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <i class="typcn typcn-user mx-0" style="color: #fff;"></i>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <a class="dropdown-item preview-item">
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal"> <b>Role :</b>   {{roleName}} </h6>
+                  </div>
+                </a>
+
+                <a class="dropdown-item preview-item">
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal"> <b>Username :</b>   {{username}} </h6>
+                  </div>
+                </a>
+                
+                <a class="dropdown-item preview-item">
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal" (click)="logout()"><i class="mdi mdi-logout mx-0"></i> Logout</h6>
+                  </div>
+                </a>
+                
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+        <div>
+          
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="typcn typcn-th-menu"></span>
+          </button>
+        </div>
+    </nav>
+  <!-- partial -->
+      
+    
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li *ngIf="showMenu('Dashboard')" class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['dashboard']">
+          <i class="typcn typcn-device-desktop menu-icon" [class.active]="isActive('dashboard')"></i>
+          <span class="menu-title" [class.active]="isActive('dashboard')">Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="roleName=='Officer'">
+        <a class="nav-link" [routerLink]="['profile']">
+          <i class="typcn typcn-user menu-icon" ></i>
+          <span class="menu-title">My Profile</span>
+        </a>
+      </li>
+
+  
+      <li *ngIf="(showMenu('Officer Profile') || showMenu('Transfer / Posting') || showMenu('Promotion') || showMenu('Leave') || showMenu('Training'))&&roleName!='Officer'" class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#splaforms" aria-expanded="false" aria-controls="splaforms">
+          <i class="typcn typcn-document-text menu-icon"></i>
+          <span class="menu-title">Spl A Forms</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse collapse1" id="splaforms">
+          <ul class="nav flex-column sub-menu">
+            <li *ngIf="showMenu('Officer Profile')" class="nav-item"><a class="nav-link" [routerLink]="['officer-profile']">Officer Profile</a></li>
+            <li *ngIf="showMenu('Transfer / Posting')" class="nav-item"><a class="nav-link" [routerLink]="['transfer-posting']">Transfer / Posting</a></li>
+            <li *ngIf="showMenu('Promotion')" class="nav-item"><a class="nav-link" [routerLink]="['promotion']">Promotion</a></li>
+            <li *ngIf="showMenu('Leave')" class="nav-item"><a class="nav-link" [routerLink]="['leave']">Leave</a></li>
+            <li *ngIf="showMenu('Training')" class="nav-item"><a class="nav-link" [routerLink]="['training']">Training</a></li>
+          </ul>
+        </div>
+      </li>
+  
+      <li *ngIf="(showMenu('Foreign Visit') || showMenu('SAF Games Village Application') || showMenu('SAF Games Village Allocation') || showMenu(''))&&roleName!='Officer'" class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#splbforms" aria-expanded="false" aria-controls="ui-basic">
+          <i class="typcn typcn-document-text menu-icon"></i>
+          <span class="menu-title">Spl B Forms</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="splbforms">
+          <ul class="nav flex-column sub-menu">
+            <li *ngIf="showMenu('Foreign Visit')" class="nav-item"><a class="nav-link" [routerLink]="['foreign-visit']">Foreign Visit</a></li>
+            <li *ngIf="showMenu('SAF Games Village Application')" class="nav-item"><a class="nav-link" [routerLink]="['saf-village-application']">SAF Games Village</a></li>
+            <li *ngIf="showMenu('SAF Games Village Allocation')" class="nav-item"><a class="nav-link" [routerLink]="['saf-village-allocation']">SAF Allocation</a></li>
+            <li *ngIf="showMenu('Leave Travel Concession')" class="nav-item"><a class="nav-link" [routerLink]="['ltc']">LTC</a></li>
+            <li *ngIf="showMenu('Medical Reimbursement')" class="nav-item"><a class="nav-link" [routerLink]="['medical-reimbursement']">Medical Reimbursement</a></li>
+            <li *ngIf="showMenu('Private Visits')" class="nav-item"><a class="nav-link" [routerLink]="['private-visits']">Private Visits</a></li>
+            <li *ngIf="showMenu('Immovable')" class="nav-item"><a class="nav-link" [routerLink]="['immovable']">Immovable Assets</a></li>
+            <li *ngIf="showMenu('Movable')" class="nav-item"><a class="nav-link" [routerLink]="['movable']">Movable Assets</a></li>
+            <li *ngIf="showMenu('Education')" class="nav-item"><a class="nav-link" [routerLink]="['education']">Education </a></li>
+            <li *ngIf="showMenu('Intimation')" class="nav-item"><a class="nav-link" [routerLink]="['intimation']">Intimation </a></li>
+          </ul>
+        </div>
+      </li>
+  
+      <li *ngIf="showMenu('Master Creation')" class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['master-creation']">
+          <i class="mdi mdi-account menu-icon" [class.active]="isActive('master-creation')"></i>
+          <span class="menu-title" [class.active]="isActive('master-creation')">Master Creation</span>
+        </a>
+      </li>
+  
+      <li *ngIf="showMenu('User')" class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['user']">
+          <i class="mdi mdi-account menu-icon" [class.active]="isActive('user')"></i>
+          <span class="menu-title" [class.active]="isActive('user')">User</span>
+        </a>
+      </li>
+  
+      <li *ngIf="showMenu('Role')" class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['role']">
+          <i class="mdi mdi-account-multiple menu-icon" [class.active]="isActive('role')"></i>
+          <span class="menu-title" [class.active]="isActive('role')">Role</span>
+        </a>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">
+          <i class="mdi mdi-logout menu-icon"></i>
+          <span class="menu-title">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>

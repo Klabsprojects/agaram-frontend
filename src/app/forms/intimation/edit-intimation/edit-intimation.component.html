@@ -1,0 +1,187 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/intimation">Intimation</a></li>
+    <li class="breadcrumb-item"><a><b>Edit Intimation</b></a></li>
+  </ul>
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body">
+        <h4 class="card-title">Edit Intimation <span class="float-right">(*) Required</span></h4>
+        <form [formGroup]="intimationForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-1 mt-2">
+
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Officer Name <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                    [ngStyle]="{'border-bottom': (submitted && intimationForm.get('officerName')?.invalid && intimationForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    <div class="autocomplete-items" *ngIf="showDropdown">
+                      <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                          {{ option.name }}
+                      </div>
+                  </div>
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Department </label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="department"  readonly
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('department')?.invalid && intimationForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Designation</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="designation" readonly
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('designation')?.invalid && intimationForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+
+
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Details of Intimation <span>*</span></label>
+                  <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="detailsOfIntimation" 
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('detailsOfIntimation')?.invalid && intimationForm.get('detailsOfIntimation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Source of Funding  <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" formControlName="fundSource"  
+                        [ngStyle]="{'border-bottom': (submitted && intimationForm.get('fundSource')?.invalid && intimationForm.get('fundSource')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    </div>
+                   </div>
+                </div>
+    
+
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Types of Intimation <span> * </span></label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="typeOfIntimation" 
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('typeOfIntimation')?.invalid && intimationForm.get('typeOfIntimation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option *ngFor="let intimationType of intimationTypes" [value]="intimationType">{{intimationType}}</option>
+                      </select>
+                </div>
+               </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Previous Sanction Order <span> * </span></label>
+                  <input type="text" class="form-control ml-2" formControlName="previousSanctionOrder"
+                [ngStyle]="{'border-bottom': (submitted && intimationForm.get('previousSanctionOrder')?.invalid && intimationForm.get('previousSanctionOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                 </div>
+              </div>
+
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Self / Family <span> * </span></label>
+                  
+                      <select class="form-control ml-2" formControlName="selfOrFamily" 
+                        [ngStyle]="{'border-bottom': (submitted && intimationForm.get('selfOrFamily')?.invalid && intimationForm.get('selfOrFamily')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                            <option value="">Select</option>
+                            <option value="Self">Self</option>
+                            <option value="Family">Family</option>
+                        </select>
+                 </div>
+              </div>
+
+              <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="orderType" 
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('orderType')?.invalid && intimationForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-2">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
+                      [ngStyle]="{'border-bottom': (submitted && intimationForm.get('orderNo')?.invalid && intimationForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderFor"  
+                    [ngStyle]="{'border-bottom': (submitted && intimationForm.get('orderFor')?.invalid && intimationForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="" selected>Select</option>
+                      <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                        {{ orderForData.label }}
+                      </option>
+                    </select>            
+                  </div>
+                </div>
+              </div>
+  
+  
+                  <div class="col-md-2">
+                      <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                      <div class="col-sm-12">
+                          <input type="date" class="form-control"  formControlName="dateOfOrder"
+                          [ngStyle]="{'border-bottom': (submitted && intimationForm.get('dateOfOrder')?.invalid && intimationForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Order File <span>*</span>
+                        <a href="{{url}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)"
+                        [ngStyle]="{'border-bottom': (submitted && intimationForm.get('orderFile')?.invalid && intimationForm.get('orderFile')?.errors?.['required']) ? '1px solid red' : '1px solid #fff'}"> 
+                      </div>
+                        <div *ngIf="intimationForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                        <div *ngIf="intimationForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                      </div>
+                  </div>
+
+                  
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Remarks</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="remarks" />
+                      </div>
+                    </div>
+                  </div>
+            
+            
+            <div class="mt-3 float-left w-100">
+              <button type="submit" class="btn btn-primary mr-2">Update</button>
+              <button type="reset" class="btn btn-light">Cancel</button>
+            </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>

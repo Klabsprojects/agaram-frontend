@@ -1,0 +1,48 @@
+.col-md-7 img{
+    width: 30%;
+    height: auto;
+    margin-bottom: 10px;
+    margin-right:10px;
+}
+.card-xs{
+    border-left:3px solid #3d97ff;
+}
+.split{
+    float: left;
+    width: 50%;
+}
+
+.back:hover{
+    cursor: pointer;
+}
+.modal-dialog{
+    max-width:700px;
+}
+.profile-img{
+    float: left;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.typcn{
+    float: left;
+    transform: rotate(90deg);
+    font-size: 20px;
+    color: #ffa53d;
+}
+  
+@media print {
+    .sidebar, body *:not(.printable-content):not(select) {
+        display: none !important;
+    }
+    .printable-content {
+       display: block !important;
+    }
+}
+
+.profile-data{
+    line-height: 1.8;
+}
+.btn:hover{
+    text-decoration: none;
+}
+

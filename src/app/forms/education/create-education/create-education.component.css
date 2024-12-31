@@ -1,0 +1,14 @@
+.existing th{
+    background-color: #202b46;
+    color: #fff;
+}
+label b{
+    font-weight: 500;
+}
+.card .form-control {
+    border-radius: 0;
+    font-size: 13px !important;
+  }
+  .card label{
+    font-size: 13px !important;
+  }

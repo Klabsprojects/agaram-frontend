@@ -1,0 +1,350 @@
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/foreign-visit">Foreign Visit</a></li>
+    <li class="breadcrumb-item"><a><b>Edit Foreign Vist</b></a></li>
+  </ul>
+  
+  <div class="col-md-12">
+      <div class="card px-3 mt-2">
+        <div class="card-body">
+          
+          <h4 class="card-title">Edit Foreign Visit<span class="float-right">(*) Required</span></h4>
+          <form [formGroup]="foreignForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-1 mt-2">
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Full Name <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="officerName"  (input)="onInput($event, 'officerName')" [value]="selectedOption"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('officerName')?.invalid && foreignForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                      <div class="autocomplete-items" *ngIf="showDropdown">
+                        <div class="option" *ngFor="let option of filteredOptions" (click)="selectOption(option)">
+                            {{ option.name }}
+                        </div>
+                    </div>
+                    </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Department </label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="department"  readonly
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('department')?.invalid && foreignForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Designation</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="designation" readonly
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('designation')?.invalid && foreignForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <!-- <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Proposed to <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="proposedCountry" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('proposedCountry')?.invalid && foreignForm.get('proposedCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div> -->
+
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Proposed to <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="proposedCountry" 
+                    [ngStyle]="{'border-bottom': (submitted && foreignForm.get('proposedCountry')?.invalid && foreignForm.get('proposedCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="">Select</option>
+                      <option *ngFor="let countryData of country" [value]="countryData.label">{{countryData.label}}</option>
+                    </select>
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">From <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="date" class="form-control" formControlName="fromDate" (change)="fromDateValue($event)"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('fromDate')?.invalid && foreignForm.get('fromDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">To <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="date" class="form-control" formControlName="toDate" [min]="fromValue" [readonly]="toDateValue"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('toDate')?.invalid && foreignForm.get('toDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Other Delegates  <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="otherDelegates" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('otherDelegates')?.invalid && foreignForm.get('otherDelegates')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div>
+  
+              <!-- <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Purpose <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="purpose" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('purpose')?.invalid && foreignForm.get('purpose')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div> -->
+  
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Present Status <span>*</span></label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="presentStatus" (change)="statusText($event)"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('presentStatus')?.invalid && foreignForm.get('presentStatus')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option value="Approved">Approved</option>
+                          <option value="Rejected">Rejected</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+  
+  
+              <div class="col-md-4" *ngIf="showRejection">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label"> Reject/ Rescinded Reasons <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="rejectReason"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('rejectReason')?.invalid && foreignForm.get('rejectReason')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+              </div>
+  
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label"> Permission Letter No  <span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="faxMessageLetterNo"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('faxMessageLetterNo')?.invalid && foreignForm.get('faxMessageLetterNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="date" class="form-control"  formControlName="dateOfOrderofFaxMessage"
+                    [ngStyle]="{'border-bottom': (submitted && foreignForm.get('dateOfOrderofFaxMessage')?.invalid && foreignForm.get('dateOfOrderofFaxMessage')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                </div>
+            </div>
+  
+              <!-- <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Administrative Sanction <span>*</span></label>
+                  <div class="col-sm-12 mt-2">
+                    <label class="radio-inline mr-2">
+                      <input type="radio" formControlName="sanction" class="mt-1 mr-1 float-left" value="Yes">Yes
+                  </label>
+                  <label class="radio-inline">
+                      <input type="radio" formControlName="sanction" class="mt-1 mr-1 float-left" value="No">No
+                  </label>
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-5">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Fund <span>*</span></label>
+                  <div class="col-sm-12 mt-2">
+                    <label class="radio-inline mr-2">
+                      <input type="radio" formControlName="fund" class="mt-1 mr-1 float-left" value="State Government Fund"> State Government Fund
+                  </label>
+                  <label class="radio-inline">
+                      <input type="radio" formControlName="fund" class="mt-1 mr-1 float-left" value="Foreign Hospitality">Foreign Hospitality
+                  </label>
+                  </div>
+                 </div>
+              </div> -->
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Political Clearance	 <span>*</span>
+                    <a href="{{politicalUrl}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                  </label>
+                  <div class="col-sm-12">
+                    <input type="file" class="form-control" formControlName="politicalClearance" (change)="politicalClearanceSelected($event)" accept=".pdf" style="border:0px;" />
+                    <div *ngIf="foreignForm.get('politicalClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                    <div *ngIf="foreignForm.get('politicalClearance')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">FCRA Clearance	 <span>*</span>
+                    <a href="{{fcraUrl}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                  </label>
+                  <div class="col-sm-12">
+                    <input type="file" class="form-control" formControlName="fcraClearance" (change)="fcraClearanceSelected($event)" accept=".pdf" style="border:0px;" />
+                    <div *ngIf="foreignForm.get('fcraClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                    <div *ngIf="foreignForm.get('fcraClearance')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                  </div>
+                 </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Funds Sanctioned By <span>*</span></label>
+                  <select class="form-control ml-2" formControlName="fundsSanctionedBy" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('fundsSanctionedBy')?.invalid && foreignForm.get('fundsSanctionedBy')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option value="State Government">State Government</option>
+                          <option value="Foregin Funds">Foregin Funds</option>
+                          <option value="Central Government">Central Government</option>
+                          <option value="Others">Others</option>
+                    </select>
+                </div>
+              </div>
+  
+              <div class="col-md-3">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Funds Sanctioned  <span>*</span></label>
+                  <input type="number" class="form-control ml-2" formControlName="fundsSanctioned"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('fundsSanctioned')?.invalid && foreignForm.get('fundsSanctioned')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+              </div>
+  
+              <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="orderTypeCategoryCode" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('orderTypeCategoryCode')?.invalid && foreignForm.get('orderTypeCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="">Select</option>
+                          <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                    <div class="col-sm-12">
+                      <input type="text" maxlength="4" class="form-control" formControlName="orderNumber" (keydown)="onKeyDown($event)"
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('orderNumber')?.invalid && foreignForm.get('orderNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                  <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderForCategoryCode" 
+                    [ngStyle]="{'border-bottom': (submitted && foreignForm.get('orderForCategoryCode')?.invalid && foreignForm.get('orderForCategoryCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                      <option value="" selected>Select</option>
+                      <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                        {{ orderForData.label }}
+                      </option>
+                    </select>            
+                  </div>
+                </div>
+              </div>
+  
+  
+                  <div class="col-md-2">
+                      <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                      <div class="col-sm-12">
+                          <input type="date" class="form-control"  formControlName="dateOfOrder"
+                          [ngStyle]="{'border-bottom': (submitted && foreignForm.get('dateOfOrder')?.invalid && foreignForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Order File <span>*</span>
+                        <a href="{{orderFileUrl}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                      </label>
+                      <div class="col-sm-12">
+                        <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" (change)="orderFileSelected($event)" style="border: none;">                  </div>
+                        <div *ngIf="foreignForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                        <div *ngIf="foreignForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label"> Name of the Inviting Authority <span>*</span></label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="invitingAuthority"  (input)="onInput($event, 'invitingAuthority')"
+                          [ngStyle]="{'border-bottom': (submitted && foreignForm.get('invitingAuthority')?.invalid && foreignForm.get('invitingAuthority')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                     </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Whether Invitation Enclosed <span>*</span></label>
+                      <div class="col-sm-12">
+                        <select class="form-control" formControlName="invitationEndorsed" 
+                        [ngStyle]="{'border-bottom': (submitted && foreignForm.get('invitationEndorsed')?.invalid && foreignForm.get('invitationEndorsed')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                          <option value="" selected>Select</option>
+                          <option *ngFor="let invitationEndorsedData of invitationEndorsed" [value]="invitationEndorsedData">
+                            {{ invitationEndorsedData }}
+                          </option>
+                        </select>            
+                      </div>
+                    </div>
+                  </div>
+  
+                    <div class="col-md-4" *ngIf="showInvitation">
+                      <div class="form-group row">
+                        <label class="col-sm-12 col-form-label"> Invitation File <span>*</span></label>
+                        <a href="{{invitationFileUrl}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                        <div class="col-sm-12">
+                          <input type="file" class="form-control pl-0" accept=".pdf" (change)="invitationselected($event)" style="border: none;"></div>
+                        </div>
+                    </div>
+      
+  
+              <!-- <div class="col-md-4">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">G.O Details<span>*</span></label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="go" 
+                      [ngStyle]="{'border-bottom': (submitted && foreignForm.get('go')?.invalid && foreignForm.get('go')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div> -->
+              
+              <div class="mt-3 float-left w-100">
+                <button type="submit" class="btn btn-primary mr-2">Update</button>
+                <button type="reset" class="btn btn-light">Cancel</button>
+              </div>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>

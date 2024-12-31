@@ -1,0 +1,137 @@
+
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Foreign Visit <button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()" *ngIf="showAdd">Add New</button></h5>
+
+<div class="col-md-12 p-0 mt-2">
+        <div class="col-md-3 px-0 mt-2 mb-0">
+          <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+        </div>
+
+        <app-shared></app-shared>
+      </div>
+<div class="table-responsive">
+<table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Designation</th>
+      <th>Batch</th>
+      <th> Country </th>
+      <th>From </th>
+      <th>To </th>
+      <th>Submitted By </th>
+      <th>Approved By</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+    
+  </thead>
+  <tbody>
+    <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+      <tr *ngFor="let data of pagedData(); let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{data.officerName}}</td>
+        <td>{{data.designation}}</td>
+        <td>{{data.employeeProfileId?.batch}}</td>
+        <td>{{data.proposedCountry}}</td>
+        <td>{{data.fromDate | date:'dd/MM/YYYY'}}</td>
+        <td>{{data.toDate | date:'dd/MM/YYYY'}}</td>
+        <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+        <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
+        <td>{{data.approvalStatus ? 'Approved' : 'Not Approved'}}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-info p-2 mr-2" (click)="editForeignVisit(data._id)" *ngIf="showEdit && !data.approvalStatus">Edit</button>
+          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewForeignVisit" (click)="viewForeignVisit(data._id)" *ngIf="showView">View</button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noRecords>
+      <tr>
+        <td colspan="13" style="color: red;">No records found</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+
+<!-- <table class="table table-bordered table-striped table-hover my-4 float-left">
+<tr>
+  <td>Assistant Commissionar</td>
+  <td>TamilNadu HR & CE (Administration) Service</td> 
+  <td rowspan="2">General</td>  
+  <td rowspan="2">Degree</td>
+  <td rowspan="2"><button type="button" class="btn btn-primary">Download</button></td>  
+</tr>
+<tr>
+  <td>District Educational Officer</td>
+  <td>TamilNadu School Educational Service</td> 
+  
+</tr>
+</table> -->
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="viewForeignVisit" tabindex="-1" aria-labelledby="viewForeignVisitLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewForeignVisitLabel">View Foreign Visit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewForeignVisitData.officerName}}</div>  
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewForeignVisitData.department}}</div>  
+            <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Designation </b></label><br>{{viewForeignVisitData.designation}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Proposed to </b></label><br>{{viewForeignVisitData.proposedCountry}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>From </b></label><br>{{viewForeignVisitData.fromDate | date:'dd/MM/YYYY'}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>To </b></label><br>{{viewForeignVisitData.toDate | date:'dd/MM/YYYY'}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Other Delegates  </b></label><br>{{viewForeignVisitData.otherDelegates}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Present Status </b></label><br>{{viewForeignVisitData.presentStatus}}</div>  
+            <div class="col-md-4 px-0 mt-3" *ngIf="showRejection"><label class="w-100"><b>Reject Reason </b></label><br>{{viewForeignVisitData.rejectReason || '-'}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Permission Letter No </b></label><br>{{viewForeignVisitData.faxMessageLetterNo}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Order  </b></label><br>{{viewForeignVisitData.dateOfOrderofFaxMessage | date:'dd/MM/YYYY'}}</div>  
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Political Clearance</b></label> <br>     
+              <a href="{{url}}{{viewForeignVisitData.politicalClearance}}" target="_blank" class="btn btn-primary py-2">View</a>
+            </div>
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>FCRA Clearance</b></label> <br>     
+              <a href="{{url}}{{viewForeignVisitData.fcraClearance}}" target="_blank" class="btn btn-primary py-2">View</a>
+            </div>
+
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b> Inviting Authority </b></label><br>{{viewForeignVisitData.invitingAuthority}}</div>
+
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Invitation File</b></label> <br> 
+              <a href="{{url}}{{viewForeignVisitData.invitationFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+            </div>
+
+            <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Funds Sanctioned By </b></label><br>{{viewForeignVisitData.fundsSanctionedBy}}</div>  
+            <div><label class="w-100"><b>Funds Sanctioned </b></label><br>{{viewForeignVisitData.fundsSanctioned}}</div>  
+
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewForeignVisitData.orderType}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewForeignVisitData.orderNo}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewForeignVisitData.orderFor}}</div>  
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br> {{viewForeignVisitData.dateOfOrder | date:'dd/MM/yyyy'}}</div>  
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>     
+            <a href="{{url}}{{viewForeignVisitData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>  
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewForeignVisitData.approvalStatus" (click)="approveForeignVisit(viewForeignVisitData)">Approve</button>
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
