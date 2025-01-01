@@ -442,6 +442,22 @@
           <label class="col-form-label px-0 float-left">Photo <span>*</span></label>
           <input type="file" class="form-control float-left" formControlName="photo" (change)="onFileSelected($event)" style="border: none;" accept="image" />
         </div>  -->
+        <div class="col-md-4 px-0">
+          <label class="col-form-label px-0 float-left w-100">Photo <span>*</span></label>
+          <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
+            formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
+        </div>
+        <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="selectedImage && !base64String">
+          <img [src]="selectedImage" alt="Selected Image" class="img-fluid" />
+          <i class="mdi mdi-close p-1" style="color: white; background: red; position: absolute;"
+            (click)="removeImage()"></i>
+        </div>
+        <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="base64String">
+          <img [src]="base64String" alt="Selected Image" class="img-fluid" />
+          <i class="mdi mdi-close p-1" style="color: white; background: red; position: absolute;"
+            (click)="removeImage()"></i>
+        </div>
+
         
 
 
