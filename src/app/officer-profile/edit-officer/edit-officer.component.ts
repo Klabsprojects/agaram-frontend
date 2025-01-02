@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeaveTransferService } from '../../forms/forms.service';
 import { DatePipe } from '@angular/common';
-
 @Component({
   selector: 'app-edit-officer',
   templateUrl: './edit-officer.component.html',
@@ -78,8 +77,9 @@ export class EditOfficerComponent implements OnInit {
         this.officerForm.get('officeEmail')?.setValue(data.officeEmail);
         this.officerForm.get('seniority')?.setValue(data.seniority);
         // this.officerForm.get('imagePath')?.setValue(data.imagePath);
-        this.selectedImage = data.imagePath;
-        console.log("selectedImage", this.selectedImage);
+        this.selectedImage = `${this.officerAction.fileUrl}${data.imagePath.replace('\\', '/')}`;
+        // this.selectedImage = 'https://agaram.a2zweb.in/v1/uploads/1735638303345.png';
+        // console.log("selectedImage", this.selectedImage);
         this.degreeData = data.degreeData;
         // const binaryData = data.photo.data;
         // this.base64ImageData = btoa(String.fromCharCode.apply(null, binaryData));
@@ -239,7 +239,14 @@ export class EditOfficerComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
+    const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
     if (file) {
+      if (file.size > maxSizeInBytes) {
+        this.base64String = null;
+        this.officerForm.get('imagePath')?.setValue(null);
+        alert('File size exceeds 1 MB. Please select a smaller file.');
+        return;  // Stop further execution
+      }
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.base64String = reader.result as string;
@@ -453,6 +460,8 @@ export class EditOfficerComponent implements OnInit {
         formData.append(`degreeData[${index}]`, JSON.stringify(degree));
       });
     }
+
+    formData.append('id',this.id);
 
     // console.log('formData',formData);  // Check FormData in console
     for (let pair of (formData as any).entries()) {

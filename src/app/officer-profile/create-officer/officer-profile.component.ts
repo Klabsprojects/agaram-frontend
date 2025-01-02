@@ -281,7 +281,13 @@ export class OfficerProfileComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
+    const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
     if (file) {
+      if (file.size > maxSizeInBytes) {
+        this.removeImage();
+        alert('File size exceeds 1 MB. Please select a smaller file.');
+        return;  // Stop further execution
+      }
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.base64String = reader.result as string;

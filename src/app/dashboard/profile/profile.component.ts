@@ -16,7 +16,7 @@ export class ProfileComponent {
     this.get_Id(this.login_id);
     this.dashboardService.getData().subscribe((element: any[]) => {
       this.catogories = element
-      console.log("this.catogories", this.catogories)
+      // console.log("this.catogories", this.catogories)
     });
     this.dashboardService.getDepartmentData().subscribe((res: any) => {
       this.departmentData = res;
@@ -219,8 +219,9 @@ export class ProfileComponent {
             this.employeeHistory.dateOfJoining = this.datePipe.transform(dateOfJoining, 'dd/MM/yyyy');
             const dateOfRetirement = item.dateOfRetirement;
             this.employeeHistory.dateOfRetirement = this.datePipe.transform(dateOfRetirement, 'dd/MM/yyyy');
-            const binaryData = new Uint8Array(item.photo.data);
-            this.base64ImageData = this.arrayBufferToBase64(binaryData);
+            this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}${item.imagePath.replace('\\', '/')}`;
+            // const binaryData = new Uint8Array(item.photo.data);
+            // this.base64ImageData = this.arrayBufferToBase64(binaryData);
             this.loading = false;
             this.fetching_user_detail(this.employeeHistory)
           });

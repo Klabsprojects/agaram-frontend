@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
   filterText: any;
   state:any[]=[];
 
-  pageSize: number = 10;
+  pageSize: number = 1000;
   pageSizeOptions: number[] = [1, 10, 15, 20];
   currentPage: number = 1;
   // filteredEmployeeLists: any[] = []; // Your filtered list
@@ -240,6 +240,7 @@ export class DashboardComponent implements OnInit {
                     this.employeeHistory.dateOfJoining = this.datePipe.transform(dateOfJoining, 'dd/MM/yyyy');
                     const dateOfRetirement = item.dateOfRetirement;
                     this.employeeHistory.dateOfRetirement = this.datePipe.transform(dateOfRetirement, 'dd/MM/yyyy');
+                    this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}${item.imagePath.replace('\\', '/')}`;
                     // const binaryData = new Uint8Array(item.photo.data);
                     // if (item.photo && item.photo.data) {
                     console.log(item.photo);

@@ -25,4 +25,5 @@ export class employeeHistory{
     employeeId:string='';
     employeeHistory:any[]=[];
     photo:any;
+    imagePath:string='';
 }

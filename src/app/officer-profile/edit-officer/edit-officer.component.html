@@ -446,6 +446,7 @@
           <label class="col-form-label px-0 float-left w-100">Photo <span>*</span></label>
           <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
             formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
+            <!-- <p style="color: yellow;">Please Upload files Under 1 MB</p> -->
         </div>
         <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="selectedImage && !base64String">
           <img [src]="selectedImage" alt="Selected Image" class="img-fluid" />

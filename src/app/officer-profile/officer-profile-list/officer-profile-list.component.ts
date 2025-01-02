@@ -14,7 +14,7 @@ export class OfficerProfileListComponent implements OnInit {
 
   public employeeListData:any[]=[];
   filterText: any;
-  pageSize: number = 100; // Number of items per page
+  pageSize: number = 1000; // Number of items per page
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
   visiblePages: number[] = [];
@@ -205,8 +205,9 @@ export class OfficerProfileListComponent implements OnInit {
         this.viewEmployeeData.payscale = ele.payscale;
         this.viewEmployeeData.educationdetails = ele.degreeData;
         this.viewEmployeeData.seniority = ele.seniority;
-        const binaryData = new Uint8Array(ele.photo.data);
-        this.base64ImageData = this.arrayBufferToBase64(binaryData);
+        this.viewEmployeeData.imagePath = `${this.officerAction.fileUrl}${ele.imagePath.replace('\\', '/')}`;
+        // const binaryData = new Uint8Array(ele.photo.data);
+        // this.base64ImageData = this.arrayBufferToBase64(binaryData);
         this.officerAction.getDegree().subscribe((response:any)=>{
           response.results.forEach((degree:any)=>{
             ele.degreeData.filter((deg:any)=>{
@@ -327,6 +328,7 @@ export class viewEmployeeData{
   submittedBy:string='';
   approvedBy:string='';
   seniority: string ='';
+  imagePath:string='';
 }
 export class education{
   courseLevel:string='';
