@@ -275,7 +275,7 @@ this.promotionService.getEmployeeCurrentPosting(this.empProfileId).subscribe((re
       }
 
       this.selectedOfficers.push(officer);
-        console.log(this.selectedOfficers);
+        console.log('this.selectedOfficers',this.selectedOfficers);
         for (const key in formValues) {
           if (formValues.hasOwnProperty(key) && key !== 'orderFile') {
               formData.append(key, JSON.stringify(formValues[key]));

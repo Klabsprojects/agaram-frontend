@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
   filterText: any;
   state:any[]=[];
 
-  pageSize: number = 1000;
+  pageSize: number = 100;
   pageSizeOptions: number[] = [1, 10, 15, 20];
   currentPage: number = 1;
   // filteredEmployeeLists: any[] = []; // Your filtered list
@@ -359,6 +359,11 @@ pagedData() {
   const startIndex = (this.currentPage - 1) * this.pageSize;
   const endIndex = startIndex + this.pageSize;
   return this.filteredEmployeeList.slice(startIndex, endIndex);
+}
+tabledatareturn(){
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  return this.tableData.slice(startIndex, endIndex);
 }
 get totalPages(): number {
   return Math.ceil(this.filteredEmployeeList.length / this.pageSize);

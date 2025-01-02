@@ -1,268 +1,336 @@
 <div class="col-12 grid-margin m-0">
-    <div class="card card1">
-      <div class="card-body">
-        
-        <h4 class="card-title text-center mb-4" *ngIf="showMainTitle">Welcome to Agaram </h4>
-        <span class="col-md-12 back" style="color: #FFA53D; position: absolute;" *ngIf="showIcon" (click)="Back()">
-          <i class="mdi mdi-chevron-double-left"></i> Back</span>  
-        <div class="card-title text-center mb-4" *ngIf="showActive"><h5>Active Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showretiredOfficer"><h5>Retired Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showMale"><h5>Male Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showFemale"><h5>Female Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showSec"><h5>Secretariat Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showOutsideChennai"><h5>Outside Chennai</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showOutsideSec"><h5>Outside Secretariat</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showChennai"><h5>Chennai Officers</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showCollector"><h5>Collectors</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showSub"><h5>Sub - Collectors</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showAsst"><h5>Asst - Collectors</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showAdditional"><h5>Additional Collectors</h5></div>
-          <div class="card-title text-center mb-4" *ngIf="showComm"><h5>Commissioner</h5></div>
+  <div class="card card1">
+    <div class="card-body">
 
-        
-          
-          
+      <h4 class="card-title text-center mb-4" *ngIf="showMainTitle">Welcome to Agaram </h4>
+      <span class="col-md-12 back" style="color: #FFA53D; position: absolute;" *ngIf="showIcon" (click)="Back()">
+        <i class="mdi mdi-chevron-double-left"></i> Back</span>
+      <div class="card-title text-center mb-4" *ngIf="showActive">
+        <h5>Active Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showretiredOfficer">
+        <h5>Retired Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showMale">
+        <h5>Male Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showFemale">
+        <h5>Female Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showSec">
+        <h5>Secretariat Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showOutsideChennai">
+        <h5>Outside Chennai</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showOutsideSec">
+        <h5>Outside Secretariat</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showChennai">
+        <h5>Chennai Officers</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showCollector">
+        <h5>Collectors</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showSub">
+        <h5>Sub - Collectors</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showAsst">
+        <h5>Asst - Collectors</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showAdditional">
+        <h5>Additional Collectors</h5>
+      </div>
+      <div class="card-title text-center mb-4" *ngIf="showComm">
+        <h5>Commissioner</h5>
+      </div>
 
-        <div class="col-md-12" *ngIf="showCard">
-          <div class="col-md-3 p-2">
-            <div class="card card-xs" style="display: block;">
-              <div class="col-md-12 p-0  mb-2">
-                  <div class="col-md-5 p-0"><h6>Total <span> ({{TotalOfficerCount}})</span> </h6></div>
-                  <div class="col-md-7 p-0"> <img src="../../assets/images/check.png"></div>
-              </div>  
-           
-              <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')">
-                <p>Active  <br><span> ( {{ActiveEmployeeCount}} )</span></p>
-              </div>
-
-              <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()">
-                <p>Retired  <br><span> ( {{RetiredEmployeeCount}} )</span></p>
-              </div>
-           </div>
-         </div>
 
 
-         <div class="col-md-3 p-2">
+
+
+      <div class="col-md-12" *ngIf="showCard">
+        <div class="col-md-3 p-2">
           <div class="card card-xs" style="display: block;">
             <div class="col-md-12 p-0  mb-2">
-                <div class="col-md-5 p-0"><h6>Total <span> ({{TotalGender}})</span> </h6></div>
-                <div class="col-md-7 p-0"> <img src="../../assets/images/gender.png"></div>
-            </div>  
-         
+              <div class="col-md-5 p-0">
+                <h6>Total <span> ({{TotalOfficerCount}})</span> </h6>
+              </div>
+              <div class="col-md-7 p-0"> <img src="../../assets/images/check.png"></div>
+            </div>
+
+            <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')">
+              <p>Active <br><span> ( {{ActiveEmployeeCount}} )</span></p>
+            </div>
+
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()">
+              <p>Retired <br><span> ( {{RetiredEmployeeCount}} )</span></p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 p-2">
+          <div class="card card-xs" style="display: block;">
+            <div class="col-md-12 p-0  mb-2">
+              <div class="col-md-5 p-0">
+                <h6>Total <span> ({{TotalGender}})</span> </h6>
+              </div>
+              <div class="col-md-7 p-0"> <img src="../../assets/images/gender.png"></div>
+            </div>
+
             <div class="col-md-6 float-left" (click)="maleOfficer()">
-              <p>Male  <br><span> ( {{maleEmployeeCount}} )</span></p>
+              <p>Male <br><span> ( {{maleEmployeeCount}} )</span></p>
             </div>
 
             <div class="col-md-6 float-left" style="border: 0px;" (click)="femaleOfficer()">
-              <p>Female  <br><span> ( {{femaleEmployeeCount}} )</span></p>
+              <p>Female <br><span> ( {{femaleEmployeeCount}} )</span></p>
             </div>
-         </div>
-       </div>
+          </div>
+        </div>
 
-       <div class="col-md-3 p-2">
-        <div class="card card-xs" style="display: block;">
-          <div class="col-md-12 p-0  mb-2">
-              <div class="col-md-5 p-0"><h6>Total <span> ({{totalCountLocation}})</span> </h6></div>
+        <div class="col-md-3 p-2">
+          <div class="card card-xs" style="display: block;">
+            <div class="col-md-12 p-0  mb-2">
+              <div class="col-md-5 p-0">
+                <h6>Total <span> ({{totalCountLocation}})</span> </h6>
+              </div>
               <div class="col-md-7 p-0"> <img src="../../assets/images/location.png"></div>
-          </div>  
-       
-          <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')">
-            <p>Chennai  <br><span> ( {{chennaiOfficerCount}} )</span></p>
-          </div>
+            </div>
 
-          <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')">
-            <p>Outside  <br><span> ( {{outsideChennaiOfficerCount}} )</span></p>
-          </div>
-       </div>
-     </div>
+            <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')">
+              <p>Chennai <br><span> ( {{chennaiOfficerCount}} )</span></p>
+            </div>
 
-     <div class="col-md-3 p-2">
-      <div class="card card-xs" style="display: block;">
-        <div class="col-md-12 p-0  mb-2">
-            <div class="col-md-5 p-0"><h6>Total <span> ({{totalSecretariatCount}})</span> </h6></div>
-            <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png"></div>
-        </div>  
-     
-        <div class="col-md-6 float-left" (click)="secretariat('yes')">
-          <p>Secretariat  <br><span> ({{secretariatCount}})</span></p>
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')">
+              <p>Outside <br><span> ( {{outsideChennaiOfficerCount}} )</span></p>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')">
-          <p>Outside  <br><span> ({{outsideSecretariatCount}})</span></p>
+        <div class="col-md-3 p-2">
+          <div class="card card-xs" style="display: block;">
+            <div class="col-md-12 p-0  mb-2">
+              <div class="col-md-5 p-0">
+                <h6>Total <span> ({{totalSecretariatCount}})</span> </h6>
+              </div>
+              <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png"></div>
+            </div>
+
+            <div class="col-md-6 float-left" (click)="secretariat('yes')">
+              <p>Secretariat <br><span> ({{secretariatCount}})</span></p>
+            </div>
+
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')">
+              <p>Outside <br><span> ({{outsideSecretariatCount}})</span></p>
+            </div>
+          </div>
         </div>
-     </div>
-   </div>
 
-   <div class="col-md-7 p-2 mt-3 border-0">
-    <div class="card card-xs" style="display: block;">
-      <div class="col-md-12 p-0  mb-2">
-          <div class="col-md-5 p-0"><h6>Total <span> ({{totalCollectors}})</span> </h6></div>
-          <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width: 15%;"></div>
-      </div>  
-   
-      <div class="col-md-3 float-left" (click)="collectors('Collector')">
-        <p>Collectors  <br><span> ({{collectorCount}})</span></p>
+        <div class="col-md-7 p-2 mt-3 border-0">
+          <div class="card card-xs" style="display: block;">
+            <div class="col-md-12 p-0  mb-2">
+              <div class="col-md-5 p-0">
+                <h6>Total <span> ({{totalCollectors}})</span> </h6>
+              </div>
+              <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width: 15%;"></div>
+            </div>
+
+            <div class="col-md-3 float-left" (click)="collectors('Collector')">
+              <p>Collectors <br><span> ({{collectorCount}})</span></p>
+            </div>
+
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')">
+              <p>Sub -Collectors <br><span> ({{subCollectorCount}})</span></p>
+            </div>
+
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')">
+              <p>Asst Collectors <br><span> ({{asstCollectorsCount}})</span></p>
+            </div>
+
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')">
+              <p>Additional <br><span> ({{additionalCollectorCount}})</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 p-2 mt-4">
+          <div class="card card-xs" style="display: block;">
+            <div class="col-md-12 p-0  mb-2">
+              <div class="col-md-5 p-0"></div>
+              <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
+            </div>
+
+            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')">
+              <p>Commissioner <br><span> ({{commissionerCount}})</span></p>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
-      <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')">
-        <p>Sub -Collectors  <br><span> ({{subCollectorCount}})</span></p>
-      </div>
+      <div class="clearfix"></div>
 
-      <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')">
-        <p>Asst Collectors  <br><span> ({{asstCollectorsCount}})</span></p>
-      </div>
-
-      <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')">
-        <p>Additional   <br><span> ({{additionalCollectorCount}})</span></p>
-      </div>
-   </div>
- </div>
-
- <div class="col-md-3 p-2 mt-4">
-  <div class="card card-xs" style="display: block;">
-    <div class="col-md-12 p-0  mb-2">
-        <div class="col-md-5 p-0"></div>
-        <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
-    </div>  
- 
-    <div class="col-md-12 float-left" (click)="commissioner('Commissioner')">
-      <p>Commissioner  <br><span> ({{commissionerCount}})</span></p>
-    </div>
- </div>
-</div>
+      <button type="button" (click)="advanceSearch()" class="float-right my-2 btn btn-primary p-2"
+        *ngIf="showAdvanceSearch">Advance Search <i class="mdi mdi-magnify float-right ml-1"></i></button>
 
 
-  </div>
-
-    <div class="clearfix"></div>
-
-    <button type="button" (click)="advanceSearch()" class="float-right my-2 btn btn-primary p-2" *ngIf="showAdvanceSearch">Advance Search <i class="mdi mdi-magnify float-right ml-1"></i></button>
-
-
-        <div class="col-md-12" *ngIf="showFilter">
+      <div class="col-md-12" *ngIf="showFilter">
         <form [formGroup]="filterForm">
           <div class="col-md-3 float-left mt-2">
             <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Name</label>
-                <div class="col-sm-12">
-                    <input type="text" class="form-control"  formControlName="name" (input)="onInput($event, 'fullName')" [value]="selectedOption" /> 
-                      <div class="autocomplete-items" *ngIf="showDropdown">
-                        <div class="option" *ngFor="let option of filteredOptions" (click)="getValue(option,'name')">
-                            {{ option.name }}
-                        </div>
-                    </div>
+              <label class="col-sm-12 col-form-label">Name</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="name" (input)="onInput($event, 'fullName')"
+                  [value]="selectedOption" />
+                <div class="autocomplete-items" *ngIf="showDropdown">
+                  <div class="option" *ngFor="let option of filteredOptions" (click)="getValue(option,'name')">
+                    {{ option.name }}
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
-        
-            <div class="col-md-2 float-left mt-2">
-                <div class="form-group row">
-                  <label class="col-sm-12 col-form-label"> Posting In</label>
-                  <div class="col-sm-12">
-                    <select class="form-control" formControlName="postingIn"  (change)="getValue($event,'postingIn')">
-                     <option value="">Select</option>
-                      <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
-                    </select>
-                  </div>
-                </div>
+
+          <div class="col-md-2 float-left mt-2">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Posting In</label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="postingIn" (change)="getValue($event,'postingIn')">
+                  <option value="">Select</option>
+                  <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}
+                  </option>
+                </select>
               </div>
-  
-              <div class="col-md-2 float-left mt-2">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label"> Department</label>
-                    <div class="col-sm-12">
-                        <select class="form-control" formControlName="department" (change)="getValue($event,'department')">
-                          <option value="">Select</option>
-                          <option *ngFor="let departmentData of department" [value]="departmentData.value">{{departmentData.label}}</option>
-                        </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-2 float-left mt-2" *ngIf="showDesignationDropdown">
-                  <div class="form-group row">
-                    <label class="col-sm-12 col-form-label"> Designation</label>
-                    <div class="col-sm-12">
-                        <select class="form-control" formControlName="designation" (change)="getValue($event,'designation')">
-                          <option value="">Select</option>
-                          <option *ngFor="let designationData of designation" [value]="designationData.value">{{designationData.label}}</option>
-                        </select>
-                    </div>
-                  </div>
-                </div>
-  
-
-              <div class="col-md-3 px-0 float-left mt-2" *ngIf="showPeriod">
-                <div class="form-group row">
-                  <label class="col-sm-12 col-form-label">Period</label>
-                  <div class="col-sm-12 pr-0 pt-1" [formGroupName]="'period'">
-                    <input type="date" class="form-control mr-1 float-left" style="width: 48%;" formControlName="fromDate" (change)="getValue($event,'fromDate')">
-                    <input type="date" class="form-control" style="width: 45%; padding-right:0px;" formControlName="toDate" (change)="getValue($event,'toDate')">
-                  </div>
-                </div>
-              </div>
-              
-
-              <div class="col-md-1 float-left mt-2">
-                <div class="form-group row">
-                    <label class="col-sm-12 col-form-label">Batch</label>
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" formControlName="batch" maxlength="4" (input)="onBatchInput($event, 'batch')" [value]="selectedBatchOption" /> 
-                        <div class="autocomplete-items" *ngIf="showBatchDropdown">
-                          <div class="option" *ngFor="let option of filteredBatchOptions" (click)="getValue(option,'batch')">
-                              {{ option.batch }}
-                          </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-            </form>
-              <div class="clearfix"></div>
-
-
-              <button type="button" class="btn btn-danger p-2 float-right" (click)="clearAll()">Clear</button>
-
-
-              <table class="table table-bordered table-striped table-hover my-4 float-left" *ngIf="showTable">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Batch</th>
-                    <th>Posting</th>
-                    <th>Department</th>
-                    <th>Designation</th>
-                    <th>Location</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let data of tableData; let i = index">
-                    <td>{{i+1}}</td>
-                    <td>{{data.fullName}}</td>
-                    <td>{{data.genderLabel}}</td>
-                    <td>{{data.batch}}</td>
-                    <td>{{data.postingInLabel}}</td>
-                    <td>{{data.departmentLabel}}</td>
-                    <td>{{data.designationLabel}}</td>
-                    <td>{{data.city}}</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-info p-2" (click)="viewInfo(data._id)" data-toggle="modal" data-target="#viewInfo">View</button>
-                    </td>
-                  </tr>
-                  <tr *ngIf="tableData.length === 0">
-                    <td colspan="9" style="color: red;">No records found</td>
-                  </tr>
-                </tbody>
-              </table>
+            </div>
           </div>
 
-          <div class="col-md-3 px-0 mt-2 mb-0" *ngIf="showtable">
-            <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+          <div class="col-md-2 float-left mt-2">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Department</label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="department" (change)="getValue($event,'department')">
+                  <option value="">Select</option>
+                  <option *ngFor="let departmentData of department" [value]="departmentData.value">
+                    {{departmentData.label}}</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <!-- <div class="col-md-3 px-0 mt-2 mb-0 float-right" *ngIf="showtable">
+          <div class="col-md-2 float-left mt-2" *ngIf="showDesignationDropdown">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Designation</label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="designation" (change)="getValue($event,'designation')">
+                  <option value="">Select</option>
+                  <option *ngFor="let designationData of designation" [value]="designationData.value">
+                    {{designationData.label}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3 px-0 float-left mt-2" *ngIf="showPeriod">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Period</label>
+              <div class="col-sm-12 pr-0 pt-1" [formGroupName]="'period'">
+                <input type="date" class="form-control mr-1 float-left" style="width: 48%;" formControlName="fromDate"
+                  (change)="getValue($event,'fromDate')">
+                <input type="date" class="form-control" style="width: 45%; padding-right:0px;" formControlName="toDate"
+                  (change)="getValue($event,'toDate')">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-1 float-left mt-2">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Batch</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="batch" maxlength="4"
+                  (input)="onBatchInput($event, 'batch')" [value]="selectedBatchOption" />
+                <div class="autocomplete-items" *ngIf="showBatchDropdown">
+                  <div class="option" *ngFor="let option of filteredBatchOptions" (click)="getValue(option,'batch')">
+                    {{ option.batch }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="clearfix"></div>
+
+
+        <button type="button" class="btn btn-danger p-2 float-right" (click)="clearAll()">Clear</button>
+
+
+        <table class="table table-bordered table-striped table-hover my-4 float-left" *ngIf="showTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Batch</th>
+              <th>Posting</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of tabledatareturn(); let i = index">
+              <td>{{i+1}}</td>
+              <td>{{data.fullName}}</td>
+              <td>{{data.genderLabel}}</td>
+              <td>{{data.batch}}</td>
+              <td>{{data.postingInLabel}}</td>
+              <td>{{data.departmentLabel}}</td>
+              <td>{{data.designationLabel}}</td>
+              <td>{{data.city}}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-info p-2" (click)="viewInfo(data._id)" data-toggle="modal"
+                  data-target="#viewInfo">View</button>
+              </td>
+            </tr>
+            <tr *ngIf="tableData.length === 0">
+              <td colspan="9" style="color: red;">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination1 float-right text-right w-100" *ngIf="tableData.length > pageSizeOptions[0]">
+          <div class="dropdown col-md-8">
+            <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Items Per Page: {{ pageSize }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+              <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                }}</a>
+            </div>
+          </div>
+          <div class="col-md-4" style="border: 0px;">
+            <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+              <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+            <ng-container *ngFor="let page of pages">
+              <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+                (click)="goToPage(page)">{{ page }}</button>
+            </ng-container>
+            <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+              Next <i class="mdi mdi-chevron-double-right"></i> </button>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 px-0 mt-2 mb-0" *ngIf="showtable">
+        <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+      </div>
+
+      <!-- <div class="col-md-3 px-0 mt-2 mb-0 float-right" *ngIf="showtable">
             <label><b>Export as : </b></label>
             <select class="form-control w-50 float-left pt-0 ml-3" (change)="changeValue($event)">
               <option value="">Select</option>
@@ -272,78 +340,83 @@
               <option value="Print">Print</option>
             </select>
           </div> -->
-        
-        <div class="printable-content table-responsive" *ngIf="showtable">
-          <table class="table table-bordered table-striped table-hover my-4 float-left">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th *ngIf="showGender">Gender</th>
-                <th>Batch</th>
-                <th *ngIf="showPosting">Posting</th>
-                <th>Department</th>
-                <th *ngIf="showDesignation">Designation</th>
-                <th *ngIf="showLocation">Location</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+
+      <div class="printable-content table-responsive" *ngIf="showtable">
+        <table class="table table-bordered table-striped table-hover my-4 float-left">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th *ngIf="showGender">Gender</th>
+              <th>Batch</th>
+              <th *ngIf="showPosting">Posting</th>
+              <th>Department</th>
+              <th *ngIf="showDesignation">Designation</th>
+              <th *ngIf="showLocation">Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
               <!-- <tr *ngFor="let cardTableData of filteredEmployeeList; let i = index"> -->
-                <tr *ngFor="let cardTableData of pagedData(); let i = index">
+              <tr *ngFor="let cardTableData of pagedData(); let i = index">
                 <!-- <td>{{i + 1}}</td> -->
                 <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
                 <td>{{cardTableData.fullName}}</td>
-                <td *ngIf="showGender">{{ cardTableData.gender === '65f43649a4a01c1cbbd6c9ad' ? 'Female' : cardTableData.gender === '65f43649a4a01c1cbbd6c9ac' ? 'Male' : '' }}</td>
+                <td *ngIf="showGender">{{ cardTableData.gender === '65f43649a4a01c1cbbd6c9ad' ? 'Female' :
+                  cardTableData.gender === '65f43649a4a01c1cbbd6c9ac' ? 'Male' : '' }}</td>
                 <td>{{cardTableData.batch}}</td>
                 <td *ngIf="showPosting">{{cardTableData.postingIn}}</td>
                 <td>{{cardTableData.department}}</td>
                 <td *ngIf="showDesignation">{{cardTableData.designation}}</td>
                 <td *ngIf="showLocation">{{cardTableData.city}}</td>
-                <td class="text-center"><button type="button" class="btn btn-info p-2" (click)="viewInfo(cardTableData._id)" data-toggle="modal" data-target="#viewInfo">View</button></td>
-               </tr>
-               </ng-container>
-               <ng-template #noRecords>
-                <tr>
-                  <td colspan="9" style="color: red;">No records found</td>
-                </tr>
-              </ng-template>
-            </tbody>
-          </table> 
-          <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > pageSizeOptions[0]">
-            <div class="dropdown col-md-8">
-              <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Items Per Page: {{ pageSize }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
-                <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option }}</a>
-              </div>
+                <td class="text-center"><button type="button" class="btn btn-info p-2"
+                    (click)="viewInfo(cardTableData._id)" data-toggle="modal" data-target="#viewInfo">View</button></td>
+              </tr>
+            </ng-container>
+            <ng-template #noRecords>
+              <tr>
+                <td colspan="9" style="color: red;">No records found</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+        <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > pageSizeOptions[0]">
+          <div class="dropdown col-md-8">
+            <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Items Per Page: {{ pageSize }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+              <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                }}</a>
             </div>
-            <div class="col-md-4" style="border: 0px;">
+          </div>
+          <div class="col-md-4" style="border: 0px;">
             <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
               <i class="mdi mdi-chevron-double-left"></i> Previous </button>
             <ng-container *ngFor="let page of pages">
-              <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }" (click)="goToPage(page)">{{ page }}</button>
+              <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+                (click)="goToPage(page)">{{ page }}</button>
             </ng-container>
             <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
-               Next <i class="mdi mdi-chevron-double-right"></i> </button>
-            
-          </div>
-        </div>  
-        </div>
+              Next <i class="mdi mdi-chevron-double-right"></i> </button>
 
-         
-          
-          
-        
-     </div>
-   </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
 </div>
 
 
 
- <!-- <div class="col-md-6 float-left">
+<!-- <div class="col-md-6 float-left">
             <h6 class="text-center my-4">Bar Chart</h6>
             <div class="chart-container">
                 <canvas  id="MyBarChart" >{{ chart }}</canvas>
@@ -357,109 +430,118 @@
             </div>
         </div> -->
 
-         <div class="modal fade" id="viewInfo" tabindex="-1" aria-labelledby="addviewInfoLabel" aria-hidden="true" *ngIf="popupVisible">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addviewInfoLabel">Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
+<div class="modal fade" id="viewInfo" tabindex="-1" aria-labelledby="addviewInfoLabel" aria-hidden="true"
+  *ngIf="popupVisible">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addviewInfoLabel">Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-              <div class="modal-body p-3">
-               <div class="col-md-12">
-                <div class="col-md-3">
-                 <img [src]="employeeHistory.imagePath" alt="Profile" class="profile-img"> 
-                </div>
-                <div class="col-md-9">
-                <div class="col-md-12 border-0"><h5 class="float-left"><label style="color: black;" class="mb-0">{{employeeHistory.fullName}} - {{employeeHistory.employeeId}}</label></h5> &nbsp; <span> - ( {{employeeHistory.batch}} ) </span></div>  
-                <div class="col-md-12 pb-2" *ngIf="firstIndex">  {{ firstIndex.toDesignationId }}, {{ firstIndex.toDepartmentId }}</div>
-                <!-- <div class="col-md-4"><label><b>Posting In:</b> <br> {{ firstIndex.posting }}</label></div>
+      <div class="modal-body p-3">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <img [src]="employeeHistory.imagePath" alt="Profile" class="profile-img">
+          </div>
+          <div class="col-md-9">
+            <div class="col-md-12 border-0">
+              <h5 class="float-left"><label style="color: black;" class="mb-0">{{employeeHistory.fullName}} -
+                  {{employeeHistory.employeeId}}</label></h5> &nbsp; <span> - ( {{employeeHistory.batch}} ) </span>
+            </div>
+            <div class="col-md-12 pb-2" *ngIf="firstIndex"> {{ firstIndex.toDesignationId }}, {{
+              firstIndex.toDepartmentId }}</div>
+            <!-- <div class="col-md-4"><label><b>Posting In:</b> <br> {{ firstIndex.posting }}</label></div>
                 <div class="col-md-4"><label><b>Department:</b> <br>{{ firstIndex.toDepartmentId }}</label></div>
                 <div class="col-md-4"><label><b>Designation:</b> <br>{{ firstIndex.toDesignationId }}</label></div> -->
-                <div class="col-md-12 border-0"><i class="typcn typcn-phone"></i><label class="pt-1 pl-2">{{employeeHistory.mobileNo1}}, {{employeeHistory.mobileNo2}}, {{employeeHistory.mobileNo3}}</label></div> 
-               <div class="col-md-12 border-0"><i class="typcn typcn-mail" style="transform: rotate(0deg);"></i><label class="pt-2 pl-2" style="width:90%;">{{employeeHistory.personalEmail}}, {{employeeHistory.officeEmail}}</label></div>
-               <div class="col-md-12 border-0" style="line-height: 1.9;"><i class="typcn typcn-location" style="transform: rotate(0deg);"></i>
-                <label class="pt-2 pl-2">
-                    {{employeeHistory.addressLine}},{{employeeHistory.city}} <br>
-                    {{employeeHistory.state}},
-                    {{employeeHistory.pincode}}
-                </label></div>
-               <div class="col-md-12 border-0 my-2">
-                  <div class="col-md-4"><label> <b>DOB :</b> {{employeeHistory.dateOfBirth}}</label></div>
-                  <div class="col-md-4"><label> <b>DOJ :</b> {{employeeHistory.dateOfJoining}}</label></div>
-                  <div class="col-md-4"><label> <b>DOR :</b> {{employeeHistory.dateOfRetirement}}</label></div>
-               </div> 
-              </div>
+            <div class="col-md-12 border-0"><i class="typcn typcn-phone"></i><label
+                class="pt-1 pl-2">{{employeeHistory.mobileNo1}}, {{employeeHistory.mobileNo2}},
+                {{employeeHistory.mobileNo3}}</label></div>
+            <div class="col-md-12 border-0"><i class="typcn typcn-mail" style="transform: rotate(0deg);"></i><label
+                class="pt-2 pl-2" style="width:90%;">{{employeeHistory.personalEmail}},
+                {{employeeHistory.officeEmail}}</label></div>
+            <div class="col-md-12 border-0" style="line-height: 1.9;"><i class="typcn typcn-location"
+                style="transform: rotate(0deg);"></i>
+              <label class="pt-2 pl-2">
+                {{employeeHistory.addressLine}},{{employeeHistory.city}} <br>
+                {{employeeHistory.state}},
+                {{employeeHistory.pincode}}
+              </label>
+            </div>
+            <div class="col-md-12 border-0 my-2">
+              <div class="col-md-4"><label> <b>DOB :</b> {{employeeHistory.dateOfBirth}}</label></div>
+              <div class="col-md-4"><label> <b>DOJ :</b> {{employeeHistory.dateOfJoining}}</label></div>
+              <div class="col-md-4"><label> <b>DOR :</b> {{employeeHistory.dateOfRetirement}}</label></div>
+            </div>
+          </div>
 
-              <!-- <div class="col-md-4 profile-data"><b>Recruitment Type :</b> <br> <span> {{employeeHistory.recruitmentType}}</span></div>
+          <!-- <div class="col-md-4 profile-data"><b>Recruitment Type :</b> <br> <span> {{employeeHistory.recruitmentType}}</span></div>
               <div class="col-md-4 profile-data"><b>Service Status Type : </b> <br>  <span>  {{employeeHistory.serviceStatus}}</span></div>
               <div class="col-md-4 profile-data"><b>Community : </b> <br> <span>  {{employeeHistory.community}}</span></div>
               <div class="col-md-4 profile-data"><b>Caste :</b> <br> <span> {{employeeHistory.caste}}</span></div>
               <div class="col-md-4 profile-data"><b>Religion :</b> <br> <span> {{employeeHistory.religion}}</span></div>
               <div class="col-md-4 profile-data"><b>Promotion Grade : </b><br>  <span> {{employeeHistory.promotionGrade}}</span></div>
              <div class="clearfix"></div> -->
-              <!-- <div class="col-md-4 profile-data"><b>Payscale :</b> <br> <span> {{employeeHistory.payscale}}</span></div> -->
-              <!-- <div class="col-md-4 profile-data"><b>Official Email : </b> <br>  <span></span></div> -->
+          <!-- <div class="col-md-4 profile-data"><b>Payscale :</b> <br> <span> {{employeeHistory.payscale}}</span></div> -->
+          <!-- <div class="col-md-4 profile-data"><b>Official Email : </b> <br>  <span></span></div> -->
 
-              <!-- <div class="col-md-6 profile-data p-0 border-0"><b>Qualification : </b></div> -->
-              <h5 class="modal-title col-md-12 pl-0 pt-2 mb-2" *ngIf="hideHistory">Employee History</h5>
-              
+          <!-- <div class="col-md-6 profile-data p-0 border-0"><b>Qualification : </b></div> -->
+          <h5 class="modal-title col-md-12 pl-0 pt-2 mb-2" *ngIf="hideHistory">Employee History</h5>
 
-              <div id="accordion" *ngIf="hideHistory">
-                <div class="card">
-                  <div class="card-header p-0" id="headingTwo" style="background-color: #007bff;">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed p-2 w-100 text-left" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: #fff;">
-                        Previous Details <i class="mdi mdi-chevron-down float-right"></i>
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                      <div *ngIf="remainingIndices.length > 0; else noPreviousDetails">
-                        <div class="table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>S.No</th>
-                              <th>Posting In</th>
-                              <th>Department</th>
-                              <th>Designation</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let detail of remainingIndices; let i=index">
-                              <td>{{i+1}}</td>
-                              <td>{{ detail.postingIn }}</td>
-                              <td>{{ detail.department }}</td>
-                              <td>{{ detail.designation }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      </div>
-                      <ng-template #noPreviousDetails>
-                        <div style="color: red;">No previous details available.</div>
-                      </ng-template>
+
+          <div id="accordion" *ngIf="hideHistory">
+            <div class="card">
+              <div class="card-header p-0" id="headingTwo" style="background-color: #007bff;">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed p-2 w-100 text-left" data-toggle="collapse"
+                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: #fff;">
+                    Previous Details <i class="mdi mdi-chevron-down float-right"></i>
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                  <div *ngIf="remainingIndices.length > 0; else noPreviousDetails">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Posting In</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let detail of remainingIndices; let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{ detail.postingIn }}</td>
+                            <td>{{ detail.department }}</td>
+                            <td>{{ detail.designation }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
+                  <ng-template #noPreviousDetails>
+                    <div style="color: red;">No previous details available.</div>
+                  </ng-template>
                 </div>
-              </div>
-              
-              
-              
-              
-              </div>
-            </div>
-              
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
               </div>
             </div>
           </div>
+
+
+
+
+        </div>
       </div>
 
-
-      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

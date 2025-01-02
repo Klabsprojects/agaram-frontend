@@ -33,4 +33,9 @@ label span, h4 span{
   label b{
     font-weight: 500;
   }
+
+  .imgup{
+    display: flex;
+    flex-direction: column;
+  }
   

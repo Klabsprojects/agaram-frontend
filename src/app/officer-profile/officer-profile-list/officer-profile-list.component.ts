@@ -14,7 +14,7 @@ export class OfficerProfileListComponent implements OnInit {
 
   public employeeListData:any[]=[];
   filterText: any;
-  pageSize: number = 1000; // Number of items per page
+  pageSize: number = 100; // Number of items per page
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
   visiblePages: number[] = [];

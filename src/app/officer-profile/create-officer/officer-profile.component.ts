@@ -446,6 +446,7 @@ export class OfficerProfileComponent implements OnInit {
           degree.addedBy = 'employeeProfile';
         });
       }
+      console.log("formValue.degreeData",formValue.degreeData);
       // console.log(this.degreeData);
       // formData.append('degreeData', JSON.stringify(this.degreeData));
       // formData.append('addedBy','employeeProfile');
@@ -454,8 +455,10 @@ export class OfficerProfileComponent implements OnInit {
       // Append all form values
       Object.keys(formValue).forEach(key => {
         const value = this.officerForm.get(key)?.value;
-      
-        if (key === 'imagePath' && value instanceof File) {
+        if(key === 'degreeData'){
+          formData.append('degreeData',JSON.stringify(formValue.degreeData));
+        }
+        else if (key === 'imagePath' && value instanceof File) {
           formData.append(key, value);  // Append file directly
         } else if (value !== null && value !== undefined) {
           formData.append(key, value);
@@ -467,12 +470,12 @@ export class OfficerProfileComponent implements OnInit {
       formData.append('submittedBy', this.submittedBy);
       
       // Handle degreeData array
-      if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
-        formValue.degreeData.forEach((degree: any, index: number) => {
-          degree.addedBy = 'employeeProfile';
-          formData.append(`degreeData[${index}]`, JSON.stringify(degree));
-        });
-      }
+      // if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
+      //   formValue.degreeData.forEach((degree: any, index: number) => {
+      //     degree.addedBy = 'employeeProfile';
+      //     formData.append(`degreeData[${index}]`, JSON.stringify(degree));
+      //   });
+      // }
 
       // console.log('formData',formData);  // Check FormData in console
       for (let pair of (formData as any).entries()) {
