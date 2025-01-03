@@ -311,7 +311,7 @@
                     <div class="col-md-2 mb-2">
                       <label><b>Course Level</b></label>
                       <select class="form-control" formControlName="courseLevel"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('courseLevel')?.invalid && officerForm.get('courseLevel')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option value="UG">UG</option>
                         <option value="PG">PG</option>
@@ -322,7 +322,7 @@
                     <div class="col-md-3 mb-2">
                       <label><b>Degree</b></label>
                       <select class="form-control" formControlName="degree"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('degree')?.invalid && officerForm.get('degree')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
                       </select>
@@ -341,7 +341,7 @@
                     <div class="col-md-3 mt-2">
                       <label><b>State</b></label>
                       <select class="form-control" formControlName="locationState"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationState')?.invalid && officerForm.get('locationState')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
                       </select>
@@ -350,7 +350,7 @@
                     <div class="col-md-3 mt-2">
                       <label><b>Country</b></label>
                       <select class="form-control" formControlName="locationCountry"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('locationCountry')?.invalid && officerForm.get('locationCountry')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
                       </select>
@@ -359,7 +359,7 @@
                     <div class="col-md-2 mt-2">
                       <label><b>Duration of Course</b></label>
                       <select class="form-control" formControlName="durationOfCourse"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('durationOfCourse')?.invalid && officerForm.get('durationOfCourse')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
                       </select>
@@ -368,7 +368,7 @@
                     <div class="col-md-2 mt-2">
                       <label><b>Fund</b></label>
                       <select class="form-control" formControlName="fund"
-                        [ngStyle]="{'border-bottom': (submitted && officerForm.get('fund')?.invalid && officerForm.get('fund')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        >
                         <option value="">Select</option>
                         <option value="Self">Self</option>
                         <option value="State Government">State Government</option>

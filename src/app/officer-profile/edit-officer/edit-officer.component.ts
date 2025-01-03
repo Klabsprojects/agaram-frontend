@@ -378,16 +378,16 @@ export class EditOfficerComponent implements OnInit {
   addRow() {
     const newRow = this.fb.group({
       courseLevel: ['', Validators.required],
-      degree: [''],
-      specialisation: ['', Validators.required],
-      instituteName: ['', Validators.required],
-      locationState: ['', Validators.required],
-      locationCountry: ['', Validators.required],
-      durationOfCourse: [null, Validators.required],
-      fund: ['', Validators.required],
-      fees: ['', Validators.required],
-      courseCompletedYear: ['', Validators.required],
-      courseCompletedDate: ['', Validators.required]
+      degree: ['', Validators.required],
+      specialisation: [''],
+      instituteName: [''],
+      locationState: [''],
+      locationCountry: [''],
+      durationOfCourse: [null],
+      fund: [''],
+      fees: [''],
+      courseCompletedYear: [''],
+      courseCompletedDate: ['']
     });
     (this.officerForm.get('degreeData') as FormArray).push(newRow);
     this.rows.push({});
@@ -503,6 +503,46 @@ export class EditOfficerComponent implements OnInit {
         }
       );
     }
+    else {
+      console.log('Form is invalid');
+      
+      // Collect invalid fields
+      const invalidFields = [];
+    
+      // Check for invalid fields in the main form
+      for (const controlName in this.officerForm.controls) {
+        if (this.officerForm.controls[controlName].invalid) {
+          const label = this.getLabelText(controlName);
+          invalidFields.push(label); // Add label to the list
+        }
+      }
+    
+      // Check for invalid fields in the degreeData form array
+      const degreeDataArray = this.officerForm.get('degreeData') as FormArray;
+      if (degreeDataArray) {
+        degreeDataArray.controls.forEach((degreeGroup, index) => {
+          if (degreeGroup instanceof FormGroup) {
+            Object.keys(degreeGroup.controls).forEach((controlName) => {
+              const control = degreeGroup.get(controlName);
+              if (control?.invalid) {
+                const label = this.getLabelText(controlName);
+                invalidFields.push(`Degree ${index + 1} - ${label}`);
+              }
+            });
+          }
+        });
+      }
+    
+      // Show the invalid fields in a popup/alert
+      if (invalidFields.length > 0) {
+        alert(`The following fields are invalid: ${invalidFields.join(', ')}`);
+      }
+    }
+  }
+
+  getLabelText(controlName: string): string {
+    const label = document.querySelector(`label[for=${controlName}]`) as HTMLLabelElement;
+    return label ? label.innerText : controlName;
   }
 
   goBack() {
