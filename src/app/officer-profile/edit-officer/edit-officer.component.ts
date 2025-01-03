@@ -77,7 +77,7 @@ export class EditOfficerComponent implements OnInit {
         this.officerForm.get('officeEmail')?.setValue(data.officeEmail);
         this.officerForm.get('seniority')?.setValue(data.seniority);
         // this.officerForm.get('imagePath')?.setValue(data.imagePath);
-        this.selectedImage = `${this.officerAction.fileUrl}${data.imagePath.replace('\\', '/')}`;
+        this.selectedImage = `${this.officerAction.fileUrl}${data.imagePath?.replace('\\', '/')}`;
         // this.selectedImage = 'https://agaram.a2zweb.in/v1/uploads/1735638303345.png';
         // console.log("selectedImage", this.selectedImage);
         this.degreeData = data.degreeData;

@@ -8,7 +8,7 @@
       <div class="card-body">
         <h4 class="card-title float-left w-100 mb-0">Update Officer Profile<span>
           <div class="col-md-1 float-right" style="max-width:12%;">
-          <img [src]="getImageSource(base64ImageData)" alt="Profile" class="profile-img">
+          <img [src]="selectedImage" alt="Profile" class="profile-img">
         </div></span></h4>
         <div class="clearfix"></div>
        
@@ -447,7 +447,7 @@
           <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
             formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
             <!-- <p style="color: yellow;">Please Upload files Under 1 MB</p> -->
-            <span style="color: orangered;">Please Upload file less than 1 Mb</span>
+            <span>Please Upload file less than 1 Mb</span>
         </div>
         <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="selectedImage && !base64String">
           <img [src]="selectedImage" alt="Selected Image" class="img-fluid" />

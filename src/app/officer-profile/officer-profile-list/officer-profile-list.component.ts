@@ -205,7 +205,7 @@ export class OfficerProfileListComponent implements OnInit {
         this.viewEmployeeData.payscale = ele.payscale;
         this.viewEmployeeData.educationdetails = ele.degreeData;
         this.viewEmployeeData.seniority = ele.seniority;
-        this.viewEmployeeData.imagePath = `${this.officerAction.fileUrl}${ele.imagePath.replace('\\', '/')}`;
+        this.viewEmployeeData.imagePath = `${this.officerAction.fileUrl}${ele.imagePath?.replace('\\', '/')}`;
         // const binaryData = new Uint8Array(ele.photo.data);
         // this.base64ImageData = this.arrayBufferToBase64(binaryData);
         this.officerAction.getDegree().subscribe((response:any)=>{

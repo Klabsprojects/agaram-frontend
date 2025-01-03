@@ -39,5 +39,6 @@ label span, h4 span{
   .imgup{
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
   }
 

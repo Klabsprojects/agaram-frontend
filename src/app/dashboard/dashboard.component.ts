@@ -240,7 +240,7 @@ export class DashboardComponent implements OnInit {
                     this.employeeHistory.dateOfJoining = this.datePipe.transform(dateOfJoining, 'dd/MM/yyyy');
                     const dateOfRetirement = item.dateOfRetirement;
                     this.employeeHistory.dateOfRetirement = this.datePipe.transform(dateOfRetirement, 'dd/MM/yyyy');
-                    this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}${item.imagePath.replace('\\', '/')}`;
+                    this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}${item.imagePath?.replace('\\', '/')}`;
                     // const binaryData = new Uint8Array(item.photo.data);
                     // if (item.photo && item.photo.data) {
                     console.log(item.photo);
