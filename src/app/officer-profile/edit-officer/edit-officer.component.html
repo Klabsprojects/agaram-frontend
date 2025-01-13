@@ -493,9 +493,9 @@
                   <input type="text" class="form-control pl-0" formControlName="dateOfJoining" readonly />              
                 </div> -->
                 <div class="col-sm-12">
-                  <input type="text" class="form-control" name="dateOfJoining" formControlName="dateOfJoining" maxlength="10"  [readonly]="dateOfJoiningReadOnly"
+                  <input type="date" class="form-control" name="dateOfJoining" formControlName="dateOfJoining" maxlength="10"  [readonly]="dateOfJoiningReadOnly" (change)="getYear()"
                     [ngStyle]="{'border-bottom': (submitted && officerForm.get('dateOfJoining')?.invalid && officerForm.get('dateOfJoining')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
-                    <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('dateOfJoining')"></i> 
+                    <i class="typcn typcn-pencil position-absolute icon" (click)="toggleReadOnly('dateOfJoining')" style="right: 0;"></i> 
                 </div>
           </div>
       </div>

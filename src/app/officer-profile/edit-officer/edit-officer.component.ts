@@ -77,7 +77,7 @@ export class EditOfficerComponent implements OnInit {
         this.officerForm.get('officeEmail')?.setValue(data.officeEmail);
         this.officerForm.get('seniority')?.setValue(data.seniority);
         // this.officerForm.get('imagePath')?.setValue(data.imagePath);
-        this.selectedImage = `${this.officerAction.fileUrl}${data.imagePath?.replace('\\', '/')}`;
+        this.selectedImage = `${this.officerAction.fileUrl}profileImages/${data.imagePath?.replace('\\', '/')}`;
         // this.selectedImage = 'https://agaram.a2zweb.in/v1/uploads/1735638303345.png';
         // console.log("selectedImage", this.selectedImage);
         this.degreeData = data.degreeData;
@@ -287,6 +287,7 @@ export class EditOfficerComponent implements OnInit {
   // }
 
   toggleReadOnly(field: string) {
+    console.log("field",field);
     if (field === 'mobile') {
       this.mobileReadOnly = !this.mobileReadOnly;
       if (!this.mobileReadOnly) {
@@ -432,6 +433,8 @@ export class EditOfficerComponent implements OnInit {
     if (dojValue) {
       const dob = new Date(dojValue);
       const retirementYear = dob.getFullYear();
+      this.officerForm.get('batch')?.markAsDirty(); // Mark the control as dirty
+      this.officerForm.get('batch')?.markAsTouched(); // Optionally mark as touched
       this.officerForm.get('batch')?.setValue(retirementYear);
     }
   }

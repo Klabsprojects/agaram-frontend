@@ -177,6 +177,7 @@ export class DashboardComponent implements OnInit {
     this.firstIndex = '';
     this.dashboardService.getEmployeeHistory(data).subscribe((res: any) => {
         res.results.forEach((item: any) => {
+          console.log("item",item);
           if (item._id == data) {
                 this.dashboardService.getData().subscribe((response: any) => {
                     response.forEach((ele: any) => {
@@ -240,7 +241,7 @@ export class DashboardComponent implements OnInit {
                     this.employeeHistory.dateOfJoining = this.datePipe.transform(dateOfJoining, 'dd/MM/yyyy');
                     const dateOfRetirement = item.dateOfRetirement;
                     this.employeeHistory.dateOfRetirement = this.datePipe.transform(dateOfRetirement, 'dd/MM/yyyy');
-                    this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}${item.imagePath?.replace('\\', '/')}`;
+                    this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}profileImages/${item.imagePath?.replace('\\', '/')}`;
                     // const binaryData = new Uint8Array(item.photo.data);
                     // if (item.photo && item.photo.data) {
                     console.log(item.photo);
