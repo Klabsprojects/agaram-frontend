@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hba',
@@ -8,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class HbaComponent implements OnInit {
   filterText:any;
   tableData:any[]=[];
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
+  }
+
+  addNew(){
+    this.router.navigate(['create-hba']);
   }
 
   get filteredEmployeeList() {

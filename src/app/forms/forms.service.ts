@@ -675,4 +675,25 @@ export class LeaveTransferService {
     const headers = this.getHeaders();
     return this.http.get<any>(this.baseUrl+`getPrivateForeignVisit?loginId=${loginId}&loginAs=${loginAs}`,{headers});
   }
+
+  getGpf(loginId:any,loginAs:any){
+    const headers = this.getHeaders();
+    return this.http.get<any[]>(this.baseUrl + `getGpf?loginId=${loginId}&loginAs=${loginAs}`, { headers });
+  }
+
+  createGpf(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addGpf',data,{headers});
+  }
+
+  getMhaId(loginId:any,loginAs:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getIdCard?loginId=${loginId}&loginAs=${loginAs}`,{headers});
+  }
+
+  createMhaId(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addIdCard',data,{headers});
+  }
+
 }

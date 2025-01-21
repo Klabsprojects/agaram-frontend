@@ -49,6 +49,13 @@ import { EditEducationComponent } from './education/edit-education/edit-educatio
 import { EditIntimationComponent } from './intimation/edit-intimation/edit-intimation.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from '../auth-guard';
+import { CreateHbaComponent } from './hba/create-hba/create-hba.component';
+import { GpfComponent } from './gpf/gpf.component';
+import { CreateGpfComponent } from './gpf/create-gpf/create-gpf.component';
+import { EditGpfComponent } from './gpf/edit-gpf/edit-gpf.component';
+import { MhaidComponent } from './mhaid/mhaid.component';
+import { CreateIdComponent } from './mhaid/create-id/create-id.component';
+import { EditIdComponent } from './mhaid/edit-id/edit-id.component';
 
 
 const routes : Routes = [
@@ -78,6 +85,13 @@ const routes : Routes = [
   { path:'create-medical-reimbursement',component:CreateMedicalReimbursementComponent,canActivate: [AuthGuard]},
   { path:'edit-medical-reimbursement',component:EditMedicalReimbursementComponent,canActivate: [AuthGuard]},
   { path:'hba',component:HbaComponent,canActivate: [AuthGuard]},
+  { path:'create-hba',component:CreateHbaComponent,canActivate: [AuthGuard]},
+  { path:'gpf',component:GpfComponent,canActivate: [AuthGuard]},
+  { path:'create-gpf',component:CreateGpfComponent,canActivate: [AuthGuard]},
+  { path:'edit-gpf',component:EditGpfComponent,canActivate: [AuthGuard]},
+  { path:'mha-idcard',component:MhaidComponent,canActivate: [AuthGuard]},
+  { path:'create-mha',component:CreateIdComponent,canActivate: [AuthGuard]},
+  { path:'edit-mha',component:EditIdComponent,canActivate: [AuthGuard]},
   { path:'private-visits',component:PrivateVisitsComponent, data: { componentName: 'PrivateVisit' },canActivate: [AuthGuard]},
   { path:'create-private',component:CreatePrivateVisitComponent,canActivate: [AuthGuard]},
   { path:'edit-private-visit',component:EditPrivateVisitComponent,canActivate: [AuthGuard]},
@@ -107,6 +121,7 @@ const routes : Routes = [
     LtcComponent,
     MedicalReimbursementComponent,
     HbaComponent,
+    CreateHbaComponent,
     PrivateVisitsComponent,
     TransferPostingComponent,
     PromotionComponent,
@@ -144,7 +159,13 @@ const routes : Routes = [
     EditMovableComponent,
     EditEducationComponent,
     EditIntimationComponent,
-    OfficerProfileListComponent
+    OfficerProfileListComponent,
+    GpfComponent,
+    CreateGpfComponent,
+    EditGpfComponent,
+    MhaidComponent,
+    CreateIdComponent,
+    EditIdComponent
   ],
   imports: [
     CommonModule,

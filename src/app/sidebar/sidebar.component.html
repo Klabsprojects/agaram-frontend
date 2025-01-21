@@ -121,8 +121,27 @@
             <li *ngIf="showMenu('Movable')" class="nav-item"><a class="nav-link" [routerLink]="['movable']">Movable Assets</a></li>
             <li *ngIf="showMenu('Education')" class="nav-item"><a class="nav-link" [routerLink]="['education']">Education </a></li>
             <li *ngIf="showMenu('Intimation')" class="nav-item"><a class="nav-link" [routerLink]="['intimation']">Intimation </a></li>
+            <li *ngIf="showMenu('officerTour')" class="nav-item"><a class="nav-link" [routerLink]="['officerTour']">Officer Tour </a></li>
+            <li *ngIf="showMenu('hba')" class="nav-item"><a class="nav-link" [routerLink]="['hba']">House Building Advance  </a></li>
+            <li *ngIf="showMenu('gpf')" class="nav-item"><a class="nav-link" [routerLink]="['gpf']">GPF </a></li>
+            <li *ngIf="showMenu('idCard')" class="nav-item"><a class="nav-link" [routerLink]="['idCard']">MHA ID card</a></li>
+
           </ul>
         </div>
+      </li>
+
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['gpf']">
+          <i class="typcn typcn-document-text menu-icon" [class.active]="isActive('gpf')"></i>
+          <span class="menu-title" [class.active]="isActive('gpf')">GPF</span>
+        </a>
+      </li>
+
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['mha-idcard']">
+          <i class="typcn typcn-document-text menu-icon" [class.active]="isActive('mha-idcard')"></i>
+          <span class="menu-title" [class.active]="isActive('mha-idcard')">MHA ID Card</span>
+        </a>
       </li>
   
       <li *ngIf="showMenu('Master Creation')" class="nav-item" [routerLinkActive]="['active']">
