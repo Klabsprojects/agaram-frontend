@@ -56,7 +56,13 @@ import { EditGpfComponent } from './gpf/edit-gpf/edit-gpf.component';
 import { MhaidComponent } from './mhaid/mhaid.component';
 import { CreateIdComponent } from './mhaid/create-id/create-id.component';
 import { EditIdComponent } from './mhaid/edit-id/edit-id.component';
-
+import { OtherGoComponent } from './uploads/other-go/other-go.component';
+import { CircularsComponent } from './uploads/circulars/circulars.component';
+import { UtilityformsComponent } from './uploads/utilityforms/utilityforms.component';
+import { ActrulesComponent } from './uploads/actrules/actrules.component';
+import { FaqComponent } from './uploads/faq/faq.component';
+import { PostingTransferComponent } from './uploads/posting-transfer/posting-transfer.component';
+import { SpecialEntriesComponent } from './uploads/special-entries/special-entries.component';
 
 const routes : Routes = [
   { path: 'transfer-posting', component: TransferPostingComponent,data: { componentName: 'TransferPosting' },canActivate: [AuthGuard] },
@@ -110,6 +116,13 @@ const routes : Routes = [
   { path:'create-intimation',component:CreateIntimationComponent,canActivate: [AuthGuard]},
   { path:'edit-intimation',component:EditIntimationComponent,canActivate: [AuthGuard]},
   { path:'officer-profile',component:OfficerProfileListComponent,data: { componentName: 'OfficerProfile' },canActivate: [AuthGuard]},
+  { path:'othergo',component:OtherGoComponent,data: { componentName: 'OtherGo' },canActivate: [AuthGuard]},
+  { path:'circular',component:CircularsComponent,data: { componentName: 'Circulars' },canActivate: [AuthGuard]},
+  { path:'utility',component:UtilityformsComponent,data: { componentName: 'Utilityforms' },canActivate: [AuthGuard]},
+  { path:'act-rule',component:ActrulesComponent,data: { componentName: 'Actrules' },canActivate: [AuthGuard]},
+  { path:'faq',component:FaqComponent,data: { componentName: 'Faq' },canActivate: [AuthGuard]},
+  { path:'post-transfer',component:PostingTransferComponent,data: { componentName: 'PostingTransfer' },canActivate: [AuthGuard]},
+  { path:'special-entry',component:SpecialEntriesComponent,data: { componentName: 'SpecialEntries' },canActivate: [AuthGuard]},
 ]
 
 @NgModule({
@@ -165,7 +178,14 @@ const routes : Routes = [
     EditGpfComponent,
     MhaidComponent,
     CreateIdComponent,
-    EditIdComponent
+    EditIdComponent,
+    OtherGoComponent,
+    CircularsComponent,
+    UtilityformsComponent,
+    ActrulesComponent,
+    FaqComponent,
+    PostingTransferComponent,
+    SpecialEntriesComponent
   ],
   imports: [
     CommonModule,

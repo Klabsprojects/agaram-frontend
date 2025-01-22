@@ -696,4 +696,24 @@ export class LeaveTransferService {
     return this.http.post<any>(this.baseUrl+'addIdCard',data,{headers});
   }
 
+  uploadAdd(payload:any,url:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+url,payload,{headers});
+  }
+
+  uploadEdit(payload:any,url:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+url,payload,{headers});
+  }
+
+  uploadGet(url:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+url,{headers});
+  }
+
+  uploadDelete(url:any,id:any){
+    const headers = this.getHeaders();
+    return this.http.delete<any>(this.baseUrl+url+'/'+id,{headers});
+  }
+
 }

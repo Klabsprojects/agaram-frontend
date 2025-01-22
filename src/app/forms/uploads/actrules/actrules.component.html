@@ -1,0 +1,115 @@
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h5>Act and Rule Upload <button type="button" class="btn btn-success btn-add float-right p-2" (click)="create()">Add New</button></h5>
+
+            <div class="col-md-12 p-0 mt-2">
+                <div class="col-md-3 px-0 mt-2 mb-0">
+                    <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+                </div>
+
+                <app-shared></app-shared>
+            </div>
+            <div class="table-responsive">
+                <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Act/Rule Number</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+                            <tr *ngFor="let data of pagedData(); let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{data.actsrulesNumber}}</td>
+                                <td>{{data.actsrulesDate | date:'dd/MM/YYYY'}}</td>
+                                <td>{{ data.actsrulesDescription}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)">Edit</button>
+                                    <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;" (click)="view(data.actsrulesFile)">View</button>
+                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-template #noRecords>
+                            <tr>
+                                <td colspan="13" style="color: red;">No records found</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+                <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length >= pageSizeOptions[0]">
+                    <div class="dropdown col-md-8">
+                      <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Items Per Page: {{ pageSize }}
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                          }}</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4" style="border: 0px;">
+                      <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+                        <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+                      <ng-container *ngFor="let page of pages">
+                        <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+                          (click)="goToPage(page)">{{ page }}</button>
+                      </ng-container>
+                      <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+                        Next <i class="mdi mdi-chevron-double-right"></i> </button>
+                  
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewForeignVisit" tabindex="-1" aria-labelledby="viewForeignVisitLabel" aria-hidden="true"
+    *ngIf="showPopup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewForeignVisitLabel">Act/Rules Upload Addition</h5>
+                <button type="button" class="close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="actrulesForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body pb-0">
+                    <div class="col-md-12 p-0">
+                        <div class="col-md-12 px-0 mb-4">
+                            <label class="w-100 col-form-label">Act / Rule Number <span>*</span></label>
+                            <input type="text" class="form-control" formControlName="actsrulesNumber" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('actsrulesNumber')?.invalid && actrulesForm.get('actsrulesNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                        <div class="col-md-12 px-0 mb-4">
+                            <label class="w-100 col-form-label">Act / Rule Date <span>*</span></label>
+                            <input type="date" class="form-control" formControlName="actsrulesDate" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('actsrulesDate')?.invalid && actrulesForm.get('actsrulesDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}"/>
+                        </div>
+                        <div class="col-md-12 px-0 mb-4">
+                            <label class="w-100 col-form-label">Act / Rule Description <span>*</span></label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                formControlName="actsrulesDescription" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('actsrulesDescription')?.invalid && actrulesForm.get('actsrulesDescription')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}"></textarea>
+                        </div>
+                        <div class="col-md-12 px-0 mb-4">
+                            <label class="w-100 col-form-label">Act/Rule Copy(Only pdf format, not more than 2MB)
+                                <span>*</span></label>
+                            <input type="file" class="form-control" formControlName="actsrulesFile" accept=".pdf" (change)="onFileSelected($event)"
+                                style="border:0px;" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success py-2 px-3">Submit</button>
+                    <button type="button" class="btn btn-secondary py-2 px-3" (click)="hideModal()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
