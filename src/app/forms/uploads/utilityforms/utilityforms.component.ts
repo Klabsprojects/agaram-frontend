@@ -196,6 +196,14 @@ export class UtilityformsComponent {
     const pdfUrl = `${this.url}${data}`;
     window.open(pdfUrl, '_blank');
   }
+  
+  onKeyDown(event: KeyboardEvent) {
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') ||
+      ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
+  }
   onSubmit() {
     this.submitted = true;
     if (this.actrulesForm.valid) {

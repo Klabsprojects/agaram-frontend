@@ -86,7 +86,7 @@
                     <div class="col-md-12 p-0">
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Utility Form Number <span>*</span></label>
-                            <input type="text" class="form-control" formControlName="UtilityNumber" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('UtilityNumber')?.invalid && actrulesForm.get('UtilityNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                            <input type="text" class="form-control" formControlName="UtilityNumber" (keydown)="onKeyDown($event)" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('UtilityNumber')?.invalid && actrulesForm.get('UtilityNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                         </div>
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Utility Form Date <span>*</span></label>

@@ -152,6 +152,13 @@ export class ActrulesComponent {
       }
     })
   }
+  onKeyDown(event: KeyboardEvent) {
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') ||
+      ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
+  }
   create() {
     this.actrulesForm.reset();
     this.editId = null;

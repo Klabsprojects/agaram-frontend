@@ -224,6 +224,15 @@ export class SpecialEntriesComponent {
       }
     }
   }
+
+  
+  onKeyDown(event: KeyboardEvent) {
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') ||
+      ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
+  }
   view(data:any){
     const pdfUrl = `${this.url}${data}`;
     window.open(pdfUrl, '_blank');

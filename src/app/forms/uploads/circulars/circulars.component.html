@@ -86,7 +86,7 @@
                     <div class="col-md-12 p-0">
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Circular Number <span>*</span></label>
-                            <input type="text" class="form-control" formControlName="CircularNumber" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('CircularNumber')?.invalid && actrulesForm.get('CircularNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                            <input type="text" class="form-control" formControlName="CircularNumber" (keydown)="onKeyDown($event)" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('CircularNumber')?.invalid && actrulesForm.get('CircularNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                         </div>
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Circular Date <span>*</span></label>
