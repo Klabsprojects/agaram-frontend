@@ -63,6 +63,9 @@ import { ActrulesComponent } from './uploads/actrules/actrules.component';
 import { FaqComponent } from './uploads/faq/faq.component';
 import { PostingTransferComponent } from './uploads/posting-transfer/posting-transfer.component';
 import { SpecialEntriesComponent } from './uploads/special-entries/special-entries.component';
+import { OfficerTourComponent } from './officer-tour/officer-tour.component';
+import { CreateTourComponent } from './officer-tour/create-tour/create-tour.component';
+import { EditTourComponent } from './officer-tour/edit-tour/edit-tour.component';
 
 const routes : Routes = [
   { path: 'transfer-posting', component: TransferPostingComponent,data: { componentName: 'TransferPosting' },canActivate: [AuthGuard] },
@@ -123,6 +126,9 @@ const routes : Routes = [
   { path:'faq',component:FaqComponent,data: { componentName: 'Faq' },canActivate: [AuthGuard]},
   { path:'post-transfer',component:PostingTransferComponent,data: { componentName: 'PostingTransfer' },canActivate: [AuthGuard]},
   { path:'special-entry',component:SpecialEntriesComponent,data: { componentName: 'SpecialEntries' },canActivate: [AuthGuard]},
+  { path:'officer-tour',component:OfficerTourComponent,data: { componentName: 'OfficerTour' },canActivate: [AuthGuard]},
+  { path:'create-officers-tour',component:CreateTourComponent,data: { componentName: 'CreateTour' },canActivate: [AuthGuard]},
+  { path:'edit-officers-tour',component:EditTourComponent,canActivate: [AuthGuard]},
 ]
 
 @NgModule({
@@ -185,7 +191,10 @@ const routes : Routes = [
     ActrulesComponent,
     FaqComponent,
     PostingTransferComponent,
-    SpecialEntriesComponent
+    SpecialEntriesComponent,
+    OfficerTourComponent,
+    CreateTourComponent,
+    EditTourComponent
   ],
   imports: [
     CommonModule,

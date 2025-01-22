@@ -111,6 +111,7 @@
         </a>
         <div class="collapse" id="splbforms">
           <ul class="nav flex-column sub-menu">
+            <li *ngIf="showMenu('Foreign Visit')" class="nav-item"><a class="nav-link" [routerLink]="['officer-tour']">Officer Tours</a></li>
             <li *ngIf="showMenu('Foreign Visit')" class="nav-item"><a class="nav-link" [routerLink]="['foreign-visit']">Foreign Visit</a></li>
             <li *ngIf="showMenu('SAF Games Village Application')" class="nav-item"><a class="nav-link" [routerLink]="['saf-village-application']">SAF Games Village</a></li>
             <li *ngIf="showMenu('SAF Games Village Allocation')" class="nav-item"><a class="nav-link" [routerLink]="['saf-village-allocation']">SAF Allocation</a></li>

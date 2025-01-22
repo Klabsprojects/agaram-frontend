@@ -15,10 +15,10 @@ export class LeaveTransferService {
   private roleDataSource = new BehaviorSubject<any[]>(this.getLocalRoleData());
   currentRoleData = this.roleDataSource.asObservable();
 
-        //  baseUrl = 'http://localhost:5500/api/';
-        //  fileUrl = 'http://localhost:5500/';
-        fileUrl = 'https://agaram.a2zweb.in/backend/';
-        baseUrl = 'https://agaram.a2zweb.in/v1/api/';
+         baseUrl = 'http://localhost:5500/api/';
+         fileUrl = 'http://localhost:5500/';
+        // fileUrl = 'https://agaram.a2zweb.in/backend/';
+        // baseUrl = 'https://agaram.a2zweb.in/v1/api/';
         private roleDataKey = 'roleData';
         private token: string='';
         
