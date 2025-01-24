@@ -38,6 +38,7 @@ export class CreateTourComponent {
   states: any[] = [];
   disctricts: any[] = [];
   row: any[] = [{}];
+  officers:any[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private ltcService: LeaveTransferService, private fb: FormBuilder, private cs: CommonService) { }
   ngAfterViewInit(): void {
@@ -84,7 +85,7 @@ export class CreateTourComponent {
       dateOfOrder: ['', Validators.required],
       rejectReasons: ['', Validators.required],
       remarks: ['testing1', Validators.required],
-      orderFIle :[null, Validators.required]
+      orderFile :[null, Validators.required]
     });
     this.ltcService.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
@@ -136,6 +137,9 @@ export class CreateTourComponent {
 
   selectOption(option: any, index: number) {
     console.log("option",option);
+    var empProfileId = option.empProfileId
+    var departmentId:any;
+    var designationId:any;
     const name = option.name;
     const payload = { name: option.name };
     this.selectedOption = option.name;
@@ -173,8 +177,8 @@ export class CreateTourComponent {
               item => item.value === res.results.empList.find((data: any) => data.toDepartmentId)?.toDepartmentId
             );
             if (matchingDepartment) {
-              console.log("matchingDepartment",matchingDepartment);
               officerGroup.get('department')?.setValue(matchingDepartment.label);
+              departmentId = matchingDepartment.value;
             }
           });
   
@@ -189,8 +193,9 @@ export class CreateTourComponent {
               item => item.value === res.results.empList.find((data: any) => data.toDesignationId)?.toDesignationId
             );
             if (matchingDesignation) {
-              console.log("matchingDesignation",matchingDesignation)
               officerGroup.get('designation')?.setValue(matchingDesignation.label);
+              designationId = matchingDesignation.value;
+              this.officers.push({'employeeProfileId':empProfileId,'departmentId':departmentId,'designationId':designationId});
             }
           });
         });
@@ -205,22 +210,22 @@ export class CreateTourComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      this.ltcForm.patchValue({ orderFIle: this.selectedFile });
+      this.ltcForm.patchValue({ orderFile: this.selectedFile });
     }
     this.selectedFile = event.target.files[0];
-    this.ltcForm.get('orderFIle')?.setValue(this.selectedFile);
+    this.ltcForm.get('orderFile')?.setValue(this.selectedFile);
     if (this.selectedFile) {
       if (this.selectedFile.type !== 'application/pdf') {
-        this.ltcForm.get('orderFIle')?.setErrors({ 'incorrectFileType': true });
+        this.ltcForm.get('orderFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
 
       if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.ltcForm.get('orderFIle')?.setErrors({ 'maxSize': true });
+        this.ltcForm.get('orderFile')?.setErrors({ 'maxSize': true });
         return;
       }
 
-      this.ltcForm.get('orderFIle')?.setErrors(null);
+      this.ltcForm.get('orderFile')?.setErrors(null);
     }
   }
 
@@ -234,17 +239,22 @@ export class CreateTourComponent {
 
   onSubmit(): void {
     this.submitted = true;
-    console.log("(this.ltcForm.valid",this.ltcForm.value)
     if (this.ltcForm.valid) {
       const formData = new FormData();
       const formValues = this.ltcForm.value;
       for (const key in formValues) {
-        if (formValues.hasOwnProperty(key) && key !== 'orderFIle') {
+        if ((formValues.hasOwnProperty(key) && key !== 'orderFile')&&(key !== 'OtherOfficers')) {
           formData.append(key, formValues[key]);
         }
       }
+      this.officers.forEach((employee,index)=>{
+        Object.keys(employee).forEach((key) => {
+          // console.log(`OtherOfficers[${index}][${key}]: ${employee[key]}`);
+          formData.append(`OtherOfficers[${index}][${key}]`,employee[key])
+      });
+      })
       if (this.selectedFile) {
-        formData.append('orderFIle', this.selectedFile);
+        formData.append('orderFile', this.selectedFile);
       }
       this.module = "Leave Travel Concession";
       this.ltcService.uploadAdd(formData,'addOfficersTour').subscribe(

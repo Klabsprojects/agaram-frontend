@@ -10,6 +10,64 @@
             <form [formGroup]="ltcForm" (ngSubmit)="onSubmit()">
                 <div class="row mb-1 mt-2">
 
+                    <!-- new -->
+                    <div class="table-responsive">
+                        <div formArrayName="OtherOfficers">
+                            <div *ngFor="let row of listofemployees.controls; let i = index" [formGroupName]="i"
+                                class="card mb-3 mt-2">
+                                <div class="card-body" *ngIf="i==0">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-2 text-right" *ngIf="i !== 0">
+                                            <button type="button" class="btn btn-danger p-2"
+                                                (click)="removeRow(i)">Delete</button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-form-label">Officer's
+                                                    Name<span>*</span></label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control"
+                                                        formControlName="officerName"
+                                                        (input)="onInput($event, 'officerName')"
+                                                        [ngStyle]="{'border-bottom': (submitted && ltcForm.get('officerName')?.invalid && ltcForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                                    <div class="autocomplete-items" *ngIf="showDropdown">
+                                                        <div class="option" *ngFor="let option of filteredOptions"
+                                                            (click)="selectOption(option,i)">
+                                                            {{ option.name }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-form-label">Department </label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control"
+                                                        formControlName="department" readonly
+                                                        [ngStyle]="{'border-bottom': (submitted && ltcForm.get('department')?.invalid && ltcForm.get('department')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-form-label">Designation</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control"
+                                                        formControlName="designation" readonly
+                                                        [ngStyle]="{'border-bottom': (submitted && ltcForm.get('designation')?.invalid && ltcForm.get('designation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- new -->
+
                     <div class="col-md-3">
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label"> Proposed State to visit <span>*</span></label>
@@ -162,12 +220,12 @@
                         <div class="form-group row">
                             <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
                             <div class="col-sm-12">
-                                <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFIle"
+                                <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile"
                                     (change)="onFileSelected($event)" style="border: none;">
                             </div>
-                            <div *ngIf="ltcForm.get('orderFIle')?.errors?.['maxSize']"
+                            <div *ngIf="ltcForm.get('orderFile')?.errors?.['maxSize']"
                                 style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
-                            <div *ngIf="ltcForm.get('orderFIle')?.errors?.['incorrectFileType']">Only PDF files are
+                            <div *ngIf="ltcForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are
                                 allowed</div>
                         </div>
                     </div>
