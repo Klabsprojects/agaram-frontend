@@ -1,19 +1,42 @@
 <div class="pagination-section">
-    <p class="entry-info">Showing 1 to 10 of 206 entries</p>
+    <p class="entry-info">Showing 1 to 10 of {{sampleData.length}} entries</p>
+    <!-- Pagination controls -->
     <div class="pagination-controls">
-        <button class="page-button" disabled>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+        <!-- Front button -->
+        <button class="page-button" [disabled]="currentPage === 1" (click)="goToPage(1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M19 6L10 12l9 6"></path>
+            </svg>
+        </button>
+
+        <!-- Previous button -->
+        <button class="page-button" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                 <path d="m15 18-6-6 6-6"></path>
             </svg>
         </button>
-        <button class="page-button current-page">1</button>
-        <button class="page-button">2</button>
-        <button class="page-button">3</button>
-        <button class="page-button">4</button>
-        <button class="page-button">5</button>
-        <button class="page-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+
+        <!-- Page buttons -->
+        <button class="page-button" *ngFor="let page of pagesToDisplay" [class.current-page]="page === currentPage"
+            [disabled]="page === '...'" (click)="goToPage(page)">
+            {{ page }}
+        </button>
+
+        <!-- Next button -->
+        <button class="page-button" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                 <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </button>
+
+        <!-- Last button -->
+        <button class="page-button" [disabled]="currentPage === totalPages" (click)="goToPage(totalPages)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M5 6l9 6-9 6"></path>
             </svg>
         </button>
     </div>

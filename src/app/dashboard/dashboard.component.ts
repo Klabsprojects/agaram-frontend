@@ -276,6 +276,9 @@ arrayBufferToBase64(buffer: Uint8Array): string {
 
   onInput(event: any, field: string) {
     const inputValue = event.target.value.trim(); 
+    if(!inputValue){
+      this.getDashboard()
+    }
     if (!inputValue) {
       this.showDropdown = false;
       return;
@@ -435,9 +438,11 @@ onDateChange(data:any) {
 getDashboard() {
   this.dashboardService.getActiveOfficers().subscribe((res: any) => {
    this.ActiveEmployeeCount= res.results.empCount;
+   const activeList:any[] = res.results.empList;
     this.dashboardService.getRetiresOfficers().subscribe((res: any) => {
       this.RetiredEmployeeCount= res.results.empCount;
-      this.tableData = res.results.empList;
+      const retiredList:any[] = res.results.empList;
+      this.tableData = activeList.concat(retiredList);
       this.TotalOfficerCount = this.ActiveEmployeeCount + this.RetiredEmployeeCount;
     });
   });
@@ -966,6 +971,7 @@ getDashboard() {
   // console.log('Payload:', payload);
   console.log(this.role);
   if(this.role !="Officer"){
+    console.log("payload",payload);
     this.dashboardService.employeeFilter(payload).subscribe((res: any) => {
       res.results.empList.forEach((ele:any)=>{
       const postingIn = this.postingIn.find((data: any) => data.value === ele.toPostingInCategoryCode);
