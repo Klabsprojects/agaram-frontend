@@ -51,7 +51,7 @@ export class LeaveTransferService {
       localStorage.clear();
 
     }
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('/');
   }
   
   setSelectedItem(item: string) {

@@ -28,7 +28,6 @@ export class landingService {
     }
 
     handlePaginationSent(data: any) {
-        console.log("data-data", data)
         this.pagginationSend.next(data);
     }
 

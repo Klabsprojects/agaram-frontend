@@ -59,11 +59,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/check.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')">
+            <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')" [class.disabled]="this.role==='Officer'">
               <p>Active <br><span> ( {{ActiveEmployeeCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()" [class.disabled]="this.role==='Officer'">
               <p>Retired <br><span> ( {{RetiredEmployeeCount}} )</span></p>
             </div>
           </div>
@@ -79,11 +79,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/gender.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="maleOfficer()">
+            <div class="col-md-6 float-left" (click)="maleOfficer()" [class.disabled]="this.role==='Officer'">
               <p>Male <br><span> ( {{maleEmployeeCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="femaleOfficer()">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="femaleOfficer()" [class.disabled]="this.role==='Officer'">
               <p>Female <br><span> ( {{femaleEmployeeCount}} )</span></p>
             </div>
           </div>
@@ -98,11 +98,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/location.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')">
+            <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')" [class.disabled]="this.role==='Officer'">
               <p>Chennai <br><span> ( {{chennaiOfficerCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')" [class.disabled]="this.role==='Officer'">
               <p>Outside <br><span> ( {{outsideChennaiOfficerCount}} )</span></p>
             </div>
           </div>
@@ -117,11 +117,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="secretariat('yes')">
+            <div class="col-md-6 float-left" (click)="secretariat('yes')" [class.disabled]="this.role==='Officer'">
               <p>Secretariat <br><span> ({{secretariatCount}})</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')" [class.disabled]="this.role==='Officer'">
               <p>Outside <br><span> ({{outsideSecretariatCount}})</span></p>
             </div>
           </div>
@@ -136,19 +136,19 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width: 15%;"></div>
             </div>
 
-            <div class="col-md-3 float-left" (click)="collectors('Collector')">
+            <div class="col-md-3 float-left" (click)="collectors('Collector')" [class.disabled]="this.role==='Officer'">
               <p>Collectors <br><span> ({{collectorCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')" [class.disabled]="this.role==='Officer'">
               <p>Sub -Collectors <br><span> ({{subCollectorCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')" [class.disabled]="this.role==='Officer'">
               <p>Asst Collectors <br><span> ({{asstCollectorsCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')" [class.disabled]="this.role==='Officer'">
               <p>Additional <br><span> ({{additionalCollectorCount}})</span></p>
             </div>
           </div>
@@ -161,7 +161,7 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
             </div>
 
-            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')">
+            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')" [class.disabled]="this.role==='Officer'">
               <p>Commissioner <br><span> ({{commissionerCount}})</span></p>
             </div>
           </div>
@@ -174,8 +174,8 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
             </div>
 
-            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')">
-              <p>DRO <br><span> ({{commissionerCount}})</span></p>
+            <div class="col-md-12 float-left" (click)="dro()" [class.disabled]="this.role==='Officer'" >
+              <p>DRO <br><span> ({{droCount}})</span></p>
             </div>
           </div>
         </div>
@@ -361,11 +361,13 @@
               <th>#</th>
               <th>Name</th>
               <th *ngIf="showGender">Gender</th>
-              <th>Batch</th>
+              <th *ngIf="!drocurrent">Batch</th>
               <th *ngIf="showPosting">Posting</th>
-              <th>Department</th>
+              <th *ngIf="!drocurrent">Department</th>
               <th *ngIf="showDesignation">Designation</th>
               <th *ngIf="showLocation">Location</th>
+              <th *ngIf="drocurrent">Current Posting</th>
+              <th *ngIf="drocurrent">Mobile No</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -375,14 +377,17 @@
               <tr *ngFor="let cardTableData of pagedData(); let i = index">
                 <!-- <td>{{i + 1}}</td> -->
                 <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-                <td>{{cardTableData.fullName}}</td>
+                <td *ngIf="!drocurrent">{{cardTableData.fullName}}</td>
                 <td *ngIf="showGender">{{ cardTableData.gender === '65f43649a4a01c1cbbd6c9ad' ? 'Female' :
                   cardTableData.gender === '65f43649a4a01c1cbbd6c9ac' ? 'Male' : '' }}</td>
-                <td>{{cardTableData.batch}}</td>
+                <td *ngIf="!drocurrent">{{cardTableData.batch}}</td>
                 <td *ngIf="showPosting">{{cardTableData.postingIn}}</td>
-                <td>{{cardTableData.department}}</td>
+                <td *ngIf="!drocurrent">{{cardTableData.department}}</td>
                 <td *ngIf="showDesignation">{{cardTableData.designation}}</td>
                 <td *ngIf="showLocation">{{cardTableData.city}}</td>
+                <td *ngIf="drocurrent">{{cardTableData.OfficerName}}</td>
+                <td *ngIf="drocurrent">{{cardTableData.PresentPost}}</td>
+                <td *ngIf="drocurrent">{{cardTableData.MobileNo}}</td>
                 <td class="text-center"><button type="button" class="btn btn-info p-2"
                     (click)="viewInfo(cardTableData._id)" data-toggle="modal" data-target="#viewInfo">View</button></td>
               </tr>
