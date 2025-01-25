@@ -7,7 +7,16 @@ import { landingService } from '../../landing-services/landing.service';
 })
 export class HomeComponent {
   constructor(private service:landingService){}
-  ngOnInit(){}
+  ngOnInit(){
+    this.service.getapicall('GetCardDetails').subscribe((res:any)=>{
+      this.dashboardCounts = [
+        {'title':'Total Officers','count':res.TotalEmpCount},
+        {'title':'Active Officers','count':res.ActiveEmpCount},
+        {'title':'Retired Officers','count':res.RetiredEmpCount},
+        {'title':'Officers on Deputation','count':res.DeputationEmpCount}]
+    })
+  }
+  public dashboardCounts:any[]=[];
   public texts: any[] = ['Total Officers','Active Officers', 'Retired Officers', 'Officers on Deputation']
   public subHeading: any[] = ['320', '316', '453', '100%']
   public greenbox: any[] = ['12% increase this month', '98% productivity rate', '25% above target', 'Full implementation']

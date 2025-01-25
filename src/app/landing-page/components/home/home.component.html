@@ -5,8 +5,8 @@
             <p class="sub-title">Pioneering Digital Governance | Empowering Administration | Serving Excellence</p>
         </div>
         <div class="row mb-5">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3" *ngFor="let detail of texts;let i = index">
-                <app-detail [title]="texts[i]" [subHeading]="subHeading[i]" [greenText]="greenbox[i]" />
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3" *ngFor="let detail of dashboardCounts">
+                <app-detail [data]="detail" />
             </div>
         </div>
         <div class="row mb-5">
