@@ -22,32 +22,25 @@ export class landingService {
 
     pagginationRecive = new BehaviorSubject<any>(null);
     pagginationRecive$ = this.pagginationRecive.asObservable();
-    
-    callSearch(data:any){
+
+    callSearch(data: any) {
         this.searchText.next(data);
     }
 
-    handlePaginationSent(data:any){
-        console.log("data-data",data)
+    handlePaginationSent(data: any) {
+        console.log("data-data", data)
         this.pagginationSend.next(data);
     }
 
-    handlePaginationRecive(data:any){
+    handlePaginationRecive(data: any) {
         this.pagginationRecive.next(data);
     }
 
-    getapicall(url:any) {
-        const token = localStorage.getItem('Authorization');
-        const header = new HttpHeaders().set('Authorization', `${token}`);
-        if(token){
-            return this.http.get<any>(`${this.baseUrl}${url}`,{headers:header});
-        }
-        else{
-            return this.http.get<any>(`${this.baseUrl}${url}`);
-        }
+    getapicall(url: any) {
+        return this.http.get<any>(`${this.baseUrl}${url}`);
     }
 
-    postapicall(url:any,payload:any){
-        return this.http.post(url,payload);
+    postapicall(url: any, payload: any) {
+        return this.http.post(url, payload);
     }
 }
