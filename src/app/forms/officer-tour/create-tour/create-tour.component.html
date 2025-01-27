@@ -32,7 +32,7 @@
                                                         [ngStyle]="{'border-bottom': (submitted && ltcForm.get('officerName')?.invalid && ltcForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                                                     <div class="autocomplete-items" *ngIf="showDropdown">
                                                         <div class="option" *ngFor="let option of filteredOptions"
-                                                            (click)="selectOption(option,i)">
+                                                            (click)="selectOptionNew(option,i)">
                                                             {{ option.name }}
                                                         </div>
                                                     </div>
@@ -262,7 +262,7 @@
                                                             [ngStyle]="{'border-bottom': (submitted && ltcForm.get('officerName')?.invalid && ltcForm.get('officerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                                                         <div class="autocomplete-items" *ngIf="showDropdown">
                                                             <div class="option" *ngFor="let option of filteredOptions"
-                                                                (click)="selectOption(option,i)">
+                                                                (click)="selectOptionNew(option,i)">
                                                                 {{ option.name }}
                                                             </div>
                                                         </div>
