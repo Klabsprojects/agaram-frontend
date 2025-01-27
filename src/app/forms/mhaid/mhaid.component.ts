@@ -22,6 +22,7 @@ export class MhaidComponent implements OnInit{
     showEdit:boolean=false;
     showApprove:boolean=false;  
     showPopup = true;
+    viewIdData = new viewIdData();
   
     constructor(private router:Router,private idService:LeaveTransferService,private datePipe: DatePipe) { }
   
@@ -29,7 +30,7 @@ export class MhaidComponent implements OnInit{
       this.url = this.idService.fileUrl;
       const loginId = localStorage.getItem('loginId');
      const loginAs = localStorage.getItem('loginAs');
-      this.idService.getMhaId(loginId,loginAs).subscribe((res:any)=>{
+      this.idService.getMhaIdCard(loginId,loginAs).subscribe((res:any)=>{
         this.tableData = res.results;
       });
       this.checkAccess();
@@ -128,7 +129,67 @@ export class MhaidComponent implements OnInit{
       this.router.navigate(['create-mha']);
     }
   
-   
+    editIdCard(data:any){
+      const encodedData = btoa(JSON.stringify(data));
+      this.router.navigate(['edit-mha'],{queryParams:{id:encodedData}});
+    }
+
+    viewIdCard(data:any){
+      this.idService.getMhaId(data).subscribe((res:any)=>{
+        res.results.forEach((data:any)=>{
+         this.idService.getData().subscribe((res: any[]) => {
+           res.forEach((item) => {
+             if(item.category_type == "order_type"){
+               if(item._id == data.orderType){
+                 this.viewIdData.orderType = item.category_name;
+               }
+             }
+             if (item.category_type == "order_for") {
+               if(item._id == data.orderFor){
+                 this.viewIdData.orderFor = item.category_name;
+               }          
+             }
+           });
+         });
+         this.viewIdData.phone = "+91"+data.employeeProfileId.mobileNo1;
+         this.viewIdData.id = data._id;
+         this.viewIdData.approvalStatus = data.approvalStatus;
+         this.viewIdData.officerName = data.officerName;
+         this.viewIdData.department = data.department;
+         this.viewIdData.designation = data.designation;
+         this.viewIdData.idCardNo = data.idCardNo;
+         this.viewIdData.availedDate = data.availedDate;
+         this.viewIdData.expiryDate = data.expiryDate;
+         this.viewIdData.idCardApplication = data.idCardApplication;
+         this.viewIdData.finalIdCard = data.finalIdCard;
+         this.viewIdData.orderType = data.orderType;
+         this.viewIdData.orderNo = data.orderNo;
+         this.viewIdData.orderFor = data.orderFor;
+         this.viewIdData.dateOfOrder = data.dateOfOrder;
+         this.viewIdData.orderFile = data.orderFile;
+         this.viewIdData.remarks = data.remarks;
+        })
+       })
+    }
     
   }
   
+  export class viewIdData{
+    id:string = '';
+    officerName:string='';
+    department:string='';
+    designation:string='';
+    idCardNo:string='';
+    availedDate:string='';
+    expiryDate:string='';
+    idCardApplication:string='';
+    finalIdCard:string='';
+    orderType:string='';
+    orderNo:string='';
+    orderFor:string='';
+    dateOfOrder:string='';
+    orderFile:string='';
+    remarks:string='';
+    phone:string = '';
+    approvalStatus = false;
+  }

@@ -41,8 +41,8 @@
         <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
         <td>{{data.approvalStatus ? 'Approved' : 'Not Approved'}}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-info p-2 mr-2">Edit</button>
-          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewForeignVisit">View</button>
+          <button type="button" class="btn btn-info p-2 mr-2" (click)="editIdCard(data._id)">Edit</button>
+          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewIdData" (click)="viewIdCard(data._id)">View</button>
         </td>
       </tr>
     </ng-container>
@@ -59,4 +59,57 @@
 </div>
 
   
-  
+<div class="modal fade" id="viewIdData" tabindex="-1" aria-labelledby="viewIdDataLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewIdDataLabel">View Ministry of Home Affairs ID Card</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewIdData.officerName}}</div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewIdData.department}}
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Designation</b></label><br>{{viewIdData.designation}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>ID Card No</b></label><br>{{viewIdData.idCardNo}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Availed Date </b></label><br>{{viewIdData.availedDate | date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>ID Card Expire Date</b></label><br>{{viewIdData.expiryDate  | date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>ID Card Application</b></label><br>
+            <a href="{{url}}{{viewIdData.idCardApplication}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Final ID Card</b></label><br>
+            <a href="{{url}}{{viewIdData.finalIdCard}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewIdData.orderType}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewIdData.orderNo}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewIdData.orderFor}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br>
+            {{viewIdData.dateOfOrder | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
+            <a href="{{url}}{{viewIdData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewIdData.remarks}}
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewIdData.approvalStatus"
+          (click)="approveLtc(viewIdData)">Approve</button> -->
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

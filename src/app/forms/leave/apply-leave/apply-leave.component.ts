@@ -65,7 +65,7 @@ export class ApplyLeaveComponent implements OnInit{
       orderNo:['',Validators.required],
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
-      remarks:['',Validators.required],
+      remarks:[''],
       orderFile:[null,Validators.required]
     });
     this.leaveService.getData().subscribe((res:any)=>{
@@ -134,10 +134,10 @@ export class ApplyLeaveComponent implements OnInit{
         return;
       }
 
-      if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.applyLeaveForm.get('orderFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
+      //   this.applyLeaveForm.get('orderFile')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
 
       this.applyLeaveForm.get('orderFile')?.setErrors(null);
     }

@@ -52,6 +52,10 @@ export class CreateTransferComponent implements AfterViewInit {
   transferFormValue: any;
   selectedFile: File | null = null;
   submittedBy: any;
+  deptAddress:string='';
+  deptPhoneNumber:string='';
+  deptOfficialMobileNo:string='';
+  deptFaxNumber:string='';
 
   ifuserlogin = false;
   userdata: any;
@@ -90,7 +94,7 @@ export class CreateTransferComponent implements AfterViewInit {
       orderTypeCategoryCode: ['', Validators.required],
       orderNumber: ['', Validators.required],
       orderForCategoryCode: ['', Validators.required],
-      dateOfOrder: ['', Validators.required],
+      dateOfOrder: [this.getCurrentDateTime(), Validators.required],
       additionalCharge: [''],
       toPostingInCategoryCode: [''],
       toDepartmentId: [''],
@@ -124,6 +128,11 @@ export class CreateTransferComponent implements AfterViewInit {
       });
 
     });
+  }
+
+  getCurrentDateTime(): string {
+    const now = new Date();
+    return now.toISOString();
   }
 
   changeOrderFor(event: Event) {
@@ -188,6 +197,7 @@ export class CreateTransferComponent implements AfterViewInit {
             res.results.filter((data: any) => {
               if (item.category_code == data.category_code) {
                 this.designation.push({ label: data.designation_name, value: data._id });
+                console.log(this.department);
                 // this.designation = [];
               }
             })
@@ -202,11 +212,15 @@ export class CreateTransferComponent implements AfterViewInit {
     this.leaveTransfer.getDepartmentData().subscribe((res: any[]) => {
       res.forEach((item) => {
         if (event.target.value == item._id) {
+          this.deptAddress = item.address;
+          this.deptFaxNumber = item.faxNumber;
+          this.deptOfficialMobileNo = item.officialMobileNo;
+          this.deptPhoneNumber = item.phoneNumber;
           this.leaveTransfer.getDesignations().subscribe((res: any) => {
             res.results.filter((data: any) => {
               if (item.category_code == data.category_code) {
                 this.toDesignation.push({ label: data.designation_name, value: data._id });
-                // this.designation = [];
+                // this.designation = []; 
               }
             })
           })
@@ -537,7 +551,9 @@ export class CreateTransferComponent implements AfterViewInit {
       formData.append('orderTypeCategoryCode', this.transferForm.get('orderTypeCategoryCode')?.value);
       formData.append('orderNumber', this.transferForm.get('orderNumber')?.value);
       formData.append('orderForCategoryCode', this.transferForm.get('orderForCategoryCode')?.value);
-      formData.append('dateOfOrder', this.transferForm.get('dateOfOrder')?.value);
+      // formData.append('dateOfOrder', this.transferForm.get('dateOfOrder')?.value);
+      // formData.append('dateOfOrder',new Date(this.transferForm.get('dateOfOrder')?.value).toISOString());
+      formData.append('dateOfOrder', new Date(new Date(this.transferForm.get('dateOfOrder')?.value).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds(), new Date().getMilliseconds())).toISOString());
       formData.append('remarks', this.transferForm.get('remarks')?.value);
       formData.append('transferOrPostingEmployeesList', JSON.stringify(this.selectedOfficers));
       formData.append('submittedBy', this.submittedBy);

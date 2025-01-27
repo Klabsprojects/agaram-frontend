@@ -676,26 +676,7 @@ export class LeaveTransferService {
     return this.http.get<any>(this.baseUrl+`getPrivateForeignVisit?loginId=${loginId}&loginAs=${loginAs}`,{headers});
   }
 
-  getGpf(loginId:any,loginAs:any){
-    const headers = this.getHeaders();
-    return this.http.get<any[]>(this.baseUrl + `getGpf?loginId=${loginId}&loginAs=${loginAs}`, { headers });
-  }
-
-  createGpf(data:any){
-    const headers = this.getHeaders();
-    return this.http.post<any>(this.baseUrl+'addGpf',data,{headers});
-  }
-
-  getMhaId(loginId:any,loginAs:any){
-    const headers = this.getHeaders();
-    return this.http.get<any>(this.baseUrl+`getIdCard?loginId=${loginId}&loginAs=${loginAs}`,{headers});
-  }
-
-  createMhaId(data:any){
-    const headers = this.getHeaders();
-    return this.http.post<any>(this.baseUrl+'addIdCard',data,{headers});
-  }
-
+  
   uploadAdd(payload:any,url:any){
     const headers = this.getHeaders();
     return this.http.post<any>(this.baseUrl+url,payload,{headers});
@@ -714,6 +695,61 @@ export class LeaveTransferService {
   uploadDelete(url:any,id:any){
     const headers = this.getHeaders();
     return this.http.delete<any>(this.baseUrl+url+'/'+id,{headers});
+  }
+
+  getGpf(loginId:any,loginAs:any){
+    const headers = this.getHeaders();
+    return this.http.get<any[]>(this.baseUrl + `getGpf?loginId=${loginId}&loginAs=${loginAs}`, { headers });
+  }
+
+  createGpf(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addGpf',data,{headers});
+  }
+
+  getGpfId(_id:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getGpf?_id=${_id}`,{headers});
+  }
+
+  updateGpf(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updateGpf',data,{headers});
+  }
+
+  getMhaIdCard(loginId:any,loginAs:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getIdCard?loginId=${loginId}&loginAs=${loginAs}`,{headers});
+  }
+
+  getMhaId(_id:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getIdCard?_id=${_id}`,{headers});
+  }
+
+  createMhaId(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addIdCard',data,{headers});
+  }
+
+  updateMhaId(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updateIdCard',data,{headers});
+  }
+
+  getHba(loginId:any,loginAs:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getHba?loginId=${loginId}&loginAs=${loginAs}`,{headers});
+  }
+
+  getState():Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any[]>(this.baseUrl + 'getState', { headers });
+  }
+
+  getDistrict(stateId:any):Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any[]>(this.baseUrl + `getDistrict?stateId=${stateId}`, { headers });
   }
 
 }

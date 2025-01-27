@@ -188,10 +188,10 @@
                 <p><span class="left"> Designation</span><span class="right">: <span *ngIf="ifuserlogin; else edes">{{userdata.designation}}</span><ng-template #edes><span>{{fromDesignation}}</span></ng-template></span>  </p>
                 <hr>
                 <h6 class="sub-title" style="font-size: 13px;"><b>Department Details</b> </h6>
-                <p><span class="left">Address</span><span class="right">:</span></p>
-                <p><span class="left">Phone</span><span class="right">:</span></p>
-                <p><span class="left">Email</span><span class="right">:</span></p>
-                <p><span class="left">Fax</span><span class="right">:</span></p>
+                <p><span class="left">Address : </span><p>{{this.deptAddress}}</p>
+                <p><span class="left">Phone</span><span class="right">:</span>{{this.deptPhoneNumber}}</p>
+                <p><span class="left">Mobile</span><span class="right">:</span>{{this.deptOfficialMobileNo}}</p>
+                <p><span class="left">Fax</span><span class="right">:</span>{{this.deptFaxNumber}}</p>
               </div>
             </div>
           </div>

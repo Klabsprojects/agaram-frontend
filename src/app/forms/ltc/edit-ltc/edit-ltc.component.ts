@@ -57,7 +57,7 @@ export class EditLtcComponent implements OnInit{
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null],
-      remarks:['',Validators.required],
+      remarks:[''],
       leaveavailed:['',Validators.required],
       category:['',Validators.required],
     });

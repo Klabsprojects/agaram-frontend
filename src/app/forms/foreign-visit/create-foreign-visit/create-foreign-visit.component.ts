@@ -210,10 +210,10 @@ export class CreateForeignVisitComponent implements OnInit {
         this.foreignForm.get('politicalClearance')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-      if (this.policalFileSelected.size > 5 * 1024 * 1024) { 
-        this.foreignForm.get('politicalClearance')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.policalFileSelected.size > 5 * 1024 * 1024) { 
+      //   this.foreignForm.get('politicalClearance')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
       this.foreignForm.get('politicalClearance')?.setErrors(null);
     }
   }
@@ -231,10 +231,10 @@ export class CreateForeignVisitComponent implements OnInit {
         this.foreignForm.get('fcraClearance')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-      if (this.fcraFileSelected.size > 5 * 1024 * 1024) { 
-        this.foreignForm.get('fcraClearance')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.fcraFileSelected.size > 5 * 1024 * 1024) { 
+      //   this.foreignForm.get('fcraClearance')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
       this.foreignForm.get('fcraClearance')?.setErrors(null);
     }
   }
@@ -251,10 +251,10 @@ export class CreateForeignVisitComponent implements OnInit {
         this.foreignForm.get('orderFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-      if (this.orderfileSelected.size > 5 * 1024 * 1024) { 
-        this.foreignForm.get('orderFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.orderfileSelected.size > 5 * 1024 * 1024) { 
+      //   this.foreignForm.get('orderFile')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
       this.foreignForm.get('orderFile')?.setErrors(null);
     }
   }
@@ -271,10 +271,10 @@ export class CreateForeignVisitComponent implements OnInit {
         this.foreignForm.get('invitationFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-      if (this.invitationfileselected.size > 5 * 1024 * 1024) { 
-        this.foreignForm.get('invitationFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.invitationfileselected.size > 5 * 1024 * 1024) { 
+      //   this.foreignForm.get('invitationFile')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
       this.foreignForm.get('invitationFile')?.setErrors(null);
     }
     console.log("invitationfileselected",this.invitationfileselected)
@@ -290,9 +290,14 @@ export class CreateForeignVisitComponent implements OnInit {
   }
 
 
-  onKeyDown(data:Event){
-
+  onKeyDown(event: KeyboardEvent){
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') || 
+          ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
   }
+
 
   onSubmit(){
     this.submitted = true;

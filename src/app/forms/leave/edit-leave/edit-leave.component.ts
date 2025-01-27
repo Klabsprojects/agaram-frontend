@@ -70,7 +70,7 @@ export class EditLeaveComponent implements OnInit{
       orderNo:['',Validators.required],
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
-      remarks:['',Validators.required],
+      remarks:[''],
       orderFile:[null]
     });
     this.leaveService.getData().subscribe((res:any)=>{

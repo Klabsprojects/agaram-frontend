@@ -192,7 +192,7 @@
                   </label>
                   <div class="col-sm-12">
                     <input type="file" class="form-control" formControlName="politicalClearance" (change)="politicalClearanceSelected($event)" accept=".pdf" style="border:0px;" />
-                    <div *ngIf="foreignForm.get('politicalClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                    <!-- <div *ngIf="foreignForm.get('politicalClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div> -->
                     <div *ngIf="foreignForm.get('politicalClearance')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
                   </div>
                  </div>
@@ -205,7 +205,7 @@
                   </label>
                   <div class="col-sm-12">
                     <input type="file" class="form-control" formControlName="fcraClearance" (change)="fcraClearanceSelected($event)" accept=".pdf" style="border:0px;" />
-                    <div *ngIf="foreignForm.get('fcraClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                    <!-- <div *ngIf="foreignForm.get('fcraClearance')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div> -->
                     <div *ngIf="foreignForm.get('fcraClearance')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
                   </div>
                  </div>
@@ -228,7 +228,7 @@
               <div class="col-md-3">
                 <div class="form-group row">
                   <label class="col-sm-12 col-form-label">Funds Sanctioned  <span>*</span></label>
-                  <input type="number" class="form-control ml-2" formControlName="fundsSanctioned"
+                  <input type="number" class="form-control ml-2" formControlName="fundsSanctioned" (keydown)="onKeyDown($event)"
                       [ngStyle]="{'border-bottom': (submitted && foreignForm.get('fundsSanctioned')?.invalid && foreignForm.get('fundsSanctioned')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                 </div>
               </div>
@@ -289,7 +289,7 @@
                       </label>
                       <div class="col-sm-12">
                         <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" (change)="orderFileSelected($event)" style="border: none;">                  </div>
-                        <div *ngIf="foreignForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                        <!-- <div *ngIf="foreignForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div> -->
                         <div *ngIf="foreignForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
                       </div>
                   </div>

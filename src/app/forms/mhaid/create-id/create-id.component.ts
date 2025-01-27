@@ -54,7 +54,7 @@ export class CreateIdComponent implements OnInit{
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null,Validators.required],
-      remarks:['',Validators.required],
+      remarks:[''],
     });
     this.idService.getData().subscribe((res: any[]) => {
       res.forEach((item) => {

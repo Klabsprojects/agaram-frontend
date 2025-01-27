@@ -139,7 +139,7 @@
                     <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
                     <div class="col-sm-12">
                       <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)" required>                  </div>
-                      <div *ngIf="applyLeaveForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
+                      <!-- <div *ngIf="applyLeaveForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div> -->
                       <div *ngIf="applyLeaveForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
                     </div>
                 </div>

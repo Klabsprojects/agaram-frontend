@@ -26,17 +26,34 @@
     <tr>
       <th>#</th>
       <th>Name of the Officer</th>
-      <th>HBA Availed <br> Amount</th>
-      <th>Place Nerkundram <br>Phase I / Phase II / <br>TNHB / Construction</th>
-      <th>G.O Date</th>
+      <th>Designation</th>
+      <th>HBA Availed</th>
       <th>Installments <br> Availed</th>
       <th>Pending <br> Installments</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
-      <tr>
-        <td colspan="7" style="color: red; padding: 15px;">No Records Found</td>
+    <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+      <tr *ngFor="let data of pagedData(); let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{data.officerName}}</td>
+        <td>{{data.designation}}</td>
+        <td>{{data.hbaAvailedFor}}</td>
+        <td></td>
+        <td></td>
+        <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-info p-2 mr-2" (click)="editGpf(data._id)">Edit</button>
+          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewGpf" (click)="viewGpf(data._id)">View</button>
+        </td>
       </tr>
+    </ng-container>
+    <ng-template #noRecords>
+      <tr>
+        <td colspan="13" style="color: red;">No records found</td>
+      </tr>
+    </ng-template>
   </tbody>
 </table>
 </div>

@@ -38,13 +38,95 @@ export class EditOfficerComponent implements OnInit {
   seniorityReadOnly: boolean = true;
   dateOfJoiningReadOnly: boolean = true;
   selectedImage: string | ArrayBuffer | null = null;
+  postingIn: any[] = [];
+  postType: any[] = [];
+  locationChange:any[]=[];
+  department: any[] = [];
+  designation: any[] = [];
+  setValues:boolean=false;
 
   constructor(private fb: FormBuilder, private elementRef: ElementRef, private officerAction: LeaveTransferService, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.queryParamMap.get('profile');
+    this.officerForm = this.fb.group({
+      employeeId: [''],
+      fullName: ['', Validators.required],
+      ifhrmsId: [''],
+      gender: [''],
+      dateOfBirth: [''],
+      dateOfJoining: [''],
+      dateOfRetirement: [''],
+      state: ['', Validators.required],
+      batch: [''],
+      recruitmentType: ['', Validators.required],
+      serviceStatus: ['', Validators.required],
+      religion: [''],
+      community: ['', Validators.required],
+      caste: [''],
+      personalEmail: [[]],
+      mobileNo1: [''],
+      mobileNo2: [''],
+      mobileNo3: [''],
+      addressLine: ['', Validators.required],
+      city: ['', Validators.required],
+      pincode: ['', Validators.required],
+      promotionGrade: ['', Validators.required],
+      payscale: [''],
+      officeEmail: [''],
+      // photo:[this.base64String],
+      imagePath: [null],
+      degreeData: this.fb.array([this.createRow()]),
+      seniority: [''],
+      toPostingInCategoryCode:[''],
+      toDepartmentId:[''],
+      toDesignationId:[''],
+      postTypeCategoryCode:[''],
+      locationChangeCategoryId:[''],
+      languages:[''],
+      deptAddress:[''],
+      deptPhoneNumber:[''],
+      deptFaxNumber:[''],
+      deptOfficialMobileNo:[''],
+      lastDateOfPromotion:['',Validators.required],
+      department:[''],
+      department_name:[''],
+      updatePost:[''],
+      updateType:['Transfer / Posting'],
+      updateId:[''],
+    });
     this.officerAction.getEmployee(this.id).subscribe((res: any) => {
       res.results.forEach((data: any) => {
+        this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+          this.department = res.map((item: any) => ({ label: item.department_name, value: item._id }));
+          
+          if (data.toDepartmentId) {
+            this.officerForm.get('toDepartmentId')?.setValue(data.toDepartmentId);
+            const selectedDepartment = res.find((item: any) => item._id === data.toDepartmentId);
+            
+            if (selectedDepartment) {
+              this.officerForm.get('department_name')?.setValue(selectedDepartment.department_name);
+              this.officerForm.get('department')?.setValue('yes');
+              this.officerForm.get('updatePost')?.setValue('yes');
+              this.officerForm.get('updateId')?.setValue(data.uniqueId);  // Only set updateId if department is found
+            } else {
+              const formValue = { ...this.officerForm.value };
+              delete formValue.updateId;
+              console.log('Form data without updateId:', formValue);  // Log updated form data without updateId
+            }
+          }
+        });
+        
+
+        this.officerAction.getDesignations().subscribe((response: any) => {
+          this.designation = response.results.map((items: any) => ({
+            label: items.designation_name,
+            value: items._id
+          }));
+         if (data.toDesignationId) {
+            this.officerForm.get('toDesignationId')?.setValue(data.toDesignationId);
+          }
+        });        
         this.officerForm.get('fullName')?.setValue(data.fullName);
         this.officerForm.get('ifhrmsId')?.setValue(data.ifhrmsId);
         this.officerForm.get('gender')?.setValue(data.gender);
@@ -87,38 +169,20 @@ export class EditOfficerComponent implements OnInit {
         // this.base64ImageData = this.arrayBufferToBase64(binaryData);
 
         this.populateDegreeForm();
+        this.officerForm.get('toPostingInCategoryCode')?.setValue(data.toPostingInCategoryCode);
+        this.officerForm.get('postTypeCategoryCode')?.setValue(data.postTypeCategoryCode);
+        this.officerForm.get('locationChangeCategoryId')?.setValue(data.locationChangeCategoryId);
+        this.officerForm.get('languages')?.setValue(data.languages);
+        this.officerForm.get('deptAddress')?.setValue(data.departmentId.address);
+        this.officerForm.get('deptPhoneNumber')?.setValue(data.departmentId.phoneNumber);
+        this.officerForm.get('deptFaxNumber')?.setValue(data.departmentId.faxNumber);
+        this.officerForm.get('deptOfficialMobileNo')?.setValue(data.departmentId.officialMobileNo);
+        var lastDateOfPromotion = new Date(data.lastDateOfPromotion);
+        data.lastDateOfPromotion = lastDateOfPromotion.toISOString().split('T')[0];
+        this.officerForm.get('lastDateOfPromotion')?.setValue(data.lastDateOfPromotion);
       });
     })
-    this.officerForm = this.fb.group({
-      employeeId: [''],
-      fullName: ['', Validators.required],
-      ifhrmsId: [''],
-      gender: [''],
-      dateOfBirth: [''],
-      dateOfJoining: [''],
-      dateOfRetirement: [''],
-      state: ['', Validators.required],
-      batch: [''],
-      recruitmentType: ['', Validators.required],
-      serviceStatus: ['', Validators.required],
-      religion: [''],
-      community: ['', Validators.required],
-      caste: [''],
-      personalEmail: [[]],
-      mobileNo1: [''],
-      mobileNo2: [''],
-      mobileNo3: [''],
-      addressLine: ['', Validators.required],
-      city: ['', Validators.required],
-      pincode: ['', Validators.required],
-      promotionGrade: ['', Validators.required],
-      payscale: [''],
-      officeEmail: [''],
-      // photo:[this.base64String],
-      imagePath: [null],
-      degreeData: this.fb.array([this.createRow()]),
-      seniority: [''],
-    });
+   
 
     this.officerAction.getDegree().subscribe((res: any) => {
       res.results.forEach((data: any) => {
@@ -153,6 +217,15 @@ export class EditOfficerComponent implements OnInit {
           case "country":
             this.country.push({ label: item.category_name, value: item._id });
             break;
+            case "posting_in":
+              this.postingIn.push({label:item.category_name,value:item._id});
+              break;
+            case "post_type":
+              this.postType.push({ label: item.category_name, value: item._id });
+              break;
+            case "location_change":
+              this.locationChange.push({ label: item.category_name, value: item._id });
+              break;
           default:
             break;
         }
@@ -168,6 +241,62 @@ export class EditOfficerComponent implements OnInit {
   //   }
   //   return window.btoa(binary);
   // }
+
+  
+  onKeyDown(event: KeyboardEvent) {
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') ||
+      ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
+  }
+
+  getDepartment(event: any) {
+    this.department = [];
+    this.officerAction.getData().subscribe((res: any[]) => {
+      res.forEach((item) => {
+        if (event.target.value == item._id) {
+          this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+            res.filter((data: any) => {
+              if (item.category_code == data.category_code) {
+                this.department.push({ label: data.department_name, value: data._id });
+              }
+            });
+          })
+        }
+      });
+    })
+  }
+
+  getDesignation(event: any) {
+    this.designation = [];
+    const input = event.target as HTMLSelectElement; 
+    const selectedOptionText = input.options[input.selectedIndex].text;
+    this.officerForm.get('department_name')?.setValue(selectedOptionText);
+    this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+      res.forEach((item) => {
+        if (event.target.value == item._id) {
+          this.officerAction.getDesignations().subscribe((res: any) => {
+            res.results.filter((data: any) => {
+              if (item.category_code == data.category_code) {
+                this.designation.push({ label: data.designation_name, value: data._id });
+                // this.designation = [];
+              }
+            })
+          })
+          this.officerForm.get('deptAddress')?.setValue(item.address || '');
+          this.officerForm.get('deptFaxNumber')?.setValue(item.faxNumber || '');
+          this.officerForm.get('deptOfficialMobileNo')?.setValue(item.officialMobileNo || '');
+          this.officerForm.get('deptPhoneNumber')?.setValue(item.phoneNumber || '');
+          const isFilled = item.address || item.faxNumber || item.phoneNumber || item.officialMobileNo;
+          this.officerForm.get('department')?.setValue(isFilled ? 'No' : 'yes');
+          this.officerForm.get('updatePost')?.setValue(isFilled ? 'yes' : 'No');
+          this.setValues = isFilled;
+        }
+      });
+    });
+  }
+
 
   arrayBufferToBase64(buffer: Uint8Array): string {
     let binary = '';
@@ -239,14 +368,14 @@ export class EditOfficerComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
+    // const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
     if (file) {
-      if (file.size > maxSizeInBytes) {
-        this.base64String = null;
-        this.officerForm.get('imagePath')?.setValue(null);
-        alert('File size exceeds 1 MB. Please select a smaller file.');
-        return;  // Stop further execution
-      }
+      // if (file.size > maxSizeInBytes) {
+      //   this.base64String = null;
+      //   this.officerForm.get('imagePath')?.setValue(null);
+      //   alert('File size exceeds 1 MB. Please select a smaller file.');
+      //   return;  // Stop further execution
+      // }
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.base64String = reader.result as string;
@@ -287,7 +416,6 @@ export class EditOfficerComponent implements OnInit {
   // }
 
   toggleReadOnly(field: string) {
-    console.log("field",field);
     if (field === 'mobile') {
       this.mobileReadOnly = !this.mobileReadOnly;
       if (!this.mobileReadOnly) {
@@ -419,7 +547,6 @@ export class EditOfficerComponent implements OnInit {
       const retirementDate = new Date(retirementYear, dob.getMonth(), dob.getDate());
       const formattedDate = this.formatDate(retirementDate);
       this.officerForm.get('dateOfRetirement')?.setValue(formattedDate);
-      console.log(formattedDate);
     }
   }
 
@@ -429,7 +556,6 @@ export class EditOfficerComponent implements OnInit {
 
   getYear() {
     const dojValue = this.officerForm.get('dateOfJoining')?.value;
-    console.log(dojValue);
     if (dojValue) {
       const dob = new Date(dojValue);
       const retirementYear = dob.getFullYear();
@@ -447,8 +573,7 @@ export class EditOfficerComponent implements OnInit {
         degree.addedBy = 'employeeProfile';
       });
     }
-    console.log("formValue.degreeData",formValue.degreeData);
-    // const formData = this.officerForm.value;
+    // console.log("formValue.degreeData",formValue.degreeData);
     const formData = new FormData();
 
     // Append all form values
@@ -472,6 +597,9 @@ export class EditOfficerComponent implements OnInit {
     //   });
     // }
 
+    if (formValue.updatePost !== 'yes') {
+      formData.delete('updateId');  // Remove updateId if not applicable
+    }
     formData.append('id',this.id);
 
     // console.log('formData',formData);  // Check FormData in console
@@ -494,9 +622,8 @@ export class EditOfficerComponent implements OnInit {
     // };
     // console.log(dataToSend);
     if (this.officerForm.valid) {
-      this.officerAction.updateEmployeeProfile(formData).subscribe(
-        response => {
-          alert("Employee Updated Successfully..!")
+      this.officerAction.updateEmployeeProfile(formData).subscribe((response:any) => {
+          alert(response.message)
           this.officerForm.reset();
           this.router.navigate(['officer-profile-list']);
           console.log('API Response:', response);

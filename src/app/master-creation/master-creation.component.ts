@@ -197,9 +197,11 @@ export class MasterCreationComponent implements OnInit {
       this.masterAction.addMasterData(value).subscribe((res)=>{
         alert("Posting In Added Successfully");
         this.showPopup = false;
-      setTimeout(() => {
-        this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-      });
+        location.reload();
+      // setTimeout(() => {
+      //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+      //   location.reload();
+      // });
       })
     }
   }
@@ -210,9 +212,10 @@ export class MasterCreationComponent implements OnInit {
       this.masterAction.addDepartments(this.departmentForm.value).subscribe((res)=>{
         alert("Department Added Successfully");
         this.showPopup = false;
-        setTimeout(() => {
-          this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-        });
+        location.reload();
+        // setTimeout(() => {
+        //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+        // });
       });
     }
   }
@@ -223,9 +226,10 @@ export class MasterCreationComponent implements OnInit {
     this.masterAction.addDesignation(this.designationForm.value).subscribe((res)=>{
       alert("Designation Added Successfully");
       this.showPopup = false;
-      setTimeout(() => {
-        this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-      });
+      location.reload();
+      // setTimeout(() => {
+      //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+      // });
 
     });
     }
@@ -237,9 +241,10 @@ export class MasterCreationComponent implements OnInit {
     this.masterAction.addDegree(this.degreeForm.value).subscribe((res)=>{
       alert("Degree Added Successfully");
       this.showPopup = false;
-      setTimeout(() => {
-        this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-      });
+      location.reload();
+      // setTimeout(() => {
+      //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+      // });
 
     });
     }
@@ -257,9 +262,10 @@ export class MasterCreationComponent implements OnInit {
         console.log(res);
         alert("Country Added Successfully");
         this.showPopup = false;
-      setTimeout(() => {
-        this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-      });
+        location.reload();
+      // setTimeout(() => {
+      //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+      // });
       })
     }
   }
@@ -275,9 +281,10 @@ export class MasterCreationComponent implements OnInit {
       this.masterAction.addMasterData(value).subscribe((res)=>{
         alert("District Added Successfully");
         this.showPopup = false;
-        setTimeout(() => {
-          this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-        });
+        location.reload();
+        // setTimeout(() => {
+        //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+        // });
       })
     }
   }
@@ -294,9 +301,10 @@ export class MasterCreationComponent implements OnInit {
       this.masterAction.addMasterData(value).subscribe((res)=>{
         alert("Payscale Added Successfully");
         this.showPopup = false;
-        setTimeout(() => {
-          this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-        });
+        location.reload();
+        // setTimeout(() => {
+        //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+        // });
       })
     }
   }
@@ -312,10 +320,11 @@ export class MasterCreationComponent implements OnInit {
       this.masterAction.addMasterData(value).subscribe((res)=>{
         alert("Order Type Added Successfully");
         this.showPopup = false;
-        setTimeout(() => {
-          this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-          window.location.reload();
-        });
+        location.reload();
+        // setTimeout(() => {
+        //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+        //   window.location.reload();
+        // });
       })
     }
   }  
@@ -330,10 +339,11 @@ export class MasterCreationComponent implements OnInit {
       }
       this.masterAction.addMasterData(value).subscribe((res)=>{
         this.showPopup = false;
-        setTimeout(() => {
-          this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
-          window.location.reload();
-        });
+        location.reload();
+        // setTimeout(() => {
+        //   this.ElementRef.nativeElement.ownerDocument.querySelector('.modal-backdrop.fade').style.opacity = '0';
+        //   window.location.reload();
+        // });
         alert("Order For Added Successfully");
       })
     }

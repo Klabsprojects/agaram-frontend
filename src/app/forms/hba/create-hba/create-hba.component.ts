@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class CreateHbaComponent implements OnInit{
   hbaForm!:FormGroup;
   selectedFile : File | null = null;
+  installmentFileSelected : File | null = null;
   submitted = false;
   orderFor:any[]=[];
   orderType:any[]=[];
@@ -27,12 +28,12 @@ export class CreateHbaComponent implements OnInit{
   phone:string='';
   module:string='';
   submittedBy:any;
-  fromValue:any;
-  toDateValue = true;
-  leaveavailed:string[] = ['Casual Leave', 'Earned Leave'];
-  category:string[] = ['Home Town','Anywhere in India','Conversion of Home Town LTC'];
-  selfOrFamily:string[] = ['Self','Family']
-
+  State:any[]=[];
+  district:any[]=[];
+  hbaAvailed:string[]=['Nerkundram Phase - I' , 'Nerkundram Phase - II' , 'Other TNHB Projects / Private'];
+  typeOfProperty:string[]=['Ready Build','Construction'];
+  existingResidence:string[]=['Yes','No'];
+  totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,"Final"];
   ifuserlogin = false;
   userdata: any;
 
@@ -62,25 +63,36 @@ export class CreateHbaComponent implements OnInit{
     if (isPlatformBrowser(this.platformId)) {
       this.submittedBy = localStorage.getItem('loginId');
     }
+    this.hbaService.getState().subscribe((res:any)=>{
+      res.results.forEach((item:any)=>{
+        this.State.push({label:item.stateName,value:item._id});
+      })
+    })
     this.hbaForm = this.fb.group({
       officerName:['',Validators.required],
       department:['',Validators.required],
       designation:['',Validators.required],
-      fromDate:['',Validators.required],
-      toDate:['',Validators.required],
-      proposedPlaceOfVisit:['',Validators.required],
-      blockYear:['',Validators.required],
-      selfOrFamily:['',Validators.required],
-      fromPlace:['',Validators.required],
-      toPlace:['',Validators.required],
+      state:['',Validators.required],
+      district:['',Validators.required],
+      hbaAvailedFor:['',Validators.required],
+      typeOfProperty:['',Validators.required],
+      dateOfApplication:['',Validators.required],
+      totalCostOfProperty:['',Validators.required],
+      isExisingResidenceAvailable:['',Validators.required],
+      twoBRelacation:['',Validators.required],
+      totalHbaAvailed:['',Validators.required],
+      totalNumberOfInstallments:['',Validators.required],
+      totalNumberOfRecoveryMonths:['',Validators.required],
+      installmentNumber:['',Validators.required],
+      conductRulePermission:['',Validators.required],
+      conductRulePermissionAttachment:['',Validators.required],
+      amount:['',Validators.required],
       orderType:['',Validators.required],
       orderNo:['',Validators.required],
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null,Validators.required],
-      remarks:['',Validators.required],
-      leaveavailed:['',Validators.required],
-      category:['',Validators.required],
+      remarks:[''],
     });
     this.hbaService.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
@@ -94,18 +106,18 @@ export class CreateHbaComponent implements OnInit{
     });
   }
 
-  fromDateValue(data:any){
-    this.fromValue = data.target.value;
-    if(this.hbaForm.get('toDate')?.value < this.fromValue || this.hbaForm.get('fromDate')?.value == ''){
-      this.hbaForm.get('toDate')?.setValue('');
-      this.toDateValue = true;
-    }
-    if(this.fromValue){
-      this.toDateValue = false;
-    }
+  getState(event:any){
+    this.district=[];
+    const id = event.target.value;
+    this.hbaService.getDistrict(id).subscribe((res:any)=>{
+      res.results.forEach((item:any)=>{
+        if(id == item.stateId){
+          this.district.push({label:item.districtName,value:item._id})
+        }
+      })
+    })
   }
-
-
+ 
   onInput(event: any, field: string) {
     const inputValue = event.target.value.trim();
     let mergedOptions: { name: string, id: string, empProfileId: any, mobileNo:string }[] = []; 
@@ -187,8 +199,28 @@ export class CreateHbaComponent implements OnInit{
     }
   }
 
-  changeOrderFor(data:Event){
 
+  installmentFileSelect(event:any){
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.installmentFileSelected = input.files[0];
+      this.hbaForm.patchValue({ conductRulePermissionAttachment: this.installmentFileSelected });
+    }
+    this.installmentFileSelected = event.target.files[0];
+    this.hbaForm.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
+    if (this.installmentFileSelected) {
+      if (this.installmentFileSelected.type !== 'application/pdf') {
+        this.hbaForm.get('conductRulePermissionAttachment')?.setErrors({ 'incorrectFileType': true });
+        return;
+      }
+
+      if (this.installmentFileSelected.size > 5 * 1024 * 1024) { // 5MB in bytes
+        this.hbaForm.get('conductRulePermissionAttachment')?.setErrors({ 'maxSize': true });
+        return;
+      }
+
+      this.hbaForm.get('conductRulePermissionAttachment')?.setErrors(null);
+    }
   }
 
   onKeyDown(event: KeyboardEvent){

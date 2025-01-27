@@ -60,7 +60,7 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Total Cost <span>*</span></label>
                 <div class="col-sm-12">
-                    <input type="number" class="form-control" formControlName="totalCostOfMedicalReimbursement" 
+                    <input type="number" class="form-control" formControlName="totalCostOfMedicalReimbursement"  (keydown)="onKeyDown($event)"
                     [ngStyle]="{'border-bottom': (submitted && medicalForm.get('totalCostOfMedicalReimbursement')?.invalid && medicalForm.get('totalCostOfMedicalReimbursement')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                 </div>
               </div>

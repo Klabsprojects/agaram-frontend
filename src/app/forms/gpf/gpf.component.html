@@ -23,8 +23,8 @@
       <th>Amount Availed </th>
       <th>Purpose of GPF </th>
       <th>Submitted By </th>
-      <th>Approved By</th>
-      <th>Status</th>
+      <!-- <th>Approved By</th>
+      <th>Status</th> -->
       <th>Action</th>
     </tr>
     
@@ -40,11 +40,9 @@
         <td>{{data.availedAmount}}</td>
         <td>{{data.purpose}}</td>
         <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
-        <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
-        <td>{{data.approvalStatus ? 'Approved' : 'Not Approved'}}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-info p-2 mr-2">Edit</button>
-          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewForeignVisit">View</button>
+          <button type="button" class="btn btn-info p-2 mr-2" (click)="editGpf(data._id)">Edit</button>
+          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewGpf" (click)="viewGpf(data._id)">View</button>
         </td>
       </tr>
     </ng-container>
@@ -61,4 +59,52 @@
 </div>
 
   
-  
+<div class="modal fade" id="viewGpf" tabindex="-1" aria-labelledby="viewGpfLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewGpfLabel">View GPF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewGpfData.officerName}}</div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewGpfData.department}}
+          </div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Designation</b></label><br>{{viewGpfData.designation}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>GPF Type</b></label><br>{{viewGpfData.gpfType}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Availed Date </b></label><br>{{viewGpfData.availedDate | date:'dd/MM/YYYY'}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Availed Amount</b></label><br>{{viewGpfData.availedAmount}}</div>
+          <div class="col-md-6 px-0 mt-3"><label class="w-100"><b>Purpose</b></label><br>{{viewGpfData.purpose}}</div>
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewGpfData.orderType}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewGpfData.orderNo}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewGpfData.orderFor}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br>
+            {{viewGpfData.dateOfOrder | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
+            <a href="{{url}}{{viewGpfData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewGpfData.remarks}}
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewGpfData.approvalStatus"
+          (click)="approveLtc(viewGpfData)">Approve</button> -->
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

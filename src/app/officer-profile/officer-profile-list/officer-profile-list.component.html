@@ -106,13 +106,13 @@
   </div>
   </div>
 
-  <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" *ngIf="showPopup">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="viewEmployeeLabel">View Officer Profile</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span>&times;</span>
           </button>
         </div>
         <div class="modal-body pb-0">
@@ -187,7 +187,21 @@
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Grade </b></label> <br> {{viewEmployeeData.promotionGrade}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Payscale </b></label> <br> {{viewEmployeeData.payscale}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Seniority Number </b></label> <br> {{viewEmployeeData.seniority}}</div>  
+            <h6 class="modal-title float-left w-100 mb-2">Posting Details</h6>
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Posting In</b></label> <br> {{viewEmployeeData.toPostingInCategoryCode}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Department </b></label> <br> {{viewEmployeeData.toDepartmentId}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Address</b></label> <br> {{viewEmployeeData.deptAddress}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Phone </b></label> <br> {{viewEmployeeData.deptPhoneNumber}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Fax</b></label> <br> {{viewEmployeeData.deptFaxNumber}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Mobile </b></label> <br> {{viewEmployeeData.deptOfficialMobileNo}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Designation </b></label> <br> {{viewEmployeeData.toDesignationId}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Posting Type </b></label> <br> {{viewEmployeeData.postTypeCategoryCode}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Location Change </b></label> <br> {{viewEmployeeData.locationChangeCategoryId}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Language Known </b></label> <br> {{viewEmployeeData.languages}}</div>  
+            <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Last Promotion Date</b></label> <br> {{viewEmployeeData.lastDateOfPromotion | date:'dd/MM/YYYY'}}</div>  
+          
           </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success py-2 px-3" (click)="approveOfficer(viewEmployeeData)" *ngIf="showApprove && !viewEmployeeData.approvalStatus">Approve</button>

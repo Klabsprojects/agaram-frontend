@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './gpf.component.css'
 })
 export class GpfComponent implements OnInit{
-filterText : any;
+    filterText : any;
     tableData:any[]=[];
     pageSize: number = 10; 
     pageSizeOptions: number[] = [5, 10, 15, 20];
@@ -22,6 +22,7 @@ filterText : any;
     showEdit:boolean=false;
     showApprove:boolean=false;  
     showPopup = true;
+    viewGpfData = new viewGpfData();
   
     constructor(private router:Router,private gpfService:LeaveTransferService,private datePipe: DatePipe) { }
   
@@ -128,5 +129,64 @@ filterText : any;
       this.router.navigate(['create-gpf']);
     }
 
+    editGpf(data:any){
+      const encodedData = btoa(JSON.stringify(data));
+      this.router.navigate(['edit-gpf'],{queryParams:{id:encodedData}});
+    }
 
+    viewGpf(data:any){
+        this.gpfService.getGpfId(data).subscribe((res:any)=>{
+          res.results.forEach((data:any)=>{
+           this.gpfService.getData().subscribe((res: any[]) => {
+             res.forEach((item) => {
+               if(item.category_type == "order_type"){
+                 if(item._id == data.orderType){
+                   this.viewGpfData.orderType = item.category_name;
+                 }
+               }
+               if (item.category_type == "order_for") {
+                 if(item._id == data.orderFor){
+                   this.viewGpfData.orderFor = item.category_name;
+                 }          
+               }
+             });
+           });
+           this.viewGpfData.phone = "+91"+data.employeeProfileId.mobileNo1;
+           this.viewGpfData.id = data._id;
+           this.viewGpfData.approvalStatus = data.approvalStatus;
+           this.viewGpfData.officerName = data.officerName;
+           this.viewGpfData.department = data.department;
+           this.viewGpfData.designation = data.designation;
+           this.viewGpfData.gpfType = data.gpfType;
+           this.viewGpfData.availedDate = data.availedDate;
+           this.viewGpfData.availedAmount = data.availedAmount;
+           this.viewGpfData.purpose = data.purpose;
+           this.viewGpfData.orderType = data.orderType;
+           this.viewGpfData.orderNo = data.orderNo;
+           this.viewGpfData.orderFor = data.orderFor;
+           this.viewGpfData.dateOfOrder = data.dateOfOrder;
+           this.viewGpfData.orderFile = data.orderFile;
+           this.viewGpfData.remarks = data.remarks;
+          })
+         })
+      }
+}
+
+export class viewGpfData{
+  id:string = '';
+  officerName:string='';
+  department:string='';
+  designation:string='';
+  gpfType:string='';
+  purpose:string='';
+  availedDate:string='';
+  availedAmount:string='';
+  orderType:string='';
+  orderNo:string='';
+  orderFor:string='';
+  dateOfOrder:string='';
+  orderFile:string='';
+  remarks:string='';
+  phone:string = '';
+  approvalStatus = false;
 }

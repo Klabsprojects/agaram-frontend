@@ -65,7 +65,7 @@ export class EditEducationComponent implements OnInit{
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null],
-      remarks:['',Validators.required],
+      remarks:[''],
       degreeData: this.fb.array([this.createRow()])
     });
 
@@ -294,10 +294,10 @@ export class EditEducationComponent implements OnInit{
         return;
       }
 
-      if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.educationForm.get('orderFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
+      //   this.educationForm.get('orderFile')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
 
       this.educationForm.get('orderFile')?.setErrors(null);
     }

@@ -12,7 +12,7 @@ export class TransferPostingComponent implements OnInit {
  
   filterText : any;
   tableData:any[]=[];
-  pageSize: number = 10; 
+  pageSize: number = 100; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1;
   visiblePages: number[] = [];

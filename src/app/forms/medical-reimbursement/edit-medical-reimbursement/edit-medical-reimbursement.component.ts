@@ -53,7 +53,7 @@ export class EditMedicalReimbursementComponent implements OnInit{
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null,Validators.required],
-      remarks:['',Validators.required],
+      remarks:[''],
       dischargeSummaryEndorsed: ['', Validators.required],
       // dischargeOrTestFile: ['', Validators.required]
     });
@@ -209,9 +209,13 @@ export class EditMedicalReimbursementComponent implements OnInit{
       }
     }
   }
-
-  onKeyDown(event:KeyboardEvent){
-    
+  
+  onKeyDown(event: KeyboardEvent){
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') || 
+          ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
   }
 
   onSubmit(){

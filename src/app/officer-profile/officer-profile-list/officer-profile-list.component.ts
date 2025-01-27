@@ -34,7 +34,6 @@ export class OfficerProfileListComponent implements OnInit {
    const loginAs = localStorage.getItem('loginAs');
     this.officerAction.getEmployeeLists(loginId,loginAs).subscribe((res:any)=>{
       this.employeeListData = res.results;
-      console.log(this.employeeListData);
     });
     this.checkEntryAccess();
   }
@@ -217,6 +216,23 @@ export class OfficerProfileListComponent implements OnInit {
             });
           })
         });
+
+        this.officerAction.getDesignations().subscribe((res:any)=>{
+          res.results.forEach((item:any)=>{
+            if(item._id == ele.toDesignationId){
+              this.viewEmployeeData.toDesignationId = item.designation_name;
+            }
+          })
+        })
+
+        this.officerAction.getDepartmentData().subscribe((res:any)=>{
+          res.forEach((item:any)=>{
+            if(item._id == ele.toDepartmentId){
+              this.viewEmployeeData.toDepartmentId = item.department_name;
+            }
+          })
+        })
+        
         this.officerAction.getData().subscribe((res:any)=>{
           res.forEach((data:any)=>{
             if(data.category_type == "gender" && data._id == ele.gender){
@@ -255,8 +271,23 @@ export class OfficerProfileListComponent implements OnInit {
             if(data.category_type == "promotion_grade" && data._id == ele.promotionGrade){
               this.viewEmployeeData.promotionGrade = data.category_name;
             }
+            if(data.category_type == "posting_in" && data._id == ele.toPostingInCategoryCode){
+              this.viewEmployeeData.toPostingInCategoryCode = data.category_name;
+            }
+            if(data.category_type == "post_type" && data._id == ele.postTypeCategoryCode){
+              this.viewEmployeeData.postTypeCategoryCode = data.category_name;
+            }
+            if(data.category_type == "location_change" && data._id == ele.locationChangeCategoryId){
+              this.viewEmployeeData.locationChangeCategoryId = data.category_name;
+            }
           })
-          
+          this.viewEmployeeData.languages = ele.languages;
+        this.viewEmployeeData.lastDateOfPromotion = ele.lastDateOfPromotion;
+        this.viewEmployeeData.deptAddress = ele.departmentId.address;
+        this.viewEmployeeData.deptFaxNumber = ele.departmentId.faxNumber;
+        this.viewEmployeeData.deptOfficialMobileNo = ele.departmentId.officialMobileNo;
+        this.viewEmployeeData.deptPhoneNumber = ele.departmentId.phoneNumber;
+        // this.viewEmployeeData.toDepartmentId = ele.departmentId.department_name;
         })
       });
     });
@@ -329,6 +360,17 @@ export class viewEmployeeData{
   approvedBy:string='';
   seniority: string ='';
   imagePath:string='';
+  deptAddress:string='';
+  deptPhoneNumber:string='';
+  deptFaxNumber:string='';
+  deptOfficialMobileNo:string='';
+  languages:string='';
+  lastDateOfPromotion:string='';
+  locationChangeCategoryId:string='';
+  postTypeCategoryCode:string='';
+  toDesignationId:string='';
+  toDepartmentId:string='';
+  toPostingInCategoryCode:string='';
 }
 export class education{
   courseLevel:string='';

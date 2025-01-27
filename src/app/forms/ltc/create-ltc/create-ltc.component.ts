@@ -79,7 +79,7 @@ export class CreateLtcComponent implements OnInit{
       orderFor:['',Validators.required],
       dateOfOrder:['',Validators.required],
       orderFile:[null,Validators.required],
-      remarks:['',Validators.required],
+      remarks:[''],
       leaveavailed:['',Validators.required],
       category:['',Validators.required],
     });

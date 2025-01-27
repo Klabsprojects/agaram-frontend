@@ -84,7 +84,7 @@ export class CreatePrivateVisitComponent implements OnInit {
       dateOfOrder:['',Validators.required],
       status:['',Validators.required],
       orderFile:[null],
-      remarks:['',Validators.required],
+      remarks:[''],
       proposedAmountOfExpenditure:['',Validators.required]
     });
 
@@ -198,9 +198,14 @@ export class CreatePrivateVisitComponent implements OnInit {
   changeOrderFor(data:Event){
   }
 
-  onKeyDown(data:Event){
+  onKeyDown(event: KeyboardEvent){
+    const key = event.key;
+    if (!((key >= '0' && key <= '9') || 
+          ['Backspace', 'Tab', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight'].includes(key))) {
+      event.preventDefault();
+    }
   }
-
+  
   onSubmit(){
     this.submitted = true;
     if(this.privateVisitForm.valid){

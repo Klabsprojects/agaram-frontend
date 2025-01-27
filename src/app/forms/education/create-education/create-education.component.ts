@@ -268,10 +268,10 @@ export class CreateEducationComponent implements OnInit{
         return;
       }
 
-      if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.educationForm.get('orderFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
+      // if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
+      //   this.educationForm.get('orderFile')?.setErrors({ 'maxSize': true });
+      //   return;
+      // }
 
       this.educationForm.get('orderFile')?.setErrors(null);
     }

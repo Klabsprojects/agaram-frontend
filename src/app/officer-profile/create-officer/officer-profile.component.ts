@@ -36,6 +36,12 @@ export class OfficerProfileComponent implements OnInit {
   educationDetail: any[] = [];
   qualificationDet: any[] = [];
   submittedBy: any;
+  postingIn: any[] = [];
+  postType: any[] = [];
+  locationChange:any[]=[];
+  department: any[] = [];
+  designation: any[] = [];
+  setValues:boolean=false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private fb: FormBuilder, private officerAction: LeaveTransferService, private router: Router, private route: ActivatedRoute) { }
 
@@ -72,6 +78,20 @@ export class OfficerProfileComponent implements OnInit {
       imagePath: [null],
       degreeData: this.fb.array([this.createRow()]),
       seniority: [''],
+      toPostingInCategoryCode:['',Validators.required],
+      toDepartmentId:['',Validators.required],
+      toDesignationId:['',Validators.required],
+      postTypeCategoryCode:['',Validators.required],
+      locationChangeCategoryId:['',Validators.required],
+      languages:['',Validators.required],
+      deptAddress:['',Validators.required],
+      deptPhoneNumber:['',Validators.required],
+      deptFaxNumber:[''],
+      deptOfficialMobileNo:[''],
+      lastDateOfPromotion:['',Validators.required],
+      department:['yes'],
+      department_name:[''],
+      updateType:['Transfer / Posting']
     });
 
     this.officerAction.getDegree().subscribe((res: any) => {
@@ -111,12 +131,72 @@ export class OfficerProfileComponent implements OnInit {
           case "country":
             this.country.push({ label: item.category_name, value: item._id });
             break;
+          case "posting_in":
+            this.postingIn.push({label:item.category_name,value:item._id});
+            break;
+          case "post_type":
+            this.postType.push({ label: item.category_name, value: item._id });
+            break;
+          case "location_change":
+            this.locationChange.push({ label: item.category_name, value: item._id });
+            break;
           default:
             break;
         }
       })
     })
   }
+
+  getDepartment(event: any) {
+    this.department = [];
+    this.officerAction.getData().subscribe((res: any[]) => {
+      res.forEach((item) => {
+        if (event.target.value == item._id) {
+          this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+            res.filter((data: any) => {
+              if (item.category_code == data.category_code) {
+                this.department.push({ label: data.department_name, value: data._id });
+              }
+            });
+          })
+        }
+      });
+    })
+  }
+
+  getDesignation(event: any) {
+    const input = event.target as HTMLSelectElement; 
+    const selectedOptionText = input.options[input.selectedIndex].text;
+    this.officerForm.get('department_name')?.setValue(selectedOptionText);
+    console.log(selectedOptionText);
+    this.designation = [];
+    this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+      res.forEach((item) => {
+        if (event.target.value == item._id) {
+          this.officerAction.getDesignations().subscribe((res: any) => {
+            res.results.filter((data: any) => {
+              if (item.category_code == data.category_code) {
+                this.designation.push({ label: data.designation_name, value: data._id });
+              }
+            })
+          })
+
+          // Get Address Details
+          this.officerForm.get('deptAddress')?.setValue(item.address || '');
+          this.officerForm.get('deptFaxNumber')?.setValue(item.faxNumber || '');
+          this.officerForm.get('deptOfficialMobileNo')?.setValue(item.officialMobileNo || '');
+          this.officerForm.get('deptPhoneNumber')?.setValue(item.phoneNumber || '');
+          const isFilled = item.address || item.faxNumber || item.phoneNumber || item.officialMobileNo;
+          this.officerForm.get('department')?.setValue(isFilled ? 'No' : 'yes');
+          this.setValues = isFilled;
+
+        }
+        this.designation = [];
+      });
+    });
+  }
+
+
 
   get rowsFormArray() {
     return this.officerForm.get('rows') as FormArray;
@@ -281,13 +361,13 @@ export class OfficerProfileComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
+    // const maxSizeInBytes = 1 * 1024 * 1024; // 2 MB
     if (file) {
-      if (file.size > maxSizeInBytes) {
-        this.removeImage();
-        alert('File size exceeds 1 MB. Please select a smaller file.');
-        return;  // Stop further execution
-      }
+      // if (file.size > maxSizeInBytes) {
+      //   this.removeImage();
+      //   alert('File size exceeds 1 MB. Please select a smaller file.');
+      //   return;  // Stop further execution
+      // }
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.base64String = reader.result as string;
@@ -483,9 +563,9 @@ export class OfficerProfileComponent implements OnInit {
       }
       
       
-      this.officerAction.createEmployeeProfile(formData).subscribe(
-        response => {
-          alert("Employee added Successfully..!")
+      this.officerAction.createEmployeeProfile(formData).subscribe((response:any)=>
+         {
+          alert(response.message);
           this.officerForm.reset();
           this.router.navigate(['officer-profile-list']);
           console.log('API Response:', response);

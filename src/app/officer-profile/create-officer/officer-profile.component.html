@@ -455,7 +455,7 @@
 
                     <div class="col-md-2 mt-2">
                       <label><b>Fee</b></label>
-                      <input type="number" class="form-control" formControlName="fees">
+                      <input type="number" class="form-control" formControlName="fees" (keydown)="onKeyDown($event)">
                     </div>
 
                     <div class="col-md-3 mt-4">
@@ -730,7 +730,7 @@
           <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
             formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
             <br>
-          <span>Please Upload file less than 1 Mb</span>
+          <!-- <span>Please Upload file less than 1 Mb</span> -->
         </div>
         <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="base64String">
           <img [src]="base64String" alt="Selected Image" class="img-fluid" />
@@ -742,7 +742,6 @@
 
         <div class="row mb-1 mt-3 float-left w-100">
           <div class="sub-title  float-left w-100 pl-2">Officer Details</div>
-
           <div class="col-md-3">
             <div class="form-group row">
               <label class="col-sm-12 col-form-label">Officer ID </label>
@@ -859,7 +858,142 @@
             </div>
           </div>
 
+
+          
         </div>
+
+        <div class="row mb-1 mt-3 float-left w-100">
+
+          <div class="sub-title  float-left w-100 pl-2">Posting Details</div>
+          <div class="col-md-12">
+          <div class="col-md-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Posting In <span>*</span></label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="toPostingInCategoryCode" (change)="getDepartment($event)">
+                <option value="">Select</option>
+                  <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5 px-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Department <span>*</span></label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="toDepartmentId" (change)="getDesignation($event)">
+                    <option value="">Select</option>
+                    <option *ngFor="let departmentData of department" [value]="departmentData.value">{{departmentData.label}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Address<span> * </span> </label>
+              <div class="col-sm-12">
+                <input type="text"  formControlName="deptAddress" class="form-control" [readonly]="setValues" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Phone<span> * </span> </label>
+              <div class="col-sm-12">
+                <input type="text"  formControlName="deptPhoneNumber" class="form-control" (keydown)="onKeyDown($event)" maxlength="20"  [readonly]="setValues" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Fax </label>
+              <div class="col-sm-12">
+                <input type="text"  formControlName="deptFaxNumber" class="form-control" [readonly]="setValues" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Official Mobile No </label>
+              <div class="col-sm-12">
+                <input type="text"  formControlName="deptOfficialMobileNo" maxlength="10" class="form-control" (keydown)="onKeyDown($event)" [readonly]="setValues" />
+              </div>
+            </div>
+          </div> 
+
+
+          <div class="col-md-3 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label"> Designation <span>*</span></label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="toDesignationId">
+                      <option value="">Select</option>
+                      <option *ngFor="let designationData of designation" [value]="designationData.value">{{designationData.label}}</option>
+                  </select>
+              </div>
+            </div>
+            </div>
+
+            
+          <div class="col-md-2 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Post Type <span>*</span> </label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="postTypeCategoryCode">
+                      <option value="">Select</option>
+                      <option *ngFor="let postTypeData of postType" [value]="postTypeData.value">{{postTypeData.label}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Location Change <span>*</span> </label>
+              <div class="col-sm-12">
+                  <select class="form-control" formControlName="locationChangeCategoryId">
+                      <option value="">Select</option>
+                      <option *ngFor="let locationChangeData of locationChange" [value]="locationChangeData.value">{{locationChangeData.label}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 pl-0">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Language Known<span> * </span> </label>
+              <div class="col-sm-12">
+                <input type="text"  formControlName="languages" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Promotion Date <span> * </span></label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control pl-0" formControlName="lastDateOfPromotion"
+                  [ngStyle]="{'border-bottom': (submitted && officerForm.get('lastDateOfPromotion')?.invalid && officerForm.get('lastDateOfPromotion')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-3 mt-3">
+          <h6 class="sub-title" style="font-size: 13px;"><b>Department Details</b> </h6>
+                <p><span class="left">Address</span><span class="right">:</span></p>
+                <p><span class="left">Phone</span><span class="right">:</span></p>
+                <p><span class="left">Mobile</span><span class="right">:</span></p>
+                <p><span class="left">Fax</span><span class="right">:</span></p>
+        </div> -->
+
+</div>
 
         <div class="my-3 float-left w-100">
           <button type="submit" class="btn btn-primary mr-2">Submit</button>
