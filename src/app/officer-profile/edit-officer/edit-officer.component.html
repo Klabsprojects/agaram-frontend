@@ -447,7 +447,7 @@
           <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
             formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
             <!-- <p style="color: yellow;">Please Upload files Under 1 MB</p> -->
-            <span>Please Upload file less than 1 Mb</span>
+            <!-- <span>Please Upload file less than 1 Mb</span> -->
         </div>
         <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="selectedImage && !base64String">
           <img [src]="selectedImage" alt="Selected Image" class="img-fluid" />
@@ -548,7 +548,7 @@
                   <select class="form-control readonly" formControlName="serviceStatus" 
                   [ngStyle]="{'border-bottom': (submitted && officerForm.get('serviceStatus')?.invalid && officerForm.get('serviceStatus')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                       <option value="">Select</option>
-                      <option *ngFor="let serviceStatusData of serviceStatus" [value]="serviceStatusData.value">{{serviceStatusData.label}}</option>
+                      <option *ngFor="let serviceStatusData of serviceData" [value]="serviceStatusData.value">{{serviceStatusData.label}}</option>
                     </select>
               </div>
             </div>
@@ -578,7 +578,7 @@
          
           </div>
 
-          <div class="row mb-1 mt-3 float-left w-100">
+          <div class="row mb-1 mt-3 float-left w-100" *ngIf="showPosting">
 
             <div class="sub-title  float-left w-100 pl-2">Posting Details</div>
             <div class="col-md-12">

@@ -187,6 +187,8 @@
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Grade </b></label> <br> {{viewEmployeeData.promotionGrade}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Payscale </b></label> <br> {{viewEmployeeData.payscale}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Seniority Number </b></label> <br> {{viewEmployeeData.seniority}}</div>  
+            
+            <div *ngIf="showPosting">
             <h6 class="modal-title float-left w-100 mb-2">Posting Details</h6>
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Posting In</b></label> <br> {{viewEmployeeData.toPostingInCategoryCode}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Department </b></label> <br> {{viewEmployeeData.toDepartmentId}}</div>  
@@ -199,7 +201,7 @@
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Location Change </b></label> <br> {{viewEmployeeData.locationChangeCategoryId}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Language Known </b></label> <br> {{viewEmployeeData.languages}}</div>  
             <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Last Promotion Date</b></label> <br> {{viewEmployeeData.lastDateOfPromotion | date:'dd/MM/YYYY'}}</div>  
-          
+            </div>
           </div>
 
         </div>

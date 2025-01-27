@@ -26,6 +26,7 @@ export class OfficerProfileListComponent implements OnInit {
   viewEmployeeData = new viewEmployeeData();
   base64ImageData:string='';
   showPopup = true;
+  showPosting = false;
 
   constructor(private router:Router, private officerAction:LeaveTransferService, private cdr: ChangeDetectorRef) { }
 
@@ -264,6 +265,13 @@ export class OfficerProfileListComponent implements OnInit {
             }
             if(data.category_type == "service_status" && data._id == ele.serviceStatus){
               this.viewEmployeeData.serviceStatus = data.category_name;
+              console.log(this.viewEmployeeData.serviceStatus);
+              if(this.viewEmployeeData.serviceStatus == "Serving"){
+                this.showPosting = true;
+              }
+              else{
+                this.showPosting = false;
+              }
             }
             if(data.category_type == "religion" && data._id == ele.religion){
               this.viewEmployeeData.religion = data.category_name;
