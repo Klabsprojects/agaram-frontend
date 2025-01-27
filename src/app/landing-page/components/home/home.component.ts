@@ -13,7 +13,14 @@ export class HomeComponent {
         {'title':'Total Officers','count':res.TotalEmpCount},
         {'title':'Active Officers','count':res.ActiveEmpCount},
         {'title':'Retired Officers','count':res.RetiredEmpCount},
-        {'title':'Officers on Deputation','count':res.DeputationEmpCount}]
+        //{'title':'Officers on Deputation','count':res.DeputationEmpCount}
+      ]
+      console.log('this.dashboardCounts => ', this.dashboardCounts);
+    })
+    this.service.getDeputationCount('getByDeputation').subscribe((res:any)=>{
+      console.log(res);
+      this.dashboardCounts.push({'title':'Officers on Deputation','count':res.results.empCount});
+      console.log('this.dashboardCounts => ', this.dashboardCounts);
     })
   }
   public dashboardCounts:any[]=[];
