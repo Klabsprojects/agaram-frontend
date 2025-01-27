@@ -37,9 +37,8 @@ export class DroComponent {
     this.getlist();
     this.checkAccess();
     this.actrulesForm = this.fb.group({
-      OfficerName: ['', Validators.required],
-      PresentPost: ['', Validators.required],
-      MobileNo: ['', Validators.required],
+      DateOfUpload: ['', Validators.required],
+      DroFile: [null, Validators.required]
     });
   }
 
@@ -65,8 +64,10 @@ export class DroComponent {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }
@@ -183,9 +184,8 @@ export class DroComponent {
   edit(data: any) {
     this.setEditMode(true)
     this.editId = data._id;
-    this.actrulesForm.get('OfficerName')?.setValue(data.OfficerName);
-    this.actrulesForm.get('PresentPost')?.setValue(data.PresentPost);
-    this.actrulesForm.get('MobileNo')?.setValue(data.MobileNo);
+    var dou = new Date(data.DateOfUpload).toISOString().split('T')[0]
+    this.actrulesForm.get('DateOfUpload')?.setValue(dou);
   }
   view(data: any) {
     const pdfUrl = `${this.url}${data}`;
@@ -206,7 +206,12 @@ export class DroComponent {
       const formData = new FormData();
       const formValues = this.actrulesForm.value;
       for (const key in formValues) {
-        formData.append(key, formValues[key]);
+        if (formValues.hasOwnProperty(key) && key !== 'DroFile') {
+          formData.append(key, formValues[key]);
+        }
+      }
+      if (this.selectedFile) {
+        formData.append('DroFile', this.selectedFile);
       }
       if (this.isEdit && this.editId) {
         formData.append('id', this.editId.toString());
@@ -218,7 +223,7 @@ export class DroComponent {
         })
       }
       else {
-        this.foreignVisitService.uploadAdd(formValues, 'addDros').subscribe((res: any) => {
+        this.foreignVisitService.uploadAdd(formData, 'addDros').subscribe((res: any) => {
           console.log("res", res);
           if (res.status === 200) {
             alert("Created Succesfully");
