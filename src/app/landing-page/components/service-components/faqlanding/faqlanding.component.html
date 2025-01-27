@@ -1,0 +1,63 @@
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h5 class=".custom-color-primary" style="text-align: center; color: #92400e !important;">FAQ's Entries</h5>
+
+            <div class="col-md-12 p-0 mt-2">
+                <div class="col-md-3 px-0 mt-2 mb-0">
+                    <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+                </div>
+
+            </div>
+            <div class="table-responsive">
+                <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Question</th>
+                            <th>Answer</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+                            <tr *ngFor="let data of pagedData(); let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{data.Question}}</td>
+                                <td>{{data.Answer}}</td>
+                            </tr>
+                        </ng-container>
+                        <ng-template #noRecords>
+                            <tr>
+                                <td colspan="13" style="color: red;">No records found</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+                <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length >= pageSizeOptions[0]">
+                    <div class="dropdown col-md-8">
+                      <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Items Per Page: {{ pageSize }}
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                          }}</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4" style="border: 0px;">
+                      <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+                        <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+                      <ng-container *ngFor="let page of pages">
+                        <button style="background-color: #92400e !important;color: #FFF !important; border-color: #92400e !important" class="btn btn-light ml-1 p-2 custom-color-primary" [ngClass]="{ 'active': currentPage === page }"
+                          (click)="goToPage(page)">{{ page }}</button>
+                      </ng-container>
+                      <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+                        Next <i class="mdi mdi-chevron-double-right"></i> </button>
+                  
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

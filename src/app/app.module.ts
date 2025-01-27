@@ -43,6 +43,10 @@ import { AdmininstrativeDashboardComponent } from './landing-page/components/ser
 import { ContactComponent } from './landing-page/components/contact/contact.component';
 import { DashboardContactComponent } from './landing-page/components/contact/dashboard-contact/dashboard-contact.component';
 import { FormContactComponent } from './landing-page/components/contact/form-contact/form-contact.component';
+import { ActrulesComponentLanding } from './landing-page/components/service-components/actrulesLanding/actruleslanding.component';
+import { CircularsComponentlanding } from './landing-page/components/service-components/circularslanding/circularslanding.component';
+import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
+import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +82,11 @@ import { FormContactComponent } from './landing-page/components/contact/form-con
     AdmininstrativeDashboardComponent,
     ContactComponent,
     DashboardContactComponent,
-    FormContactComponent
+    FormContactComponent,
+    ActrulesComponentLanding,
+    CircularsComponentlanding,
+    FaqComponentlanding,
+    UtilityformsComponentlanding
   ],
   imports: [
     BrowserModule,

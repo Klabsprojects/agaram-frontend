@@ -14,6 +14,13 @@ import { TransferComponent } from './landing-page/components/transfer/transfer.c
 import { CurrentPostingComponent } from './landing-page/components/current-posting/current-posting.component';
 import { ServicesLnComponent } from './landing-page/components/services-ln/services-ln.component';
 import { ContactComponent } from './landing-page/components/contact/contact.component';
+import { ActrulesComponentLanding } from './landing-page/components/service-components/actrulesLanding/actruleslanding.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
+import { CircularsComponentlanding } from './landing-page/components/service-components/circularslanding/circularslanding.component';
+import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
+import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -22,7 +29,11 @@ const routes: Routes = [
     {path:'transfer',component:TransferComponent},
     {path:'posting',component:CurrentPostingComponent},
     {path:'service',component:ServicesLnComponent},
-    {path:'contact',component:ContactComponent}
+    {path:'contact',component:ContactComponent},
+    {path:'actnrulz',component:ActrulesComponentLanding},
+    {path:'circular-landing',component:CircularsComponentlanding},
+    {path:'faq-landing',component:FaqComponentlanding},
+    {path:'utility-landing',component:UtilityformsComponentlanding},
   ]},
   { path:'login',component:LoginComponent },
   { path:'advance-search',component:AdvanceSearchComponent,canActivate: [AuthGuard]},
@@ -62,7 +73,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        SharedModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

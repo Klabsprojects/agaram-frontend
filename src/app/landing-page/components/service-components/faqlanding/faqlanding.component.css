@@ -1,0 +1,15 @@
+.modal-dialog{
+    max-width:800px;
+}
+
+.custom-color-primary{
+    background-color: #92400e !important;
+}
+
+.custom-color-secondary{
+    background-color: #fef4cd;
+}
+
+.table thead th{
+    background-color: #fef4cd !important;
+}
