@@ -25,6 +25,10 @@ export class AdvanceSearchComponent implements OnInit{
   employeeHistory = new employeeHistory();
   firstIndex: any = '';
   remainingIndices:any[]=[];
+  pageSize: number = 100;
+  pageSizeOptions: number[] = [5, 10, 15, 20];
+  currentPage: number = 1;
+  filterText: any;
 
   constructor(private filterService:LeaveTransferService,private fb:FormBuilder,private datePipe: DatePipe){
 
@@ -210,6 +214,62 @@ export class AdvanceSearchComponent implements OnInit{
 clearAll(){
   this.filterForm.reset();
   this.tableData = [];
+}
+
+get filteredEmployeeList() {
+  const filterText = (this.filterText || '').trim().toLowerCase();
+  if (filterText === '') {
+    return this.tableData;
+  } else {
+    return this.tableData.filter(employee =>
+      Object.values(employee).some((value: any) =>
+        value && value.toString().toLowerCase().includes(filterText)));
+  }
+}
+
+public startIndex:any;
+pagedData() {
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  this.startIndex  = startIndex;
+  const endIndex = startIndex + this.pageSize;
+  return this.filteredEmployeeList.slice(startIndex, endIndex);
+}
+tabledatareturn() {
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  this.startIndex  = startIndex;
+  const endIndex = startIndex + this.pageSize;
+  return this.tableData.slice(startIndex, endIndex);
+}
+get totalPages(): number {
+  return Math.ceil(this.filteredEmployeeList.length / this.pageSize);
+}
+
+get pages(): number[] {
+  const pagesCount = Math.min(5, this.totalPages); // Display up to 5 pages
+  const startPage = Math.max(1, this.currentPage - Math.floor(pagesCount / 2));
+  const endPage = Math.min(this.totalPages, startPage + pagesCount - 1);
+  return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+}
+
+changePageSize(size: number) {
+  this.pageSize = size;
+  this.currentPage = 1;
+}
+
+goToPage(page: number) {
+  this.currentPage = page;
 }
   
 }

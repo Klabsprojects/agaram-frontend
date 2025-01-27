@@ -15,7 +15,7 @@ export class PromotionComponent implements OnInit {
   filterText : any;
   tableData:any[]=[];
   pageSize: number = 10; 
-  pageSizeOptions: number[] = [5, 10, 15, 20];
+  pageSizeOptions: number[] = [1,5, 10, 15, 20];
   currentPage: number = 1; // Current page
   visiblePages: number[] = [];
   maxVisiblePages = 10;
@@ -77,8 +77,10 @@ export class PromotionComponent implements OnInit {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }

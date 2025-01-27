@@ -62,8 +62,10 @@ export class OfficerTourComponent implements OnInit {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }
@@ -121,7 +123,6 @@ export class OfficerTourComponent implements OnInit {
   changeValue(data: any) {
     if (data.target.value == "Print") {
       const printableElement = document.querySelector('.printable-content');
-      console.log(printableElement);
       if (printableElement) {
         window.print();
       } else {
@@ -139,7 +140,6 @@ export class OfficerTourComponent implements OnInit {
     this.router.navigate(['edit-officers-tour'], { queryParams: { id: encodedData } });
   }
   viewLtc(data: any) {
-    console.log("data", data, "orderType", this.orderType, "orderFor", this.orderFor);
     this.ltcService.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
         if (item.category_type == "order_type") {
@@ -225,7 +225,8 @@ export class OfficerTourComponent implements OnInit {
   deleteLtc(id: any) {
     this.ltcService.uploadDelete('deleteOfficersTour', id).subscribe((res: any) => {
       if (res.status === 200) {
-        alert("Deleted Successfully")
+        alert("Deleted Successfully");
+        this.ngOnInit();
       }
     })
   }

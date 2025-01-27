@@ -31,7 +31,7 @@
   <tbody>
     <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
       <tr *ngFor="let data of pagedData(); let i = index">
-        <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{i + 1}}</td>
+        <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{i +startIndex+ 1}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.employeeId}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.ifhrmsId}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.fullName}}</td>
@@ -53,7 +53,7 @@
     </ng-template>
   </tbody>
 </table>
-<div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > pageSizeOptions[0]">
+<div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > 0">
   <div class="dropdown col-md-8">
     <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

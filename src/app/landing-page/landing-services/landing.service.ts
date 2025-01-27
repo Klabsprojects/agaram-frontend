@@ -17,11 +17,18 @@ export class landingService {
     searchText = new BehaviorSubject<any>(null);
     searchText$ = this.searchText.asObservable();
 
+    searchTextTransfer = new BehaviorSubject<any>(null);
+    searchTextTransfer$ = this.searchTextTransfer.asObservable();
+
     pagginationSend = new BehaviorSubject<any>(null);
     pagginationSend$ = this.pagginationSend.asObservable();
 
     pagginationRecive = new BehaviorSubject<any>(null);
     pagginationRecive$ = this.pagginationRecive.asObservable();
+
+    CallSearchTransfer(data:any){
+        this.searchTextTransfer.next(data);
+    }
 
     callSearch(data: any) {
         this.searchText.next(data);

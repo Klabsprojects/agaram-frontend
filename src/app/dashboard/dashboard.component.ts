@@ -91,7 +91,7 @@ export class DashboardComponent implements OnInit {
   state: any[] = [];
 
   pageSize: number = 100;
-  pageSizeOptions: number[] = [1, 10, 15, 20];
+  pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1;
   // filteredEmployeeLists: any[] = []; // Your filtered list
   popupVisible: boolean = false;
@@ -360,13 +360,16 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex  = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }
   tabledatareturn() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex  = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.tableData.slice(startIndex, endIndex);
   }
@@ -915,20 +918,21 @@ export class DashboardComponent implements OnInit {
   }
   drocurrent:boolean=false;
   dro(){
-    this.dashboardService.uploadGet('getDros').subscribe((res:any)=>{
-      this.tableData = res.results;
-      this.drocurrent = true;
-      this.showMainTitle = false;
-      this.showCard = false;
-      this.showtable = true;
-      this.showFilter = false;
-      this.showComm = true;
-      this.showIcon = true;
-      this.showPosting = false;
-      this.showGender = false;
-      this.showDesignation = false;
-      this.showLocation = false;
-    })
+    this.router.navigate(['/dro'])
+    // this.dashboardService.uploadGet('getDros').subscribe((res:any)=>{
+    //   this.tableData = res.results;
+    //   this.drocurrent = true;
+    //   this.showMainTitle = false;
+    //   this.showCard = false;
+    //   this.showtable = true;
+    //   this.showFilter = false;
+    //   this.showComm = true;
+    //   this.showIcon = true;
+    //   this.showPosting = false;
+    //   this.showGender = false;
+    //   this.showDesignation = false;
+    //   this.showLocation = false;
+    // })
   }
 
   Back() {
