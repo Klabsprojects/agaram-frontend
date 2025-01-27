@@ -21,11 +21,30 @@
         <nav class="nav-col">
             <p class="footer-heading">Quick Links</p>
             <ul class="footer-nav">
-                <li><a class="footer-link" href="" target="_blank">Home</a></li>
-                <li><a class="footer-link" href="" target="_blank">Services</a></li>
-                <li><a class="footer-link" href="" target="_blank">Current Postings</a></li>
-                <li><a class="footer-link" href="">Transfers</a></li>
-                <li><a class="footer-link" href="" target="_blank">Contact</a></li>
+                <li [routerLink]="'Landing/home'"><a class="footer-link" href="" >Home</a></li>
+                <!-- <li><a class="footer-link" href="" >Services</a></li> -->
+                <li class="has-submenu">
+                    <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')" (mouseleave)="closeSubmenu('services')">
+                    Services
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
+                      stroke="currentColor" stroke-width="2" class="dropdown-icon">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    </a>
+                    <ul class="submenu" 
+                    [class.active]="activeSubmenu === 'services'"
+                        (mouseenter)="preventSubmenuClose($event)"
+                        (mouseleave)="closeSubmenu('services')">
+                      <li><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
+                      <li><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
+                      <li><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
+                      <li><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
+                      <li><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
+                    </ul>
+                  </li>
+                <li [routerLink]="'Landing/posting'"><a class="footer-link" href="" >Current Postings</a></li>
+                <li [routerLink]="'Landing/transfer'"><a class="footer-link" href="" >Transfers</a></li>
+                <li [routerLink]="'Landing/contact'"><a class="footer-link" href="" >Contact</a></li>
             </ul>
         </nav>
 
@@ -54,7 +73,7 @@
             </ul>
         </div>
 
-        <nav class="nav-col">
+        <!-- <nav class="nav-col">
             <p class="footer-heading">Connect With Us</p>
             <ul class="footer-nav-connect">
                 <li><a class="footer-link-connect" href="#">
@@ -70,7 +89,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube w-5 h-5 text-amber-700"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                 </a></li>
             </ul>
-        </nav>
+        </nav> -->
     </div>
     <div class="container">
         <div class="copyright-gov">

@@ -127,22 +127,22 @@ export class DroComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      this.actrulesForm.patchValue({ actsrulesFile: this.selectedFile });
+      this.actrulesForm.patchValue({ DroFile: this.selectedFile });
     }
     this.selectedFile = event.target.files[0];
-    this.actrulesForm.get('actsrulesFile')?.setValue(this.selectedFile);
+    this.actrulesForm.get('DroFile')?.setValue(this.selectedFile);
     if (this.selectedFile) {
       if (this.selectedFile.type !== 'application/pdf') {
-        this.actrulesForm.get('actsrulesFile')?.setErrors({ 'incorrectFileType': true });
+        this.actrulesForm.get('DroFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
 
       if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.actrulesForm.get('actsrulesFile')?.setErrors({ 'maxSize': true });
+        this.actrulesForm.get('DroFile')?.setErrors({ 'maxSize': true });
         return;
       }
 
-      this.actrulesForm.get('actsrulesFile')?.setErrors(null);
+      this.actrulesForm.get('DroFile')?.setErrors(null);
     }
   }
   getlist() {
@@ -164,7 +164,7 @@ export class DroComponent {
     this.actrulesForm.reset();
     this.editId = null;
     this.isEdit = false; // Switch back to create mode
-    const fileControl = this.actrulesForm.get('actsrulesFile');
+    const fileControl = this.actrulesForm.get('DroFile');
     fileControl?.setValidators(Validators.required); // Add the required validator
     fileControl?.updateValueAndValidity(); // Revalidate the field
     this.showModal();
@@ -173,7 +173,7 @@ export class DroComponent {
     this.actrulesForm.reset();
     this.showModal();
     this.isEdit = isEdit; // Update the mode
-    const fileControl = this.actrulesForm.get('actsrulesFile');
+    const fileControl = this.actrulesForm.get('DroFile');
     if (isEdit) {
       fileControl?.clearValidators(); // Remove validators in edit mode
     } else {
@@ -186,13 +186,14 @@ export class DroComponent {
     this.editId = data._id;
     var dou = new Date(data.DateOfUpload).toISOString().split('T')[0]
     this.actrulesForm.get('DateOfUpload')?.setValue(dou);
+    this.actrulesForm.get('DroFile')?.setValue(data.DroFile);
   }
   view(data: any) {
     const pdfUrl = `${this.url}${data}`;
     window.open(pdfUrl, '_blank');
   }
   delete(id: any) {
-    this.foreignVisitService.uploadDelete('deleteActsrules', id).subscribe((res: any) => {
+    this.foreignVisitService.uploadDelete('DeleteDro', id).subscribe((res: any) => {
       console.log("res delete", res);
       if (res.status === 200) {
         alert("Deleted Succesfully");
@@ -215,7 +216,7 @@ export class DroComponent {
       }
       if (this.isEdit && this.editId) {
         formData.append('id', this.editId.toString());
-        this.foreignVisitService.uploadEdit(formData, 'updateaActsrules').subscribe((res: any) => {
+        this.foreignVisitService.uploadEdit(formData, 'updateDRO').subscribe((res: any) => {
           if (res.status === 200) {
             alert("Updated Succesfully");
             this.resetForm();
