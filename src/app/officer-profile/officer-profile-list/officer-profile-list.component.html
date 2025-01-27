@@ -31,7 +31,7 @@
   <tbody>
     <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
       <tr *ngFor="let data of pagedData(); let i = index">
-        <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{i + 1}}</td>
+        <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{i +startIndex+ 1}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.employeeId}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.ifhrmsId}}</td>
         <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.fullName}}</td>

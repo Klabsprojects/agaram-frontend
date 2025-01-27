@@ -29,7 +29,7 @@ export class CurrentPostingComponent {
     })
     this.service.searchText$.subscribe((res:any)=>{
       if(res){
-        this.currentPosting = this.currentPosting.filter(item =>
+        this.currentPosting = this.currentPostingStatic.filter(item =>
           Object.values(item).some(value =>
             String(value).toLowerCase().includes(res.toLowerCase())
           )

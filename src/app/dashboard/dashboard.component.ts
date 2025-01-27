@@ -915,20 +915,21 @@ export class DashboardComponent implements OnInit {
   }
   drocurrent:boolean=false;
   dro(){
-    this.dashboardService.uploadGet('getDros').subscribe((res:any)=>{
-      this.tableData = res.results;
-      this.drocurrent = true;
-      this.showMainTitle = false;
-      this.showCard = false;
-      this.showtable = true;
-      this.showFilter = false;
-      this.showComm = true;
-      this.showIcon = true;
-      this.showPosting = false;
-      this.showGender = false;
-      this.showDesignation = false;
-      this.showLocation = false;
-    })
+    this.router.navigate(['/dro'])
+    // this.dashboardService.uploadGet('getDros').subscribe((res:any)=>{
+    //   this.tableData = res.results;
+    //   this.drocurrent = true;
+    //   this.showMainTitle = false;
+    //   this.showCard = false;
+    //   this.showtable = true;
+    //   this.showFilter = false;
+    //   this.showComm = true;
+    //   this.showIcon = true;
+    //   this.showPosting = false;
+    //   this.showGender = false;
+    //   this.showDesignation = false;
+    //   this.showLocation = false;
+    // })
   }
 
   Back() {
