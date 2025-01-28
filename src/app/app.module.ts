@@ -47,6 +47,8 @@ import { ActrulesComponentLanding } from './landing-page/components/service-comp
 import { CircularsComponentlanding } from './landing-page/components/service-components/circularslanding/circularslanding.component';
 import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
+import { CarouselComponent } from './landing-page/components/home/carousel/carousel.component';
+import { OfficialsComponent } from './landing-page/components/home/officials/officials.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +88,9 @@ import { UtilityformsComponentlanding } from './landing-page/components/service-
     ActrulesComponentLanding,
     CircularsComponentlanding,
     FaqComponentlanding,
-    UtilityformsComponentlanding
+    UtilityformsComponentlanding,
+    CarouselComponent,
+    OfficialsComponent
   ],
   imports: [
     BrowserModule,

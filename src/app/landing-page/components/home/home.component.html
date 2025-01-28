@@ -5,13 +5,17 @@
             <p class="sub-title">Pioneering Digital Governance | Empowering Administration | Serving Excellence</p>
         </div>
         <div class="row mb-5">
+            <app-carousel/>
+        </div>
+        <div class="row mb-5">
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3" *ngFor="let detail of dashboardCounts">
                 <app-detail [data]="detail" />
             </div>
         </div>
         <div class="row mb-5">
             <div class="col-xl-6 col-lg-6 col-md-6 mb-2"><app-announcements-updates [updatedetails]="announcements" [title]="'Important Announcements'" /></div>
-            <div class="col-xl-6 col-lg-6 col-md-6"><app-announcements-updates [updatedetails]="updates" [title]="'Latest Updates'" /></div>
+            <div class="col-xl-6 col-lg-6 col-md-6"><app-officials/></div>
+            <!-- <div class="col-xl-6 col-lg-6 col-md-6"><app-announcements-updates [updatedetails]="updates" [title]="'Latest Updates'" /></div> -->
         </div>
     
         <!-- <div class="row">
