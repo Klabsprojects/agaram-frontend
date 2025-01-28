@@ -67,7 +67,7 @@ export class EditTourComponent {
       orderNo: ['', Validators.required],
       orderFor: ['', Validators.required],
       dateOfOrder: ['', Validators.required],
-      rejectReasons: ['', Validators.required],
+      rejectReasons: [''],
       remarks: ['testing1', Validators.required],
       orderFile: [null]
     });
@@ -104,8 +104,10 @@ export class EditTourComponent {
     }
   }
 
+  activeinput:any;
 
-  onInput(event: any, field: string) {
+  onInput(event: any, field: string,index:any) {
+    this.activeinput = index;
     const inputValue = event.target.value.trim();
     let mergedOptions: { name: string, id: string, empProfileId: any, mobileNo: string }[] = [];
     this.ltcService.getEmployeeList().subscribe((res: any) => {
@@ -219,6 +221,10 @@ export class EditTourComponent {
       // Use RxJS operators to handle asynchronous calls
       this.ltcService.employeeFilter(payload).pipe(
         switchMap((res: any) => {  
+          if(res.results.empCount===0){
+            alert('employee details not found')
+            this.removeRow(index);
+          }
           const empList = res.results.empList;
           if (empList.length === 0) {
             throw new Error("No employees found");
@@ -261,12 +267,18 @@ export class EditTourComponent {
           }
   
           // Add to the officers array if both are found
+
           if (matchingDepartment && matchingDesignation) {
-            this.officers.push({
+            // this.officers.push({
+            //   employeeProfileId: empProfileId,
+            //   departmentId: matchingDepartment.value,
+            //   designationId: matchingDesignation.value,
+            // });
+            this.officers[index]= {
               employeeProfileId: empProfileId,
               departmentId: matchingDepartment.value,
               designationId: matchingDesignation.value,
-            });
+            }
           } else {
             console.warn(
               `Could not find a matching department or designation for employee ID: ${empProfileId}`
@@ -374,6 +386,11 @@ export class EditTourComponent {
     (this.ltcForm.get('OtherOfficers') as FormArray).push(newRow);
     const qualifications = this.ltcForm.get('OtherOfficers') as FormArray;
     this.row.push({});
+    this.officers.push({
+      employeeProfileId: '',
+      departmentId: '',
+      designationId: '',
+    });
   }
 
   createRow() {

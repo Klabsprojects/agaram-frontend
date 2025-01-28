@@ -78,12 +78,12 @@ export class CreateTourComponent {
       toDate: ['', Validators.required],
       purpose: ['', Validators.required],
       organisationHostName: ['', Validators.required],
-      presentStatus: ['', Validators.required],
+      presentStatus: ['Carried out', Validators.required],
       orderType: ['', Validators.required],
       orderNo: ['', Validators.required],
       orderFor: ['', Validators.required],
       dateOfOrder: ['', Validators.required],
-      rejectReasons: ['', Validators.required],
+      rejectReasons: [''],
       remarks: ['testing1', Validators.required],
       orderFile :[null, Validators.required]
     });
@@ -111,9 +111,11 @@ export class CreateTourComponent {
     }
   }
 
+  activeinput:any;
 
-  onInput(event: any, field: string) {
+  onInput(event: any, field: string,index:any) {
     const inputValue = event.target.value.trim();
+    this.activeinput = index;
     let mergedOptions: { name: string, id: string, empProfileId: any, mobileNo: string }[] = [];
     this.ltcService.getEmployeeList().subscribe((res: any) => {
       res.results.forEach((item: any) => {
@@ -226,6 +228,11 @@ export class CreateTourComponent {
       // Use RxJS operators to handle asynchronous calls
       this.ltcService.employeeFilter(payload).pipe(
         switchMap((res: any) => {
+
+          if(res.results.empCount===0){
+            alert('employee details not found')
+            this.removeRow(index);
+          }
   
           const empList = res.results.empList;
           if (empList.length === 0) {
@@ -270,11 +277,16 @@ export class CreateTourComponent {
   
           // Add to the officers array if both are found
           if (matchingDepartment && matchingDesignation) {
-            this.officers.push({
+            // this.officers.push({
+            //   employeeProfileId: empProfileId,
+            //   departmentId: matchingDepartment.value,
+            //   designationId: matchingDesignation.value,
+            // });
+            this.officers[index]= {
               employeeProfileId: empProfileId,
               departmentId: matchingDepartment.value,
               designationId: matchingDesignation.value,
-            });
+            }
           } else {
             console.warn(
               `Could not find a matching department or designation for employee ID: ${empProfileId}`
@@ -382,6 +394,11 @@ export class CreateTourComponent {
     (this.ltcForm.get('OtherOfficers') as FormArray).push(newRow);
     const qualifications = this.ltcForm.get('OtherOfficers') as FormArray;
     this.row.push({});
+    this.officers.push({
+      employeeProfileId: '',
+      departmentId: '',
+      designationId: '',
+    });
   }
 
   createRow() {
@@ -396,6 +413,7 @@ export class CreateTourComponent {
       const qualifications = this.ltcForm.get('OtherOfficers') as FormArray;
       qualifications.removeAt(index);
       this.row.splice(index, 1);
+      this.officers.splice(index,1);
     }
   }
 }

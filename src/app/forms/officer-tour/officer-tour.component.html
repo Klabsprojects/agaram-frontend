@@ -95,6 +95,12 @@
       <div class="modal-body pb-0">
 
         <div class="col-md-12 p-0">
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Employee Name </b></label> <br> {{viewLtcData.OtherOfficers[0].employeeProfileId.fullName}}
+          </div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br> {{viewLtcData.OtherOfficers[0].departmentId.department_name}}
+          </div>
+          <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Designation </b></label> <br> {{viewLtcData.OtherOfficers[0].designationId.designation_name}}
+          </div>
           <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>State to Visit </b></label> <br> {{viewLtcData.state}}
           </div>
           <div class="col-md-6 px-0 mb-2"><label class="w-100"><b>Discrict to Visit </b></label>
@@ -125,10 +131,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let tableData of viewLtcData.OtherOfficers; let i = index">
-                  <td>{{i+1}}</td>
-                  <td>{{tableData.employeeProfileId.fullName}}</td>
-                  <td>{{tableData.departmentId.department_name}}</td>
-                  <td>{{tableData.designationId.designation_name}}</td>
+                  <ng-container *ngIf="i!=0">
+                    <td>{{i}}</td>
+                    <td>{{tableData.employeeProfileId.fullName}}</td>
+                    <td>{{tableData.departmentId.department_name}}</td>
+                    <td>{{tableData.designationId.designation_name}}</td>
+                  </ng-container>
                 </tr>
               </tbody>
               
