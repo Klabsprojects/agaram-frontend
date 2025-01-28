@@ -21,7 +21,7 @@
         <nav class="nav-col">
             <p class="footer-heading">Quick Links</p>
             <ul class="footer-nav">
-                <li [routerLink]="'Landing/home'"><a class="footer-link" href="" >Home</a></li>
+                <li><a class="footer-link" href="" [routerLink]="'Landing/home'">Home</a></li>
                 <!-- <li><a class="footer-link" href="" >Services</a></li> -->
                 <li class="has-submenu">
                     <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')" (mouseleave)="closeSubmenu('services')">
@@ -42,9 +42,9 @@
                       <li><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
                     </ul>
                   </li>
-                <li [routerLink]="'Landing/posting'"><a class="footer-link" href="" >Current Postings</a></li>
-                <li [routerLink]="'Landing/transfer'"><a class="footer-link" href="" >Transfers</a></li>
-                <li [routerLink]="'Landing/contact'"><a class="footer-link" href="" >Contact</a></li>
+                <li><a class="footer-link" href="" [routerLink]="'Landing/posting'">Current Postings</a></li>
+                <li><a class="footer-link" href="" [routerLink]="'Landing/transfer'">Transfers</a></li>
+                <li><a class="footer-link" href="" [routerLink]="'Landing/contact'">Contact</a></li>
             </ul>
         </nav>
 

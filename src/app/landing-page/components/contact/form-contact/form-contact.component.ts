@@ -16,7 +16,7 @@ export class FormContactComponent{
 
     this.service.postapicall('addContactus',contactForm.value).subscribe((res:any)=>{
       if(res.status === 200){
-        alert("Request sent successfully!");
+        alert("Message sent successfully!");
       }
     })
   }
