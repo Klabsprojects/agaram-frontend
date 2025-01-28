@@ -72,6 +72,11 @@
     width: 3rem; /* Default width (48px) */
     background: linear-gradient(to right, transparent, #fde68a, transparent); /* Gradient: from-transparent via-amber-200 to-transparent */
   }
+
+  .person-boxes{
+    height: 80vh;
+    overflow: scroll;
+  }
   
   /* Small screen (>=640px) */
   @media (min-width: 640px) {

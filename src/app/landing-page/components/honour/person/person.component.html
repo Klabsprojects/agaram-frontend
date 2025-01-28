@@ -1,6 +1,6 @@
 <div class="person">
     <div class="img-box">
-        <img [src]="person.imageUrl" alt="" class="person-img">
+        <img [src]="person.image || defaultimage" alt="" class="person-img">
     </div>
     <h3 class="name">{{person.name}}</h3>
     <div class="detail">
@@ -13,7 +13,7 @@
             <path d="M22 10v6"></path>
             <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
         </svg>
-        <span class="service">{{person.service}}</span>
+        <span class="service">{{person.title}}</span>
     </div>
     <div class="detail date-details">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
