@@ -12,6 +12,7 @@ export class landingService {
     fileUrl = 'https://agaram.a2zweb.in/backend/';
     baseUrl = 'https://agaram.a2zweb.in/v1/api/';
 
+
     constructor(private http: HttpClient) { }
 
     searchText = new BehaviorSubject<any>(null);
@@ -46,7 +47,11 @@ export class landingService {
         return this.http.get<any>(`${this.baseUrl}${url}`);
     }
 
+    getDeputationCount(url: any) {
+        return this.http.get<any>(`${this.baseUrl}${url}`);
+    }
+
     postapicall(url: any, payload: any) {
-        return this.http.post(url, payload);
+        return this.http.post(`${this.baseUrl}${url}`, payload);
     }
 }
