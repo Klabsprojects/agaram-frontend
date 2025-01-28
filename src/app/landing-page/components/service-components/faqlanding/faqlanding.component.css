@@ -1,15 +1,75 @@
-.modal-dialog{
-    max-width:800px;
+.modal-dialog {
+    max-width: 800px;
 }
 
-.custom-color-primary{
+.custom-color-primary {
     background-color: #92400e !important;
 }
 
-.custom-color-secondary{
+.custom-color-secondary {
     background-color: #fef4cd;
 }
 
-.table thead th{
+.table thead th {
     background-color: #fef4cd !important;
 }
+
+#table-to-export {
+    width: 100%;
+    /* Ensures the table takes the full width of its container */
+    table-layout: auto;
+    /* Allows column widths to adjust based on content */
+    word-wrap: break-word;
+    /* Forces word breaking in table cells */
+}
+
+#table-to-export th,
+#table-to-export td {
+    white-space: normal;
+    /* Allows text to wrap */
+    word-wrap: break-word;
+    /* Break long words if needed */
+    text-align: left;
+    /* Align text to the left for better readability */
+    vertical-align: top;
+    /* Aligns text to the top of the cell */
+}
+
+#table-to-export th {
+    background-color: #f8f9fa;
+    /* Optional: light background for headers */
+    font-weight: bold;
+}
+
+#table-to-export tbody tr td {
+    padding: 8px;
+    /* Adds some spacing for better readability */
+}
+
+/* Responsive behavior for smaller screens */
+/* @media screen and (max-width: 426px) {
+    #table-to-export {
+        font-size: 14px;
+    }
+
+    #table-to-export td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #table-to-export tr {
+        margin-bottom: 10px;
+    }
+
+    #table-to-export th {
+        display: none;
+    }
+
+    #table-to-export td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+} */
