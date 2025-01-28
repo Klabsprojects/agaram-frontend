@@ -30,7 +30,7 @@
           <tbody>
             <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
               <tr *ngFor="let data of pagedData(); let i = index">
-                <td>{{i + 1}}</td>
+                <td>{{i + startIndex+1}}</td>
                 <td>{{data.orderTypeCategoryCode}}</td>
                 <td>{{data.orderNumber}}</td>
                 <td>{{data.orderForCategoryCode}}</td>
@@ -54,6 +54,29 @@
             </ng-template>
           </tbody>
         </table>
+        <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > 0">
+          <div class="dropdown col-md-8">
+            <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Items Per Page: {{ pageSize }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+              <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                }}</a>
+            </div>
+          </div>
+          <div class="col-md-4" style="border: 0px;">
+            <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+              <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+            <ng-container *ngFor="let page of pages">
+              <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+                (click)="goToPage(page)">{{ page }}</button>
+            </ng-container>
+            <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+              Next <i class="mdi mdi-chevron-double-right"></i> </button>
+        
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -6,9 +6,9 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.3-4.3"></path>
             </svg>
-            <input type="text" placeholder="Search by officer name or notification..." class="search-input">
+            <input type="text" placeholder="Search by officer name or notification..." class="search-input" (input)="onInput($event)">
         </div>
-        <div class="filter-container">
+        <!-- <div class="filter-container">
             <select class="date-filter">
                 <option>All Dates</option>
                 <option>Last 7 Days</option>
@@ -16,6 +16,6 @@
                 <option>Last 90 Days</option>
             </select>
             <button class="filter-button">Filter</button>
-        </div>
+        </div> -->
     </div>
 </div>

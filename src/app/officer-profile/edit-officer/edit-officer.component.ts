@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {  Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeaveTransferService } from '../../forms/forms.service';
@@ -25,7 +25,7 @@ export class EditOfficerComponent implements OnInit {
   community: any[] = [];
   grade: any[] = [];
   religion: any[] = [];
-  serviceStatus: any[] = [];
+  serviceData: any[] = [];
   exam: string = '';
   degreeData: any[] = [];
   rows: any[] = [{}];
@@ -44,6 +44,8 @@ export class EditOfficerComponent implements OnInit {
   department: any[] = [];
   designation: any[] = [];
   setValues:boolean=false;
+  showPosting : boolean = false;
+
 
   constructor(private fb: FormBuilder, private elementRef: ElementRef, private officerAction: LeaveTransferService, private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
@@ -88,13 +90,55 @@ export class EditOfficerComponent implements OnInit {
       deptPhoneNumber:[''],
       deptFaxNumber:[''],
       deptOfficialMobileNo:[''],
-      lastDateOfPromotion:['',Validators.required],
+      lastDateOfPromotion:[''],
       department:[''],
       department_name:[''],
       updatePost:[''],
-      updateType:['Transfer / Posting'],
       updateId:[''],
+      serving:['']
     });
+    this.officerAction.getData().subscribe((res: any[]) => {
+      res.forEach((item) => {
+        switch (item.category_type) {
+          case "gender":
+            this.gender.push({ label: item.category_name, value: item._id });
+            break;
+          case "state":
+            this.state.push({ label: item.category_name, value: item._id });
+            break;
+          case "recruitment_type":
+            this.recruitment.push({ label: item.category_name, value: item._id });
+            break;
+          case "class":
+            this.community.push({ label: item.category_name, value: item._id });
+            break;
+          case "promotion_grade":
+            this.grade.push({ label: item.category_name, value: item._id });
+            break;
+          case "religion":
+            this.religion.push({ label: item.category_name, value: item._id });
+            break;
+          case "service_status":
+            this.serviceData.push({ label: item.category_name, value: item._id });
+            break;
+          case "country":
+            this.country.push({ label: item.category_name, value: item._id });
+            break;
+            case "posting_in":
+              this.postingIn.push({label:item.category_name,value:item._id});
+              break;
+            case "post_type":
+              this.postType.push({ label: item.category_name, value: item._id });
+              break;
+            case "location_change":
+              this.locationChange.push({ label: item.category_name, value: item._id });
+              break;
+          default:
+            break;
+        }
+        
+      })
+    })
     this.officerAction.getEmployee(this.id).subscribe((res: any) => {
       res.results.forEach((data: any) => {
         this.officerAction.getDepartmentData().subscribe((res: any[]) => {
@@ -173,13 +217,36 @@ export class EditOfficerComponent implements OnInit {
         this.officerForm.get('postTypeCategoryCode')?.setValue(data.postTypeCategoryCode);
         this.officerForm.get('locationChangeCategoryId')?.setValue(data.locationChangeCategoryId);
         this.officerForm.get('languages')?.setValue(data.languages);
-        this.officerForm.get('deptAddress')?.setValue(data.departmentId.address);
-        this.officerForm.get('deptPhoneNumber')?.setValue(data.departmentId.phoneNumber);
-        this.officerForm.get('deptFaxNumber')?.setValue(data.departmentId.faxNumber);
-        this.officerForm.get('deptOfficialMobileNo')?.setValue(data.departmentId.officialMobileNo);
-        var lastDateOfPromotion = new Date(data.lastDateOfPromotion);
-        data.lastDateOfPromotion = lastDateOfPromotion.toISOString().split('T')[0];
-        this.officerForm.get('lastDateOfPromotion')?.setValue(data.lastDateOfPromotion);
+        if (data.departmentId) {
+          this.officerForm.get('deptAddress')?.setValue(data.departmentId.address);
+          this.officerForm.get('deptPhoneNumber')?.setValue(data.departmentId.phoneNumber);
+          this.officerForm.get('deptFaxNumber')?.setValue(data.departmentId.faxNumber);
+          this.officerForm.get('deptOfficialMobileNo')?.setValue(data.departmentId.officialMobileNo);
+        }
+        if (data.lastDateOfPromotion) {
+          var lastDateOfPromotion = new Date(data.lastDateOfPromotion);
+          data.lastDateOfPromotion = lastDateOfPromotion.toISOString().split('T')[0];
+          this.officerForm.get('lastDateOfPromotion')?.setValue(data.lastDateOfPromotion);
+        } 
+
+        this.officerAction.getData().subscribe((res: any[]) => {
+          res.forEach((item) => {
+            if (item.category_type == 'service_status') {
+              this.serviceData.push({ label: item.category_name, value: item._id });
+              this.serviceData.find((ele:any)=> {
+                if(ele.value == data.serviceStatus){
+                  console.log(ele.label);
+                  if(ele.label == "Retired") { this.showPosting = false; 
+                    this.officerForm.get('serving')?.setValue('no');
+                  } else if(ele.label == "Serving") { this.showPosting = true;
+                    this.officerForm.get('serving')?.setValue('yes');
+                  }
+                }
+              })
+            }
+          });
+        });
+        
       });
     })
    
@@ -190,48 +257,9 @@ export class EditOfficerComponent implements OnInit {
       });
     })
 
-    this.officerAction.getData().subscribe((res: any[]) => {
-      res.forEach((item) => {
-        switch (item.category_type) {
-          case "gender":
-            this.gender.push({ label: item.category_name, value: item._id });
-            break;
-          case "state":
-            this.state.push({ label: item.category_name, value: item._id });
-            break;
-          case "recruitment_type":
-            this.recruitment.push({ label: item.category_name, value: item._id });
-            break;
-          case "class":
-            this.community.push({ label: item.category_name, value: item._id });
-            break;
-          case "promotion_grade":
-            this.grade.push({ label: item.category_name, value: item._id });
-            break;
-          case "religion":
-            this.religion.push({ label: item.category_name, value: item._id });
-            break;
-          case "service_status":
-            this.serviceStatus.push({ label: item.category_name, value: item._id });
-            break;
-          case "country":
-            this.country.push({ label: item.category_name, value: item._id });
-            break;
-            case "posting_in":
-              this.postingIn.push({label:item.category_name,value:item._id});
-              break;
-            case "post_type":
-              this.postType.push({ label: item.category_name, value: item._id });
-              break;
-            case "location_change":
-              this.locationChange.push({ label: item.category_name, value: item._id });
-              break;
-          default:
-            break;
-        }
-      })
-    })
+   
   }
+
 
   // arrayBufferToBase64(buffer: Uint8Array): string {
   //   let binary = '';
@@ -241,8 +269,7 @@ export class EditOfficerComponent implements OnInit {
   //   }
   //   return window.btoa(binary);
   // }
-
-  
+ 
   onKeyDown(event: KeyboardEvent) {
     const key = event.key;
     if (!((key >= '0' && key <= '9') ||

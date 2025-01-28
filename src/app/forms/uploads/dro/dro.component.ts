@@ -37,9 +37,8 @@ export class DroComponent {
     this.getlist();
     this.checkAccess();
     this.actrulesForm = this.fb.group({
-      OfficerName: ['', Validators.required],
-      PresentPost: ['', Validators.required],
-      MobileNo: ['', Validators.required],
+      DateOfUpload: ['', Validators.required],
+      DroFile: [null, Validators.required]
     });
   }
 
@@ -65,8 +64,10 @@ export class DroComponent {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }
@@ -126,22 +127,22 @@ export class DroComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      this.actrulesForm.patchValue({ actsrulesFile: this.selectedFile });
+      this.actrulesForm.patchValue({ DroFile: this.selectedFile });
     }
     this.selectedFile = event.target.files[0];
-    this.actrulesForm.get('actsrulesFile')?.setValue(this.selectedFile);
+    this.actrulesForm.get('DroFile')?.setValue(this.selectedFile);
     if (this.selectedFile) {
       if (this.selectedFile.type !== 'application/pdf') {
-        this.actrulesForm.get('actsrulesFile')?.setErrors({ 'incorrectFileType': true });
+        this.actrulesForm.get('DroFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
 
       if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.actrulesForm.get('actsrulesFile')?.setErrors({ 'maxSize': true });
+        this.actrulesForm.get('DroFile')?.setErrors({ 'maxSize': true });
         return;
       }
 
-      this.actrulesForm.get('actsrulesFile')?.setErrors(null);
+      this.actrulesForm.get('DroFile')?.setErrors(null);
     }
   }
   getlist() {
@@ -163,7 +164,7 @@ export class DroComponent {
     this.actrulesForm.reset();
     this.editId = null;
     this.isEdit = false; // Switch back to create mode
-    const fileControl = this.actrulesForm.get('actsrulesFile');
+    const fileControl = this.actrulesForm.get('DroFile');
     fileControl?.setValidators(Validators.required); // Add the required validator
     fileControl?.updateValueAndValidity(); // Revalidate the field
     this.showModal();
@@ -172,7 +173,7 @@ export class DroComponent {
     this.actrulesForm.reset();
     this.showModal();
     this.isEdit = isEdit; // Update the mode
-    const fileControl = this.actrulesForm.get('actsrulesFile');
+    const fileControl = this.actrulesForm.get('DroFile');
     if (isEdit) {
       fileControl?.clearValidators(); // Remove validators in edit mode
     } else {
@@ -183,16 +184,16 @@ export class DroComponent {
   edit(data: any) {
     this.setEditMode(true)
     this.editId = data._id;
-    this.actrulesForm.get('OfficerName')?.setValue(data.OfficerName);
-    this.actrulesForm.get('PresentPost')?.setValue(data.PresentPost);
-    this.actrulesForm.get('MobileNo')?.setValue(data.MobileNo);
+    var dou = new Date(data.DateOfUpload).toISOString().split('T')[0]
+    this.actrulesForm.get('DateOfUpload')?.setValue(dou);
+    this.actrulesForm.get('DroFile')?.setValue(data.DroFile);
   }
   view(data: any) {
     const pdfUrl = `${this.url}${data}`;
     window.open(pdfUrl, '_blank');
   }
   delete(id: any) {
-    this.foreignVisitService.uploadDelete('deleteActsrules', id).subscribe((res: any) => {
+    this.foreignVisitService.uploadDelete('DeleteDro', id).subscribe((res: any) => {
       console.log("res delete", res);
       if (res.status === 200) {
         alert("Deleted Succesfully");
@@ -206,11 +207,16 @@ export class DroComponent {
       const formData = new FormData();
       const formValues = this.actrulesForm.value;
       for (const key in formValues) {
-        formData.append(key, formValues[key]);
+        if (formValues.hasOwnProperty(key) && key !== 'DroFile') {
+          formData.append(key, formValues[key]);
+        }
+      }
+      if (this.selectedFile) {
+        formData.append('DroFile', this.selectedFile);
       }
       if (this.isEdit && this.editId) {
         formData.append('id', this.editId.toString());
-        this.foreignVisitService.uploadEdit(formData, 'updateaActsrules').subscribe((res: any) => {
+        this.foreignVisitService.uploadEdit(formData, 'updateDRO').subscribe((res: any) => {
           if (res.status === 200) {
             alert("Updated Succesfully");
             this.resetForm();
@@ -218,7 +224,7 @@ export class DroComponent {
         })
       }
       else {
-        this.foreignVisitService.uploadAdd(formValues, 'addDros').subscribe((res: any) => {
+        this.foreignVisitService.uploadAdd(formData, 'addDros').subscribe((res: any) => {
           console.log("res", res);
           if (res.status === 200) {
             alert("Created Succesfully");

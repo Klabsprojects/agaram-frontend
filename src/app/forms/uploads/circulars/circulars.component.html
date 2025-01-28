@@ -25,7 +25,7 @@
                     <tbody>
                         <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
                             <tr *ngFor="let data of pagedData(); let i = index">
-                                <td>{{i + 1}}</td>
+                                <td>{{i + startIndex +1}}</td>
                                 <td>{{data.CircularNumber}}</td>
                                 <td>{{data.CircularDate | date:'dd/MM/YYYY'}}</td>
                                 <td>{{ data.CircularDescription}}</td>
@@ -86,7 +86,7 @@
                     <div class="col-md-12 p-0">
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Circular Number <span>*</span></label>
-                            <input type="text" class="form-control" formControlName="CircularNumber" (keydown)="onKeyDown($event)" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('CircularNumber')?.invalid && actrulesForm.get('CircularNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                            <input type="text" class="form-control" formControlName="CircularNumber" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('CircularNumber')?.invalid && actrulesForm.get('CircularNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                         </div>
                         <div class="col-md-12 px-0 mb-4">
                             <label class="w-100 col-form-label">Circular Date <span>*</span></label>

@@ -15,19 +15,21 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Officer Name</th>
-                            <th>Present Post</th>
-                            <th>Mobile Number</th>
+                            <th>Date</th>
+                            <th>Action</th>
                         </tr>
 
                     </thead>
                     <tbody>
                         <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
                             <tr *ngFor="let data of pagedData(); let i = index">
-                                <td>{{i + 1}}</td>
-                                <td>{{data.OfficerName}}</td>
-                                <td>{{data.PresentPost}}</td>
-                                <td>{{ data.MobileNo}}</td>
+                                <td>{{i + startIndex +1}}</td>
+                                <td>{{data.DateOfUpload | date:'dd/MM/YYYY'}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)">Edit</button>
+                                    <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;" (click)="view(data.DroFile)">View</button>
+                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)">Delete</button>
+                                </td>
                             </tr>
                         </ng-container>
                         <ng-template #noRecords>
@@ -57,7 +59,6 @@
                       </ng-container>
                       <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
                         Next <i class="mdi mdi-chevron-double-right"></i> </button>
-                  
                     </div>
                   </div>
             </div>
@@ -78,17 +79,14 @@
                 <div class="modal-body pb-0">
                     <div class="col-md-12 p-0">
                         <div class="col-md-12 px-0 mb-4">
-                            <label class="w-100 col-form-label">Employee Name <span>*</span></label>
-                            <input type="text" class="form-control" formControlName="OfficerName" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('OfficerName')?.invalid && actrulesForm.get('OfficerName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                            <label class="w-100 col-form-label">DRO Date <span>*</span></label>
+                            <input type="date" class="form-control" formControlName="DateOfUpload" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('DateOfUpload')?.invalid && actrulesForm.get('DateOfUpload')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                         </div>
                         <div class="col-md-12 px-0 mb-4">
-                            <label class="w-100 col-form-label">Present Post <span>*</span></label>
-                            <input type="text" class="form-control" formControlName="PresentPost" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('PresentPost')?.invalid && actrulesForm.get('PresentPost')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}"/>
-                        </div>
-                        <div class="col-md-12 px-0 mb-4">
-                            <label class="w-100 col-form-label">Mobile Number <span>*</span></label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                formControlName="MobileNo" [ngStyle]="{'border-bottom': (submitted && actrulesForm.get('MobileNo')?.invalid && actrulesForm.get('MobileNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}"></textarea>
+                            <label class="w-100 col-form-label">DRO Copy(Only pdf format, not more than 2MB)
+                                <span>*</span></label>
+                            <input type="file" class="form-control" formControlName="DroFile" accept=".pdf" (change)="onFileSelected($event)"
+                                style="border:0px;" />
                         </div>
                     </div>
                 </div>

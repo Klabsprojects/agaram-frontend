@@ -67,8 +67,10 @@ export class UtilityformsComponent {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
+  public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }

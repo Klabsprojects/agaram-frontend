@@ -42,7 +42,8 @@ export class OfficerProfileComponent implements OnInit {
   department: any[] = [];
   designation: any[] = [];
   setValues:boolean=false;
-
+  showPosting:boolean=false;
+  servingtype: string = '';
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private fb: FormBuilder, private officerAction: LeaveTransferService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -89,9 +90,10 @@ export class OfficerProfileComponent implements OnInit {
       deptFaxNumber:[''],
       deptOfficialMobileNo:[''],
       lastDateOfPromotion:['',Validators.required],
-      department:['yes'],
+      department:[''],
       department_name:[''],
-      updateType:['Transfer / Posting']
+      updateType:[''],
+      serving:['']
     });
 
     this.officerAction.getDegree().subscribe((res: any) => {
@@ -416,22 +418,101 @@ export class OfficerProfileComponent implements OnInit {
       }
     }
   }
+  
+  // calculateRetirement() {
+  //   if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
+  //     this.calculateRetirementDate();
+  //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
+  //     this.showPosting = true;
+  //   }
+  //   else if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d7') {
+  //     this.officerForm.get('dateOfRetirement')?.setValue('');
+  //     this.servingtype = '65f43649a4a01c1cbbd6c9d7';
+  //     this.showPosting = false;
+  //   }
+  //   else if (this.officerForm.get('serviceStatus')?.value == '') {
+  //     this.officerForm.get('dateOfRetirement')?.setValue('');
+  //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
+  //     this.showPosting = false;
+  //   }
+  // }
 
-  servingtype: string = '';
   calculateRetirement() {
-    if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
+    const serviceStatus = this.officerForm.get('serviceStatus')?.value;
+  
+    if (serviceStatus === '65f43649a4a01c1cbbd6c9d6') {
       this.calculateRetirementDate();
-      this.servingtype = '65f43649a4a01c1cbbd6c9d6';
-    }
-    else if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d7') {
+      this.servingtype = serviceStatus;
+      this.showPosting = true;
+      this.toggleFieldValidation(true);
+      this.setDepartmentAndServing('yes', 'yes', 'Transfer / Posting'); 
+    } else if (serviceStatus === '65f43649a4a01c1cbbd6c9d7') {
       this.officerForm.get('dateOfRetirement')?.setValue('');
-      this.servingtype = '65f43649a4a01c1cbbd6c9d7';
-    }
-    else if (this.officerForm.get('serviceStatus')?.value == '') {
+      this.servingtype = serviceStatus;
+      this.showPosting = false;
+      this.toggleFieldValidation(false);
+      this.setDepartmentAndServing('no', 'no', ''); 
+    } else if (serviceStatus === '') {
       this.officerForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = '65f43649a4a01c1cbbd6c9d6';
+      this.showPosting = false;
+      this.toggleFieldValidation(false);
+      this.setDepartmentAndServing('no', 'no', ''); 
     }
   }
+  
+  toggleFieldValidation(isRequired: boolean) {
+    const fieldsToValidate = [
+      'toPostingInCategoryCode',
+      'toDepartmentId',
+      'toDesignationId',
+      'postTypeCategoryCode',
+      'locationChangeCategoryId',
+      'languages',
+      'deptAddress',
+      'deptPhoneNumber',
+      'lastDateOfPromotion',
+      'department',
+      'updateType',
+      'serving'
+    ];
+  
+    fieldsToValidate.forEach((field) => {
+      const control = this.officerForm.get(field);
+  
+      if (control) {
+        if (isRequired) {
+          control.setValidators(Validators.required);
+        } else {
+          control.clearValidators();
+          control.setValue(''); // Clear the value if not required
+        }
+        control.updateValueAndValidity();
+      }
+    });
+  }
+  
+  setDepartmentAndServing(departmentValue: string, servingValue: string, updateTypeValue: string) {
+    const departmentControl = this.officerForm.get('department');
+    const servingControl = this.officerForm.get('serving');
+    const updateTypeControl = this.officerForm.get('updateType');
+  
+    if (departmentControl) {
+      departmentControl.setValue(departmentValue);
+    }
+  
+    if (servingControl) {
+      servingControl.setValue(servingValue);
+    }
+  
+    if (updateTypeControl) {
+      updateTypeControl.setValue(updateTypeValue);
+    }
+  }
+  
+  
+  
+  
 
   hideFutureDate() {
     return new Date().toISOString().split('T')[0];
@@ -572,8 +653,12 @@ export class OfficerProfileComponent implements OnInit {
         },
         error => {
           console.error('API Error:', error);
+          alert(error.message);
         }
       );
+    }
+    else{
+      console.log(this.officerForm.value);
     }
   }
 }

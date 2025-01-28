@@ -4,6 +4,7 @@ import { LeaveTransferService } from '../../forms.service';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonService } from '../../../shared-services/common.service';
+import { forkJoin, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-create-tour',
@@ -56,7 +57,6 @@ export class CreateTourComponent {
           this.ltcForm.controls['department'].disable(); // Properly disables the control
           this.ltcForm.controls['designation'].setValue(this.userdata.designation);
           this.ltcForm.controls['designation'].disable(); // Properly disables the control
-          console.log('chk', this.userdata);
         }
       });
     }
@@ -136,7 +136,6 @@ export class CreateTourComponent {
   }
 
   selectOption(option: any, index: number) {
-    console.log("option",option);
     var empProfileId = option.empProfileId
     var departmentId:any;
     var designationId:any;
@@ -205,6 +204,92 @@ export class CreateTourComponent {
     }
   }
   
+  selectOptionNew(option: any, index: number) {
+    const empProfileId = option.empProfileId;
+    const name = option.name;
+    const payload = { name: option.name };
+    this.selectedOption = option.name;
+    this.phone = "+91" + option.mobileNo;
+  
+    // Access the 'OtherOfficers' FormArray
+    const otherOfficersArray = this.ltcForm.get('OtherOfficers') as FormArray;
+  
+    // Ensure the index exists in the FormArray
+    if (index < otherOfficersArray.length) {
+      const officerGroup = otherOfficersArray.at(index) as FormGroup;
+  
+      // Set the 'officerName' value
+      officerGroup.get('officerName')?.setValue(this.selectedOption);
+  
+      this.showDropdown = false;
+  
+      // Use RxJS operators to handle asynchronous calls
+      this.ltcService.employeeFilter(payload).pipe(
+        switchMap((res: any) => {
+  
+          const empList = res.results.empList;
+          if (empList.length === 0) {
+            throw new Error("No employees found");
+          }
+  
+          // Extract the department and designation IDs from the first employee
+          const toDepartmentId = empList[0]?.toDepartmentId;
+          const toDesignationId = empList[0]?.toDesignationId;
+  
+          return forkJoin({
+            departmentData: this.ltcService.getDepartmentData(),
+            designationData: this.ltcService.getDesignations(),
+            departmentId: of(toDepartmentId), // Pass the departmentId as observable
+            designationId: of(toDesignationId),
+          });
+        })
+      ).subscribe({
+        next: ({ departmentData, designationData, departmentId, designationId }) => {
+  
+          // Process department data
+          this.department = departmentData.map((data: any) => ({
+            label: data.department_name,
+            value: data._id,
+          }));
+  
+          const matchingDepartment = this.department.find(item => item.value === departmentId);
+          if (matchingDepartment) {
+            officerGroup.get('department')?.setValue(matchingDepartment.label);
+          }
+  
+          // Process designation data
+          this.designation = designationData.results.map((data: any) => ({
+            label: data.designation_name,
+            value: data._id,
+          }));
+  
+          const matchingDesignation = this.designation.find(item => item.value === designationId);
+          if (matchingDesignation) {
+            officerGroup.get('designation')?.setValue(matchingDesignation.label);
+          }
+  
+          // Add to the officers array if both are found
+          if (matchingDepartment && matchingDesignation) {
+            this.officers.push({
+              employeeProfileId: empProfileId,
+              departmentId: matchingDepartment.value,
+              designationId: matchingDesignation.value,
+            });
+          } else {
+            console.warn(
+              `Could not find a matching department or designation for employee ID: ${empProfileId}`
+            );
+          }
+        },
+        error: (err) => {
+          console.error("Error occurred:", err);
+        }
+      });
+    } else {
+      console.error(`Index ${index} does not exist in OtherOfficers array.`);
+    }
+  }
+  
 
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
@@ -249,7 +334,6 @@ export class CreateTourComponent {
       }
       this.officers.forEach((employee,index)=>{
         Object.keys(employee).forEach((key) => {
-          // console.log(`OtherOfficers[${index}][${key}]: ${employee[key]}`);
           formData.append(`OtherOfficers[${index}][${key}]`,employee[key])
       });
       })
@@ -261,7 +345,6 @@ export class CreateTourComponent {
         response => {
           alert(response.message);
           this.router.navigateByUrl('officer-tour');
-          // console.log('API Response:', response);
         },
         error => {
           console.error('API Error:', error);
