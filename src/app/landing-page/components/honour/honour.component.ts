@@ -217,7 +217,7 @@ export class HonourComponent {
     {
       "name": "Muruganantham, IAS",
       "title": "Indian Administrative Service",
-      "period": "19/08/2024 - Till",
+      "period": "19/08/2024",
       "image": "assets/images/ias/1737455265521.jpeg"
     }
   ]
