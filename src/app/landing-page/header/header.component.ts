@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css','../landing-page.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  serviceEnable:any
+  ngOnInit(): void {
+    this.serviceEnable = localStorage.getItem('loginAs');
+
+  }
   activeSubmenu: string | null = null;
   submenuTimeout: any;
   menu = false;
+  birthdayCount:number=0;
   toggle(){
     this.menu = !this.menu;
   }

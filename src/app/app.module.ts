@@ -49,6 +49,8 @@ import { FaqComponentlanding } from './landing-page/components/service-component
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 import { CarouselComponent } from './landing-page/components/home/carousel/carousel.component';
 import { OfficialsComponent } from './landing-page/components/home/officials/officials.component';
+import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
+import { PersonBirthdayComponent } from './landing-page/components/birthdays/person-birthday/person-birthday.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +92,9 @@ import { OfficialsComponent } from './landing-page/components/home/officials/off
     FaqComponentlanding,
     UtilityformsComponentlanding,
     CarouselComponent,
-    OfficialsComponent
+    OfficialsComponent,
+    BirthdaysComponent,
+    PersonBirthdayComponent
   ],
   imports: [
     BrowserModule,

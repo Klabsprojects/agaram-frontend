@@ -21,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
 import { CircularsComponentlanding } from './landing-page/components/service-components/circularslanding/circularslanding.component';
 import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
+import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -34,6 +35,7 @@ const routes: Routes = [
     {path:'circular-landing',component:CircularsComponentlanding},
     {path:'faq-landing',component:FaqComponentlanding},
     {path:'utility-landing',component:UtilityformsComponentlanding},
+    {path:'birthday',component:BirthdaysComponent}
   ]},
   { path:'login',component:LoginComponent },
   { path:'advance-search',component:AdvanceSearchComponent,canActivate: [AuthGuard]},
