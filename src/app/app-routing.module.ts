@@ -29,12 +29,12 @@ const routes: Routes = [
     {path:'honour',component:HonourComponent},
     {path:'transfer',component:TransferComponent},
     {path:'posting',component:CurrentPostingComponent},
-    {path:'service',component:ServicesLnComponent},
+    // {path:'service',component:ServicesLnComponent},
     {path:'contact',component:ContactComponent},
-    {path:'actnrulz',component:ActrulesComponentLanding},
-    {path:'circular-landing',component:CircularsComponentlanding},
-    {path:'faq-landing',component:FaqComponentlanding},
-    {path:'utility-landing',component:UtilityformsComponentlanding},
+    {path:'actnrulz',component:ActrulesComponentLanding,canActivate: [AuthGuard]},
+    {path:'circular-landing',component:CircularsComponentlanding,canActivate: [AuthGuard]},
+    {path:'faq-landing',component:FaqComponentlanding,canActivate: [AuthGuard]},
+    {path:'utility-landing',component:UtilityformsComponentlanding,canActivate: [AuthGuard]},
     {path:'birthday',component:BirthdaysComponent}
   ]},
   { path:'login',component:LoginComponent },
@@ -71,7 +71,8 @@ const routes: Routes = [
     path:'',
     redirectTo:'Landing',
     pathMatch:'full'
-  }
+  },
+  { path: '**', redirectTo: 'Landing', pathMatch: 'full' }
 ];
 
 @NgModule({

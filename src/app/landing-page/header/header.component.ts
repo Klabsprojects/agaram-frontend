@@ -1,11 +1,13 @@
 import { Component,OnInit } from '@angular/core';
-
+import { LeaveTransferService } from '../../forms/forms.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css','../landing-page.component.css']
 })
 export class HeaderComponent implements OnInit {
+  constructor(private menuService:LeaveTransferService,private router:Router){}
   serviceEnable:any
   ngOnInit(): void {
     this.serviceEnable = localStorage.getItem('loginAs');
@@ -41,5 +43,8 @@ export class HeaderComponent implements OnInit {
     if (this.submenuTimeout) {
       clearTimeout(this.submenuTimeout);
     }
+  }
+  logout(){
+    this.menuService.logout();
   }
 }
