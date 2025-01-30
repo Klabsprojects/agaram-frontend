@@ -22,6 +22,7 @@ import { CircularsComponentlanding } from './landing-page/components/service-com
 import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
+import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -35,7 +36,8 @@ const routes: Routes = [
     {path:'circular-landing',component:CircularsComponentlanding,canActivate: [AuthGuard]},
     {path:'faq-landing',component:FaqComponentlanding,canActivate: [AuthGuard]},
     {path:'utility-landing',component:UtilityformsComponentlanding,canActivate: [AuthGuard]},
-    {path:'birthday',component:BirthdaysComponent}
+    {path:'birthday',component:BirthdaysComponent},
+    {path:'retirments',component:RetirementsComponent}
   ]},
   { path:'login',component:LoginComponent },
   { path:'advance-search',component:AdvanceSearchComponent,canActivate: [AuthGuard]},

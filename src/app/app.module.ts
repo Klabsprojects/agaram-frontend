@@ -51,6 +51,8 @@ import { CarouselComponent } from './landing-page/components/home/carousel/carou
 import { OfficialsComponent } from './landing-page/components/home/officials/officials.component';
 import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
 import { PersonBirthdayComponent } from './landing-page/components/birthdays/person-birthday/person-birthday.component';
+import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
+import { PersonRetirementComponent } from './landing-page/components/retirements/person-retirement/person-retirement.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +96,9 @@ import { PersonBirthdayComponent } from './landing-page/components/birthdays/per
     CarouselComponent,
     OfficialsComponent,
     BirthdaysComponent,
-    PersonBirthdayComponent
+    PersonBirthdayComponent,
+    RetirementsComponent,
+    PersonRetirementComponent
   ],
   imports: [
     BrowserModule,
