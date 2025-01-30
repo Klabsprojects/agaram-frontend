@@ -306,5 +306,37 @@ export class ProfileComponent {
     this.cs.setData(JSON.stringify(userData));
   }
 
+  showModal(modalName:string) {
+    const modalElement = document.getElementById(modalName);
+    if (modalElement) {
+      // Ensure backdrop is added if not already present
+      if (!document.querySelector('.modal-backdrop')) {
+        const backdrop = document.createElement('div');
+        backdrop.classList.add('modal-backdrop', 'fade', 'show');
+        document.body.appendChild(backdrop);
+      }
+  
+      // Show the modal by adding the 'show' class and setting display
+      modalElement.classList.add('show');
+      modalElement.setAttribute('aria-hidden', 'false'); // Make modal visible for screen readers
+      modalElement.style.display = 'block'; // Make modal visible
+    }
+  }
+  hideModal(modalName:string) {
+    const modalElement = document.getElementById(modalName);
+    if (modalElement) {
+      // Remove modal backdrop manually
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove(); // Remove the backdrop manually
+      }
+  
+      // Hide the modal by removing the 'show' class and setting display to 'none'
+      modalElement.classList.remove('show'); // Remove 'show' class
+      modalElement.setAttribute('aria-hidden', 'true'); // Hide modal from screen readers
+      modalElement.style.display = 'none'; // Manually hide modal
+    }
+  }
+
 }
 
