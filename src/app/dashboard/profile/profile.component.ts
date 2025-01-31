@@ -67,7 +67,10 @@ export class ProfileComponent {
   previousData: any[] = [];
   userAvailable: any[] = [];
   catogories: any[] = [];
-
+  hba:any[] = [];
+  OfficersTour:any[]=[];
+  gpf:any[]=[];
+  IdCard:any[]=[];
   urls: string[] = [
     "getLeave",
     "getTraining",
@@ -79,7 +82,11 @@ export class ProfileComponent {
     "getImmovable",
     "getMovable",
     "getEducation",
-    "getIntimation"]
+    "getIntimation",
+    "getHba",
+    "getOfficersTourByProfileId",
+    "getGpf",
+    "getIdCard"]
   get_Id(login_id: any) {
     this.loading = true;
     this.dashboardService.getEmployeeAlone(login_id).subscribe((res: any) => {
@@ -122,6 +129,18 @@ export class ProfileComponent {
             }
             if (value === 'getIntimation') {
               this.intimationData = response.results;
+            }
+            if (value === 'getHba'){
+              this.hba = response.results;
+            }
+            if (value === 'getOfficersTourByProfileId'){
+              this.OfficersTour = response.results;
+            }
+            if (value === 'getGpf'){
+              this.gpf = response.results;
+            }
+            if (value === 'getIdCard'){
+              this.IdCard = response.results;
             }
           })
         })
@@ -219,7 +238,12 @@ export class ProfileComponent {
             this.employeeHistory.dateOfJoining = this.datePipe.transform(dateOfJoining, 'dd/MM/yyyy');
             const dateOfRetirement = item.dateOfRetirement;
             this.employeeHistory.dateOfRetirement = this.datePipe.transform(dateOfRetirement, 'dd/MM/yyyy');
-            this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}profileImages/${item.imagePath?.replace('\\', '/')}`;
+            if(item.imagePath){
+              this.employeeHistory.imagePath = `${this.dashboardService.fileUrl}profileImages/${item.imagePath?.replace('\\', '/')}`;
+            }
+            else{
+              this.employeeHistory.imagePath = 'assets/images/worker.png';
+            }
             // const binaryData = new Uint8Array(item.photo.data);
             // this.base64ImageData = this.arrayBufferToBase64(binaryData);
             this.loading = false;

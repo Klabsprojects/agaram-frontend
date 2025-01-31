@@ -438,7 +438,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="col-md-3 p-2 mb-3" (click)="showModal('intimation')">
               <div class="card card-xs" style="display: block;">
                 <div class="col-md-12 p-0  mb-2">
@@ -446,6 +446,62 @@
                     <h6>Intimation Details</h6>
                   </div>
                   <div class="col-md-3 p-0"> <img src="../../assets/images/intimation.png" class="icon-img"></div>
+                </div>
+                <div class="col-md-12 float-left">
+                  <p>Total <br><span> ({{intimationData.length}})</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 p-2 mb-3" (click)="showModal('hba')">
+              <div class="card card-xs" style="display: block;">
+                <div class="col-md-12 p-0  mb-2">
+                  <div class="col-md-9 p-0">
+                    <h6>House Building Advance Details</h6>
+                  </div>
+                  <div class="col-md-3 p-0"> <img src="../../assets/images/hba.png" class="icon-img"></div>
+                </div>
+                <div class="col-md-12 float-left">
+                  <p>Total <br><span> ({{intimationData.length}})</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 p-2 mb-3" (click)="showModal('officerTour')">
+              <div class="card card-xs" style="display: block;">
+                <div class="col-md-12 p-0  mb-2">
+                  <div class="col-md-9 p-0">
+                    <h6>Officers Tour Details</h6>
+                  </div>
+                  <div class="col-md-3 p-0"> <img src="../../assets/images/tour.png" class="icon-img"></div>
+                </div>
+                <div class="col-md-12 float-left">
+                  <p>Total <br><span> ({{intimationData.length}})</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 p-2 mb-3" (click)="showModal('gpf')">
+              <div class="card card-xs" style="display: block;">
+                <div class="col-md-12 p-0  mb-2">
+                  <div class="col-md-9 p-0">
+                    <h6>GPF Details</h6>
+                  </div>
+                  <div class="col-md-3 p-0"> <img src="../../assets/images/gpf.png" class="icon-img"></div>
+                </div>
+                <div class="col-md-12 float-left">
+                  <p>Total <br><span> ({{intimationData.length}})</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3 p-2 mb-3" (click)="showModal('mha')">
+              <div class="card card-xs" style="display: block;">
+                <div class="col-md-12 p-0  mb-2">
+                  <div class="col-md-9 p-0">
+                    <h6>MHA ID Card Details</h6>
+                  </div>
+                  <div class="col-md-3 p-0"> <img src="../../assets/images/id.png" class="icon-img"></div>
                 </div>
                 <div class="col-md-12 float-left">
                   <p>Total <br><span> ({{intimationData.length}})</span></p>
@@ -1035,7 +1091,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-private" (click)="hideModal('privatevisit')">Add
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-private"
+                      (click)="hideModal('privatevisit')">Add
                       Private
                       visit</button>
                     <div *ngIf="privatevisitData.length > 0; else noPreviousDetails">
@@ -1089,8 +1146,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="imasset" tabindex="-1" aria-labelledby="imassetLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="imasset" tabindex="-1" aria-labelledby="imassetLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1101,7 +1157,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-immovable" (click)="hideModal('imasset')">Add
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-immovable"
+                      (click)="hideModal('imasset')">Add
                       Immovable</button>
                     <div *ngIf="imassetData.length > 0; else noPreviousDetails">
                       <div class="table-responsive">
@@ -1160,8 +1217,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="massest" tabindex="-1" aria-labelledby="massestLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="massest" tabindex="-1" aria-labelledby="massestLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1172,7 +1228,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-movable" (click)="hideModal('massest')">Add
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-movable"
+                      (click)="hideModal('massest')">Add
                       Movable</button>
                     <div *ngIf="massestData.length > 0; else noPreviousDetails">
                       <div class="table-responsive">
@@ -1231,8 +1288,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="education" tabindex="-1" aria-labelledby="educationLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="education" tabindex="-1" aria-labelledby="educationLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1243,7 +1299,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-education" (click)="hideModal('education')">Add
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-education"
+                      (click)="hideModal('education')">Add
                       Education</button>
                     <div *ngIf="educationData.length > 0; else noPreviousDetails">
                       <div class="table-responsive">
@@ -1290,8 +1347,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="intimation" tabindex="-1" aria-labelledby="intimationLabel"
-            aria-hidden="true">
+          <div class="modal fade" id="intimation" tabindex="-1" aria-labelledby="intimationLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -1302,7 +1358,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-intimation" (click)="hideModal('intimation')">Add
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-intimation"
+                      (click)="hideModal('intimation')">Add
                       Intimation</button>
                     <div *ngIf="intimationData.length > 0; else noPreviousDetails">
                       <div class="table-responsive">
@@ -1352,6 +1409,235 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary py-2 px-3"
                     (click)="hideModal('intimation')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="hba" tabindex="-1" aria-labelledby="hbaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="viewForeignVisitLabel">House Building Advance Details</h5>
+                  <button type="button" class="close" (click)="hideModal('hba')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-hba"
+                      (click)="hideModal('hba')">Add HBA</button>
+                    <div *ngIf="hba.length > 0; else noPreviousDetails">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover my-4 float-left">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Name of the Officer</th>
+                              <th>Designation</th>
+                              <th>HBA Availed</th>
+                              <th>Installments <br> Availed</th>
+                              <th>Pending <br> Installments</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="hba.length > 0">
+                              <tr *ngFor="let data of hba; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.officerName}}</td>
+                                <td>{{data.designation}}</td>
+                                <td>{{data.hbaAvailedFor}}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #noPreviousDetails>
+                      <div style="color: red;">No previous details available.</div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3" (click)="hideModal('hba')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="officerTour" tabindex="-1" aria-labelledby="officerTourLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="viewForeignVisitLabel">Officers Tour Details</h5>
+                  <button type="button" class="close" (click)="hideModal('officerTour')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-officers-tour"
+                      (click)="hideModal('officerTour')">Add officer Tour</button>
+                    <div *ngIf="OfficersTour.length > 0; else noPreviousDetails">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover my-4 float-left">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Order No</th>
+                              <th>State</th>
+                              <th>Discrict</th>
+                              <th>From </th>
+                              <th>To</th>
+                              <th>Purpose</th>
+                              <th>Present Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="OfficersTour.length > 0">
+                              <tr *ngFor="let data of OfficersTour; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{data.orderNo}}</td>
+                                <td>{{data.stateId.stateName}}</td>
+                                <td>{{data.districtId.districtName}}</td>
+                                <td>{{data.fromDate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{data.toDate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{data.purpose}}</td>
+                                <td>{{data.presentStatus}}</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #noPreviousDetails>
+                      <div style="color: red;">No previous details available.</div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3"
+                    (click)="hideModal('officerTour')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="gpf" tabindex="-1" aria-labelledby="gpfLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="viewForeignVisitLabel">GPF Details</h5>
+                  <button type="button" class="close" (click)="hideModal('gpf')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-gpf"
+                      (click)="hideModal('gpf')">Add GPF</button>
+                    <div *ngIf="gpf.length > 0; else noPreviousDetails">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover my-4 float-left">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Name</th>
+                              <th>Designation</th>
+                              <th>GPF Type</th>
+                              <th> Availed Date </th>
+                              <th>Amount Availed </th>
+                              <th>Purpose of GPF </th>
+                              <th>Submitted By </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="gpf.length > 0">
+                              <tr *ngFor="let data of gpf; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{data.officerName}}</td>
+                                <td>{{data.designation}}</td>
+                                <td>{{data.gpfType}}</td>
+                                <td>{{data.availedDate | date:'dd/MM/YYYY'}}</td>
+                                <td>{{data.availedAmount}}</td>
+                                <td>{{data.purpose}}</td>
+                                <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #noPreviousDetails>
+                      <div style="color: red;">No previous details available.</div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3" (click)="hideModal('gpf')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="mha" tabindex="-1" aria-labelledby="mhaLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="viewForeignVisitLabel">MHA ID Card Details</h5>
+                  <button type="button" class="close" (click)="hideModal('mha')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-mha"
+                      (click)="hideModal('mha')">Add MHA ID Card</button>
+                    <div *ngIf="IdCard.length > 0; else noPreviousDetails">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover my-4 float-left">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Name</th>
+                              <th>Designation</th>
+                              <th>ID Card No</th>
+                              <th> Availed Date </th>
+                              <th>Expiry Date</th>
+                              <th>Submitted By </th>
+                              <th>Approved By</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngIf="IdCard.length > 0">
+                              <tr *ngFor="let data of IdCard; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{data.officerName}}</td>
+                                <td>{{data.designation}}</td>
+                                <td>{{data.idCardNo}}</td>
+                                <td>{{data.availedDate | date:'dd/MM/YYYY'}}</td>
+                                <td>{{data.expiryDate | date:'dd/MM/YYYY'}}</td>
+                                <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+                                <td> <span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
+                                <td>{{data.approvalStatus ? 'Approved' : 'Not Approved'}}</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #noPreviousDetails>
+                      <div style="color: red;">No previous details available.</div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3" (click)="hideModal('mha')">Close</button>
                 </div>
               </div>
             </div>
