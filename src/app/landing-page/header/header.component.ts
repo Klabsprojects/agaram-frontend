@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   serviceEnable:any
   ngOnInit(): void {
     this.serviceEnable = localStorage.getItem('loginAs');
-
+    this.get_bithday_count();
   }
   activeSubmenu: string | null = null;
   submenuTimeout: any;
@@ -46,5 +46,10 @@ export class HeaderComponent implements OnInit {
   }
   logout(){
     this.menuService.logout();
+  }
+  get_bithday_count(){
+    this.menuService.get_no_header('getEmployeeProfileBydateOfBirth').subscribe((res:any)=>{
+      this.birthdayCount = res.results.length;
+    })
   }
 }

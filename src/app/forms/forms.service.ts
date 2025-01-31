@@ -752,4 +752,8 @@ export class LeaveTransferService {
     return this.http.get<any[]>(this.baseUrl + `getDistrict?stateId=${stateId}`, { headers });
   }
 
+  get_no_header(url:any){
+    return this.http.get<any>(this.baseUrl+url);
+  }
+
 }
