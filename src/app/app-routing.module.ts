@@ -22,6 +22,8 @@ import { CircularsComponentlanding } from './landing-page/components/service-com
 import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 import { OfficialInfoComponent } from './dashboard/profile/official-info/official-info.component';
+import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
+import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -29,12 +31,14 @@ const routes: Routes = [
     {path:'honour',component:HonourComponent},
     {path:'transfer',component:TransferComponent},
     {path:'posting',component:CurrentPostingComponent},
-    {path:'service',component:ServicesLnComponent},
+    // {path:'service',component:ServicesLnComponent},
     {path:'contact',component:ContactComponent},
-    {path:'actnrulz',component:ActrulesComponentLanding},
-    {path:'circular-landing',component:CircularsComponentlanding},
-    {path:'faq-landing',component:FaqComponentlanding},
-    {path:'utility-landing',component:UtilityformsComponentlanding},
+    {path:'actnrulz',component:ActrulesComponentLanding,canActivate: [AuthGuard]},
+    {path:'circular-landing',component:CircularsComponentlanding,canActivate: [AuthGuard]},
+    {path:'faq-landing',component:FaqComponentlanding,canActivate: [AuthGuard]},
+    {path:'utility-landing',component:UtilityformsComponentlanding,canActivate: [AuthGuard]},
+    {path:'birthday',component:BirthdaysComponent},
+    {path:'retirments',component:RetirementsComponent}
   ]},
   { path:'login',component:LoginComponent },
   { path:'advance-search',component:AdvanceSearchComponent,canActivate: [AuthGuard]},
@@ -71,7 +75,8 @@ const routes: Routes = [
     path:'',
     redirectTo:'Landing',
     pathMatch:'full'
-  }
+  },
+  // { path: '**', redirectTo: 'Landing', pathMatch: 'full' }
 ];
 
 @NgModule({

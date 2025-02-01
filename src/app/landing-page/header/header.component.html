@@ -1,99 +1,169 @@
 <header class="header" [ngClass]="{'nav-open':menu}">
-  <div class="brandDiv">
-    <a href="#">
-      <img class="logo" alt="Omnifood logo" src="../../../assets/images/logo.png" />
-    </a>
-    <p class="Main-title">Agaram</p>
-  </div>
-  <nav class="main-nav">
-    <ul class="main-nav-list">
-      <li><a class="main-nav-link" [routerLink]="'Landing/home'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-house w-4 h-4">
-            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-            <path
-              d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
-            </path>
-          </svg>
-          Home
-        </a></li>
-      <li><a class="main-nav-link" [routerLink]="'Landing/honour'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-award w-4 h-4">
-            <path
-              d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526">
-            </path>
-            <circle cx="12" cy="8" r="6"></circle>
-          </svg>
-          C.S. Roll of Honour
-        </a></li>
-      <li><a class="main-nav-link" [routerLink]="'Landing/transfer'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-refresh-cw w-4 h-4">
-            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-            <path d="M21 3v5h-5"></path>
-            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-            <path d="M8 16H3v5"></path>
-          </svg>
-          Transfer
-        </a></li>
-      <li><a class="main-nav-link" [routerLink]="'Landing/posting'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-briefcase w-4 h-4">
-            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            <rect width="20" height="14" x="2" y="6" rx="2"></rect>
-          </svg>
-          Current Posting
-        </a></li>
-      
-        <li class="has-submenu">
-          <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')" (mouseleave)="closeSubmenu('services')">
-          Services
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
-            stroke="currentColor" stroke-width="2" class="dropdown-icon">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+  <div class="top-header">
+    <div class="brandDiv">
+      <a href="#">
+        <img class="logo" alt="Omnifood logo" src="../../../assets/images/logo.png" />
+      </a>
+      <div style="display: flex;flex-direction: column;align-items:flex-start;">
+        <p class="Main-title">Agaram</p>
+        <p class="prp">Public & Rehabilation Portal</p>
+        <p class="Main-title-sub">Government of Tamil Nadu</p>
+      </div>
+      <!-- <p class="Main-title">Agaram <br><span class="prp">Public & Rehabilation Portal</span><br> <span class="Main-title-sub">Government of Tamil Nadu</span></p> -->
+      <p></p>
+    </div>
+    <nav class="main-nav-top">
+      <ul class="main-nav-list">
+        <li>
+          <a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'" *ngIf="!serviceEnable">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-log-in w-4 h-4">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" x2="3" y1="12" y2="12"></line>
+            </svg>
+            Login
           </a>
-          <ul class="submenu" 
-          [class.active]="activeSubmenu === 'services'"
-              (mouseenter)="preventSubmenuClose($event)"
-              (mouseleave)="closeSubmenu('services')">
-            <li><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
-            <li><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
-            <li><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
-            <li><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
-            <li><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
+          <a class="main-nav-link nav-cta" href="#" *ngIf="serviceEnable" (click)="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-log-in w-4 h-4">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" x2="3" y1="12" y2="12"></line>
+            </svg>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <button class="btn-mobile-nav">
+      <i class="mdi mdi-menu icon-mobile-nav" name="menu-outline" (click)="toggle()"></i>
+      <i class="mdi mdi-close icon-mobile-nav" name="close-outline" (click)="toggle()"></i>
+    </button>
+  </div>
+  <div class="lower-header">
+    <nav class="main-nav">
+      <ul class="main-nav-list">
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/home'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-house w-4 h-4">
+              <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+              <path
+                d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+              </path>
+            </svg>
+            Home
+          </a>
+        </li>
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/honour'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-award w-4 h-4">
+              <path
+                d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526">
+              </path>
+              <circle cx="12" cy="8" r="6"></circle>
+            </svg>
+            C.S. Roll of Honour
+          </a>
+        </li>
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/birthday'">
+            <img src="assets/images/birthday.png" alt="" width="16" height="16">
+            Birthday(s)
+            <span style="color: orangered;">{{birthdayCount}}</span>
+          </a>
+        </li>
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/retirments'">
+            <img src="assets/images/retirement.png" alt="" width="16" height="16">
+            Current Year Retirements
+          </a>
+        </li>
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/transfer'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-refresh-cw w-4 h-4">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <path d="M21 3v5h-5"></path>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <path d="M8 16H3v5"></path>
+            </svg>
+            Transfer
+          </a>
+        </li>
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/posting'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-briefcase w-4 h-4">
+              <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+            </svg>
+            Current Posting
+          </a>
+        </li>
+  
+        <li class="has-submenu" *ngIf="serviceEnable" (click)="toggle()">
+          <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')"
+            (mouseleave)="closeSubmenu('services')">
+            Services
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" class="dropdown-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul class="submenu" [class.active]="activeSubmenu === 'services'" (mouseenter)="preventSubmenuClose($event)"
+            (mouseleave)="closeSubmenu('services')">
+            <li (click)="toggle()"><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
+            <li (click)="toggle()"><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
+            <li (click)="toggle()"><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
+            <li (click)="toggle()"><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
+            <li (click)="toggle()"><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
           </ul>
         </li>
-
-      <li><a class="main-nav-link" [routerLink]="'Landing/contact'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-phone w-4 h-4">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-            </path>
-          </svg>
-          Contact
-        </a></li>
-      <li><a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-log-in w-4 h-4">
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-            <polyline points="10 17 15 12 10 7"></polyline>
-            <line x1="15" x2="3" y1="12" y2="12"></line>
-          </svg>
-          Login
-        </a></li>
-    </ul>
-  </nav>
-  <button class="btn-mobile-nav">
-    <i class="mdi mdi-menu icon-mobile-nav" name="menu-outline" (click)="toggle()"></i>
-    <i class="mdi mdi-close icon-mobile-nav" name="close-outline" (click)="toggle()"></i>
-  </button>
+  
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/contact'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-phone w-4 h-4">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+            Contact
+          </a>
+        </li>
+        <li class="login-list-item" (click)="toggle()">
+          <a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'" *ngIf="!serviceEnable">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-log-in w-4 h-4">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" x2="3" y1="12" y2="12"></line>
+            </svg>
+            Login
+          </a>
+          <a class="main-nav-link nav-cta" href="#" *ngIf="serviceEnable" (click)="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-log-in w-4 h-4">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" x2="3" y1="12" y2="12"></line>
+            </svg>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>

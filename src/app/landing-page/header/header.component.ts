@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
-
+import { Component,OnInit } from '@angular/core';
+import { LeaveTransferService } from '../../forms/forms.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css','../landing-page.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  constructor(private menuService:LeaveTransferService,private router:Router){}
+  serviceEnable:any
+  ngOnInit(): void {
+    this.serviceEnable = localStorage.getItem('loginAs');
+    this.get_bithday_count();
+  }
   activeSubmenu: string | null = null;
   submenuTimeout: any;
   menu = false;
+  birthdayCount:number=0;
   toggle(){
     this.menu = !this.menu;
   }
@@ -35,5 +43,13 @@ export class HeaderComponent {
     if (this.submenuTimeout) {
       clearTimeout(this.submenuTimeout);
     }
+  }
+  logout(){
+    this.menuService.logout();
+  }
+  get_bithday_count(){
+    this.menuService.get_no_header('getEmployeeProfileBydateOfBirth').subscribe((res:any)=>{
+      this.birthdayCount = res.results.length;
+    })
   }
 }

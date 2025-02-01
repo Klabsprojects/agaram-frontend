@@ -1,0 +1,30 @@
+<div class="person">
+    <div class="img-box">
+        <img [src]="person.image || defaultimage" alt="" class="person-img">
+    </div>
+    <h3 class="name">{{person.name}}</h3>
+    <div class="detail">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-graduation-cap w-4 h-4 flex-shrink-0">
+            <path
+                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z">
+            </path>
+            <path d="M22 10v6"></path>
+            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
+        </svg>
+        <span class="service">{{person.department}}</span>
+    </div>
+    <span class="service">{{person.designation}}</span>
+    <div class="detail date-details">
+        <svg _ngcontent-ng-c3407646259="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-map-pin w-4 h-4 text-amber-700">
+            <path _ngcontent-ng-c3407646259=""
+                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+            </path>
+            <circle _ngcontent-ng-c3407646259="" cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span class="date">{{person.location}}</span>
+    </div>
+</div>

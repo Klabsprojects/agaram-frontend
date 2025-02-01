@@ -77,6 +77,17 @@
     font-size: 14px;
 }
 
+.contact-item{
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.email-flex{
+    display:flex ;
+    gap: 0.5rem;
+    align-items: center;
+}
+
 .contact-info {
     display: flex;
     flex-direction: column;

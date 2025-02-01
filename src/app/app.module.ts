@@ -50,6 +50,10 @@ import { UtilityformsComponentlanding } from './landing-page/components/service-
 import { CarouselComponent } from './landing-page/components/home/carousel/carousel.component';
 import { OfficialsComponent } from './landing-page/components/home/officials/officials.component';
 import { OfficialInfoComponent } from './dashboard/profile/official-info/official-info.component';
+import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
+import { PersonBirthdayComponent } from './landing-page/components/birthdays/person-birthday/person-birthday.component';
+import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
+import { PersonRetirementComponent } from './landing-page/components/retirements/person-retirement/person-retirement.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,7 +97,11 @@ import { OfficialInfoComponent } from './dashboard/profile/official-info/officia
     UtilityformsComponentlanding,
     CarouselComponent,
     OfficialsComponent,
-    OfficialInfoComponent
+    OfficialInfoComponent,
+    BirthdaysComponent,
+    PersonBirthdayComponent,
+    RetirementsComponent,
+    PersonRetirementComponent
   ],
   imports: [
     BrowserModule,
