@@ -49,6 +49,7 @@ import { FaqComponentlanding } from './landing-page/components/service-component
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
 import { CarouselComponent } from './landing-page/components/home/carousel/carousel.component';
 import { OfficialsComponent } from './landing-page/components/home/officials/officials.component';
+import { OfficialInfoComponent } from './dashboard/profile/official-info/official-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { OfficialsComponent } from './landing-page/components/home/officials/off
     LoginComponent,
     AdvanceSearchComponent,
     ProfileComponent,
+    OfficialInfoComponent,
     LandingPageComponent,
     HeaderComponent,
     HeroComponent,
@@ -90,7 +92,8 @@ import { OfficialsComponent } from './landing-page/components/home/officials/off
     FaqComponentlanding,
     UtilityformsComponentlanding,
     CarouselComponent,
-    OfficialsComponent
+    OfficialsComponent,
+    OfficialInfoComponent
   ],
   imports: [
     BrowserModule,

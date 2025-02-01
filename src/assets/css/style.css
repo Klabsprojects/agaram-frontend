@@ -8608,6 +8608,7 @@ body {
   color: #001737;
   text-align: left;
   background-color: #f3f3f3;
+  /* background: linear-gradient(to right, #fffbeb, #fef3c7); */
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -26000,7 +26001,7 @@ label span, h4 span{
 /*Login*/
 .login-outer { 
   margin:0px auto;
-  width:800px;
+  width:450px;
 }
  .login-inner{
   float: left;
@@ -26008,10 +26009,11 @@ label span, h4 span{
   text-align: center;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.24);
   margin-bottom: 20px;
+  background: #fff;
 }
-.login-inner h3{ color: #223a66; padding: 20px; font-size:20px; font-weight:600;}
-.login-button { background: #223a66; border: 0px; padding: 10px 15px; color: #fff; float: left; margin-top:20px; width: 100%; border-radius:5px;  }
-.forgot { color: #00599b; text-decoration: none; float: right; padding-left:10px;}
+.login-inner h3{ color: rgb(120 53 15); padding: 20px; font-size:20px; font-weight:600;}
+.login-button { background: #92400e; border: 0px; padding: 10px 15px; color: #fff; float: left; margin-top:20px; width: 100%; border-radius:5px;  }
+.forgot { color: #92400e; text-decoration: none; float: right; padding-left:10px;}
 .logo {
   float: left;
   width: 100%;
@@ -26019,22 +26021,34 @@ label span, h4 span{
   padding: 30px 0px;
 }
 .logo img{
-  width:10%;
+  width:45%;
+}
+.logo-out{
+  float: left;
+    width: 30%;
+}
+.logo span{
+  float: left;
+    font-size: 30px;
+    color:rgb(120 53 15);
+    padding-top:15px;
 }
 .left-login{
   float:left;
-  width:50%;
+  width:100%;
   padding: 20px;
+  background: linear-gradient(to right, #fffbeb, #fef3c7);
 }
 .right-login{
   float:right;
   width:50%;
 }
 .right-login img{
-  width: 100%;
+  width: 30%;
 } 
 .logo h3{
-  color: #223a66;
+  /* color: #223a66; */
+  color: rgb(120 53 15);
 }
 .check-box{
   float: left;

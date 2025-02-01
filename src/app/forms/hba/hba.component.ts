@@ -23,6 +23,7 @@ export class HbaComponent implements OnInit {
       showApprove:boolean=false;  
       showPopup = true;
       viewHbaData = new viewHbaData();
+
     
       constructor(private router:Router,private hbaService:LeaveTransferService,private datePipe: DatePipe) { }
     
@@ -38,7 +39,7 @@ export class HbaComponent implements OnInit {
     
       checkAccess(): void {
         this.hbaService.currentRoleData.subscribe((response: any[]) => {
-          const idCardMenu = response.find(item => item.menu === 'GPF');
+          const idCardMenu = response.find(item => item.menu === 'Hba');
           this.showAdd = idCardMenu?.entryAccess ?? false;
           this.showEdit = idCardMenu?.editAccess ?? false;
           this.showView = idCardMenu?.viewAccess ?? false;
@@ -131,14 +132,15 @@ export class HbaComponent implements OnInit {
         this.router.navigate(['create-hba']);
       }
   
-      editGpf(data:any){
+      editHba(data:any){
         const encodedData = btoa(JSON.stringify(data));
-        this.router.navigate(['edit-gpf'],{queryParams:{id:encodedData}});
+        this.router.navigate(['edit-hba'],{queryParams:{id:encodedData}});
       }
   
-      viewGpf(data:any){
-          this.hbaService.getGpfId(data).subscribe((res:any)=>{
+      viewHba(data:any){
+          this.hbaService.getHbaId(data).subscribe((res:any)=>{
             res.results.forEach((data:any)=>{
+              console.log(res.results);
              this.hbaService.getData().subscribe((res: any[]) => {
                res.forEach((item) => {
                  if(item.category_type == "order_type"){
@@ -153,16 +155,37 @@ export class HbaComponent implements OnInit {
                  }
                });
              });
+
+             this.hbaService.getState().subscribe((res:any)=>{
+              res.results.find((ele:any)=>{
+                if(ele._id == data.state){
+                  this.viewHbaData.state = ele.stateName;
+                }
+              })
+             })
+
+             this.hbaService.getDistrict(data.state).subscribe((res:any)=>{
+              res.results.find((ele:any)=>{
+                if(ele._id == data.district){
+                  this.viewHbaData.district = ele.districtName;
+                }
+              })
+             })
              this.viewHbaData.phone = "+91"+data.employeeProfileId.mobileNo1;
              this.viewHbaData.id = data._id;
              this.viewHbaData.approvalStatus = data.approvalStatus;
              this.viewHbaData.officerName = data.officerName;
              this.viewHbaData.department = data.department;
              this.viewHbaData.designation = data.designation;
-             this.viewHbaData.gpfType = data.gpfType;
-             this.viewHbaData.availedDate = data.availedDate;
-             this.viewHbaData.availedAmount = data.availedAmount;
-             this.viewHbaData.purpose = data.purpose;
+             this.viewHbaData.hbaAvailedFor = data.hbaAvailedFor;
+             this.viewHbaData.typeOfProperty = data.typeOfProperty;
+             this.viewHbaData.dateOfApplication = data.dateOfApplication;
+             this.viewHbaData.totalCostOfProperty = data.totalCostOfProperty;
+             this.viewHbaData.isExisingResidenceAvailable = data.isExisingResidenceAvailable;
+             this.viewHbaData.twoBRelacation = data.twoBRelacation;
+             this.viewHbaData.totalHbaAvailed = data.totalHbaAvailed;
+             this.viewHbaData.totalNumberOfInstallments = data.totalNumberOfInstallments;
+             this.viewHbaData.totalNumberOfRecoveryMonths = data.totalNumberOfRecoveryMonths;
              this.viewHbaData.orderType = data.orderType;
              this.viewHbaData.orderNo = data.orderNo;
              this.viewHbaData.orderFor = data.orderFor;
@@ -179,10 +202,17 @@ export class HbaComponent implements OnInit {
     officerName:string='';
     department:string='';
     designation:string='';
-    gpfType:string='';
-    purpose:string='';
-    availedDate:string='';
-    availedAmount:string='';
+    state:string='';
+    district:string='';
+    hbaAvailedFor:string='';
+    typeOfProperty:string='';
+    dateOfApplication:string='';
+    totalCostOfProperty:string='';
+    isExisingResidenceAvailable:string='';
+    twoBRelacation:string='';
+    totalHbaAvailed:string='';
+    totalNumberOfInstallments:string='';
+    totalNumberOfRecoveryMonths:string='';
     orderType:string='';
     orderNo:string='';
     orderFor:string='';

@@ -1,5 +1,12 @@
 .form-control{
     border: 1px solid #ccc;
-    border-left: 3px solid #223a66;
+    /* border-left: 3px solid #223a66; */
+    border-left: 3px solid #92400e;
     border-radius: 5px !important;
+}
+.outer{
+    background: linear-gradient(to right, #fffbeb, #fef3c7) !important;
+    float: left;
+    width: 100%;
+    padding-bottom: 200px;
 }

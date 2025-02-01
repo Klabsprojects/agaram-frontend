@@ -123,7 +123,7 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label"> Any Exisiting Residence  <span>*</span></label>
                 <div class="col-sm-12">
-                  <select class="form-control" formControlName="isExisingResidenceAvailable"
+                  <select class="form-control" formControlName="isExisingResidenceAvailable" (change)="getResidence($event)"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('isExisingResidenceAvailable')?.invalid && hbaForm.get('isExisingResidenceAvailable')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                       <option value="">Select</option>
                       <option *ngFor="let existingResidenceData of existingResidence" [value]="existingResidenceData">{{existingResidenceData}}</option>
@@ -138,11 +138,12 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">2B Relaxation <span>*</span></label>
                 <div class="col-sm-12">
-                  <select class="form-control" formControlName="twoBRelacation"
+                  <input type="text" class="form-control"  formControlName="twoBRelacation"  readonly/>
+                  <!-- <select class="form-control" formControlName="twoBRelacation"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('twoBRelacation')?.invalid && hbaForm.get('twoBRelacation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                       <option value="">Select</option>
                       <option *ngFor="let existingResidenceData of existingResidence" [value]="existingResidenceData">{{existingResidenceData}}</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
             </div>
@@ -182,7 +183,7 @@
             <div class="sub-title float-left w-100  mx-2 my-2">Installment Info</div>
 
 
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Installment Number<span>*</span></label>
                 <div class="col-sm-12">
@@ -192,9 +193,9 @@
                </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 pr-0">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Conduct Rule Permission Obtained Attachment<span>*</span></label>
+                <label class="col-sm-12 col-form-label">Conduct Rule Permission Obtained Attachment<span> * </span></label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" formControlName="conductRulePermission"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('conductRulePermission')?.invalid && hbaForm.get('conductRulePermission')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -206,7 +207,7 @@
                 </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2 pl-0">
                 <div class="form-group row">
                   <label class="col-sm-12 col-form-label">Amount<span>*</span></label>
                   <div class="col-sm-12">
@@ -215,6 +216,70 @@
                   </div>
                  </div>
               </div>
+
+              <div class="col-md-2 pl-0">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Installment Date<span>*</span></label>
+                  <div class="col-sm-12">
+                      <input type="date" class="form-control" formControlName="installmentDate"
+                      [ngStyle]="{'border-bottom': (submitted && hbaForm.get('installmentDate')?.invalid && hbaForm.get('installmentDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+                 </div>
+              </div> -->
+
+              <div formArrayName="installments" class="col-md-12">
+                <div *ngFor="let installment of installments.controls; let i = index" [formGroupName]="i" class="row">
+                  <div class="col-md-3">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Installment Number</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="installmentNumber" />
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Conduct Rule Permission -->
+                  <div class="col-md-5 pr-0">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Conduct Rule Permission</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="conductRulePermission" />
+                      </div>
+                      <div class="col-sm-8 mt-3">
+                        <input
+                          type="file"
+                          class="form-control pl-0"
+                          accept=".pdf"
+                          (change)="getPermissionFile($event)"
+                          style="border: none;"
+                        />
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Amount -->
+                  <div class="col-md-2 pl-0">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Amount</label>
+                      <div class="col-sm-12">
+                        <input type="number" class="form-control" formControlName="amount" />
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Installment Date -->
+                  <div class="col-md-2 pl-0">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Installment Date</label>
+                      <div class="col-sm-12">
+                        <input type="date" class="form-control" formControlName="installmentDate" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
             
             <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
             <div class="col-md-2">
@@ -269,7 +334,7 @@
                   <div class="form-group row">
                     <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
                     <div class="col-sm-12">
-                      <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)" required>                  </div>
+                      <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)"></div>
                       <div *ngIf="hbaForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
                       <div *ngIf="hbaForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
                     </div>

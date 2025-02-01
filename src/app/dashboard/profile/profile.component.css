@@ -7,6 +7,13 @@
 h6{
     font-size: 15px !important;
 }
+.profile-img{
+    height: 100px;
+    width: 100px;
+    float: right;
+    margin-bottom: 20px;
+    border:1px solid #ccc;
+}
 .option{
     float: left;
     width:100%;
@@ -71,11 +78,11 @@ h6{
 .modal-dialog{
     /* max-width:700px; */
 }
-.profile-img{
+/* .profile-img{
     float: left;
     width: 100%;
     border: 1px solid #ccc;
-}
+} */
 .typcn{
     float: left;
     transform: rotate(90deg);

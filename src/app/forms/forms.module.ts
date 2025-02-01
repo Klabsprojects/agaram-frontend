@@ -67,6 +67,7 @@ import { OfficerTourComponent } from './officer-tour/officer-tour.component';
 import { CreateTourComponent } from './officer-tour/create-tour/create-tour.component';
 import { EditTourComponent } from './officer-tour/edit-tour/edit-tour.component';
 import { DroComponent } from './uploads/dro/dro.component';
+import { EditHbaComponent } from './hba/edit-hba/edit-hba.component';
 
 const routes: Routes = [
   { path: 'transfer-posting', component: TransferPostingComponent, data: { componentName: 'TransferPosting' }, canActivate: [AuthGuard] },
@@ -96,6 +97,7 @@ const routes: Routes = [
   { path: 'edit-medical-reimbursement', component: EditMedicalReimbursementComponent, canActivate: [AuthGuard] },
   { path: 'hba', component: HbaComponent, canActivate: [AuthGuard] },
   { path: 'create-hba', component: CreateHbaComponent, canActivate: [AuthGuard] },
+  { path: 'edit-hba', component: EditHbaComponent, canActivate: [AuthGuard] },
   { path: 'gpf', component: GpfComponent, canActivate: [AuthGuard] },
   { path: 'create-gpf', component: CreateGpfComponent, canActivate: [AuthGuard] },
   { path: 'edit-gpf', component: EditGpfComponent, canActivate: [AuthGuard] },
@@ -143,6 +145,7 @@ const routes: Routes = [
     MedicalReimbursementComponent,
     HbaComponent,
     CreateHbaComponent,
+    EditHbaComponent,
     PrivateVisitsComponent,
     TransferPostingComponent,
     PromotionComponent,

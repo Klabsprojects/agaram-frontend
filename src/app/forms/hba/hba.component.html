@@ -28,8 +28,8 @@
       <th>Name of the Officer</th>
       <th>Designation</th>
       <th>HBA Availed</th>
-      <th>Installments <br> Availed</th>
-      <th>Pending <br> Installments</th>
+      <th>Total Cost <br> of Property</th>
+      <th>No of <br> Installments</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -40,12 +40,12 @@
         <td>{{data.officerName}}</td>
         <td>{{data.designation}}</td>
         <td>{{data.hbaAvailedFor}}</td>
-        <td></td>
-        <td></td>
-        <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td>
+        <td>{{data.totalCostOfProperty}}</td>
+        <td>{{data.totalNumberOfInstallments}}</td>
+        <!-- <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td> -->
         <td class="text-center">
-          <button type="button" class="btn btn-info p-2 mr-2" (click)="editGpf(data._id)">Edit</button>
-          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewGpf" (click)="viewGpf(data._id)">View</button>
+          <button type="button" class="btn btn-info p-2 mr-2" (click)="editHba(data._id)">Edit</button>
+          <button type="button" class="btn btn-info p-2" style="font-size: 12px;" data-toggle="modal" data-target="#viewHba" (click)="viewHba(data._id)">View</button>
         </td>
       </tr>
     </ng-container>
@@ -84,4 +84,60 @@
 </div>
 </div>
 
-  
+<div class="modal fade" id="viewHba" tabindex="-1" aria-labelledby="viewHbaLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog" style="max-width:700px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewHbaLabel">View HBA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+
+        <div class="col-md-12 p-0">
+          <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewHbaData.officerName}}</div>
+          <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewHbaData.department}}
+          </div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Designation</b></label><br>{{viewHbaData.designation}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (State)</b></label><br>{{viewHbaData.state}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (District)</b></label><br>{{viewHbaData.district}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>HBA Availed for TNHB </b></label><br>{{viewHbaData.hbaAvailedFor}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Type of Property </b></label><br>{{viewHbaData.typeOfProperty}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Application </b></label><br>{{viewHbaData.dateOfApplication | date:'dd/mm/yyyy'}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total Cost of Property</b></label><br>{{viewHbaData.totalCostOfProperty}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Any Exisiting Residence</b></label><br>{{viewHbaData.isExisingResidenceAvailable}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>2B Relaxation</b></label><br>{{viewHbaData.twoBRelacation}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total HBA Availed </b></label><br>{{viewHbaData.totalHbaAvailed}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total No. of Installment </b></label><br>{{viewHbaData.totalNumberOfInstallments}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total No. Recovery Months</b></label><br>{{viewHbaData.totalNumberOfRecoveryMonths}}</div>
+
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewHbaData.orderType}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label> <br> {{viewHbaData.orderNo}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label> <br> {{viewHbaData.orderFor}}
+          </div>
+          <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label> <br>
+            {{viewHbaData.dateOfOrder | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
+            <a href="{{url}}{{viewHbaData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
+          </div>
+          <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Remarks </b></label> <br> {{viewHbaData.remarks}}
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-success py-2 px-3" *ngIf="showApprove && !viewHbaData.approvalStatus"
+          (click)="approveLtc(viewHbaData)">Approve</button> -->
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

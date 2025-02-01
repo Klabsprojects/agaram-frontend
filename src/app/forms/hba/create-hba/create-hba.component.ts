@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from '../../../shared-services/common.service';
 import { LeaveTransferService } from '../../forms.service';
@@ -13,7 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class CreateHbaComponent implements OnInit{
   hbaForm!:FormGroup;
   selectedFile : File | null = null;
-  installmentFileSelected : File | null = null;
+  conductRulePermissionAttachmentFile : File | null = null;
   submitted = false;
   orderFor:any[]=[];
   orderType:any[]=[];
@@ -32,7 +32,7 @@ export class CreateHbaComponent implements OnInit{
   district:any[]=[];
   hbaAvailed:string[]=['Nerkundram Phase - I' , 'Nerkundram Phase - II' , 'Other TNHB Projects / Private'];
   typeOfProperty:string[]=['Ready Build','Construction'];
-  existingResidence:string[]=['Yes','No'];
+  existingResidence:string[]=['yes','No'];
   totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,"Final"];
   ifuserlogin = false;
   userdata: any;
@@ -83,10 +83,15 @@ export class CreateHbaComponent implements OnInit{
       totalHbaAvailed:['',Validators.required],
       totalNumberOfInstallments:['',Validators.required],
       totalNumberOfRecoveryMonths:['',Validators.required],
-      installmentNumber:['',Validators.required],
-      conductRulePermission:['',Validators.required],
-      conductRulePermissionAttachment:['',Validators.required],
-      amount:['',Validators.required],
+      conductRulePermissionAttachment: [''],
+      installments: this.fb.array([
+        this.fb.group({
+          installmentNumber: [''],
+          conductRulePermission: [''],
+          amount:[''],
+          installmentDate:['']
+        }),
+      ]),
       orderType:['',Validators.required],
       orderNo:['',Validators.required],
       orderFor:['',Validators.required],
@@ -106,6 +111,10 @@ export class CreateHbaComponent implements OnInit{
     });
   }
 
+  get installments(): FormArray {
+    return this.hbaForm.get('installments') as FormArray;
+  }
+
   getState(event:any){
     this.district=[];
     const id = event.target.value;
@@ -116,6 +125,10 @@ export class CreateHbaComponent implements OnInit{
         }
       })
     })
+  }
+
+  getResidence(data:any){
+    this.hbaForm.get('twoBRelacation')?.setValue(data.target.value);
   }
  
   onInput(event: any, field: string) {
@@ -189,39 +202,42 @@ export class CreateHbaComponent implements OnInit{
         this.hbaForm.get('orderFile')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-
-      if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.hbaForm.get('orderFile')?.setErrors({ 'maxSize': true });
-        return;
-      }
-
       this.hbaForm.get('orderFile')?.setErrors(null);
     }
   }
 
-
-  installmentFileSelect(event:any){
+  getPermissionFile(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.installmentFileSelected = input.files[0];
-      this.hbaForm.patchValue({ conductRulePermissionAttachment: this.installmentFileSelected });
+      this.conductRulePermissionAttachmentFile = input.files[0];
+      this.hbaForm.patchValue({ conductRulePermissionAttachment: this.conductRulePermissionAttachmentFile });
     }
-    this.installmentFileSelected = event.target.files[0];
-    this.hbaForm.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
-    if (this.installmentFileSelected) {
-      if (this.installmentFileSelected.type !== 'application/pdf') {
+    this.conductRulePermissionAttachmentFile = event.target.files[0];
+    this.hbaForm.get('conductRulePermissionAttachment')?.setValue(this.conductRulePermissionAttachmentFile);
+    if (this.conductRulePermissionAttachmentFile) {
+      if (this.conductRulePermissionAttachmentFile.type !== 'application/pdf') {
         this.hbaForm.get('conductRulePermissionAttachment')?.setErrors({ 'incorrectFileType': true });
         return;
       }
-
-      if (this.installmentFileSelected.size > 5 * 1024 * 1024) { // 5MB in bytes
-        this.hbaForm.get('conductRulePermissionAttachment')?.setErrors({ 'maxSize': true });
-        return;
-      }
-
       this.hbaForm.get('conductRulePermissionAttachment')?.setErrors(null);
     }
   }
+
+  // getPermissionFile(event: any, index: number) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.installmentFileSelected = input.files[0];
+  //     const installmentFormGroup = (this.hbaForm.get('installments') as FormArray).at(index) as FormGroup;
+  //     installmentFormGroup.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
+  //     if (this.installmentFileSelected.type !== 'application/pdf') {
+  //       installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors({ incorrectFileType: true });
+  //       return;
+  //     }
+     
+  //     installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors(null);
+  //   }
+  // }
+  
 
   onKeyDown(event: KeyboardEvent){
     const key = event.key;
@@ -231,37 +247,62 @@ export class CreateHbaComponent implements OnInit{
     }
   }
 
-   onSubmit(): void {
+  onSubmit(): void {
     this.submitted = true;
-    console.log("hbaForm",this.hbaForm.valid);
+    console.log('Form Values:', this.hbaForm.value);
+    console.log('Form Valid:', this.hbaForm.valid);
+  
     if (this.hbaForm.valid) {
       const formData = new FormData();
       const formValues = this.hbaForm.value;
-      for (const key in formValues) {
-        if (formValues.hasOwnProperty(key) && key !== 'orderFile') {
-          formData.append(key, formValues[key]);
+  
+      // Append top-level fields except 'installments'
+      Object.keys(formValues).forEach((key) => {
+        if (key !== 'installments') {
+          if (key === 'orderFile' && this.selectedFile) {
+            formData.append(key, this.selectedFile); // Append binary file
+          } else if (key === 'conductRulePermissionAttachment' && this.conductRulePermissionAttachmentFile) {
+            formData.append(key, this.conductRulePermissionAttachmentFile); // Append binary file
+          } else {
+            formData.append(key, formValues[key]); // Append other fields
+          }
         }
-      }
-      if (this.selectedFile) {
-        formData.append('orderFile', this.selectedFile);
-      }
-      this.module = "Leave Travel Concession";
+      });
+  
+      // Append 'installments' in the required format
+      formValues.installments.forEach((installment: any, index: number) => {
+        Object.keys(installment).forEach((field) => {
+          formData.append(`installments[${index}][${field}]`, installment[field]);
+        });
+      });
+  
+      // Append additional static fields only once
       formData.append('employeeProfileId', this.employeeProfileId);
       formData.append('departmentId', this.departmentId);
       formData.append('designationId', this.designationId);
-      formData.append('submittedBy',this.submittedBy);
-      formData.append('phone',this.phone);
-      formData.append('module',this.module);
-      this.hbaService.createLtc(formData).subscribe(
-        response => {
+      formData.append('submittedBy', this.submittedBy);
+      formData.append('phone', this.phone);
+      formData.append('module', 'House Building Advance');
+  
+      // Log final FormData for debugging
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+  
+      // Call the API
+      this.hbaService.createHba(formData).subscribe(
+        (response) => {
           alert(response.message);
-          this.router.navigateByUrl('ltc');
-         console.log('API Response:', response);
+          this.router.navigateByUrl('hba');
+          console.log('API Response:', response);
         },
-        error => {
+        (error) => {
           console.error('API Error:', error);
         }
       );
+    } else {
+      console.error('Form is invalid');
     }
   }
+    
 }

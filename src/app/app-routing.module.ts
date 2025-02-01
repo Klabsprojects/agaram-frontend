@@ -21,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
 import { CircularsComponentlanding } from './landing-page/components/service-components/circularslanding/circularslanding.component';
 import { FaqComponentlanding } from './landing-page/components/service-components/faqlanding/faqlanding.component';
 import { UtilityformsComponentlanding } from './landing-page/components/service-components/utilityformslanding/utilityformslanding.component';
+import { OfficialInfoComponent } from './dashboard/profile/official-info/official-info.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path:'advance-search',component:AdvanceSearchComponent,canActivate: [AuthGuard]},
   { path:'dashboard',component:DashboardComponent,canActivate: [AuthGuard]},
   { path:'profile',component:ProfileComponent,canActivate:[AuthGuard],data: { role: 'Officer' }},
+  { path:'official-info',component:OfficialInfoComponent,canActivate:[AuthGuard],data: { role: 'Officer' }},
   { path: 'create-officer', component: OfficerProfileComponent,canActivate: [AuthGuard] },
   { path: 'edit-officer', component:EditOfficerComponent,canActivate: [AuthGuard]},
   { path:'officer-profile-list',

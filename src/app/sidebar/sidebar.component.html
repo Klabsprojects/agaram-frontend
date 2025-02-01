@@ -78,11 +78,25 @@
         </a>
       </li>
 
-      <li class="nav-item" *ngIf="roleName=='Officer'">
+      <!-- <li class="nav-item" *ngIf="roleName=='Officer'">
         <a class="nav-link" [routerLink]="['profile']">
           <i class="typcn typcn-user menu-icon" ></i>
           <span class="menu-title">My Profile</span>
         </a>
+      </li> -->
+
+      <li class="nav-item" *ngIf="roleName=='Officer'">
+        <a class="nav-link" data-toggle="collapse" href="#profile" aria-expanded="false" aria-controls="ui-basic">
+          <i class="typcn typcn-user menu-icon"></i>
+          <span class="menu-title">Profile</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse small-collapse" id="profile" style="height: auto !important; overflow: hidden;">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" [routerLink]="['profile']">Basic Info</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['official-info']">Official Info</a></li>
+          </ul>
+        </div>
       </li>
 
   
@@ -125,15 +139,13 @@
             <li *ngIf="showMenu('officerTour')" class="nav-item"><a class="nav-link" [routerLink]="['officerTour']">Officer Tour </a></li>
             <li class="nav-item"><a class="nav-link" [routerLink]="['hba']">House Building Advance  </a></li>
             <li class="nav-item"><a class="nav-link" [routerLink]="['gpf']">GPF </a></li>
-            <li class="nav-item"><a class="nav-link" [routerLink]="['idCard']">MHA ID card</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['mha-idcard']">MHA ID card</a></li>
 
           </ul>
         </div>
       </li>
 
-      <li
-      *ngIf="(showMenu('Foreign Visit') || showMenu('SAF Games Village Application') || showMenu('SAF Games Village Allocation') || showMenu(''))&&roleName!='Officer'"
-      class="nav-item">
+      <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="ui-basic">
         <i class="typcn typcn-upload-outline menu-icon"></i>
         <span class="menu-title">Uploads</span>
