@@ -267,7 +267,10 @@ strong {
   }
 
   .footer-grid {
-    padding: 3rem 3rem;
+    padding: 1rem 3rem;
+  }
+  .nav-col{
+    padding: 1rem 3rem;
   }
 
   .heading-secondary {
