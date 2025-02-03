@@ -390,7 +390,7 @@ strong {
   }
 
   .top-header {
-    padding: 0 32px;
+    padding: 1rem 32px;
   }
 
   .main-nav-top {
@@ -597,9 +597,19 @@ strong {
     height: auto;
   }
 
-  .Main-title,
+  .Main-title{
+    font-size: 1.5rem;
+  }
   .prp {
     font-size: 1rem;
+    text-align: center;
+  }
+  .Main-title-sub{
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .logo{
+    width: 3rem;
   }
 }
 
