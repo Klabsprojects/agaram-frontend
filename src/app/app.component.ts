@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -53,5 +53,16 @@ export class AppComponent {
         this.showLanding = false;
       }
     });
+  }
+  showScroll: boolean = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Show button when scrolled down 200px
+    this.showScroll = window.scrollY > 200;
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
