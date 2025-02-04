@@ -9,39 +9,37 @@
         <p class="prp">Public & Rehabilation Portal</p>
         <p class="Main-title-sub">Government of Tamil Nadu</p>
       </div>
-      <!-- <p class="Main-title">Agaram <br><span class="prp">Public & Rehabilation Portal</span><br> <span class="Main-title-sub">Government of Tamil Nadu</span></p> -->
-      <p></p>
+      <nav class="main-nav-top">
+        <ul class="main-nav-list">
+          <li>
+            <a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'" *ngIf="!serviceEnable">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-log-in w-4 h-4">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" x2="3" y1="12" y2="12"></line>
+              </svg>
+              Login
+            </a>
+            <a class="main-nav-link nav-cta" href="#" *ngIf="serviceEnable" (click)="logout()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-log-in w-4 h-4">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" x2="3" y1="12" y2="12"></line>
+              </svg>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <button class="btn-mobile-nav">
+        <i class="mdi mdi-menu icon-mobile-nav" name="menu-outline" (click)="toggle()"></i>
+        <i class="mdi mdi-close icon-mobile-nav" name="close-outline" (click)="toggle()"></i>
+      </button>
     </div>
-    <!-- <nav class="main-nav-top">
-      <ul class="main-nav-list">
-        <li>
-          <a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'" *ngIf="!serviceEnable">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-log-in w-4 h-4">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-              <polyline points="10 17 15 12 10 7"></polyline>
-              <line x1="15" x2="3" y1="12" y2="12"></line>
-            </svg>
-            Login
-          </a>
-          <a class="main-nav-link nav-cta" href="#" *ngIf="serviceEnable" (click)="logout()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-log-in w-4 h-4">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-              <polyline points="10 17 15 12 10 7"></polyline>
-              <line x1="15" x2="3" y1="12" y2="12"></line>
-            </svg>
-            Logout
-          </a>
-        </li>
-      </ul>
-    </nav> -->
-    <button class="btn-mobile-nav">
-      <i class="mdi mdi-menu icon-mobile-nav" name="menu-outline" (click)="toggle()"></i>
-      <i class="mdi mdi-close icon-mobile-nav" name="close-outline" (click)="toggle()"></i>
-    </button>
   </div>
   <div class="lower-header">
     <nav class="main-nav">

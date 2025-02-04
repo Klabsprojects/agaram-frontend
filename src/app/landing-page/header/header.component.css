@@ -9,7 +9,7 @@
 
 .top-header,
 .lower-header {
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   align-items: center;
   /* height: 120px; */
@@ -33,7 +33,8 @@
 
 .lower-header {
   /* height: 50px; */
-  background: linear-gradient(to right, #fffbeb, #fef3c7);
+  /* background: linear-gradient(to right, #fffbeb, #fef3c7); */
+  background-color: #112A46;
   padding: 0.5rem 138px;
   /* background-color: #115dbb; */
 }
@@ -46,7 +47,7 @@
 .Main-title,
 .Main-title-sub,
 .prp {
-  font-size: 2rem;
+  font-size: 3rem;
   color: rgb(120 53 15/var(--tw-text-opacity, 1));
   font-weight: 500;
   font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
@@ -55,20 +56,20 @@
 }
 
 .prp{
-  font-size: 1.5rem;
+  font-size: 1.125rem;
 }
 
 .Main-title-sub {
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 .login-list-item {
-  /* display:none ; */
+  display:none ;
 }
 
 .brandDiv {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 1.25rem;
 }
@@ -82,7 +83,8 @@
   list-style-type: none;
   display: flex;
   align-items: center;
-  gap: 30px;
+  /* gap: 30px; */
+  justify-content: space-between;
 }
 
 .lucide {
@@ -108,8 +110,8 @@
   align-items: center;
   gap: 0.55rem;
   text-decoration: none;
-  color: rgb(120 53 15/var(--tw-text-opacity, 1));
-  /* color: white; */
+  /* color: rgb(120 53 15/var(--tw-text-opacity, 1)); */
+  color: #fff;
   font-weight: 500;
   font-size: 0.875rem;
   font-family: 'ui-sans-serif', 'system-ui', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
