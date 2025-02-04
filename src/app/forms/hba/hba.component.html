@@ -41,7 +41,10 @@
         <td>{{data.designation}}</td>
         <td>{{data.hbaAvailedFor}}</td>
         <td>{{data.totalCostOfProperty}}</td>
-        <td>{{data.totalNumberOfInstallments}}</td>
+        <td>
+          <!-- {{data.totalNumberOfInstallments}} -->
+          {{ data.totalNumberOfInstallments === '16' ? 'Final' : data.totalNumberOfInstallments }}
+        </td>
         <!-- <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}})</td> -->
         <td class="text-center">
           <button type="button" class="btn btn-info p-2 mr-2" (click)="editHba(data._id)">Edit</button>
@@ -85,7 +88,7 @@
 </div>
 
 <div class="modal fade" id="viewHba" tabindex="-1" aria-labelledby="viewHbaLabel" aria-hidden="true" *ngIf="showPopup">
-  <div class="modal-dialog" style="max-width:700px;">
+  <div class="modal-dialog" style="max-width:900px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="viewHbaLabel">View HBA</h5>
@@ -99,7 +102,7 @@
           <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Name </b></label> <br> {{viewHbaData.officerName}}</div>
           <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewHbaData.department}}
           </div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Designation</b></label><br>{{viewHbaData.designation}}</div>
+          <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Designation</b></label><br>{{viewHbaData.designation}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (State)</b></label><br>{{viewHbaData.state}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (District)</b></label><br>{{viewHbaData.district}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>HBA Availed for TNHB </b></label><br>{{viewHbaData.hbaAvailedFor}}</div>
@@ -109,9 +112,45 @@
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Any Exisiting Residence</b></label><br>{{viewHbaData.isExisingResidenceAvailable}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>2B Relaxation</b></label><br>{{viewHbaData.twoBRelacation}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total HBA Availed </b></label><br>{{viewHbaData.totalHbaAvailed}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total No. of Installment </b></label><br>{{viewHbaData.totalNumberOfInstallments}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total No. Recovery Months</b></label><br>{{viewHbaData.totalNumberOfRecoveryMonths}}</div>
+          <div class="col-md-4 px-0 mt-3">
+            <label class="w-100"><b>Total No. of Installments</b></label><br>
+            {{ viewHbaData.totalNumberOfInstallments === '16' ? 'Final' : viewHbaData.totalNumberOfInstallments }}
+          </div>
+                    <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total No. Recovery Months</b></label><br>{{viewHbaData.totalNumberOfRecoveryMonths}}</div>
 
+          <hr>
+          <h6 class="modal-title float-left w-100 mb-2">Installment Information</h6>
+
+          <table class="table table-bordered table-striped table-hover my-1 float-left">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Installment No.</th>
+                <th>Conduct Rule Permission</th>
+                <th>Amount</th>
+                <th>Installment Date</th>
+                <th>Attachment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let installmentData of installment; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ installmentData.installmentNumber }}</td>
+                <td>{{ installmentData.conductRulePermission }}</td>
+                <td>{{ installmentData.amount }}</td>
+                <td>{{ installmentData.installmentDate | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                  <a
+                    href="{{ url }}{{ installmentData.conductRulePermissionAttachment }}"
+                    target="_blank"
+                    class="btn btn-primary py-2 px-1 ml-2"
+                  >
+                    View
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <hr>
           <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
           <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label> <br> {{viewHbaData.orderType}}

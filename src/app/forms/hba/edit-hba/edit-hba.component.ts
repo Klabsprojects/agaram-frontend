@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeaveTransferService } from '../../forms.service';
 import { CommonService } from '../../../shared-services/common.service';
-import { isPlatformBrowser } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-edit-hba',
@@ -33,7 +33,7 @@ export class EditHbaComponent implements OnInit{
      hbaAvailed:string[]=['Nerkundram Phase - I' , 'Nerkundram Phase - II' , 'Other TNHB Projects / Private'];
      typeOfProperty:string[]=['Ready Build','Construction'];
      existingResidence:string[]=['yes','No'];
-     totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,"Final"];
+     totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
      ifuserlogin = false;
      userdata: any;
      id:any;
@@ -41,8 +41,14 @@ export class EditHbaComponent implements OnInit{
      orderFileUrl:string='';
      installment:any[]=[];
      showTable = false;
+     installmentdate:any;
+     conductRulePermissionAttachment: string | null = null;
+     installmentFileSelected : any;
+     installmentId:any;
+     totalCostOfProperty:number=0;
+     alreadyPaidAmount:number=0;
    
-     constructor(@Inject(PLATFORM_ID) private platformId: Object,private router:Router,private route:ActivatedRoute, private hbaService:LeaveTransferService,private fb:FormBuilder,private cs: CommonService){}
+     constructor(@Inject(PLATFORM_ID) private platformId: Object,private datePipe:DatePipe,private router:Router,private route:ActivatedRoute, private hbaService:LeaveTransferService,private fb:FormBuilder,private cs: CommonService){}
      ngAfterViewInit(): void {
        if (localStorage.getItem('loginAs') == 'Officer') {
          this.cs.data$.subscribe((data: any) => {
@@ -83,15 +89,25 @@ export class EditHbaComponent implements OnInit{
      
      this.hbaService.getHbaId(this.id).subscribe((res:any)=>{
       res.results.forEach((data:any)=>{
+        console.log(data.installments);
+        // if (data.installments && Array.isArray(data.installments)) {
+        //   const hasValidInstallments = data.installments.some((ele: any) => {
+        //     return ele.installmentNumber !== "" && ele.amount !== null && ele.conductRulePermission !== "" && ele.installmentDate !== null;
+        //   });
+        //   this.showTable = hasValidInstallments;
+        //   if (hasValidInstallments) {
+        //     this.installment.push(...data.installments);
+        //     console.log(this.installment);
+        //   }else{
+        //     this.installment.push(...data.installments);
+        //   }
+        // }
         if (data.installments && Array.isArray(data.installments)) {
-          const hasValidInstallments = data.installments.some((ele: any) => {
-            return ele.installmentNumber !== "" && ele.amount !== null && ele.conductRulePermission !== "" && ele.installmentDate !== null;
-          });
-          this.showTable = hasValidInstallments;
-          if (hasValidInstallments) {
-            this.installment.push(...data.installments);
-          }
+          this.installment.push(...data.installments); // Directly push all installments without checking for non-empty fields
+          this.showTable = this.installment.length > 0; // Show table if there are any installments
+          console.log(this.installment);
         }
+        
         this.hbaService.getDistrict(data.state).subscribe((response: any) => {
           this.district = response.results.map((items: any) => ({
             label:items.districtName,value:items._id
@@ -110,6 +126,7 @@ export class EditHbaComponent implements OnInit{
         var dateOfApplication = new Date(data.dateOfApplication);
         data.dateOfApplication= dateOfApplication.toISOString().split('T')[0];
         this.hbaForm.get('dateOfApplication')?.setValue(data.dateOfApplication);
+        this.totalCostOfProperty = data.totalCostOfProperty;
         this.hbaForm.get('totalCostOfProperty')?.setValue(data.totalCostOfProperty);
         this.hbaForm.get('isExisingResidenceAvailable')?.setValue(data.isExisingResidenceAvailable);
         this.hbaForm.get('twoBRelacation')?.setValue(data.twoBRelacation);
@@ -130,6 +147,11 @@ export class EditHbaComponent implements OnInit{
          this.departmentId = data.departmentId;
          this.designationId = data.designationId;
       })
+      this.populateInstallmentForm();
+      this.addInstallment();
+      this.installmentDetailsFormArray.valueChanges.subscribe((values) => {
+        this.calculateAlreadyPaidAmount(values);
+      });
     });
        
        this.hbaForm = this.fb.group({
@@ -147,20 +169,12 @@ export class EditHbaComponent implements OnInit{
          totalHbaAvailed:['',Validators.required],
          totalNumberOfInstallments:['',Validators.required],
          totalNumberOfRecoveryMonths:['',Validators.required],
-         conductRulePermissionAttachment: [''],
-         installments: this.fb.array([
-           this.fb.group({
-             installmentNumber: [''],
-             conductRulePermission: [''],
-             amount:[''],
-             installmentDate:['']
-           }),
-         ]),
+         installments: this.fb.array([this.createRow()]),
          orderType:['',Validators.required],
          orderNo:['',Validators.required],
          orderFor:['',Validators.required],
          dateOfOrder:['',Validators.required],
-         orderFile:[null,Validators.required],
+         orderFile:[null],
          remarks:[''],
        });
        this.hbaService.getData().subscribe((res: any[]) => {
@@ -174,11 +188,131 @@ export class EditHbaComponent implements OnInit{
          });
        });
      }
+
+    //  addInstallment(): void {
+    //   const installmentGroup = this.fb.group({
+    //     installmentNumber: [''],
+    //     conductRulePermission: [''],
+    //     conductRulePermissionAttachment: [''],
+    //     amount: [''],
+    //     installmentDate: [''],
+    //   });
+  
+    //   this.installmentDetailsFormArray.push(installmentGroup);
+    // }
+
+    addInstallment(): void {
+      const totalNumberOfInstallments = this.hbaForm.get('totalNumberOfInstallments')?.value;
+    
+      // Ensure `totalNumberOfInstallments` is valid
+      if (totalNumberOfInstallments === '16') {
+        // If "Final", ensure only one row is present
+        if (this.installmentDetailsFormArray.length < 1) {
+          const installmentGroup = this.fb.group({
+            installmentNumber: [''],
+            conductRulePermission: [''],
+            conductRulePermissionAttachment: [''],
+            amount: [''],
+            installmentDate: [''],
+          });
+          this.installmentDetailsFormArray.push(installmentGroup);
+        }
+      } else if (!isNaN(Number(totalNumberOfInstallments)) && Number(totalNumberOfInstallments) > 0) {
+        // Convert to numeric
+        const maxInstallments = Number(totalNumberOfInstallments);
+    
+        // Add one row only if current count is less than totalNumberOfInstallments
+        if (this.installmentDetailsFormArray.length < maxInstallments) {
+          const installmentGroup = this.fb.group({
+            installmentNumber: [''],
+            conductRulePermission: [''],
+            conductRulePermissionAttachment: [''],
+            amount: [''],
+            installmentDate: [''],
+          });
+          this.installmentDetailsFormArray.push(installmentGroup);
+        }
+      }
+    }
+    
+    getTotalNoInstallment(event: any): void {
+      const totalNumberOfInstallments = Number(event.target.value);
+      const currentInstallments = this.installmentDetailsFormArray.length;  
+      console.log(currentInstallments);
+      if (!isNaN(totalNumberOfInstallments)) {
+        if (totalNumberOfInstallments < currentInstallments) {
+          alert(`The total number of installments cannot be less than the already added installments (${currentInstallments}).`);
+          this.hbaForm.get('totalNumberOfInstallments')?.setValue(currentInstallments);
+        } else {
+          console.log(`Total number of installments updated to ${totalNumberOfInstallments}`);
+        }
+      } else {
+        alert('Please enter a valid number for the total number of installments.');
+      }
+    }
+    
+    validateInstallmentAmount(): void {
+      const formArrayValues = this.installmentDetailsFormArray.value;
+      console.log(formArrayValues);
+      const totalAmount = formArrayValues.reduce((sum: number, installments: { amount: any; }) => {
+        return sum + (Number(installments.amount) || 0); // Ensure valid number
+      }, 0);
+
+      console.log(totalAmount,this.totalCostOfProperty);
+    
+      // Check if the total amount exceeds the property cost
+      if (totalAmount > this.totalCostOfProperty) {
+        alert(`The total payable amount cannot exceed the total cost of the property (${this.totalCostOfProperty}).`);
+    
+        // Reset the last entered value if it exceeds the limit
+        const lastIndex = formArrayValues.length - 1;
+        const lastControl = this.installmentDetailsFormArray.at(lastIndex).get('amount');
+        lastControl?.setValue(0);
+      }
+    }
+    
+    calculateAlreadyPaidAmount(values: any[]): void {
+      // Sum up all installment amounts
+      this.alreadyPaidAmount = values.reduce((sum, installment) => {
+        return sum + (Number(installment.amount) || 0); // Ensure valid number
+      }, 0);
+    }
+
+     get installmentDetailsFormArray() {
+      return this.hbaForm.get('installments') as FormArray;
+    }
+
+    populateInstallmentForm() {
+      const formArray = this.hbaForm.get('installments') as FormArray;
+      while (formArray.length) {
+        formArray.removeAt(0);
+      }
+      this.installment.forEach(installmentItem => {
+        this.installmentdate = this.datePipe.transform(installmentItem.installmentDate, 'yyyy-MM-dd');
+        this.installmentId = installmentItem._id;
+        this.conductRulePermissionAttachment = installmentItem.conductRulePermissionAttachment,
+        formArray.push(this.fb.group({
+          installmentNumber: [installmentItem.installmentNumber],
+          conductRulePermission: [installmentItem.conductRulePermission],
+          conductRulePermissionAttachment: [installmentItem.conductRulePermissionAttachment],
+          amount:[installmentItem.amount],
+          installmentDate:[this.installmentdate]
+          
+        }));
+      });
+    }
+  
    
-     get installments(): FormArray {
-       return this.hbaForm.get('installments') as FormArray;
-     }
-   
+     createRow() {
+      return this.fb.group({
+        installmentNumber: [''],
+        conductRulePermission: [''],
+        conductRulePermissionAttachment:[''],
+        amount:[''],
+        installmentDate:[''],
+      });
+    }
+  
      getState(event:any){
        this.district=[];
        const id = event.target.value;
@@ -253,6 +387,77 @@ export class EditHbaComponent implements OnInit{
        })
      }
    
+    //  getInstallmentTitle(index: number): string {
+    //   switch (index) {
+    //     case 0:
+    //       return '1st Installment';
+    //     case 1:
+    //       return '2nd Installment';
+    //     case 2:
+    //       return '3rd Installment';
+    //     case 3:
+    //       return '4th Installment';
+    //     case 4:
+    //       return '5th Installment';
+    //     case 5:
+    //       return '6th Installment';
+    //     case 6:
+    //       return '7th Installment';
+    //     case 7:
+    //       return '8th Installment';
+    //     case 8:
+    //       return '9th Installment';
+    //     case 9:
+    //       return '10th Installment';
+    //     default:
+    //       return `Final Installment`;
+    //   }
+    // }
+
+    getInstallmentTitle(index: number): string {
+      const totalInstallments = this.hbaForm.get('totalNumberOfInstallments')?.value;
+    
+      if (totalInstallments === '16' && index === 0) {
+        return 'Final Installment';
+      }
+    
+      switch (index) {
+        case 0:
+          return '1st Installment';
+        case 1:
+          return '2nd Installment';
+        case 2:
+          return '3rd Installment';
+        case 3:
+          return '4th Installment';
+        case 4:
+          return '5th Installment';
+        case 5:
+          return '6th Installment';
+        case 6:
+          return '7th Installment';
+        case 7:
+          return '8th Installment';
+        case 8:
+          return '9th Installment';
+        case 9:
+          return '10th Installment';
+        case 10:
+            return '11th Installment';
+        case 11:
+            return '12th Installment';
+        case 12:
+            return '13th Installment';
+        case 13:
+            return '14th Installment';
+        case 14:
+            return '15th Installment';
+        default:
+          return `Installment ${index + 1}`;
+      }
+    }
+    
+
      onFileSelected(event: any) {
        const input = event.target as HTMLInputElement;
        if (input.files && input.files.length > 0) {
@@ -270,37 +475,44 @@ export class EditHbaComponent implements OnInit{
        }
      }
    
-     getPermissionFile(event: any) {
-       const input = event.target as HTMLInputElement;
-       if (input.files && input.files.length > 0) {
-         this.conductRulePermissionAttachmentFile = input.files[0];
-         this.hbaForm.patchValue({ conductRulePermissionAttachment: this.conductRulePermissionAttachmentFile });
-       }
-       this.conductRulePermissionAttachmentFile = event.target.files[0];
-       this.hbaForm.get('conductRulePermissionAttachment')?.setValue(this.conductRulePermissionAttachmentFile);
-       if (this.conductRulePermissionAttachmentFile) {
-         if (this.conductRulePermissionAttachmentFile.type !== 'application/pdf') {
-           this.hbaForm.get('conductRulePermissionAttachment')?.setErrors({ 'incorrectFileType': true });
-           return;
-         }
-         this.hbaForm.get('conductRulePermissionAttachment')?.setErrors(null);
-       }
-     }
+    
    
-     // getPermissionFile(event: any, index: number) {
-     //   const input = event.target as HTMLInputElement;
-     //   if (input.files && input.files.length > 0) {
-     //     this.installmentFileSelected = input.files[0];
-     //     const installmentFormGroup = (this.hbaForm.get('installments') as FormArray).at(index) as FormGroup;
-     //     installmentFormGroup.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
-     //     if (this.installmentFileSelected.type !== 'application/pdf') {
-     //       installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors({ incorrectFileType: true });
-     //       return;
-     //     }
+    //  getPermissionFile(event: any, index: number) {
+    //    const input = event.target as HTMLInputElement;
+    //    if (input.files && input.files.length > 0) {
+    //      this.installmentFileSelected = input.files[0];
+    //      const installmentFormGroup = (this.hbaForm.get('installments') as FormArray).at(index) as FormGroup;
+    //      installmentFormGroup.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
+    //      if (this.installmentFileSelected.type !== 'application/pdf') {
+    //        installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors({ incorrectFileType: true });
+    //        return;
+    //      }
         
-     //     installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors(null);
-     //   }
-     // }
+    //      installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors(null);
+    //    }
+    //  }
+
+    getPermissionFile(event: any, index: number) {
+      const input = event.target as HTMLInputElement;
+    
+      if (input.files && input.files.length > 0) {
+        this.installmentFileSelected = input.files[0];
+    
+        const installmentFormGroup = (this.hbaForm.get('installments') as FormArray).at(index) as FormGroup;
+    
+        // Set the file value in the FormGroup
+        installmentFormGroup.get('conductRulePermissionAttachment')?.setValue(this.installmentFileSelected);
+    
+        // Validate file type
+        if (this.installmentFileSelected.type !== 'application/pdf') {
+          installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors({ incorrectFileType: true });
+          return;
+        }
+    
+        // Clear errors if the file type is valid
+        installmentFormGroup.get('conductRulePermissionAttachment')?.setErrors(null);
+      }
+    }
      
    
      onKeyDown(event: KeyboardEvent){
@@ -311,7 +523,289 @@ export class EditHbaComponent implements OnInit{
        }
      }
    
-     onSubmit(): void {
-       this.submitted = true;
-     }   
+    
+    // onSubmit(): void {
+    //   this.submitted = true;
+    //   console.log(this.hbaForm.value, this.hbaForm.valid);
+    
+    //   if (this.hbaForm.valid) {
+    //     const formData = new FormData();
+    //     const formValues = this.hbaForm.value;
+    //     console.log(this.installment);
+    //     const formInstallments = formValues.installments;
+    //     formInstallments.forEach((installment: any, index: number) => {
+    //       const currentInstallment = this.installment[index]; 
+    //       console.log(currentInstallment);
+    //       console.log(currentInstallment?._id);
+    
+    //       if (currentInstallment && currentInstallment._id) {
+    //         const isEqual = installment.installmentNumber === currentInstallment.installmentNumber &&
+    //                         installment.amount === currentInstallment.amount &&
+    //                         installment.conductRulePermission === currentInstallment.conductRulePermission &&
+    //                         installment.installmentDate === new Date(currentInstallment.installmentDate).toISOString().split('T')[0];
+    
+    //         installment.edited = isEqual ? 'no' : 'yes';
+    
+    //         formData.append(`installments[${index}][_id]`, currentInstallment._id);
+    //       } else {
+    //         installment.edited = 'no';
+    //       }
+    
+    //       formData.append(`installments[${index}][installmentNumber]`, installment.installmentNumber);
+    //       formData.append(`installments[${index}][amount]`, installment.amount);
+    //       formData.append(`installments[${index}][conductRulePermission]`, installment.conductRulePermission);
+    //       formData.append(`installments[${index}][conductRulePermissionAttachment]`, installment.conductRulePermissionAttachment || ''); // Ensure empty values are handled properly
+    
+    //       const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    //       if (fileInput && fileInput.files && fileInput.files[0]) {
+    //         formData.append(`installments[${index}][conductRulePermissionAttachment]`, fileInput.files[0]);  // Append the actual file
+    //       }
+    
+    //       formData.append(`installments[${index}][installmentDate]`, installment.installmentDate);
+    //       formData.append(`installments[${index}][edited]`, installment.edited); 
+    //     });
+    
+    //     Object.keys(formValues).forEach((key) => {
+    //       if (key !== 'installments' && key !== 'orderFile') {
+    //         formData.append(key, formValues[key]);
+    //       }
+    //     });
+    
+    //     if (this.selectedFile) {
+    //       formData.append('orderFile', this.selectedFile);
+    //     }
+    
+    //     const fixedFields = {
+    //       employeeProfileId: this.employeeProfileId,
+    //       departmentId: this.departmentId,
+    //       designationId: this.designationId,
+    //       phone: this.phone,
+    //       module: 'House Building Advance',
+    //       id: this.id,
+    //     };
+    
+    //     Object.entries(fixedFields).forEach(([key, value]) => {
+    //       formData.append(key, value);
+    //     });
+    
+    //     // Log formData contents for debugging
+    //     // console.log('Form Data Contents:');
+    //     // formData.forEach((value, key) => {
+    //     //   console.log(`${key}:`, value);
+    //     // });
+    
+    //     this.hbaService.updateHba(formData).subscribe(
+    //       (response) => {
+    //         alert(response.message);
+    //         this.router.navigateByUrl('hba');
+    //       },
+    //       (error) => {
+    //         console.error('API Error:', error);
+    //       }
+    //     );
+    //   }
+    // }
+    
+    onSubmit(): void {
+      this.submitted = true;
+    
+      // Log the form values and validity for debugging
+      console.log(this.hbaForm.value, this.hbaForm.valid);
+    
+      if (this.hbaForm.valid) {
+        const formData = new FormData();
+        const formValues = this.hbaForm.value;
+    
+        // Iterate through the installments
+        const formInstallments = formValues.installments;
+        formInstallments.forEach((installment: any, index: number) => {
+          const currentInstallment = this.installment[index]; // Existing installment data (if any)
+          let edited = 'no'; // Default edited value
+    
+          if (currentInstallment && currentInstallment._id) {
+            // Check if the current installment values match the existing values
+            const isEqual =
+              installment.installmentNumber === currentInstallment.installmentNumber &&
+              installment.amount === currentInstallment.amount &&
+              installment.conductRulePermission === currentInstallment.conductRulePermission &&
+              installment.installmentDate ===
+                new Date(currentInstallment.installmentDate).toISOString().split('T')[0] &&
+              (!installment.conductRulePermissionAttachment || // Check for file change
+                (typeof installment.conductRulePermissionAttachment === 'string' &&
+                  installment.conductRulePermissionAttachment === currentInstallment.conductRulePermissionAttachment));
+    
+            edited = isEqual ? 'no' : 'yes';
+    
+            // Append the existing `_id` field for the installment
+            formData.append(`installments[${index}][_id]`, currentInstallment._id);
+          }
+    
+          // Append all other fields of the installment to FormData
+          formData.append(`installments[${index}][installmentNumber]`, installment.installmentNumber);
+          formData.append(`installments[${index}][amount]`, installment.amount);
+          formData.append(`installments[${index}][conductRulePermission]`, installment.conductRulePermission);
+    
+          // Check if a new file has been uploaded
+          const fileInput = document.getElementById(`fileInput-${index}`) as HTMLInputElement;
+          if (fileInput && fileInput.files && fileInput.files[0]) {
+            formData.append(`installments[${index}][conductRulePermissionAttachment]`, fileInput.files[0]); // New file
+            edited = 'yes'; // Mark as edited since a new file was uploaded
+          } else {
+            // Append existing file path or an empty string
+            formData.append(
+              `installments[${index}][conductRulePermissionAttachment]`,
+              installment.conductRulePermissionAttachment || ''
+            );
+          }
+    
+          formData.append(`installments[${index}][installmentDate]`, installment.installmentDate);
+          formData.append(`installments[${index}][edited]`, edited); // Add the `edited` field
+        });
+    
+        // Append other form fields except `installments` and `orderFile`
+        Object.keys(formValues).forEach((key) => {
+          if (key !== 'installments' && key !== 'orderFile') {
+            formData.append(key, formValues[key]);
+          }
+        });
+    
+        // Append `orderFile` if selected
+        if (this.selectedFile) {
+          formData.append('orderFile', this.selectedFile);
+        }
+    
+        // Add fixed fields
+        const fixedFields = {
+          employeeProfileId: this.employeeProfileId,
+          departmentId: this.departmentId,
+          designationId: this.designationId,
+          phone: this.phone,
+          module: 'House Building Advance',
+          id: this.id,
+        };
+    
+        Object.entries(fixedFields).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+    
+        // Log FormData contents for debugging (optional)
+        // console.log('Form Data Contents:');
+        // formData.forEach((value, key) => {
+        //   console.log(`${key}:`, value);
+        // });
+    
+        // Send the FormData to the API
+        this.hbaService.updateHba(formData).subscribe(
+          (response) => {
+            alert(response.message);
+            this.router.navigateByUrl('hba'); // Navigate to the desired route
+          },
+          (error) => {
+            console.error('API Error:', error);
+          }
+        );
+      }
+    }
+    
+
+    // onSubmit(): void {
+    //   this.submitted = true;
+    
+    //   console.log(this.hbaForm.value, this.hbaForm.valid);
+    
+    //   if (this.hbaForm.valid) {
+    //     const formData = new FormData();
+    //     const formValues = this.hbaForm.value;
+    
+    //     // Iterate through the installments
+    //     const formInstallments = formValues.installments;
+    //     formInstallments.forEach((installment: any, index: number) => {
+    //       const currentInstallment = this.installment[index]; // Existing installment data (if any)
+    //       let edited = 'no'; // Default edited value
+    //       console.log(this.installment,currentInstallment ,formValues.totalNumberOfInstallments);
+    //       if (currentInstallment && currentInstallment._id) {
+    //         if ((formValues.totalNumberOfInstallments === 1 || formValues.totalNumberOfInstallments === 16) &&
+    //           (!installment.installmentNumber || !installment.amount || !installment.installmentDate)) {
+    //           edited = 'yes';
+    //         } else {
+    //           // Check if the current installment values match the existing values
+    //           const isEqual =
+    //             installment.installmentNumber === currentInstallment.installmentNumber &&
+    //             installment.amount === currentInstallment.amount &&
+    //             installment.conductRulePermission === currentInstallment.conductRulePermission &&
+    //             installment.installmentDate ===
+    //               new Date(currentInstallment.installmentDate).toISOString().split('T')[0] &&
+    //             (!installment.conductRulePermissionAttachment || // Check for file change
+    //               (typeof installment.conductRulePermissionAttachment === 'string' &&
+    //                 installment.conductRulePermissionAttachment === currentInstallment.conductRulePermissionAttachment));
+    
+    //           edited = isEqual ? 'no' : 'yes';
+    //         }
+    
+    //         // Append the existing `_id` field for the installment
+    //         formData.append(`installments[${index}][_id]`, currentInstallment._id);
+    //       }
+    
+    //       // Append all other fields of the installment to FormData
+    //       formData.append(`installments[${index}][installmentNumber]`, installment.installmentNumber || '');
+    //       formData.append(`installments[${index}][amount]`, installment.amount || '');
+    //       formData.append(`installments[${index}][conductRulePermission]`, installment.conductRulePermission || '');
+    
+    //       // Check if a new file has been uploaded
+    //       const fileInput = document.getElementById(`fileInput-${index}`) as HTMLInputElement;
+    //       if (fileInput && fileInput.files && fileInput.files[0]) {
+    //         formData.append(`installments[${index}][conductRulePermissionAttachment]`, fileInput.files[0]); // New file
+    //         edited = 'yes'; // Mark as edited since a new file was uploaded
+    //       } else {
+    //         // Append existing file path or an empty string
+    //         formData.append(
+    //           `installments[${index}][conductRulePermissionAttachment]`,
+    //           installment.conductRulePermissionAttachment || ''
+    //         );
+    //       }
+    
+    //       formData.append(`installments[${index}][installmentDate]`, installment.installmentDate || '');
+    //       formData.append(`installments[${index}][edited]`, edited); // Add the `edited` field
+    //     });
+    
+    //     // Append other form fields except `installments` and `orderFile`
+    //     Object.keys(formValues).forEach((key) => {
+    //       if (key !== 'installments' && key !== 'orderFile') {
+    //         formData.append(key, formValues[key]);
+    //       }
+    //     });
+    
+    //     // Append `orderFile` if selected
+    //     if (this.selectedFile) {
+    //       formData.append('orderFile', this.selectedFile);
+    //     }
+    
+    //     // Add fixed fields
+    //     const fixedFields = {
+    //       employeeProfileId: this.employeeProfileId,
+    //       departmentId: this.departmentId,
+    //       designationId: this.designationId,
+    //       phone: this.phone,
+    //       module: 'House Building Advance',
+    //       id: this.id,
+    //     };
+    
+    //     Object.entries(fixedFields).forEach(([key, value]) => {
+    //       formData.append(key, value);
+    //     });
+    
+    //     // Send the FormData to the API
+    //     // this.hbaService.updateHba(formData).subscribe(
+    //     //   (response) => {
+    //     //     alert(response.message);
+    //     //     this.router.navigateByUrl('hba'); // Navigate to the desired route
+    //     //   },
+    //     //   (error) => {
+    //     //     console.error('API Error:', error);
+    //     //   }
+    //     // );
+    //   }
+    // }
+    
+    
 }

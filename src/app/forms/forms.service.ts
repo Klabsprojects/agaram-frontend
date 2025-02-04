@@ -752,6 +752,10 @@ export class LeaveTransferService {
     return this.http.get<any>(this.baseUrl+`getHba?_id=${id}`,{headers});
   }
 
+  updateHba(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updateHba',data,{headers});
+  }
 
   getState():Observable<any>{
     const headers = this.getHeaders();

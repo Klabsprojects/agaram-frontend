@@ -33,7 +33,7 @@ export class CreateHbaComponent implements OnInit{
   hbaAvailed:string[]=['Nerkundram Phase - I' , 'Nerkundram Phase - II' , 'Other TNHB Projects / Private'];
   typeOfProperty:string[]=['Ready Build','Construction'];
   existingResidence:string[]=['yes','No'];
-  totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,"Final"];
+  totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
   ifuserlogin = false;
   userdata: any;
 

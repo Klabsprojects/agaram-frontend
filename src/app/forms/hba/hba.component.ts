@@ -23,7 +23,7 @@ export class HbaComponent implements OnInit {
       showApprove:boolean=false;  
       showPopup = true;
       viewHbaData = new viewHbaData();
-
+      installment:any[]=[];
     
       constructor(private router:Router,private hbaService:LeaveTransferService,private datePipe: DatePipe) { }
     
@@ -141,6 +141,12 @@ export class HbaComponent implements OnInit {
           this.hbaService.getHbaId(data).subscribe((res:any)=>{
             res.results.forEach((data:any)=>{
               console.log(res.results);
+              res.results.forEach((data:any)=>{
+                if (data.installments && Array.isArray(data.installments)) {
+                  this.installment.push(...data.installments); // Directly push all installments without checking for non-empty fields
+                  console.log(this.installment);
+                }
+              });
              this.hbaService.getData().subscribe((res: any[]) => {
                res.forEach((item) => {
                  if(item.category_type == "order_type"){

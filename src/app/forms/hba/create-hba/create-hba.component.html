@@ -161,11 +161,26 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Total No. of Installment<span>*</span></label>
                 <div class="col-sm-12">
-                  <select class="form-control" formControlName="totalNumberOfInstallments"
-                  [ngStyle]="{'border-bottom': (submitted && hbaForm.get('totalNumberOfInstallments')?.invalid && hbaForm.get('totalNumberOfInstallments')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
-                      <option value="">Select</option>
-                      <option *ngFor="let totalNumberOfInstallmentsData of totalNumberOfInstallments" [value]="totalNumberOfInstallmentsData">{{totalNumberOfInstallmentsData}}</option>
-                  </select>
+                  <select
+                  class="form-control"
+                  formControlName="totalNumberOfInstallments"
+                  [ngStyle]="{
+                    'border-bottom': (submitted &&
+                      hbaForm.get('totalNumberOfInstallments')?.invalid &&
+                      hbaForm.get('totalNumberOfInstallments')?.errors?.['required'])
+                      ? '1px solid red'
+                      : '1px solid #ccc'
+                  }"
+                >
+                  <option value="">Select</option>
+                  <option
+                    *ngFor="let totalNumberOfInstallmentsData of totalNumberOfInstallments"
+                    [value]="totalNumberOfInstallmentsData"
+                  >
+                    {{ totalNumberOfInstallmentsData === 16 ? 'Final' : totalNumberOfInstallmentsData }}
+                  </option>
+                </select>
+                
                 </div>
                </div>
             </div>
