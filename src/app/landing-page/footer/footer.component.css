@@ -6,14 +6,14 @@
   background: linear-gradient(to bottom, #fffbeb, #fef3c7);
 }
 
-.footer-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 0 12rem;
-  column-gap: 3rem;
-}
 .nav-col{
   padding: 1rem 12rem;
+  display: flex;
+  justify-content: space-between;
+}
+.lower-nav{
+  display: flex;
+  flex-direction: column;
 }
 
 .logo-col {
@@ -31,29 +31,22 @@
   font-size: 1.25rem;
   font-family: serif;
   font-weight: 600;
-  margin-bottom: 1rem;
 }
 
 .lucide{
   color: rgb(180 83 9/var(--tw-text-opacity,1));
 }
 
-.social-links {
-  list-style: none;
-  display: flex;
-  gap: 24px;
-}
-
-.social-icon {
-  height: 24px;
-  width: 24px;
-}
-
-.copyright {
+.copyright,.visitor {
   font-size: .875rem;
   line-height: 1.625;
   color: rgb(75 85 99/var(--tw-text-opacity,1));
   font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+}
+
+.visitor{
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 .copyright-gov{
   display: flex;
@@ -66,31 +59,6 @@
   font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
 }
 
-.footer-heading {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  color: rgb(120 53 15/var(--tw-text-opacity,1));
-  font-family: 'ui-sans-serif','system-ui','sans-serif','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
-}
-
-.contacts {
-  font-style: normal;
-  font-size: 16px;
-  line-height: 16px;
-}
-
-.address {
-  margin-bottom: 24px;
-}
-
-.footer-nav {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .footer-nav-connect{
   list-style: none;
   display: flex;
@@ -98,86 +66,15 @@
 }
 
 .footer-link:link,
-.footer-link:visited,
-.footer-link-contact:link,
-.footer-link-contact:visited,
-.footer-link-connect:link,
-.footer-link-connect:visited {
+.footer-link:visited {
   text-decoration: none;
   font-size: .875rem;
   line-height: 1.25rem;
   color: rgb(75 85 99/var(--tw-text-opacity,1));
   transition: all 0.3s;
 }
-.footer-link-connect:link,
-.footer-link-connect:visited{
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color:rgb(254 243 199/var(--tw-bg-opacity,1));
-}
 
 .footer-link:hover,
 .footer-link:active {
-  /* color: #555; */
-  /* color: rgb(120 53 15/var(--tw-text-opacity,1)); */
   color: #e67e22;
-}
-
-.logo{
-  width: 40% !important;
-}
-
-.has-submenu {
-  position: relative;
-}
-
-.dropdown-icon {
-  margin-left: 0.25rem;
-  transition: transform 0.3s ease;
-}
-
-
-.has-submenu:hover .dropdown-icon {
-  transform: rotate(180deg);
-}
-
-
-.submenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 200px;
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-  z-index: 10;
-  padding: 0.5rem 0;
-}
-
-
-.submenu.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.submenu-link {
-  display: block;
-  padding: 0.5rem 1rem;
-  color: rgb(120 53 15 / var(--tw-text-opacity, 1));
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.submenu-link:hover {
-  background-color: #f3f4f6;
-}
-
-.submenu li {
-  list-style-type: none;
 }

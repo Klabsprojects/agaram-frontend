@@ -267,7 +267,7 @@ strong {
   }
 
   .footer-grid {
-    padding: 1rem 3rem;
+    /* padding: 1rem 3rem; */
   }
   .nav-col{
     padding: 1rem 3rem;
@@ -613,6 +613,9 @@ strong {
   }
   .logo{
     width: 3rem;
+  }
+  .nav-col{
+    flex-direction: column;
   }
 }
 

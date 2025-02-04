@@ -1,121 +1,34 @@
 <footer class="footer">
     <div class="nav-col">
-        <ul class="footer-nav-connect">
-            <li><a class="footer-link" href="" [routerLink]="'Landing/home'">Home </a></li>
-            <!-- <li class="has-submenu" *ngIf="serviceEnable">
-                <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')" (mouseleave)="closeSubmenu('services')">
-                Services
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
-                  stroke="currentColor" stroke-width="2" class="dropdown-icon">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-                </a>
-                <ul class="submenu" 
-                [class.active]="activeSubmenu === 'services'"
-                    (mouseenter)="preventSubmenuClose($event)"
-                    (mouseleave)="closeSubmenu('services')">
-                  <li><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
-                  <li><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
-                  <li><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
-                  <li><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
-                  <li><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
-                </ul>
-              </li> -->
-            <li><a class="footer-link" href="" [routerLink]="'Landing/posting'">Current Postings</a></li>
-            <li><a class="footer-link" href="" [routerLink]="'Landing/transfer'">Transfers</a></li>
-            <li><a class="footer-link" href="" [routerLink]="'Landing/contact'">Contact</a></li>
-        </ul>
-    </div>
-    <div class="footer-grid">
-        <div class="logo-col">
-            <div class="footer-logo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-shield w-6 h-6 text-amber-700">
-                    <path
-                        d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
-                    </path>
-                </svg>
-                <h3>AGARAM</h3>
-            </div>
-
-            <p class="copyright">
-                Empowering governance through digital innovation and administrative excellence in Tamil Nadu.
-            </p>
-
-        </div>
-<!-- 
-        <nav class="nav-col">
-            <p class="footer-heading">Quick Links</p>
-            <ul class="footer-nav">
-                <li><a class="footer-link" href="" [routerLink]="'Landing/home'">Home</a></li>
-                <li class="has-submenu">
-                    <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')" (mouseleave)="closeSubmenu('services')">
-                    Services
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
-                      stroke="currentColor" stroke-width="2" class="dropdown-icon">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    </a>
-                    <ul class="submenu" 
-                    [class.active]="activeSubmenu === 'services'"
-                        (mouseenter)="preventSubmenuClose($event)"
-                        (mouseleave)="closeSubmenu('services')">
-                      <li><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
-                      <li><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
-                      <li><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
-                      <li><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
-                      <li><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
-                    </ul>
-                  </li>
+        <div class="lower-nav">
+            <ul class="footer-nav-connect">
+                <li><a class="footer-link" href="" [routerLink]="'Landing/home'">Home </a></li>
                 <li><a class="footer-link" href="" [routerLink]="'Landing/posting'">Current Postings</a></li>
                 <li><a class="footer-link" href="" [routerLink]="'Landing/transfer'">Transfers</a></li>
                 <li><a class="footer-link" href="" [routerLink]="'Landing/contact'">Contact</a></li>
             </ul>
-        </nav> -->
-
-        <!-- <div class="address-col">
-            <p class="footer-heading">Contact Info</p>
-            <ul class="footer-nav">
-                <li>
-                <a class="footer-link-contact" href="" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4 text-amber-700"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    +91 44 2567 8901
-                </a>
-                </li>
-                <li><a class="footer-link-contact" href="" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4 text-amber-700"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    contact&#64;tn.gov.in
-                    </a>
-                </li>
-                <li><a class="footer-link-contact" href="" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4 text-amber-700"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                    Fort St. George, Chennai
-                </a></li>
-                <li><a class="footer-link-contact" href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe w-4 h-4 text-amber-700"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-                    www.tn.gov.in
-                </a></li>
-            </ul>
-        </div> -->
-
-        <!-- <nav class="nav-col">
-            <p class="footer-heading">Connect With Us</p>
-            <ul class="footer-nav-connect">
-                <li><a class="footer-link-connect" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook w-5 h-5 text-amber-700"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a></li>
-                <li><a class="footer-link-connect" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter w-5 h-5 text-amber-700"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                </a></li>
-                <li><a class="footer-link-connect" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin w-5 h-5 text-amber-700"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a></li>
-                <li><a class="footer-link-connect" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube w-5 h-5 text-amber-700"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
-                </a></li>
-            </ul>
-        </nav> -->
+            <div class="footer-grid">
+                <div class="logo-col">
+                    <div class="footer-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-shield w-6 h-6 text-amber-700">
+                            <path
+                                d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+                            </path>
+                        </svg>
+                        <h3>AGARAM</h3>
+                    </div>
+                    <p class="copyright">
+                        Empowering governance through digital innovation and administrative excellence in Tamil Nadu.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="visitors">
+            <p class="visitor">Visitors: 25066874</p>
+            <p class="visitor">Page last updated on: 04/02/2025</p>
+        </div>
     </div>
     <div class="container">
         <div class="copyright-gov">

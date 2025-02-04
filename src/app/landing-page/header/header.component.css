@@ -53,14 +53,17 @@
   font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
   text-transform: uppercase;
   color: #112A46;
+  line-height: 1;
 }
 
 .prp{
   font-size: 1.125rem;
+  line-height: 1;
 }
 
 .Main-title-sub {
   font-size: 0.875rem;
+  line-height: 1;
 }
 
 .login-list-item {
