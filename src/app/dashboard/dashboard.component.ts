@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
     }
     else {
       // this.showCard  = false;
-      this.showAdvanceSearch = false;
+      // this.showAdvanceSearch = false;
       this.showPeriod = false;
       this.showDesignationDropdown = true;
       this.hideHistory = false;

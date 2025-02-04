@@ -80,11 +80,32 @@
     /* Gradient: from-transparent via-amber-200 to-transparent */
 }
 
+.footer-link-contact:link,
+.footer-link-contact:visited {
+  text-decoration: none;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  color: rgb(75 85 99/var(--tw-text-opacity,1));
+  transition: all 0.3s;
+}
+.footer-nav {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+
 /* Small screen (>=640px) */
 @media (min-width: 640px) {
     .gradient-bar {
         width: 4rem;
         /* 64px */
+    }
+}
+@media(max-width:640px){
+    .footer-nav{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
 

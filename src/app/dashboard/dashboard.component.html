@@ -59,11 +59,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/check.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" (click)="activeOfficers('Active Officers')">
               <p>Active <br><span> ( {{ActiveEmployeeCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="retiredOfficer()">
               <p>Retired <br><span> ( {{RetiredEmployeeCount}} )</span></p>
             </div>
           </div>
@@ -79,11 +79,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/gender.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="maleOfficer()" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" (click)="maleOfficer()">
               <p>Male <br><span> ( {{maleEmployeeCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="femaleOfficer()" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="femaleOfficer()">
               <p>Female <br><span> ( {{femaleEmployeeCount}} )</span></p>
             </div>
           </div>
@@ -98,11 +98,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/location.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" (click)="chennaiOfficer('yes')">
               <p>Chennai <br><span> ( {{chennaiOfficerCount}} )</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideChennai('no')">
               <p>Outside <br><span> ( {{outsideChennaiOfficerCount}} )</span></p>
             </div>
           </div>
@@ -117,11 +117,11 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png"></div>
             </div>
 
-            <div class="col-md-6 float-left" (click)="secretariat('yes')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" (click)="secretariat('yes')">
               <p>Secretariat <br><span> ({{secretariatCount}})</span></p>
             </div>
 
-            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-6 float-left" style="border: 0px;" (click)="outsideSectrtariat('no')">
               <p>Outside <br><span> ({{outsideSecretariatCount}})</span></p>
             </div>
           </div>
@@ -136,19 +136,19 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width: 15%;"></div>
             </div>
 
-            <div class="col-md-3 float-left" (click)="collectors('Collector')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-3 float-left" (click)="collectors('Collector')">
               <p>Collectors <br><span> ({{collectorCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="subCollectors('Sub Collector')">
               <p>Sub -Collectors <br><span> ({{subCollectorCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="asstCollectors('Assistant Collector')">
               <p>Asst Collectors <br><span> ({{asstCollectorsCount}})</span></p>
             </div>
 
-            <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-3 float-left" style="border: 0px;" (click)="additioanlCollector('Additional Collector')">
               <p>Additional <br><span> ({{additionalCollectorCount}})</span></p>
             </div>
           </div>
@@ -161,7 +161,7 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
             </div>
 
-            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')" [class.disabled]="this.role==='Officer'">
+            <div class="col-md-12 float-left" (click)="commissioner('Commissioner')">
               <p>Commissioner <br><span> ({{commissionerCount}})</span></p>
             </div>
           </div>
@@ -174,7 +174,7 @@
               <div class="col-md-7 p-0"> <img src="../../assets/images/secretary.png" style="width:35%;"></div>
             </div>
 
-            <div class="col-md-12 float-left" (click)="dro()" [class.disabled]="this.role==='Officer'" >
+            <div class="col-md-12 float-left" (click)="dro()" >
               <p>DRO <br><span> ({{droCount}})</span></p>
             </div>
           </div>

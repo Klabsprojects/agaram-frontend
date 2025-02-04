@@ -1,3 +1,28 @@
 .small-collapse{
     height:auto !important;
 }
+
+.sidebar .nav .nav-item .nav-link i.menu-arrow{
+    color: #fff;
+}
+.sidebar .nav .nav-item.active > .nav-link .menu-title{
+    color: #fff;
+}
+.sidebar{
+    background-color: #115dbb;
+}
+.navbar .navbar-brand-wrapper{
+    background-color: #115dbb;
+}
+.sidebar .nav .nav-item.active > .nav-link i{
+    color: #fff;
+}
+.active {
+    background-color: #093263;
+}
+.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link{
+    background-color: #093263;
+}
+.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link i{
+    background-color: #093263;
+}

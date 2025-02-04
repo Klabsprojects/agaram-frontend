@@ -239,7 +239,8 @@ strong {
     font-size: 44px;
     /* 4.4rem to px */
   }
-  .main-nav-list{
+
+  .main-nav-list {
     gap: 20px;
   }
 
@@ -265,8 +266,11 @@ strong {
     /* 6.4rem to px */
   }
 
-  .footer-grid{
-    padding: 3rem 3rem;
+  .footer-grid {
+    padding: 1rem 3rem;
+  }
+  .nav-col{
+    padding: 1rem 3rem;
   }
 
   .heading-secondary {
@@ -324,8 +328,9 @@ strong {
     gap: 64px;
     /* 6.4rem to px */
   }
-  .footer-grid{
-    grid-template-columns: repeat(2,1fr);
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
     row-gap: 2rem;
   }
 
@@ -387,20 +392,20 @@ strong {
     z-index: 9999;
   }
 
-  .top-header{
-    padding: 0 32px;
+  .top-header {
+    padding: 1rem 32px;
   }
 
-  .main-nav-top{
+  .main-nav-top {
     display: none;
   }
 
-  .lower-header{
+  .lower-header {
     display: none;
   }
 
-  .login-list-item{
-    display:block ;
+  .login-list-item {
+    display: block;
   }
 
   .main-nav {
@@ -426,7 +431,12 @@ strong {
     padding: 2rem 0;
   }
 
-  .nav-open .lower-header{
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    color: #78350f;
+  }
+
+  .nav-open .lower-header {
     display: block;
   }
 
@@ -458,15 +468,17 @@ strong {
     /* 3rem to px */
   }
 }
+
 /**************************/
 /* BELOW 769px (actual tablets) */
 /**************************/
 @media (max-width: 49em) {
-  .grid--footer{
+  .grid--footer {
     padding: 3rem 1rem;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
+
 /**************************/
 
 /**************************/
@@ -474,6 +486,7 @@ strong {
 /**************************/
 
 @media (max-width: 44em) {
+
   .grid--3-cols,
   .grid--4-cols {
     grid-template-columns: repeat(2, 1fr);
@@ -577,15 +590,29 @@ strong {
     /* 32rem to px */
     grid-row: 1;
   }
-  .footer-grid{
+
+  .footer-grid {
     grid-template-columns: 1fr;
   }
-  .top-header{
+
+  .top-header {
     padding: 20px 20px;
     height: auto;
   }
-  .Main-title,.prp{
+
+  .Main-title{
+    font-size: 1.5rem;
+  }
+  .prp {
     font-size: 1rem;
+    text-align: center;
+  }
+  .Main-title-sub{
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .logo{
+    width: 3rem;
   }
 }
 

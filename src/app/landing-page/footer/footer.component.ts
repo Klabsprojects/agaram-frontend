@@ -9,6 +9,10 @@ export class FooterComponent {
   activeSubmenu: string | null = null;
   submenuTimeout: any;
   menu = false;
+  serviceEnable:any
+  ngOnInit(): void {
+    this.serviceEnable = localStorage.getItem('loginAs');
+  }
   toggle(){
     this.menu = !this.menu;
   }
