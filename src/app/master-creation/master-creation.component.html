@@ -308,20 +308,36 @@
                 <th>#</th>
                 <th>Posting In</th>
                 <th>Code</th>
+                <th>Action</th>
               </thead>
               <tbody>
                 <tr *ngFor="let postingData of postingin; let i = index">
-                  <td>{{i+1}}</td>
-                  <td>{{postingData.category_name}}</td>
-                  <td>{{postingData.category_code}}</td>
+                  <td>{{ i + 1 }}</td>
+                  <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_name }}</td>
+                  <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_code }}</td>
+                  
+                  <td *ngIf="editing && editingId === postingData._id">
+                    <input  class="form-control" type="text" />
+                  </td>
+                  <td *ngIf="editing && editingId === postingData._id">
+                    <input  class="form-control" type="text" />
+                  </td>
+              
+                  <td class="text-center">
+                    <button *ngIf="!editing || editingId !== postingData._id" type="button" class="btn btn-info btn-sm btn-icon-text" 
+                    style="font-size: 13px;" (click)="editPosting(postingData._id)">Edit</button>
+              
+                    <button *ngIf="editing && editingId === postingData._id"  type="button" class="btn btn-primary mr-2 btn-sm btn-icon-text" 
+                    style="font-size: 13px;">Update</button>
+                    <button *ngIf="editing && editingId === postingData._id"  type="button" class="btn btn-light btn-sm btn-icon-text" 
+                    style="font-size: 13px;">Cancel</button>
+                  </td>
                 </tr>
                 <tr *ngIf="postingin.length === 0">
                   <td colspan="3">No data available</td>
                 </tr>
               </tbody>
             </table>
-            
-       
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>

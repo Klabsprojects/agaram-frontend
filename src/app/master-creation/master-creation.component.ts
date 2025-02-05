@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LeaveTransferService } from '../forms/forms.service';
 
 
@@ -10,6 +10,7 @@ import { LeaveTransferService } from '../forms/forms.service';
 })
 export class MasterCreationComponent implements OnInit {
   postingInForm!:FormGroup;
+  postingInUpdateForm!:FormGroup;
   departmentForm!:FormGroup;
   designationForm!:FormGroup;
   degreeForm!:FormGroup;
@@ -34,6 +35,10 @@ export class MasterCreationComponent implements OnInit {
   masterData:any[]=[];
   showAdd:boolean=false;
   showView:boolean=false;
+  editing = false;
+  editingId: number | null = null;
+  editingCategoryName: string = '';
+  editingCategoryCode: string = '';
 
   constructor(private fb:FormBuilder, private masterAction:LeaveTransferService,private ElementRef:ElementRef) { }
 
@@ -47,6 +52,11 @@ export class MasterCreationComponent implements OnInit {
     })
 
     this.postingInForm = this.fb.group({
+      title:['',Validators.required],
+      code:['',Validators.required]
+    });
+
+    this.postingInUpdateForm = this.fb.group({
       title:['',Validators.required],
       code:['',Validators.required]
     });
@@ -132,6 +142,11 @@ export class MasterCreationComponent implements OnInit {
     });
   }
 
+  editPosting(id: any) {
+    this.editing = true;
+    this.editingId = id;
+  }
+
   viewDepartment(){
     this.masterAction.getDepartmentData().subscribe((res:any[]) => {
       this.department = res;
@@ -185,6 +200,10 @@ export class MasterCreationComponent implements OnInit {
     this.masterCreationForm.reset();
   }
   
+  onPostingUpdate(){
+    // this.submitted = true;
+    console.log(this.postingInUpdateForm.value);
+  }
 
   onPostingSubmit(){
     this.submitted = true;

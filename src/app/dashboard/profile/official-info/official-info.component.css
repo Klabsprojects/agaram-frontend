@@ -100,7 +100,9 @@ h6{
 .btn:hover{
     text-decoration: none;
 }
-
+a:hover{
+    text-decoration: none;
+}
 .card-xs{
     margin-top:0px;
 }

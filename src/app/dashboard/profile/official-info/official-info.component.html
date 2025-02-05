@@ -894,9 +894,15 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-saf-games-village"
+                    <!-- <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      Apply</button> -->
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      <a href="assets/document/saf.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-saf-games-village"
                       (click)="hideModal('SAF')">Add
                       SAF</button>
+
+
                     <div *ngIf="SAF_data.length > 0; else noPreviousDetails">
                       <div class="table-responsive">
                         <table id="table-to-export"
@@ -1027,6 +1033,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      <a href="assets/document/medical-reimbursement.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1"
                       routerLink="/create-medical-reimbursement" (click)="hideModal('medical')">Add
                       Medical</button>
@@ -1299,6 +1307,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      <a href="assets/document/education.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-education"
                       (click)="hideModal('education')">Add
                       Education</button>
@@ -1425,6 +1435,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      <a href="assets/document/hba.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-hba"
                       (click)="hideModal('hba')">Add HBA</button>
                     <div *ngIf="hba.length > 0; else noPreviousDetails">
@@ -1538,6 +1550,8 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
+                      <a href="assets/document/gpf.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-gpf"
                       (click)="hideModal('gpf')">Add GPF</button>
                     <div *ngIf="gpf.length > 0; else noPreviousDetails">
