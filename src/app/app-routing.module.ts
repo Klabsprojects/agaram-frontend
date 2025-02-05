@@ -24,6 +24,8 @@ import { UtilityformsComponentlanding } from './landing-page/components/service-
 import { OfficialInfoComponent } from './dashboard/profile/official-info/official-info.component';
 import { BirthdaysComponent } from './landing-page/components/birthdays/birthdays.component';
 import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
+import { ActiveOfficersComponent } from './landing-page/components/home/active-officers/active-officers.component';
+import { RetiredOfficersComponent } from './landing-page/components/home/retired-officers/retired-officers.component';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -31,7 +33,8 @@ const routes: Routes = [
     {path:'honour',component:HonourComponent},
     {path:'transfer',component:TransferComponent},
     {path:'posting',component:CurrentPostingComponent},
-    // {path:'service',component:ServicesLnComponent},
+    {path:'ActiveOfficers',component:ActiveOfficersComponent},
+    {path:'RetiredOfficers',component:RetiredOfficersComponent},
     {path:'contact',component:ContactComponent},
     {path:'actnrulz',component:ActrulesComponentLanding,canActivate: [AuthGuard]},
     {path:'circular-landing',component:CircularsComponentlanding,canActivate: [AuthGuard]},

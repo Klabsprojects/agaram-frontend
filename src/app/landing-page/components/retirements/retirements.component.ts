@@ -25,6 +25,7 @@ export class RetirementsComponent implements OnInit {
           this.retirementPersons = res.results.map((employee: any) => {
             return {
               name: employee.fullName,
+              date: employee.dateOfRetirement,
               department: this.departments.find((d: any) => d._id === employee.toDepartmentId)?.department_name || '',
               designation: this.designations.find((d: any) => d._id === employee.toDesignationId)?.designation_name || '',
               location: employee.city,

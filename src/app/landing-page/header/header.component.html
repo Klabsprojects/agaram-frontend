@@ -2,11 +2,11 @@
   <div class="top-header">
     <div class="brandDiv">
       <a href="#">
-        <img class="logo" alt="Omnifood logo" src="../../../assets/images/logo.png" />
+        <img class="logo" alt="tn gov logo" src="../../../assets/images/TamilNadu_Logo.svg.png" />
       </a>
       <div class="title-header">
         <p class="Main-title">Agaram</p>
-        <p class="prp">Public & Rehabilation Portal</p>
+        <p class="prp">Public & Rehabilation Department</p>
         <p class="Main-title-sub">Government of Tamil Nadu</p>
       </div>
       <nav class="main-nav-top">
@@ -83,7 +83,7 @@
             Current Year Retirements
           </a>
         </li>
-        <li (click)="toggle()">
+        <!-- <li (click)="toggle()">
           <a class="main-nav-link" [routerLink]="'Landing/transfer'">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -95,7 +95,7 @@
             </svg>
             Transfer
           </a>
-        </li>
+        </li> -->
         <li (click)="toggle()">
           <a class="main-nav-link" [routerLink]="'Landing/posting'">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -107,8 +107,8 @@
             Current Posting
           </a>
         </li>
-  
-        <li class="has-submenu" *ngIf="serviceEnable" (click)="toggle()">
+
+        <!-- <li class="has-submenu" *ngIf="serviceEnable" (click)="toggle()">
           <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')"
             (mouseleave)="closeSubmenu('services')">
             Services
@@ -121,12 +121,26 @@
             (mouseleave)="closeSubmenu('services')">
             <li (click)="toggle()"><a [routerLink]="'Landing/circular-landing'" class="submenu-link">Circulars</a></li>
             <li (click)="toggle()"><a [routerLink]="'Landing/actnrulz'" class="submenu-link">Acts & Rules</a></li>
-            <li (click)="toggle()"><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a></li>
+            <li (click)="toggle()"><a [routerLink]="'Landing/utility-landing'" class="submenu-link">Utility Form</a>
+            </li>
             <li (click)="toggle()"><a [routerLink]="'Landing/faq-landing'" class="submenu-link">FAQs</a></li>
             <li (click)="toggle()"><a [routerLink]="'Landing/honour'" class="submenu-link">Role of Honour</a></li>
           </ul>
+        </li> -->
+        <li (click)="toggle()">
+          <a class="main-nav-link" [routerLink]="'Landing/circular-landing'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-refresh-cw w-4 h-4">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <path d="M21 3v5h-5"></path>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <path d="M8 16H3v5"></path>
+            </svg>
+            Circulars
+          </a>
         </li>
-  
+
         <li (click)="toggle()">
           <a class="main-nav-link" [routerLink]="'Landing/contact'">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"

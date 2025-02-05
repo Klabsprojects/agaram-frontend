@@ -54,6 +54,10 @@ import { BirthdaysComponent } from './landing-page/components/birthdays/birthday
 import { PersonBirthdayComponent } from './landing-page/components/birthdays/person-birthday/person-birthday.component';
 import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
 import { PersonRetirementComponent } from './landing-page/components/retirements/person-retirement/person-retirement.component';
+import { ActiveOfficersComponent } from './landing-page/components/home/active-officers/active-officers.component';
+import { ActiveOfficersDetailComponent } from './landing-page/components/home/active-officers/active-officers-detail/active-officers-detail.component';
+import { RetiredOfficersComponent } from './landing-page/components/home/retired-officers/retired-officers.component';
+import { RetiredOfficersDetailComponent } from './landing-page/components/home/retired-officers/retired-officers-detail/retired-officers-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,7 +105,11 @@ import { PersonRetirementComponent } from './landing-page/components/retirements
     BirthdaysComponent,
     PersonBirthdayComponent,
     RetirementsComponent,
-    PersonRetirementComponent
+    PersonRetirementComponent,
+    ActiveOfficersComponent,
+    ActiveOfficersDetailComponent,
+    RetiredOfficersComponent,
+    RetiredOfficersDetailComponent
   ],
   imports: [
     BrowserModule,
