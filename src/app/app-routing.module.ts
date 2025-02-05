@@ -37,7 +37,7 @@ const routes: Routes = [
     {path:'RetiredOfficers',component:RetiredOfficersComponent},
     {path:'contact',component:ContactComponent},
     {path:'actnrulz',component:ActrulesComponentLanding,canActivate: [AuthGuard]},
-    {path:'circular-landing',component:CircularsComponentlanding,canActivate: [AuthGuard]},
+    {path:'circular-landing',component:CircularsComponentlanding},
     {path:'faq-landing',component:FaqComponentlanding,canActivate: [AuthGuard]},
     {path:'utility-landing',component:UtilityformsComponentlanding,canActivate: [AuthGuard]},
     {path:'birthday',component:BirthdaysComponent},

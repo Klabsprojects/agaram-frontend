@@ -6,7 +6,22 @@
 }
 .outer{
     background: linear-gradient(to right, #fffbeb, #fef3c7) !important;
+    /* background-image: url('/assets/images/sectratiate.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
     float: left;
     width: 100%;
-    padding-bottom: 200px;
+    /* padding-bottom: 200px; */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+.logo span{
+    padding: 0;
 }

@@ -59,11 +59,13 @@
 .prp{
   font-size: 1.125rem;
   line-height: 1;
+  text-transform: none;
 }
 
 .Main-title-sub {
   font-size: 0.875rem;
   line-height: 1;
+  text-transform: none;
 }
 
 .login-list-item {
