@@ -1,6 +1,7 @@
 .honour {
     background: linear-gradient(to bottom, #fffbeb, #fffbeb);
-    padding: 1rem;
+    padding: 1rem 0;
+    padding-top: 0;
 }
 
 .containerhonour{

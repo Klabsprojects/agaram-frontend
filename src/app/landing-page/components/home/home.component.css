@@ -1,7 +1,7 @@
 .home {
     background: linear-gradient(to bottom, #fffbeb, #fffbeb);
-    padding: 1rem;
-    padding-top: 3rem;
+    padding: 1rem 0rem;
+    padding-top: 0;
 }
 
 .containerhome{
