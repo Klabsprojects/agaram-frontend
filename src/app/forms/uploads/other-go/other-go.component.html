@@ -1,7 +1,7 @@
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
-            <h5>Other Type G.Os Upload <button type="button" class="btn btn-success btn-add float-right p-2" (click)="create()">Add New</button></h5>
+            <h5>Other Type G.Os Upload <button type="button" class="btn btn-success btn-add float-right p-2" (click)="create()" *ngIf="showEdit">Add New</button></h5>
 
             <div class="col-md-12 p-0 mt-2">
                 <div class="col-md-3 px-0 mt-2 mb-0">
@@ -30,9 +30,9 @@
                                 <td>{{data.GoDate | date:'dd/MM/YYYY'}}</td>
                                 <td>{{ data.GoDescription}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)">Edit</button>
+                                    <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)" *ngIf="showEdit">Edit</button>
                                     <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;" (click)="view(data.GoFile)">View</button>
-                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)">Delete</button>
+                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)" *ngIf="showEdit">Delete</button>
                                 </td>
                             </tr>
                         </ng-container>

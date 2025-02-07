@@ -149,8 +149,10 @@
 
       <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="ui-basic">
-        <i class="typcn typcn-upload-outline menu-icon"></i>
-        <span class="menu-title">Uploads</span>
+        <i class="typcn typcn-upload-outline menu-icon" *ngIf="roleName!=='Officer'"></i>
+        <i class="typcn typcn-download-outline menu-icon" *ngIf="roleName==='Officer'"></i>
+        <span class="menu-title" *ngIf="roleName!=='Officer'">Uploads</span>
+        <span class="menu-title" *ngIf="roleName==='Officer'">Downloads</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="upload">
