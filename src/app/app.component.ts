@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { ApiLoadingService } from './landing-page/landing-services/loading.serivce';
 import { filter } from 'rxjs';
 
 @Component({
@@ -14,8 +15,9 @@ export class AppComponent {
   showLogin:boolean = false;
   showRegister:boolean = false;
   showLanding:boolean = true;
+  loading$ = this.apiloading.loading$;
   
-  constructor(private router:Router){}
+  constructor(private router:Router, private apiloading:ApiLoadingService){}
 
   ngOnInit(){
     this.router.events

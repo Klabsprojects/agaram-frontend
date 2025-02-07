@@ -24410,8 +24410,8 @@ div.tagsinput span.tag a {
 }
 
 .navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper {
-  margin-right: 1.3rem;
-  margin-left: 1.8rem;
+  /* margin-right: 1.3rem; */
+  /* margin-left: 1.8rem; */
 }
 
 .navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper .navbar-brand {

@@ -32,4 +32,7 @@
 <button class="scroll-to-top" (click)="scrollToTop()" *ngIf="showScroll">
   &#8679;
 </button>
+<div *ngIf="loading$ | async" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
 

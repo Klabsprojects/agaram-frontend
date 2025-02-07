@@ -26,6 +26,8 @@ import { BirthdaysComponent } from './landing-page/components/birthdays/birthday
 import { RetirementsComponent } from './landing-page/components/retirements/retirements.component';
 import { ActiveOfficersComponent } from './landing-page/components/home/active-officers/active-officers.component';
 import { RetiredOfficersComponent } from './landing-page/components/home/retired-officers/retired-officers.component';
+import { ApiLoaderInterceptor } from './landing-page/landing-services/api-loader.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 const routes: Routes = [
   {path:'Landing',component:LandingPageComponent,children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -93,6 +95,9 @@ const routes: Routes = [
         ReactiveFormsModule,
         FormsModule,
         SharedModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiLoaderInterceptor, multi: true }
   ],
   exports: [RouterModule]
 })

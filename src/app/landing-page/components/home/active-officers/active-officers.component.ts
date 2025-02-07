@@ -61,8 +61,9 @@ export class ActiveOfficersComponent {
               designation: this.designations.find((d: any) => d._id === employee.toDesignationId)?.designation_name || '',
               dateOfJoining : employee.dateOfJoining,
               location: employee.city,
-              address:employee.addressLine,
-              officeEmail:employee.officeEmail
+              address:employee.Departmentdetails.address,
+              officeEmail:employee.officeEmail,
+              imagePath:employee.imagePath
             };
           });
           this.currentPostingStatic = structuredClone(this.currentPosting);
