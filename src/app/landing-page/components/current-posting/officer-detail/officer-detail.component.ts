@@ -8,6 +8,6 @@ import { LeaveTransferService } from '../../../../forms/forms.service';
 export class OfficerDetailComponent {
   constructor(private service:LeaveTransferService){}
 @Input() data!:any;
-placeHolderPath:string='';
+placeHolderPath:string='assets/images/ias/noprofile.jpg';
 url = this.service.fileUrl + 'profileImages/';
 }

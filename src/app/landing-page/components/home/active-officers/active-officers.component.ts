@@ -62,7 +62,8 @@ export class ActiveOfficersComponent {
               dateOfJoining : employee.dateOfJoining,
               location: employee.city,
               address:employee.addressLine,
-              officeEmail:employee.officeEmail
+              officeEmail:employee.officeEmail,
+              imagePath:employee.imagePath
             };
           });
           this.currentPostingStatic = structuredClone(this.currentPosting);

@@ -1,7 +1,7 @@
 <div class="profile-card">
     <div class="profile-content row">
         <!-- First Section -->
-        <div class="profile-section1 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="profile-section1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="icon-box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                     <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -22,7 +22,7 @@
         </div>
 
         <!-- Second Section -->
-        <div class="profile-section2 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="profile-section2 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="icon-box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                     <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
@@ -56,7 +56,7 @@
         </div>
 
         <!-- Third Section -->
-        <div class="profile-section3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="profile-section3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="icon-box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                     <path d="M8 2v4"></path>
@@ -69,6 +69,11 @@
                 <h4 class="date-title">Date of Joining</h4>
                 <p class="date">{{data.dateOfJoining | date: 'dd-MMM-yyyy'}}</p>
             </div>
+        </div>
+
+        <div class="profile-section3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <img src="{{placeHolderPath}}" alt="" width="125px" *ngIf="!data.imagePath">
+            <img src="{{url+data.imagePath}}" alt="" width="125px" *ngIf="data.imagePath">
         </div>
     </div>
 </div>
