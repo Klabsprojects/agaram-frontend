@@ -41,6 +41,7 @@
   /* background: linear-gradient(to right, #fffbeb, #fef3c7); */
   background-color: #112A46;
   padding: 0.5rem 138px;
+  border-bottom: none;
   /* background-color: #115dbb; */
 }
 
