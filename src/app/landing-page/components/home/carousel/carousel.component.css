@@ -23,3 +23,9 @@
     color: #fff;
     text-decoration: none;
 }
+
+@media(max-width:769px){
+    .lower-header{
+        padding: 0.5rem 20px;
+    }
+}
