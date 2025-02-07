@@ -90,6 +90,35 @@ export class OtherGoComponent {
     this.pageSize = size;
     this.currentPage = 1;
   }
+  download(data: any) {
+    const pdfUrl = `${this.url}${data}`;
+    fetch(pdfUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();  // Convert to Blob
+      })
+      .then(blob => {
+        const blobUrl = window.URL.createObjectURL(blob);
+  
+        // Create an anchor element
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'file.pdf';  // You can customize the filename here
+        
+        // Append to the DOM and trigger click
+        document.body.appendChild(link);
+        link.click();
+        
+        // Cleanup
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);  // Free up memory
+      })
+      .catch(error => {
+        console.error('Error downloading the PDF:', error);
+      });
+  }
 
   updateVisiblePages() {
     const maxVisiblePages = this.maxVisiblePages;

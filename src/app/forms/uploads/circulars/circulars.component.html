@@ -32,6 +32,7 @@
                                 <td class="text-center">
                                     <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)" *ngIf="showEdit">Edit</button>
                                     <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;" (click)="view(data.CircularFile)"  *ngIf="showView">View</button>
+                                    <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;" (click)="download(data.CircularFile)" *ngIf="showView">Download</button>
                                     <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)" *ngIf="showEdit">Delete</button>
                                 </td>
                             </tr>
