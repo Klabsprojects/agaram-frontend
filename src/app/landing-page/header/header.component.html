@@ -1,13 +1,19 @@
 <header class="header" [ngClass]="{'nav-open':menu}">
   <div class="top-header">
-    <div class="brandDiv">
-      <a href="#">
-        <img class="logo" alt="tn gov logo" src="../../../assets/images/TamilNadu_Logo.svg.png" />
-      </a>
-      <div class="title-header">
-        <p class="Main-title">Agaram</p>
-        <p class="prp">Public & Rehabilation Department</p>
-        <p class="Main-title-sub">Government of Tamil Nadu</p>
+    <div class="web-nav">
+      <div class="brandDiv">
+        <a href="#">
+          <img class="logo" alt="tn gov logo" src="../../../assets/images/TamilNadu_Logo.svg.png" />
+        </a>
+        <div class="title-header">
+          <p class="Main-title">Agaram</p>
+          <p class="prp">Public & Rehabilation Department</p>
+          <p class="Main-title-sub">Government of Tamil Nadu</p>
+        </div>
+      </div>
+      <div class="headers">
+        <h1 class="heading">Tamil Nadu Indian Administrative Officers Portal</h1>
+        <p class="sub-title">Pioneering Digital Governance | Empowering Administration | Serving Excellence</p>
       </div>
       <nav class="main-nav-top">
         <ul class="main-nav-list">
@@ -39,6 +45,10 @@
         <i class="mdi mdi-menu icon-mobile-nav" name="menu-outline" (click)="toggle()"></i>
         <i class="mdi mdi-close icon-mobile-nav" name="close-outline" (click)="toggle()"></i>
       </button>
+    </div>
+    <div class="headers-tab">
+      <h1 class="heading">Tamil Nadu Indian Administrative Officers Portal</h1>
+      <p class="sub-title">Pioneering Digital Governance | Empowering Administration | Serving Excellence</p>
     </div>
   </div>
   <div class="lower-header">
@@ -152,6 +162,26 @@
             </svg>
             Contact
           </a>
+        </li>
+        <li class="has-submenu" (click)="toggle()">
+          <a class="main-nav-link" href="#" (mouseenter)="toggleSubmenu('services')"
+            (mouseleave)="closeSubmenu('services')">
+            Links
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" class="dropdown-icon">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul class="submenu" [class.active]="activeSubmenu === 'services'" (mouseenter)="preventSubmenuClose($event)"
+            (mouseleave)="closeSubmenu('services')">
+            <li (click)="toggle()"><a href="https://www.india.gov.in/" target="_blank" class="submenu-link">National Portal of India</a></li>
+            <li (click)="toggle()"><a href="http://www.tn.gov.in/" target="_blank" class="submenu-link">Government of Tamil Nadu</a></li>
+            <li (click)="toggle()"><a href="http://intraias.nic.in/" target="_blank" class="submenu-link">Indian Administrative Service</a></li>
+            <li (click)="toggle()"><a href="https://dopt.gov.in/" target="_blank" class="submenu-link">DOPT</a></li>
+            <li (click)="toggle()"><a href="https://sparrow.eoffice.gov.in/SPARROW/LoginPage#no-back-button" target="_blank" class="submenu-link">SPARROW (eAPAR)</a></li>
+            <li (click)="toggle()"><a href="https://iasmess.tn.gov.in/" target="_blank" class="submenu-link">IAS Officers Mess</a></li>
+            <li (click)="toggle()"><a href="https://sgh.tn.gov.in/" target="_blank" class="submenu-link">State Guest House</a></li>
+          </ul>
         </li>
         <li class="login-list-item" (click)="toggle()">
           <a class="main-nav-link nav-cta" href="#" [routerLink]="'/login'" *ngIf="!serviceEnable">

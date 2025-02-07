@@ -1,7 +1,7 @@
 /**************************/
 /* HEADER */
 /**************************/
-
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap');
 :root {
   --gradient-start: #fffbeb;
   --gradient-end: #fef3c7;
@@ -13,13 +13,18 @@
   justify-content: space-between;
   align-items: center;
   /* height: 120px; */
-  padding: 1rem 138px;
+  padding: 1rem 20px;
   position: relative;
   border-bottom: 1px solid #fde68a;
 }
 
+.web-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .top-header {
-  justify-content: center;
   align-items: center;
   background: linear-gradient(to right, #fffbeb, #fef3c7);
 }
@@ -27,8 +32,8 @@
 .title-header {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  align-items:flex-start;
+  gap: 0.7rem;
 }
 
 .lower-header {
@@ -47,23 +52,24 @@
 .Main-title,
 .Main-title-sub,
 .prp {
-  font-size: 3rem;
+  font-size: 1.8rem;
   color: rgb(120 53 15/var(--tw-text-opacity, 1));
   font-weight: 500;
-  font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
-  text-transform: uppercase;
+  /* font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif'; */
+  font-family: 'Poppins', sans-serif;
+  /* text-transform: uppercase; */
   color: #112A46;
   line-height: 1;
 }
 
-.prp{
-  font-size: 1.125rem;
+.prp,.Main-title-sub{
+  font-size: 1.1rem;
   line-height: 1;
   text-transform: none;
 }
 
 .Main-title-sub {
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1;
   text-transform: none;
 }
@@ -74,7 +80,7 @@
 
 .brandDiv {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 1.25rem;
 }
@@ -235,4 +241,34 @@
 
 .submenu li {
   list-style-type: none;
+}
+
+.headers {
+  display: block;
+  /* text-align: center; */
+  /* margin-left: 3rem; */
+}
+.headers-tab{
+  display: none;
+}
+
+.heading {
+  color: rgb(120 53 15 / var(--tw-text-opacity, 1));
+  font-size: 1.8rem;
+  line-height: 1;
+  font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
+  margin-bottom: 0.5rem;
+}
+
+.sub-title {
+  color: rgb(75 85 99/var(--tw-text-opacity, 1));
+  font-weight: 500;
+  font-size: 1rem;
+  /* line-height: 1.75rem; */
+  font-family: 'ui-sans-serif', 'system-ui', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+@media(max-width:1025px){
+  .headers {
+    margin-left: 0;
+  }
 }
