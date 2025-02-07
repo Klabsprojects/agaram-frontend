@@ -1,6 +1,6 @@
 <section class="home">
     <div class="row mb-5">
-        <app-carousel/>
+        <app-carousel />
     </div>
     <div class="containerhome">
         <!-- <div class="header">
@@ -16,11 +16,27 @@
             </div>
         </div>
         <div class="row mb-5">
-            <div class="col-xl-6 col-lg-6 col-md-12 mb-2"><app-announcements-updates [updatedetails]="announcements" [title]="'Important Announcements'" /></div>
-            <div class="col-xl-6 col-lg-6 col-md-12"><app-officials/></div>
+            <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <app-announcements-updates [updatedetails]="announcements" [title]="'Important Announcements'" />
+                <div class="thirukural-div">
+                    <div class="scroll-content">
+                        <p style="font-size:12px;font-weight:bold;color:#4b5563;font-family:sans-serif;">
+                            இதனை இதனால் இவன்முடிக்கும் என்றாய்ந்து 
+                            அதனை அவன்கண் விடல்
+                        </p>
+                        <img src="assets/images/thiru.png" alt="" height="100px">
+                        <p style="font-size:12px;font-weight:bold;color:#4b5563;font-family:sans-serif;">
+                            This deed, by these means, if he can perform 
+                            Test him; if convinced, assign it to him.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12"><app-officials /></div>
             <!-- <div class="col-xl-6 col-lg-6 col-md-6"><app-announcements-updates [updatedetails]="updates" [title]="'Latest Updates'" /></div> -->
         </div>
-    
+
         <!-- <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-4 mb-2"><app-overview-card [title]="'Priority Initiatives'" [details]="overview[0]" /></div>
             <div class="col-xl-4 col-lg-4 col-md-4 mb-2"><app-overview-card [title]="'Recent Achievements'" [details]="overview[1]" /></div>
