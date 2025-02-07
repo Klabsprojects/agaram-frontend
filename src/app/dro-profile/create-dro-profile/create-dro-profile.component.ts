@@ -1,17 +1,16 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LeaveTransferService } from '../../forms/forms.service';
-import { isPlatformBrowser } from '@angular/common';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-officer-profile',
-  templateUrl: './officer-profile.component.html',
-  styleUrls: ['./officer-profile.component.css']
+  selector: 'app-create-dro-profile',
+  templateUrl: './create-dro-profile.component.html',
+  styleUrl: './create-dro-profile.component.css'
 })
-export class OfficerProfileComponent implements OnInit {
-  officerForm!: FormGroup;
+export class CreateDroProfileComponent implements OnInit{
+droForm!: FormGroup;
   submitted: boolean = false;
   gender: any[] = [];
   state: any[] = [];
@@ -44,14 +43,14 @@ export class OfficerProfileComponent implements OnInit {
   setValues:boolean=false;
   showPosting:boolean=false;
   servingtype: string = '';
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private fb: FormBuilder, private officerAction: LeaveTransferService, private router: Router, private route: ActivatedRoute) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private fb: FormBuilder, private droAction: LeaveTransferService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.submittedBy = localStorage.getItem('loginId');
       console.log(this.submittedBy);
     }
-    this.officerForm = this.fb.group({
+    this.droForm = this.fb.group({
       employeeId: [''],
       ifhrmsId: [''],
       fullName: ['', Validators.required],
@@ -96,13 +95,13 @@ export class OfficerProfileComponent implements OnInit {
       serving:['']
     });
 
-    this.officerAction.getDegree().subscribe((res: any) => {
+    this.droAction.getDegree().subscribe((res: any) => {
       res.results.forEach((data: any) => {
         this.degree.push({ label: data.degree_name, value: data._id });
       });
     })
 
-    this.officerAction.getData().subscribe((res: any[]) => {
+    this.droAction.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
         switch (item.category_type) {
           case "gender":
@@ -151,10 +150,10 @@ export class OfficerProfileComponent implements OnInit {
 
   getDepartment(event: any) {
     this.department = [];
-    this.officerAction.getData().subscribe((res: any[]) => {
+    this.droAction.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
         if (event.target.value == item._id) {
-          this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+          this.droAction.getDepartmentData().subscribe((res: any[]) => {
             res.filter((data: any) => {
               if (item.category_code == data.category_code) {
                 this.department.push({ label: data.department_name, value: data._id });
@@ -169,13 +168,13 @@ export class OfficerProfileComponent implements OnInit {
   getDesignation(event: any) {
     const input = event.target as HTMLSelectElement; 
     const selectedOptionText = input.options[input.selectedIndex].text;
-    this.officerForm.get('department_name')?.setValue(selectedOptionText);
+    this.droForm.get('department_name')?.setValue(selectedOptionText);
     console.log(selectedOptionText);
     this.designation = [];
-    this.officerAction.getDepartmentData().subscribe((res: any[]) => {
+    this.droAction.getDepartmentData().subscribe((res: any[]) => {
       res.forEach((item) => {
         if (event.target.value == item._id) {
-          this.officerAction.getDesignations().subscribe((res: any) => {
+          this.droAction.getDesignations().subscribe((res: any) => {
             res.results.filter((data: any) => {
               if (item.category_code == data.category_code) {
                 this.designation.push({ label: data.designation_name, value: data._id });
@@ -184,12 +183,12 @@ export class OfficerProfileComponent implements OnInit {
           })
 
           // Get Address Details
-          this.officerForm.get('deptAddress')?.setValue(item.address || '');
-          this.officerForm.get('deptFaxNumber')?.setValue(item.faxNumber || '');
-          this.officerForm.get('deptOfficialMobileNo')?.setValue(item.officialMobileNo || '');
-          this.officerForm.get('deptPhoneNumber')?.setValue(item.phoneNumber || '');
+          this.droForm.get('deptAddress')?.setValue(item.address || '');
+          this.droForm.get('deptFaxNumber')?.setValue(item.faxNumber || '');
+          this.droForm.get('deptOfficialMobileNo')?.setValue(item.officialMobileNo || '');
+          this.droForm.get('deptPhoneNumber')?.setValue(item.phoneNumber || '');
           const isFilled = item.address || item.faxNumber || item.phoneNumber || item.officialMobileNo;
-          this.officerForm.get('department')?.setValue(isFilled ? 'No' : 'yes');
+          this.droForm.get('department')?.setValue(isFilled ? 'No' : 'yes');
           this.setValues = isFilled;
 
         }
@@ -201,68 +200,68 @@ export class OfficerProfileComponent implements OnInit {
 
 
   get rowsFormArray() {
-    return this.officerForm.get('rows') as FormArray;
+    return this.droForm.get('rows') as FormArray;
   }
 
   addEducation() {
     this.showEducation = true;
-    if (this.officerForm.get('courseLevel')?.value != '' &&
-      // this.officerForm.get('degree')?.value != '' &&
-      this.officerForm.get('specialisation')?.value != '' &&
-      this.officerForm.get('instituteName')?.value != '' &&
-      this.officerForm.get('locationState')?.value != '' &&
-      this.officerForm.get('locationCountry')?.value != '' &&
-      this.officerForm.get('durationOfCourse')?.value != '' &&
-      this.officerForm.get('fund')?.value != '' &&
-      this.officerForm.get('fees')?.value != '' &&
-      this.officerForm.get('courseCompletedDate')?.value != '' &&
-      this.officerForm.get('courseCompletedYear')?.value != '') {
+    if (this.droForm.get('courseLevel')?.value != '' &&
+      // this.droForm.get('degree')?.value != '' &&
+      this.droForm.get('specialisation')?.value != '' &&
+      this.droForm.get('instituteName')?.value != '' &&
+      this.droForm.get('locationState')?.value != '' &&
+      this.droForm.get('locationCountry')?.value != '' &&
+      this.droForm.get('durationOfCourse')?.value != '' &&
+      this.droForm.get('fund')?.value != '' &&
+      this.droForm.get('fees')?.value != '' &&
+      this.droForm.get('courseCompletedDate')?.value != '' &&
+      this.droForm.get('courseCompletedYear')?.value != '') {
 
-      const stateValue = this.state.find((pos: any) => pos.value === this.officerForm.get('locationState')?.value)?.label;
-      const country = this.country.find((pos: any) => pos.value === this.officerForm.get('locationCountry')?.value)?.label;
+      const stateValue = this.state.find((pos: any) => pos.value === this.droForm.get('locationState')?.value)?.label;
+      const country = this.country.find((pos: any) => pos.value === this.droForm.get('locationCountry')?.value)?.label;
 
       // console.log(stateValue);
       // console.log(country);
       const educationDet = {
-        courseLevel: this.officerForm.get('courseLevel')?.value,
-        degree: this.officerForm.get('degree')?.value,
-        specialisation: this.officerForm.get('specialisation')?.value,
-        instituteName: this.officerForm.get('instituteName')?.value,
+        courseLevel: this.droForm.get('courseLevel')?.value,
+        degree: this.droForm.get('degree')?.value,
+        specialisation: this.droForm.get('specialisation')?.value,
+        instituteName: this.droForm.get('instituteName')?.value,
         locationState: stateValue,
         locationCountry: country,
-        durationOfCourse: this.officerForm.get('durationOfCourse')?.value,
-        fund: this.officerForm.get('fund')?.value,
-        fees: this.officerForm.get('fees')?.value,
-        courseCompletedDate: this.officerForm.get('courseCompletedDate')?.value,
-        courseCompletedYear: this.officerForm.get('courseCompletedYear')?.value
+        durationOfCourse: this.droForm.get('durationOfCourse')?.value,
+        fund: this.droForm.get('fund')?.value,
+        fees: this.droForm.get('fees')?.value,
+        courseCompletedDate: this.droForm.get('courseCompletedDate')?.value,
+        courseCompletedYear: this.droForm.get('courseCompletedYear')?.value
       };
 
       const educationDetails = {
-        courseLevel: this.officerForm.get('courseLevel')?.value,
-        degree: this.officerForm.get('degree')?.value,
-        specialisation: this.officerForm.get('specialisation')?.value,
-        instituteName: this.officerForm.get('instituteName')?.value,
-        locationState: this.officerForm.get('locationState')?.value,
-        locationCountry: this.officerForm.get('locationCountry')?.value,
-        durationOfCourse: this.officerForm.get('durationOfCourse')?.value,
-        fund: this.officerForm.get('fund')?.value,
-        fees: this.officerForm.get('fees')?.value,
-        courseCompletedDate: this.officerForm.get('courseCompletedDate')?.value,
-        courseCompletedYear: this.officerForm.get('courseCompletedYear')?.value
+        courseLevel: this.droForm.get('courseLevel')?.value,
+        degree: this.droForm.get('degree')?.value,
+        specialisation: this.droForm.get('specialisation')?.value,
+        instituteName: this.droForm.get('instituteName')?.value,
+        locationState: this.droForm.get('locationState')?.value,
+        locationCountry: this.droForm.get('locationCountry')?.value,
+        durationOfCourse: this.droForm.get('durationOfCourse')?.value,
+        fund: this.droForm.get('fund')?.value,
+        fees: this.droForm.get('fees')?.value,
+        courseCompletedDate: this.droForm.get('courseCompletedDate')?.value,
+        courseCompletedYear: this.droForm.get('courseCompletedYear')?.value
       };
       this.educationDetail.push(educationDet);
       this.degreeData.push(educationDetails);
-      this.officerForm.get('courseLevel')?.setValue('');
-      this.officerForm.get('degree')?.setValue('');
-      this.officerForm.get('specialisation')?.setValue('');
-      this.officerForm.get('instituteName')?.setValue('');
-      this.officerForm.get('locationState')?.setValue('');
-      this.officerForm.get('locationCountry')?.setValue('');
-      this.officerForm.get('durationOfCourse')?.setValue('');
-      this.officerForm.get('fund')?.setValue('');
-      this.officerForm.get('fees')?.setValue('');
-      this.officerForm.get('courseCompletedDate')?.setValue('');
-      this.officerForm.get('courseCompletedYear')?.setValue('');
+      this.droForm.get('courseLevel')?.setValue('');
+      this.droForm.get('degree')?.setValue('');
+      this.droForm.get('specialisation')?.setValue('');
+      this.droForm.get('instituteName')?.setValue('');
+      this.droForm.get('locationState')?.setValue('');
+      this.droForm.get('locationCountry')?.setValue('');
+      this.droForm.get('durationOfCourse')?.setValue('');
+      this.droForm.get('fund')?.setValue('');
+      this.droForm.get('fees')?.setValue('');
+      this.droForm.get('courseCompletedDate')?.setValue('');
+      this.droForm.get('courseCompletedYear')?.setValue('');
       console.log(this.educationDetail);
     } else if (this.educationDetail.length >= 1) {
       alert("Please fill all Details");
@@ -313,8 +312,8 @@ export class OfficerProfileComponent implements OnInit {
       courseCompletedYear: [''],
       courseCompletedDate: ['']
     });
-    (this.officerForm.get('degreeData') as FormArray).push(newRow);
-    const qualifications = this.officerForm.get('degreeData') as FormArray;
+    (this.droForm.get('degreeData') as FormArray).push(newRow);
+    const qualifications = this.droForm.get('degreeData') as FormArray;
     // qualifications.push(this.createRow());
     this.row.push({});
     // this.rowsFormArray.push(this.createRow());
@@ -322,14 +321,14 @@ export class OfficerProfileComponent implements OnInit {
 
   removeRow(index: number) {
     if (index !== 0) {
-      const qualifications = this.officerForm.get('degreeData') as FormArray;
+      const qualifications = this.droForm.get('degreeData') as FormArray;
       qualifications.removeAt(index);
       this.row.splice(index, 1);
     }
   }
 
   get degreeDetailsFormArray() {
-    return this.officerForm.get('degreeData') as FormArray;
+    return this.droForm.get('degreeData') as FormArray;
   }
 
   createRow() {
@@ -355,7 +354,7 @@ export class OfficerProfileComponent implements OnInit {
   //     reader.onload = (e: ProgressEvent<FileReader>) => {
   //       this.selectedImage = reader.result;
   //       this.base64String = e.target?.result;
-  //       this.officerForm.get('photo')?.setValue(this.base64String);
+  //       this.droForm.get('photo')?.setValue(this.base64String);
   //     };
   //     reader.readAsDataURL(file);
   //   }
@@ -378,7 +377,7 @@ export class OfficerProfileComponent implements OnInit {
     }
     // const file: File = event.target.files[0];
     if (file) {
-      this.officerForm.get('imagePath')?.setValue(file);  // Set file directly to form
+      this.droForm.get('imagePath')?.setValue(file);  // Set file directly to form
       const reader = new FileReader();
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -393,7 +392,7 @@ export class OfficerProfileComponent implements OnInit {
   removeImage() {
     this.selectedImage = null;
     // You may also want to clear the file input here to allow selecting the same image again
-    this.officerForm.get('imagePath')?.setValue(null);
+    this.droForm.get('imagePath')?.setValue(null);
     this.base64String = null;
   }
 
@@ -406,39 +405,39 @@ export class OfficerProfileComponent implements OnInit {
 
 
   calculateRetirementDate() {
-    if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
-      const dobValue = this.officerForm.get('dateOfBirth')?.value;
+    if (this.droForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
+      const dobValue = this.droForm.get('dateOfBirth')?.value;
       if (dobValue) {
         const dob = new Date(dobValue);
         const retirementYear = dob.getFullYear() + 60;
         const retirementDate = new Date(retirementYear, dob.getMonth(), dob.getDate());
         const formattedDate = this.formatDate(retirementDate);
-        this.officerForm.get('dateOfRetirement')?.setValue(formattedDate);
+        this.droForm.get('dateOfRetirement')?.setValue(formattedDate);
         console.log(formattedDate);
       }
     }
   }
   
   // calculateRetirement() {
-  //   if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
+  //   if (this.droForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
   //     this.calculateRetirementDate();
   //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
   //     this.showPosting = true;
   //   }
-  //   else if (this.officerForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d7') {
-  //     this.officerForm.get('dateOfRetirement')?.setValue('');
+  //   else if (this.droForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d7') {
+  //     this.droForm.get('dateOfRetirement')?.setValue('');
   //     this.servingtype = '65f43649a4a01c1cbbd6c9d7';
   //     this.showPosting = false;
   //   }
-  //   else if (this.officerForm.get('serviceStatus')?.value == '') {
-  //     this.officerForm.get('dateOfRetirement')?.setValue('');
+  //   else if (this.droForm.get('serviceStatus')?.value == '') {
+  //     this.droForm.get('dateOfRetirement')?.setValue('');
   //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
   //     this.showPosting = false;
   //   }
   // }
 
   calculateRetirement() {
-    const serviceStatus = this.officerForm.get('serviceStatus')?.value;
+    const serviceStatus = this.droForm.get('serviceStatus')?.value;
   
     if (serviceStatus === '65f43649a4a01c1cbbd6c9d6') {
       this.calculateRetirementDate();
@@ -447,13 +446,13 @@ export class OfficerProfileComponent implements OnInit {
       this.toggleFieldValidation(true);
       this.setDepartmentAndServing('yes', 'yes', 'Transfer / Posting'); 
     } else if (serviceStatus === '65f43649a4a01c1cbbd6c9d7') {
-      this.officerForm.get('dateOfRetirement')?.setValue('');
+      this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = serviceStatus;
       this.showPosting = false;
       this.toggleFieldValidation(false);
       this.setDepartmentAndServing('no', 'no', ''); 
     } else if (serviceStatus === '') {
-      this.officerForm.get('dateOfRetirement')?.setValue('');
+      this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = '65f43649a4a01c1cbbd6c9d6';
       this.showPosting = false;
       this.toggleFieldValidation(false);
@@ -478,7 +477,7 @@ export class OfficerProfileComponent implements OnInit {
     ];
   
     fieldsToValidate.forEach((field) => {
-      const control = this.officerForm.get(field);
+      const control = this.droForm.get(field);
   
       if (control) {
         if (isRequired) {
@@ -493,9 +492,9 @@ export class OfficerProfileComponent implements OnInit {
   }
   
   setDepartmentAndServing(departmentValue: string, servingValue: string, updateTypeValue: string) {
-    const departmentControl = this.officerForm.get('department');
-    const servingControl = this.officerForm.get('serving');
-    const updateTypeControl = this.officerForm.get('updateType');
+    const departmentControl = this.droForm.get('department');
+    const servingControl = this.droForm.get('serving');
+    const updateTypeControl = this.droForm.get('updateType');
   
     if (departmentControl) {
       departmentControl.setValue(departmentValue);
@@ -519,16 +518,16 @@ export class OfficerProfileComponent implements OnInit {
   }
 
   getYear() {
-    const dojValue = this.officerForm.get('dateOfJoining')?.value;
+    const dojValue = this.droForm.get('dateOfJoining')?.value;
     if (dojValue) {
       const dob = new Date(dojValue);
       const retirementYear = dob.getFullYear();
-      this.officerForm.get('batch')?.setValue(retirementYear);
+      this.droForm.get('batch')?.setValue(retirementYear);
     }
   }
 
   getCompletedYear(index: number) {
-    const degreeDetailsFormArray = this.officerForm.get('degreeData') as FormArray;
+    const degreeDetailsFormArray = this.droForm.get('degreeData') as FormArray;
     const selectedDate = degreeDetailsFormArray.at(index).get('courseCompletedDate')?.value;
 
     if (selectedDate) {
@@ -538,11 +537,11 @@ export class OfficerProfileComponent implements OnInit {
   }
 
   // getCompletedYear(){
-  //   const dojValue = this.officerForm.get('courseCompletedDate')?.value;
+  //   const dojValue = this.droForm.get('courseCompletedDate')?.value;
   //   if(dojValue){
   //     const dob = new Date(dojValue);
   //     const completedYear = dob.getFullYear(); 
-  //     this.officerForm.get('courseCompletedYear')?.setValue(completedYear); 
+  //     this.droForm.get('courseCompletedYear')?.setValue(completedYear); 
   //   }
   // }
 
@@ -572,97 +571,20 @@ export class OfficerProfileComponent implements OnInit {
   changeGrade(data: any) {
     this.payScale.filter((item: any) => {
       if (data.target.value == item._id) {
-        this.officerForm.get('payscale')?.setValue(item.payscale);
+        this.droForm.get('payscale')?.setValue(item.payscale);
 
       }
     });
   }
   onSubmit() {
     this.submitted = true;
-    if (this.officerForm.valid) {
-      const formValue = this.officerForm.value;
-      console.log('officerForm', formValue);
-      // const formData = new FormData();
-      // delete formValue.courseLevel;
-      // delete formValue.specialisation;
-      // delete formValue.instituteName;
-      // delete formValue.locationState;
-      // delete formValue.locationCountry;
-      // delete formValue.durationOfCourse;
-      // delete formValue.fund;
-      // delete formValue.fees;
-      // delete formValue.courseCompletedDate;
-      // delete formValue.courseCompletedYear;
-      // for (const key in formValue) {
-      //   if (formValue.hasOwnProperty(key)) {
-      //     formData.append(key, formValue[key]);
-      //   }
-      // }
-
-
-      formValue.addedBy = 'employeeProfile';
-      formValue.submittedBy = this.submittedBy;
-      if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
-        formValue.degreeData.forEach((degree: any) => {
-          degree.addedBy = 'employeeProfile';
-        });
-      }
-      console.log("formValue.degreeData",formValue.degreeData);
-      // console.log(this.degreeData);
-      // formData.append('degreeData', JSON.stringify(this.degreeData));
-      // formData.append('addedBy','employeeProfile');
-      const formData = new FormData();
-
-      // Append all form values
-      Object.keys(formValue).forEach(key => {
-        const value = this.officerForm.get(key)?.value;
-        if(key === 'degreeData'){
-          formData.append('degreeData',JSON.stringify(formValue.degreeData));
-        }
-        else if (key === 'imagePath' && value instanceof File) {
-          formData.append(key, value);  // Append file directly
-        } else if (value !== null && value !== undefined) {
-          formData.append(key, value);
-        }
-      });
+    if (this.droForm.valid) {
+      const formValue = this.droForm.value;
+      console.log('droForm', formValue);
       
-      // Manually append additional fields
-      formData.append('addedBy', 'employeeProfile');
-      formData.append('submittedBy', this.submittedBy);
-      
-      // Handle degreeData array
-      // if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
-      //   formValue.degreeData.forEach((degree: any, index: number) => {
-      //     degree.addedBy = 'employeeProfile';
-      //     formData.append(`degreeData[${index}]`, JSON.stringify(degree));
-      //   });
-      // }
-
-      // console.log('formData',formData);  // Check FormData in console
-      for (let pair of (formData as any).entries()) {
-        console.log(pair[0], pair[1]);
-      }
-      
-      
-      this.officerAction.createEmployeeProfile(formData).subscribe((response:any)=>
-         {
-          alert(response.message);
-          this.officerForm.reset();
-          this.router.navigate(['officer-profile-list']);
-          console.log('API Response:', response);
-        },
-        error => {
-          console.error('API Error:', error);
-          alert(error.message);
-        }
-      );
-    }
-    else{
-      console.log(this.officerForm.value);
-    }
   }
 }
-
+}
 
 export class educationDetails {
   courseLevel: string = '';

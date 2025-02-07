@@ -1,0 +1,214 @@
+<div class="col-12">
+    <div class="card px-2">
+      <div class="card-body">
+  
+  <h5>DRO Profile List <button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()">Add New</button></h5>
+  
+  <div class="col-md-12 p-0">
+  <div class="col-md-3 px-0 mt-4 mb-0">
+    <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+  </div>
+  
+  <app-shared></app-shared>
+  </div>
+  
+  
+  <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>DRO ID</th>
+        <th>IFHRMS ID</th>
+        <th>Name</th>
+        <th>Batch</th>
+        <th>Mobile</th>
+        <th>Submitted By </th>
+        <th>Approved By</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+        <tr *ngFor="let data of pagedData(); let i = index">
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{i +startIndex+ 1}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.employeeId}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.ifhrmsId}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.fullName}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.batch}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.mobileNo1}}</td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}}) </td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}"><span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
+          <td  [ngClass]="{'tabletd':showEdit, 'table-td':!showEdit}">{{data.approvalStatus? 'Approved':'Not Approved'}}</td>
+          <td style="text-align: center;">
+            <button type="button" class="btn btn-info p-2 mr-2" *ngIf="showEdit && !data.approvalStatus"  (click)="editEmployee(data._id)"> Edit</button>
+            <button type="button" class="btn btn-info p-2" *ngIf="showView" data-toggle="modal" data-target="#viewEmployee"  (click)="viewEmployee(data._id)"> View</button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #noRecords>
+        <tr>
+          <td colspan="10" style="color: red;">No records found</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > 0">
+    <div class="dropdown col-md-8">
+      <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Items Per Page: {{ pageSize }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+          }}</a>
+      </div>
+    </div>
+    <div class="col-md-4" style="border: 0px;">
+      <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+        <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+      <ng-container *ngFor="let page of pages">
+        <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+          (click)="goToPage(page)">{{ page }}</button>
+      </ng-container>
+      <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Next <i class="mdi mdi-chevron-double-right"></i> </button>
+  
+    </div>
+  </div>
+  
+  <!-- <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > pageSizeOptions[0]">
+    <div class="dropdown col-md-8">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="pageSizeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Items Per Page: {{ pageSize }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option }}</a>
+      </div>
+    </div>
+    <div class="col-md-4" style="border: 0px;">
+      <button class="btn btn-light mr-1" [disabled]="currentPage === 1" (click)="prevPage()">
+        <i class="mdi mdi-chevron-double-left"></i> Previous
+      </button>
+      <ng-container *ngFor="let page of visiblePages">
+        <button class="btn btn-light ml-1" [ngClass]="{ 'active': currentPage === page }" (click)="goToPage(page)">{{ page }}</button>
+      </ng-container>
+      <span *ngIf="totalPages > maxVisiblePages + 2">...</span>
+      <button class="btn btn-light ml-1" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Next <i class="mdi mdi-chevron-double-right"></i>
+      </button>
+    </div>
+  </div> -->
+  
+  
+  
+    </div>
+    </div>
+    </div>
+  
+    <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" *ngIf="showPopup">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewEmployeeLabel">View DRO Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body pb-0">
+            <div class="col-md-12 p-0">
+              <img [src]="viewEmployeeData.imagePath" alt="Profile" class="profile-img">
+              <div class="col-md-12 p-0">
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Name </b></label> <br> {{viewEmployeeData.fullName}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Gender </b></label> <br>{{viewEmployeeData.gender}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Date of Birth </b></label><br>{{viewEmployeeData.dateOfBirth | date:'dd/MM/YYYY'}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Home State </b></label><br>{{viewEmployeeData.state}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Class</b></label><br>{{viewEmployeeData.community}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Religion</b></label><br>{{viewEmployeeData.religion}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Caste</b></label><br>{{viewEmployeeData.caste}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Mobile No 1</b></label><br>{{viewEmployeeData.mobileNo1}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Mobile No 2</b></label><br>{{viewEmployeeData.mobileNo2}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Landline</b></label><br>{{viewEmployeeData.mobileNo3}}</div>  
+                <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Email ID</b></label><br>{{viewEmployeeData.personalEmail}}</div>
+                
+                <hr>
+                  <h6 class="modal-title float-left w-100 mt-3">Education Details </h6></div>  
+                  <div class="table-responsive">
+                    <table class="table existing mt-2">
+                      <thead>
+                        <tr>
+                          <th class="py-2"><label class="col-form-label pt-0">S.No</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0">Course Level</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0">Degree</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0">Specialisation</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0">Institute Name</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> State</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> Country</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> Duration of Course</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> Fund</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> Fee</label></th>
+                          <th class="py-2"><label class="col-form-label pt-0"> Completed Date & Year</label></th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let tableData of viewEmployeeData.educationdetails; let i = index">
+                        <tr>
+                          <td>{{i+1}}</td>
+                          <td>{{tableData.courseLevel}}</td>
+                          <td>{{tableData.degree}}</td>
+                          <td>{{tableData.specialisation}}</td>
+                          <td>{{tableData.instituteName}}</td>
+                          <td>{{tableData.locationStateName}}</td>
+                          <td>{{tableData.locationCountryName}}</td>
+                          <td>{{tableData.durationOfCourse}}</td>
+                          <td>{{tableData.fund}}</td>
+                          <td>{{tableData.fees}}</td>
+                          <td>{{tableData.courseCompletedDate | date:'dd/MM/YYYY'}}</td>
+                        </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                  <hr>
+              <h6 class="modal-title float-left w-100 mt-3 mb-2">Address</h6>
+              <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Address Line </b></label> <br> {{viewEmployeeData.addressLine}}</div>  
+              <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>City </b></label> <br> {{viewEmployeeData.city}}</div>  
+              <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Pincode </b></label> <br> {{viewEmployeeData.pincode}}</div>  
+  
+              <hr>
+              <h6 class="modal-title float-left w-100 mb-2">DRO Details</h6>
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>DRO ID</b></label> <br> {{viewEmployeeData.employeeId}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>IFHRMS ID </b></label> <br> {{viewEmployeeData.ifhrmsId}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Date of Joining </b></label> <br> {{viewEmployeeData.dateOfJoining | date:'dd/MM/YYYY'}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Date of Retirement </b></label> <br> {{viewEmployeeData.dateOfRetirement | date:'dd/MM/YYYY'}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Batch </b></label> <br> {{viewEmployeeData.batch}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Recruitment Type </b></label> <br> {{viewEmployeeData.recruitmentType}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Official Mail ID </b></label> <br> {{viewEmployeeData.officeEmail}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Service Status </b></label> <br> {{viewEmployeeData.serviceStatus}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Grade </b></label> <br> {{viewEmployeeData.promotionGrade}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Payscale </b></label> <br> {{viewEmployeeData.payscale}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Seniority Number </b></label> <br> {{viewEmployeeData.seniority}}</div>  
+              
+              <div *ngIf="showPosting">
+              <h6 class="modal-title float-left w-100 mb-2">Posting Details</h6>
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Posting In</b></label> <br> {{viewEmployeeData.toPostingInCategoryCode}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Department </b></label> <br> {{viewEmployeeData.toDepartmentId}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Address</b></label> <br> {{viewEmployeeData.deptAddress}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Phone </b></label> <br> {{viewEmployeeData.deptPhoneNumber}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Fax</b></label> <br> {{viewEmployeeData.deptFaxNumber}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Mobile </b></label> <br> {{viewEmployeeData.deptOfficialMobileNo}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Designation </b></label> <br> {{viewEmployeeData.toDesignationId}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Posting Type </b></label> <br> {{viewEmployeeData.postTypeCategoryCode}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Location Change </b></label> <br> {{viewEmployeeData.locationChangeCategoryId}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Language Known </b></label> <br> {{viewEmployeeData.languages}}</div>  
+              <div class="col-md-3 px-0 mb-3"><label class="w-100"><b>Last Promotion Date</b></label> <br> {{viewEmployeeData.lastDateOfPromotion | date:'dd/MM/YYYY'}}</div>  
+              </div>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success py-2 px-3" (click)="approvedro(viewEmployeeData)" *ngIf="showApprove && !viewEmployeeData.approvalStatus">Approve</button>
+            <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>

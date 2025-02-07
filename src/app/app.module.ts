@@ -58,6 +58,8 @@ import { ActiveOfficersComponent } from './landing-page/components/home/active-o
 import { ActiveOfficersDetailComponent } from './landing-page/components/home/active-officers/active-officers-detail/active-officers-detail.component';
 import { RetiredOfficersComponent } from './landing-page/components/home/retired-officers/retired-officers.component';
 import { RetiredOfficersDetailComponent } from './landing-page/components/home/retired-officers/retired-officers-detail/retired-officers-detail.component';
+import { NotificationModule } from './notification/notification.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,6 +121,7 @@ import { RetiredOfficersDetailComponent } from './landing-page/components/home/r
     HttpClientModule,
     FormModule,
     MasterCreationModule,
+    NotificationModule,
     RoleModule,
     UserModule,
     BrowserAnimationsModule

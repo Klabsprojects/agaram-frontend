@@ -3,14 +3,16 @@ import { employeeHistory } from '../../dashboard.model';
 import { LeaveTransferService } from '../../../forms/forms.service';
 import { DatePipe } from '@angular/common';
 import { CommonService } from '../../../shared-services/common.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-official-info',
   templateUrl: './official-info.component.html',
   styleUrl: './official-info.component.css'
 })
 export class OfficialInfoComponent implements OnInit{
-  constructor(private dashboardService: LeaveTransferService, private datePipe: DatePipe, private cs:CommonService) {
+  constructor(private dashboardService: LeaveTransferService, private datePipe: DatePipe, private cs:CommonService, private fb:FormBuilder) {
   }
+  employeeProfileId:string='';
   ngOnInit(): void {
     this.login_id = localStorage.getItem('loginId')
     this.get_Id(this.login_id);
@@ -24,6 +26,11 @@ export class OfficialInfoComponent implements OnInit{
     this.dashboardService.getDesignations().subscribe((res: any) => {
       this.designationData = res.results;
     })
+    this.applyForm = this.fb.group({
+      formFile: ['', Validators.required],
+      remarks: [''],
+      // employeeProfileId:[this.employeeProfileId]
+    });
   }
   base64ImageData: string = '';
   employeeHistory = new employeeHistory();
@@ -87,6 +94,10 @@ export class OfficialInfoComponent implements OnInit{
     "getOfficersTourByProfileId",
     "getGpf",
     "getIdCard"]
+  applyForm!:FormGroup;
+  uploadSafFile : any;
+  submitted = false;
+  formType = '';
   get_Id(login_id: any) {
     this.loading = true;
     this.dashboardService.getEmployeeAlone(login_id).subscribe((res: any) => {
@@ -170,9 +181,13 @@ export class OfficialInfoComponent implements OnInit{
     this.firstIndex = '';
     this.dashboardService.getEmployeeHistory(data).subscribe((res: any) => {
       this.userAvailable = res.results;
+      console.log(res.results);
       // this.loading = false;
       res.results.forEach((item: any) => {
         if (item._id == data) {
+          this.employeeProfileId = item._id;
+          console.log(item);
+          console.log(item._id);
           this.dashboardService.getData().subscribe((response: any) => {
             response.forEach((ele: any) => {
               if (ele.category_type == "state") {
@@ -188,6 +203,7 @@ export class OfficialInfoComponent implements OnInit{
               if (index === 0) {
                 this.firstIndex = element.transferOrPostingEmployeesList;
                 console.log("this.firstIndex", this.firstIndex)
+                
                 if (element.category_type == "posting_in") {
                   if (element._id == element.transferOrPostingEmployeesList.toPostingInCategoryCode) {
                     this.firstIndex.posting = element.category_name;
@@ -330,7 +346,39 @@ export class OfficialInfoComponent implements OnInit{
     this.cs.setData(JSON.stringify(userData));
   }
 
-  showModal(modalName:string) {
+  // showModal(modalName:string) {
+  //   const modalElement = document.getElementById(modalName);
+  //   if (modalElement) {
+  //     // Ensure backdrop is added if not already present
+  //     if (!document.querySelector('.modal-backdrop')) {
+  //       const backdrop = document.createElement('div');
+  //       backdrop.classList.add('modal-backdrop', 'fade', 'show');
+  //       document.body.appendChild(backdrop);
+  //     }
+  
+  //     // Show the modal by adding the 'show' class and setting display
+  //     modalElement.classList.add('show');
+  //     modalElement.setAttribute('aria-hidden', 'false'); // Make modal visible for screen readers
+  //     modalElement.style.display = 'block'; // Make modal visible
+  //   }
+  // }
+  // hideModal(modalName:string) {
+  //   const modalElement = document.getElementById(modalName);
+  //   if (modalElement) {
+  //     // Remove modal backdrop manually
+  //     const backdrop = document.querySelector('.modal-backdrop');
+  //     if (backdrop) {
+  //       backdrop.remove(); // Remove the backdrop manually
+  //     }
+  
+  //     // Hide the modal by removing the 'show' class and setting display to 'none'
+  //     modalElement.classList.remove('show'); // Remove 'show' class
+  //     modalElement.setAttribute('aria-hidden', 'true'); // Hide modal from screen readers
+  //     modalElement.style.display = 'none'; // Manually hide modal
+  //   }
+  // }
+
+  showModal(modalName: string) {
     const modalElement = document.getElementById(modalName);
     if (modalElement) {
       // Ensure backdrop is added if not already present
@@ -346,7 +394,8 @@ export class OfficialInfoComponent implements OnInit{
       modalElement.style.display = 'block'; // Make modal visible
     }
   }
-  hideModal(modalName:string) {
+  
+  hideModal(modalName: string) {
     const modalElement = document.getElementById(modalName);
     if (modalElement) {
       // Remove modal backdrop manually
@@ -361,4 +410,83 @@ export class OfficialInfoComponent implements OnInit{
       modalElement.style.display = 'none'; // Manually hide modal
     }
   }
+  
+  
+  onApply() {
+    this.formType = 'SAF Games Village';
+    this.hideModal('SAF');
+    this.showModal('safApplication');
+  }
+
+  applyMedical(){
+    this.formType = 'Medical Reimbursement';
+    this.hideModal('medical');
+    this.showModal('applyMedical');
+  }
+
+  onFileSelected(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.uploadSafFile = input.files[0];
+      this.applyForm.patchValue({ formFile: this.uploadSafFile });
+    }
+    this.uploadSafFile = event.target.files[0];
+    this.applyForm.get('formFile')?.setValue(this.uploadSafFile);
+    if (this.uploadSafFile) {
+      if (this.uploadSafFile.type !== 'application/pdf') {
+        this.applyForm.get('formFile')?.setErrors({ 'incorrectFileType': true });
+        return;
+      }
+
+      if (this.uploadSafFile.size > 5 * 1024 * 1024) { 
+        this.applyForm.get('formFile')?.setErrors({ 'maxSize': true });
+        return;
+      }
+
+      this.applyForm.get('formFile')?.setErrors(null);
+    }
+  }
+
+  applyFormSubmit() {
+    console.log(this.applyForm.value);
+    if (this.applyForm.valid) {
+      const formData = new FormData();
+      const formValues = this.applyForm.value;
+  
+      // Append form data excluding the file (which will be handled separately)
+      for (const key in formValues) {
+        if (formValues.hasOwnProperty(key) && key !== 'formFile') {
+          formData.append(key, formValues[key]);
+        }
+      }
+  
+      // If a file is uploaded, append it
+      if (this.uploadSafFile) {
+        formData.append('formFile', this.uploadSafFile);
+      }
+  
+      // Add additional data like employeeProfileId, formType
+      formData.append('employeeProfileId', this.employeeProfileId);
+      formData.append('formType', this.formType);  // Pass formType dynamically
+  
+      // Send the form data
+      this.dashboardService.applyForm(formData).subscribe(
+        response => {
+          alert(response.message);
+          console.log(response.message);
+  
+          // Hide modal based on formType
+          if (this.formType === 'SAF Games Village') {
+            this.hideModal('safApplication');  // Hide SAF application modal
+          } else if (this.formType === 'Medical Reimbursement') {
+            this.hideModal('applyMedical');  // Hide Medical application modal
+          }
+        },
+        error => {
+          console.error('API Error:', error);
+        }
+      );
+    }
+  }
+  
 }

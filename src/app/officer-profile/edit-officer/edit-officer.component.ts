@@ -64,7 +64,7 @@ export class EditOfficerComponent implements OnInit {
       recruitmentType: ['', Validators.required],
       serviceStatus: ['', Validators.required],
       religion: [''],
-      community: ['', Validators.required],
+      community: [''],
       caste: [''],
       personalEmail: [[]],
       mobileNo1: [''],

@@ -1,0 +1,48 @@
+<div class="col-12 grid-margin">
+    <div class="card px-3 mt-2">
+      <div class="card-body pb-0">
+        <h4 class="card-title">Notification</h4>
+      </div>
+
+      <table class="table table-bordered table-hover table-striped mb-4">
+        <thead>
+          <tr>
+            <th style="width: 50px;">#</th>
+            <th>Officer Name</th>
+            <th>Form</th>
+            <th>Remarks</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="notificationData.length > 0; else noRecords">
+            <tr *ngFor="let notification of notificationData; let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td>{{notification.employeeProfileId.fullName }}</td>
+              <td>{{notification.formType}}</td>
+              <td>{{notification.remarks}}</td>
+              <td class="text-center">
+              <button class="btn p-2 btn-info mr-1">
+                <a href="{{ url + notification.formFile }}" target="_blank" style="color: #fff;">View</a>
+              </button>
+
+              <button class="btn p-2 btn-info mr-1">
+                <a href="{{ url + notification.formFile }}" download="{{ notification.formFile.split('/').pop() }}" style="color: #fff;">Download</a>
+              </button>
+              <button class="btn p-2 btn-info" (click)="approve(notification)">Approve</button>
+
+              </td> 
+            </tr>
+          </ng-container>
+          <ng-template #noRecords>
+            <tr>
+              <td colspan="4" style="color: red;">No Records Found</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+      
+      
+    
+    </div>
+</div>

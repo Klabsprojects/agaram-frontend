@@ -65,6 +65,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'notification',
+    loadChildren:()=>import('./notification/notification.module').then(m=>m.NotificationModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path:'role',
     loadChildren:()=>import('./role/role.module').then(m=>m.RoleModule),
     canActivate: [AuthGuard]

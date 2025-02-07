@@ -894,10 +894,10 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
-                    <!-- <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      Apply</button> -->
+                      <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 7px 15px;" (click)="onApply()">Apply</button>
+
                     <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      <a href="assets/document/saf.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <a href="assets/document/saf.pdf" download="" style="color: #fff;"> Download Form&nbsp;<i class="mdi mdi-download"></i></a></button>
                       <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-saf-games-village"
                       (click)="hideModal('SAF')">Add
                       SAF</button>
@@ -955,11 +955,54 @@
             </div>
           </div>
 
+          <div class="modal fade" id="safApplication" tabindex="-1" aria-labelledby="safApplicationLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" style="max-width: 400px;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="safApplicationLabel">Apply for SAF Games Village</h5>
+                  <button type="button" class="close" (click)="hideModal('safApplication')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body float-left p-0">
+                    <form class="form-sample" [formGroup]="applyForm" (ngSubmit)="applyFormSubmit()">
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Upload <span>*</span></label>
+                          <div class="col-sm-12">
+                            <input type="file" class="form-control pl-0" accept=".pdf" formControlName="formFile" style="border: none;" (change)="onFileSelected($event)">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Remarks</label>
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="remarks" />
+                          </div>
+                        </div>
+                      </div>
+                    
+                    
+                    <div class="modal-footer">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" type="submit" [disabled]="!applyForm.valid">Submit</button>
+                    <button class="float-right btn btn-secondary btn-sm mt-1 mb-1 ml-2" (click)="hideModal('safApplication')">Close</button>
+                  </div>
+                </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+
           <div class="modal fade" id="LTC" tabindex="-1" aria-labelledby="LTCLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="viewForeignVisitLabel">SAF Games Village Details</h5>
+                  <h5 class="modal-title" id="viewForeignVisitLabel">LTC</h5>
                   <button type="button" class="close" (click)="hideModal('LTC')">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -1033,8 +1076,9 @@
                 </div>
                 <div class="modal-body pb-0">
                   <div class="card-body">
+                    <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 7px 15px;" (click)="applyMedical()">Apply</button>
                     <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      <a href="assets/document/medical-reimbursement.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <a href="assets/document/medical-reimbursement.pdf" download="" style="color: #fff;"> Download Form &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1"
                       routerLink="/create-medical-reimbursement" (click)="hideModal('medical')">Add
                       Medical</button>
@@ -1082,6 +1126,48 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary py-2 px-3"
                     (click)="hideModal('medical')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="applyMedical" tabindex="-1" aria-labelledby="applyMedicalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" style="max-width: 400px;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="applyMedicalLabel">Apply for Medical Reimbursement</h5>
+                  <button type="button" class="close" (click)="hideModal('applyMedical')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body float-left p-0">
+                    <form class="form-sample" [formGroup]="applyForm" (ngSubmit)="applyFormSubmit()">
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Upload <span>*</span></label>
+                          <div class="col-sm-12">
+                            <input type="file" class="form-control pl-0" accept=".pdf" formControlName="formFile" style="border: none;" (change)="onFileSelected($event)">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-12 col-form-label">Remarks</label>
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="remarks" />
+                          </div>
+                        </div>
+                      </div>
+                    
+                    
+                    <div class="modal-footer">
+                    <button class="float-right btn btn-success btn-sm mt-1 mb-1" type="submit" [disabled]="!applyForm.valid">Submit</button>
+                    <button class="float-right btn btn-secondary btn-sm mt-1 mb-1 ml-2" (click)="hideModal('applyMedical')">Close</button>
+                  </div>
+                </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1308,7 +1394,7 @@
                 <div class="modal-body pb-0">
                   <div class="card-body">
                     <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      <a href="assets/document/education.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <a href="assets/document/education.pdf" download="" style="color: #fff;"> Download Form&nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-education"
                       (click)="hideModal('education')">Add
                       Education</button>
@@ -1436,7 +1522,7 @@
                 <div class="modal-body pb-0">
                   <div class="card-body">
                     <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      <a href="assets/document/hba.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <a href="assets/document/hba.pdf" download="" style="color: #fff;"> Download Form &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-hba"
                       (click)="hideModal('hba')">Add HBA</button>
                     <div *ngIf="hba.length > 0; else noPreviousDetails">
@@ -1551,7 +1637,7 @@
                 <div class="modal-body pb-0">
                   <div class="card-body">
                     <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" style="padding: 5px 15px;">
-                      <a href="assets/document/gpf.pdf" download="" style="color: #fff;"> Download &nbsp;<i class="mdi mdi-download"></i></a></button>
+                      <a href="assets/document/gpf.pdf" download="" style="color: #fff;"> Download Form &nbsp;<i class="mdi mdi-download"></i></a></button>
                     <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/create-gpf"
                       (click)="hideModal('gpf')">Add GPF</button>
                     <div *ngIf="gpf.length > 0; else noPreviousDetails">

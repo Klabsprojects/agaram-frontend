@@ -68,8 +68,14 @@ import { CreateTourComponent } from './officer-tour/create-tour/create-tour.comp
 import { EditTourComponent } from './officer-tour/edit-tour/edit-tour.component';
 import { DroComponent } from './uploads/dro/dro.component';
 import { EditHbaComponent } from './hba/edit-hba/edit-hba.component';
+import { DroProfileComponent } from '../dro-profile/dro-profile.component';
+import { CreateDroProfileComponent } from '../dro-profile/create-dro-profile/create-dro-profile.component';
+import { EditDroProfileComponent } from '../dro-profile/edit-dro-profile/edit-dro-profile.component';
 
 const routes: Routes = [
+  { path: 'droprofile', component: DroProfileComponent, data: { componentName: 'droProfile' }, canActivate: [AuthGuard] },
+  { path: 'create-dro', component: CreateDroProfileComponent, canActivate: [AuthGuard] },
+  { path: 'edit-dro', component: EditDroProfileComponent, canActivate: [AuthGuard] },
   { path: 'transfer-posting', component: TransferPostingComponent, data: { componentName: 'TransferPosting' }, canActivate: [AuthGuard] },
   { path: 'create-transfer', component: CreateTransferComponent, canActivate: [AuthGuard] },
   { path: 'edit-transfer', component: EditTransferPostingComponent, canActivate: [AuthGuard] },
@@ -200,7 +206,10 @@ const routes: Routes = [
     OfficerTourComponent,
     CreateTourComponent,
     EditTourComponent,
-    DroComponent
+    DroComponent,
+    DroProfileComponent,
+    CreateDroProfileComponent,
+    EditDroProfileComponent
   ],
   imports: [
     CommonModule,

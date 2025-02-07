@@ -771,4 +771,16 @@ export class LeaveTransferService {
     return this.http.get<any>(this.baseUrl+url);
   }
 
+  applyForm(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addFormsupload',data,{headers});
+  }
+  getAppliedForms(){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+'getFormsUpload',{headers});
+  }
+  formApproval(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updateFormsuploadApprovalStatus',data,{headers});
+  }
 }

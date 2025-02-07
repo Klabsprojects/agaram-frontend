@@ -109,6 +109,7 @@
         <div class="collapse collapse1" id="splaforms">
           <ul class="nav flex-column sub-menu">
             <li *ngIf="showMenu('Officer Profile')" class="nav-item"><a class="nav-link" [routerLink]="['officer-profile']">Officer Profile</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['droprofile']">DRO Profile</a></li>
             <li *ngIf="showMenu('Transfer / Posting')" class="nav-item"><a class="nav-link" [routerLink]="['transfer-posting']">Transfer / Posting</a></li>
             <li *ngIf="showMenu('Promotion')" class="nav-item"><a class="nav-link" [routerLink]="['promotion']">Promotion</a></li>
             <li *ngIf="showMenu('Leave')" class="nav-item"><a class="nav-link" [routerLink]="['leave']">Leave</a></li>
@@ -166,6 +167,12 @@
       </div>
     </li>
 
+    <li *ngIf="showMenu('Master Creation')"  class="nav-item" [routerLinkActive]="['active']">
+      <a class="nav-link" [routerLink]="['notification']">
+        <i class="mdi mdi-bell menu-icon" [class.active]="isActive('notification')"></i>
+        <span class="menu-title" [class.active]="isActive('notification')">Notification</span>
+      </a>
+    </li>
      
   
       <li *ngIf="showMenu('Master Creation')" class="nav-item" [routerLinkActive]="['active']">
