@@ -144,13 +144,14 @@ export class ImpUpdatesComponent {
   edit(data: any) {
     this.setEditMode(true)
     this.editId = data._id;
-    this.actrulesForm.get('Question')?.setValue(data.Question);
-    this.actrulesForm.get('Answer')?.setValue(data.Answer);
+    const dateString = data.announcementDate.split('T')[0];
+    this.actrulesForm.get('announcementDate')?.setValue(dateString);
+    this.actrulesForm.get('announcementText')?.setValue(data.announcementText);
   }
   delete(id: any) {
-    this.foreignVisitService.uploadDelete('deletefaq', id).subscribe((res: any) => {
-      console.log("res delete", res);
-      if (res.status === 200) {
+    this.foreignVisitService.uploadDelete('deleteAnnouncement', id).subscribe((res: any) => {
+      console.log("res.suc",res);
+      if (res.success) {
         alert("Deleted Succesfully");
         this.getlist()
       }
@@ -161,8 +162,8 @@ export class ImpUpdatesComponent {
     if (this.actrulesForm.valid) {
       var formValues = this.actrulesForm.value;
       if (this.isEdit && this.editId) {
-        formValues['id'] = this.editId.toString()
-        this.foreignVisitService.uploadEdit(formValues, 'updatefaq').subscribe((res: any) => {
+        // formValues['id'] = this.editId.toString()
+        this.foreignVisitService.uploadEdit(formValues, `updateAnnouncement/${this.editId.toString()}`).subscribe((res: any) => {
           if (res.status === 200) {
             alert("Updated Succesfully");
             this.resetForm();

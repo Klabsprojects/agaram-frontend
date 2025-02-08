@@ -17,7 +17,7 @@
                             <th>#</th>
                             <th>Date</th>
                             <th>Announcement</th>
-                            <!-- <th *ngIf="showEdit">Action</th> -->
+                            <th *ngIf="showEdit">Action</th>
                         </tr>
 
                     </thead>
@@ -27,10 +27,10 @@
                                 <td>{{i + startIndex +1}}</td>
                                 <td>{{data.announcementDate | date:'dd/MM/YYYY'}}</td>
                                 <td>{{data.announcementText}}</td>
-                                <!-- <td class="text-center" *ngIf="showEdit">
+                                <td class="text-center" *ngIf="showEdit">
                                     <button type="button" class="btn btn-info p-2 mr-2" (click)="edit(data)" *ngIf="showEdit">Edit</button>
                                     <button type="button" class="btn btn-info p-2" style="font-size: 12px;" (click)="delete(data._id)" *ngIf="showEdit">Delete</button>
-                                </td> -->
+                                </td>
                             </tr>
                         </ng-container>
                         <ng-template #noRecords>
