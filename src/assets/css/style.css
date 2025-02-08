@@ -10046,7 +10046,9 @@ pre code {
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #f3f3f3;
-  background-color: #c8ddf2;
+  /* background-color: #c8ddf2; */
+  background-color: #093263;
+  color: #fff;
 }
 
 .table tbody + tbody {
