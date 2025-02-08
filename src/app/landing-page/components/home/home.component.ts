@@ -22,6 +22,9 @@ export class HomeComponent {
       this.dashboardCounts.push({'title':'Officers on Deputation','count':res.results.empCount});
       console.log('this.dashboardCounts => ', this.dashboardCounts);
     })
+    this.service.getapicall('getRecentAnnouncements').subscribe((res:any)=>{
+      this.announcements = res.results;
+    })
   }
   public dashboardCounts:any[]=[];
   public texts: any[] = ['Total Officers','Active Officers', 'Retired Officers', 'Officers on Deputation']
