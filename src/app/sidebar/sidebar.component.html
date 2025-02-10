@@ -201,7 +201,7 @@
         </a>
       </li>
 
-      <li class="nav-item" [routerLinkActive]="['active']">
+      <li *ngIf="showMenu('Role')" class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" [routerLink]="['Messages']">
           <i class="mdi mdi-message menu-icon" [class.active]="isActive('Messages')"></i>
           <span class="menu-title" [class.active]="isActive('Messages')">Messages <span class="count" *ngIf="messageCount>0">{{messageCount}}</span></span>
