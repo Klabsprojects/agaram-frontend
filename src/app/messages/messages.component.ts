@@ -24,7 +24,8 @@ export class MessagesComponent {
       emailaddress: 'john.doe@example.com',
       subject: 'Inquiry about services',
       message: 'I would like to know more about your services.',
-      date: '2024-02-01'
+      date: new Date('2024-02-01'),
+      is_read: false  // Unread
     },
     {
       _id:2,
@@ -32,7 +33,8 @@ export class MessagesComponent {
       emailaddress: 'jane.smith@example.com',
       subject: 'Feedback on product',
       message: 'The product quality is excellent. Thank you!',
-      date: '2024-02-05'
+      date: new Date('2024-02-05'),
+      is_read: false  // Read
     },
     {
       _id:3,
@@ -40,7 +42,8 @@ export class MessagesComponent {
       emailaddress: 'michael.johnson@example.com',
       subject: 'Support request',
       message: 'I am facing issues with logging into my account.',
-      date: '2024-02-07'
+      date: new Date('2024-02-07'),
+      is_read: false  // Unread
     },
     {
       _id:4,
@@ -48,7 +51,8 @@ export class MessagesComponent {
       emailaddress: 'emily.brown@example.com',
       subject: 'Billing issue',
       message: 'I was charged twice for my last purchase.',
-      date: '2024-02-09'
+      date: new Date('2024-02-09'),
+      is_read: true  // Read
     },
     {
       _id:5,
@@ -56,9 +60,11 @@ export class MessagesComponent {
       emailaddress: 'chris.wilson@example.com',
       subject: 'Request for information',
       message: 'Can you provide more details on your pricing?',
-      date: '2024-02-10'
+      date: new Date('2024-02-10'),
+      is_read: true  // Unread
     }
   ];
+  
   
   pageSize: number = 10; // Number of items per page
   pageSizeOptions: number[] = [1, 5, 10, 15, 20];
@@ -234,9 +240,10 @@ export class MessagesComponent {
   }
   selectedEmail: any = null;
 
-  view(data: any) { 
+  view(data: any,i:any) { 
       this.selectedEmail = data; // Store the selected email data
       this.showModal();
+      this.tableData[i].is_read=true;
   }
   hideModal() {
     const modalElement = document.getElementById('viewForeignVisit');
