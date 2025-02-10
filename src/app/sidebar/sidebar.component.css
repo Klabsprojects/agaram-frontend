@@ -35,3 +35,10 @@
     font-family: 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times,serif';
     margin-bottom: 0.5rem;
   }
+
+  .count{
+    background-color: red;
+    color: #fff;
+    padding: 0 5px;
+    border-radius: 50%;
+  }

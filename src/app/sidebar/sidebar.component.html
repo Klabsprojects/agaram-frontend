@@ -200,6 +200,13 @@
           <span class="menu-title" [class.active]="isActive('role')">Role</span>
         </a>
       </li>
+
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['Messages']">
+          <i class="mdi mdi-message menu-icon" [class.active]="isActive('Messages')"></i>
+          <span class="menu-title" [class.active]="isActive('Messages')">Messages <span class="count" *ngIf="messageCount>0">{{messageCount}}</span></span>
+        </a>
+      </li>
   
       <li class="nav-item">
         <a class="nav-link" (click)="logout()">

@@ -8,6 +8,7 @@ import { LeaveTransferService } from '../forms/forms.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit {
+  messageCount:number=5;
   showSubMenu = false;
   activeSubMenu: string | null = null;
   roleData:any[]=[];
