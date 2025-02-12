@@ -71,6 +71,7 @@ import { EditHbaComponent } from './hba/edit-hba/edit-hba.component';
 import { DroProfileComponent } from '../dro-profile/dro-profile.component';
 import { CreateDroProfileComponent } from '../dro-profile/create-dro-profile/create-dro-profile.component';
 import { EditDroProfileComponent } from '../dro-profile/edit-dro-profile/edit-dro-profile.component';
+import { ImpUpdatesComponent } from './uploads/imp-updates/imp-updates.component';
 
 const routes: Routes = [
   { path: 'droprofile', component: DroProfileComponent, data: { componentName: 'droProfile' }, canActivate: [AuthGuard] },
@@ -133,6 +134,7 @@ const routes: Routes = [
   { path: 'utility', component: UtilityformsComponent, data: { componentName: 'Utilityforms' }, canActivate: [AuthGuard] },
   { path: 'act-rule', component: ActrulesComponent, data: { componentName: 'Actrules' }, canActivate: [AuthGuard] },
   { path: 'faq', component: FaqComponent, data: { componentName: 'Faq' }, canActivate: [AuthGuard] },
+  { path: 'important-updates', component: ImpUpdatesComponent, data: { componentName: 'Impupdate' }, canActivate: [AuthGuard] },
   { path: 'post-transfer', component: PostingTransferComponent, data: { componentName: 'PostingTransfer' }, canActivate: [AuthGuard] },
   { path: 'special-entry', component: SpecialEntriesComponent, data: { componentName: 'SpecialEntries' }, canActivate: [AuthGuard] },
   { path: 'officer-tour', component: OfficerTourComponent, data: { componentName: 'OfficerTour' }, canActivate: [AuthGuard] },
@@ -209,7 +211,8 @@ const routes: Routes = [
     DroComponent,
     DroProfileComponent,
     CreateDroProfileComponent,
-    EditDroProfileComponent
+    EditDroProfileComponent,
+    ImpUpdatesComponent
   ],
   imports: [
     CommonModule,

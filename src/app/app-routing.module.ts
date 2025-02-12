@@ -87,6 +87,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'Messages',
+    loadChildren:()=>import('./messages/messages.module').then(m=>m.MessagesModule),
+    canActivate:[AuthGuard]
+  },
+  {
     path:'',
     redirectTo:'Landing',
     pathMatch:'full'

@@ -61,7 +61,7 @@ export class ActiveOfficersComponent {
               designation: this.designations.find((d: any) => d._id === employee.toDesignationId)?.designation_name || '',
               dateOfJoining : employee.dateOfJoining,
               location: employee.city,
-              address:employee.Departmentdetails.address,
+              address: (employee.Departmentdetails && employee.Departmentdetails.address) ? employee.Departmentdetails.address : '',
               officeEmail:employee.officeEmail,
               imagePath:employee.imagePath
             };
