@@ -1,0 +1,53 @@
+<div class="col-12">
+    <div class="card px-2">
+      <div class="card-body">
+  
+  <h5>Previous Posting List <button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()">Add New</button></h5>
+  
+  <div class="col-md-12 p-0">
+  <!-- <div class="col-md-3 px-0 mt-4 mb-0">
+    <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+  </div> -->
+  
+  </div>
+  
+  
+  <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 float-left">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Officer Name</th>
+        <th>Officer ID</th>
+        <th>Batch</th>
+        <!-- <th>From Date</th>
+        <th>To Date</th> -->
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+        <tr *ngFor="let data of pagedData(); let i = index">
+          <td>{{i + startIndex+ 1}}</td>
+          <td>{{data.empProfileId.fullName}}</td>
+          <td>{{data.empProfileId.empProfileId}}</td>
+          <td>{{data.empProfileId.batch}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-info p-2 mr-2" (click)="editPreviousPosting(data._id)" disabled>Edit</button>
+            <button type="button" class="btn btn-info p-2" style="font-size: 12px;" disabled data-toggle="modal" data-target="#viewPreviousPosting" (click)="viewPreviousPosting(data._id)">View</button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #noRecords>
+        <tr>
+          <td colspan="13" style="color: red;">No records found</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  
+  
+    </div>
+    </div>
+    </div>
+  
+    

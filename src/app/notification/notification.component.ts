@@ -10,15 +10,24 @@ import { Router, Routes } from '@angular/router';
 export class NotificationComponent implements OnInit{
     notificationData:any[]=[];
     url='';
+    pageSize: number = 100; 
+    pageSizeOptions: number[] = [5, 10, 15, 20];
+    currentPage: number = 1;
+    visiblePages: number[] = [];
+    maxVisiblePages = 100;
+
     constructor(private notificationService:LeaveTransferService,private router:Router) { }
   
     ngOnInit(): void {
       this.url = this.notificationService.fileUrl;
-      console.log("nof");
       this.notificationService.getAppliedForms().subscribe((res:any)=>{
         this.notificationData = res.results;
       })
     }
+
+    
+
+   
   
     approve(data:any){
       console.log(data,data.formType);

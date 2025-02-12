@@ -72,6 +72,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'previous-posting',
+    loadChildren:()=>import('./previous-posting/previous-posting.module').then(m=>m.PreviousPostingModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path:'role',
     loadChildren:()=>import('./role/role.module').then(m=>m.RoleModule),
     canActivate: [AuthGuard]

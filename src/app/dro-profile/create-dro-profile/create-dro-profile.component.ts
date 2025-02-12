@@ -43,6 +43,10 @@ droForm!: FormGroup;
   setValues:boolean=false;
   showPosting:boolean=false;
   servingtype: string = '';
+  orderFor:any[]=[];
+  orderType:any[]=[];
+  selectedFile : File | null = null;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private fb: FormBuilder, private droAction: LeaveTransferService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -53,15 +57,15 @@ droForm!: FormGroup;
     this.droForm = this.fb.group({
       employeeId: [''],
       ifhrmsId: [''],
-      fullName: ['', Validators.required],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      dateOfJoining: ['', Validators.required],
+      fullName: [''],
+      gender: [''],
+      dateOfBirth: [''],
+      dateOfJoining: [''],
       dateOfRetirement: [''],
-      state: ['', Validators.required],
+      state: [''],
       batch: [''],
-      recruitmentType: ['', Validators.required],
-      serviceStatus: ['', Validators.required],
+      recruitmentType: [''],
+      serviceStatus: [''],
       religion: [''],
       community: [''],
       caste: [''],
@@ -69,30 +73,37 @@ droForm!: FormGroup;
       mobileNo1: [''],
       mobileNo2: [''],
       mobileNo3: [''],
-      addressLine: ['', Validators.required],
-      city: ['', Validators.required],
-      pincode: ['', Validators.required],
-      promotionGrade: ['', Validators.required],
+      addressLine: [''],
+      city: [''],
+      pincode: [''],
+      promotionGrade: [''],
       officeEmail: [''],
       payscale: [''],
       imagePath: [null],
       degreeData: this.fb.array([this.createRow()]),
       seniority: [''],
-      toPostingInCategoryCode:['',Validators.required],
-      toDepartmentId:['',Validators.required],
-      toDesignationId:['',Validators.required],
-      postTypeCategoryCode:['',Validators.required],
-      locationChangeCategoryId:['',Validators.required],
-      languages:['',Validators.required],
-      deptAddress:['',Validators.required],
-      deptPhoneNumber:['',Validators.required],
+      toPostingInCategoryCode:[''],
+      toDepartmentId:[''],
+      toDesignationId:[''],
+      postTypeCategoryCode:[''],
+      locationChangeCategoryId:[''],
+      languages:[''],
+      deptAddress:[''],
+      deptPhoneNumber:[''],
       deptFaxNumber:[''],
       deptOfficialMobileNo:[''],
-      lastDateOfPromotion:['',Validators.required],
+      lastDateOfPromotion:[''],
       department:[''],
       department_name:[''],
       updateType:[''],
-      serving:['']
+      serving:[''],
+      orderType:[''],
+      orderNo:[''],
+      orderFor:[''],
+      dateOfOrder:[''],
+      remarks:[''],
+      orderFile:[null]
+
     });
 
     this.droAction.getDegree().subscribe((res: any) => {
@@ -141,6 +152,12 @@ droForm!: FormGroup;
           case "location_change":
             this.locationChange.push({ label: item.category_name, value: item._id });
             break;
+          case "order_type":
+              this.orderType.push({label:item.category_name,value:item._id});
+          break;
+          case "order_for":
+              this.orderFor.push({ label: item.category_name, value: item._id });
+           break; 
           default:
             break;
         }
@@ -388,10 +405,31 @@ droForm!: FormGroup;
     }
   }
 
+  onPdfFileSelected(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.droForm.patchValue({ orderFile: this.selectedFile });
+    }
+    this.selectedFile = event.target.files[0];
+    this.droForm.get('orderFile')?.setValue(this.selectedFile);
+    if (this.selectedFile) {
+      if (this.selectedFile.type !== 'application/pdf') {
+        this.droForm.get('orderFile')?.setErrors({ 'incorrectFileType': true });
+        return;
+      }
+
+      if (this.selectedFile.size > 5 * 1024 * 1024) { // 5MB in bytes
+        this.droForm.get('orderFile')?.setErrors({ 'maxSize': true });
+        return;
+      }
+
+      this.droForm.get('orderFile')?.setErrors(null);
+    }
+  }
 
   removeImage() {
     this.selectedImage = null;
-    // You may also want to clear the file input here to allow selecting the same image again
     this.droForm.get('imagePath')?.setValue(null);
     this.base64String = null;
   }
@@ -418,24 +456,6 @@ droForm!: FormGroup;
     }
   }
   
-  // calculateRetirement() {
-  //   if (this.droForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d6') {
-  //     this.calculateRetirementDate();
-  //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
-  //     this.showPosting = true;
-  //   }
-  //   else if (this.droForm.get('serviceStatus')?.value == '65f43649a4a01c1cbbd6c9d7') {
-  //     this.droForm.get('dateOfRetirement')?.setValue('');
-  //     this.servingtype = '65f43649a4a01c1cbbd6c9d7';
-  //     this.showPosting = false;
-  //   }
-  //   else if (this.droForm.get('serviceStatus')?.value == '') {
-  //     this.droForm.get('dateOfRetirement')?.setValue('');
-  //     this.servingtype = '65f43649a4a01c1cbbd6c9d6';
-  //     this.showPosting = false;
-  //   }
-  // }
-
   calculateRetirement() {
     const serviceStatus = this.droForm.get('serviceStatus')?.value;
   
@@ -443,53 +463,21 @@ droForm!: FormGroup;
       this.calculateRetirementDate();
       this.servingtype = serviceStatus;
       this.showPosting = true;
-      this.toggleFieldValidation(true);
-      this.setDepartmentAndServing('yes', 'yes', 'Transfer / Posting'); 
+      this.setDepartmentAndServing('yes', 'yes', ''); 
     } else if (serviceStatus === '65f43649a4a01c1cbbd6c9d7') {
       this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = serviceStatus;
       this.showPosting = false;
-      this.toggleFieldValidation(false);
       this.setDepartmentAndServing('no', 'no', ''); 
     } else if (serviceStatus === '') {
       this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = '65f43649a4a01c1cbbd6c9d6';
       this.showPosting = false;
-      this.toggleFieldValidation(false);
       this.setDepartmentAndServing('no', 'no', ''); 
     }
   }
   
-  toggleFieldValidation(isRequired: boolean) {
-    const fieldsToValidate = [
-      'toPostingInCategoryCode',
-      'toDepartmentId',
-      'toDesignationId',
-      'postTypeCategoryCode',
-      'locationChangeCategoryId',
-      'languages',
-      'deptAddress',
-      'deptPhoneNumber',
-      'lastDateOfPromotion',
-      'department',
-      'updateType',
-      'serving'
-    ];
-  
-    fieldsToValidate.forEach((field) => {
-      const control = this.droForm.get(field);
-  
-      if (control) {
-        if (isRequired) {
-          control.setValidators(Validators.required);
-        } else {
-          control.clearValidators();
-          control.setValue(''); // Clear the value if not required
-        }
-        control.updateValueAndValidity();
-      }
-    });
-  }
+ 
   
   setDepartmentAndServing(departmentValue: string, servingValue: string, updateTypeValue: string) {
     const departmentControl = this.droForm.get('department');
@@ -536,15 +524,6 @@ droForm!: FormGroup;
     }
   }
 
-  // getCompletedYear(){
-  //   const dojValue = this.droForm.get('courseCompletedDate')?.value;
-  //   if(dojValue){
-  //     const dob = new Date(dojValue);
-  //     const completedYear = dob.getFullYear(); 
-  //     this.droForm.get('courseCompletedYear')?.setValue(completedYear); 
-  //   }
-  // }
-
   onKeyDown(event: KeyboardEvent) {
     const key = event.key;
     if (!((key >= '0' && key <= '9') ||
@@ -576,26 +555,87 @@ droForm!: FormGroup;
       }
     });
   }
+ 
   onSubmit() {
     this.submitted = true;
+    
     if (this.droForm.valid) {
       const formValue = this.droForm.value;
+  
       console.log('droForm', formValue);
+      formValue.addedBy = 'DRO Profile';
+      formValue.submittedBy = this.submittedBy;
+  
+      // Check if degreeData exists, is an array, and has values
+      if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
+        formValue.degreeData.forEach((degree: any) => {
+          degree.addedBy = 'DRO Profile';
+        });
+      } else {
+        formValue.degreeData = []; // Set to empty array if no degreeData
+      }
+  
+      console.log("formValue.degreeData", formValue.degreeData);
+  
+      const formData = new FormData();
       
+      // Append the non-file fields (except degreeData and submittedBy)
+      for (const key in formValue) {
+        if (formValue.hasOwnProperty(key) && key !== 'orderFile' && key !== 'imagePath' && key !== 'degreeData' && key !== 'submittedBy') {
+          formData.append(key, formValue[key] !== null && formValue[key] !== undefined ? formValue[key] : '');
+        }
+      }
+      
+      // Handle orderFile (append only if a file is selected)
+      if (this.selectedFile) {
+        formData.append('orderFile', this.selectedFile);
+      } else {
+        formData.append('orderFile', '');  // If no file, append empty value
+      }
+  
+      // Handle imagePath (append only if a file is selected)
+      const imagePathValue = this.droForm.get('imagePath')?.value;
+      if (imagePathValue instanceof File) {
+        formData.append('imagePath', imagePathValue);
+      } else {
+        formData.append('imagePath', '');  // If no file, append empty value
+      }
+  
+      // Append degreeData as JSON string if it's not empty
+      if (formValue.degreeData.length > 0) {
+        formData.append('degreeData', JSON.stringify(formValue.degreeData));
+      } else {
+        formData.append('degreeData', ''); // Append empty string if degreeData is empty
+      }
+  
+      // Append addedBy and submittedBy only once
+      formData.append('addedBy', 'DRO Profile');
+      formData.append('submittedBy', this.submittedBy);
+  
+      // Log form data entries for debugging (cast formData to any to use entries())
+      (formData as any).entries().forEach((pair: [string, FormDataEntryValue]) => {
+        console.log(pair[0], pair[1]);
+      });
+  
+      // Submit the form data
+      this.droAction.createDroProfile(formData).subscribe(
+        (response: any) => {
+          alert(response.message);
+          this.droForm.reset();
+          // this.router.navigate(['droprofile']);
+          console.log('API Response:', response);
+        },
+        error => {
+          console.error('API Error:', error);
+          alert(error.message);
+        }
+      );
+    } else {
+      console.log(this.droForm.value);
+    }
   }
-}
+  
+
 }
 
-export class educationDetails {
-  courseLevel: string = '';
-  degree: string = '';
-  specialisation: string = '';
-  instituteName: string = '';
-  locationState: string = '';
-  locationCountry: string = '';
-  durationOfCourse: string = '';
-  fund: string = '';
-  fees: number = 0;
-  courseCompletedDate: string = '';
-  courseCompletedYear: number = 0;
-}
+

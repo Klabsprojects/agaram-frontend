@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LeaveTransferService } from '../forms/forms.service';
 import { Router } from '@angular/router';
 
@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   templateUrl: './dro-profile.component.html',
   styleUrl: './dro-profile.component.css'
 })
-export class DroProfileComponent {
+export class DroProfileComponent implements OnInit{
 
-public employeeListData:any[]=[];
+  public droListData:any[]=[];
   filterText: any;
   pageSize: number = 100; // Number of items per page
   pageSizeOptions: number[] = [5, 10, 15, 20];
@@ -20,19 +20,21 @@ public employeeListData:any[]=[];
   showEdit:boolean = false;
   showApprove:boolean = false;
   showView:boolean=false;
-  viewEmployeeData = new viewEmployeeData();
+  viewDroData = new viewDroData();
   base64ImageData:string='';
   showPopup = true;
   showPosting = false;
+  url='';
 
   constructor(private router:Router, private droAction:LeaveTransferService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.url = this.droAction.fileUrl;
     const loginId = localStorage.getItem('loginId');
    const loginAs = localStorage.getItem('loginAs');
-    // this.droAction.getEmployeeLists(loginId,loginAs).subscribe((res:any)=>{
-    //   this.employeeListData = res.results;
-    // });
+    this.droAction.getDroList().subscribe((res:any)=>{
+      this.droListData = res.results;
+    });
     this.checkEntryAccess();
   }
 
@@ -66,13 +68,12 @@ public employeeListData:any[]=[];
     this.router.navigate(['create-dro']);
   }
 
-  
   get filteredEmployeeList() {
     const filterText = (this.filterText || '').trim().toLowerCase();
     if (filterText === '') {
-      return this.employeeListData;
+      return this.droListData;
     } else {
-      return this.employeeListData.filter(employee =>
+      return this.droListData.filter(employee =>
         Object.values(employee).some((value: any) =>
           value && value.toString().toLowerCase().includes(filterText)));
     }
@@ -141,37 +142,37 @@ public employeeListData:any[]=[];
     this.cdr.detectChanges();
   }
 
-  editEmployee(data:any){
+  editDro(data:any){
     this.router.navigate(['edit-dro'], { queryParams: { profile: data } })
   }
 
-  viewEmployee(data:any){
-    this.droAction.getEmployee(data).subscribe((res:any)=>{
+  viewDro(data:any){
+    this.droAction.getDroId(data).subscribe((res:any)=>{
       res.results.forEach((ele:any)=>{
-        this.viewEmployeeData.approvalStatus = ele.approvalStatus;
-        this.viewEmployeeData.id = ele._id;
-        this.viewEmployeeData.submittedBy = ele.submittedBy.loginAs;
-        this.viewEmployeeData.approvedBy = ele.approvedBy?.loginAs;
-        this.viewEmployeeData.fullName = ele.fullName;
-        this.viewEmployeeData.caste = ele.caste;
-        this.viewEmployeeData.mobileNo1 = ele.mobileNo1;
-        this.viewEmployeeData.mobileNo2 = ele.mobileNo2;
-        this.viewEmployeeData.mobileNo3 = ele.mobileNo3;
-        this.viewEmployeeData.personalEmail = ele.personalEmail;
-        this.viewEmployeeData.dateOfBirth = ele.dateOfBirth;
-        this.viewEmployeeData.addressLine = ele.addressLine;
-        this.viewEmployeeData.city = ele.city;
-        this.viewEmployeeData.pincode = ele.pincode;
-        this.viewEmployeeData.employeeId = ele.employeeId;
-        this.viewEmployeeData.ifhrmsId = ele.ifhrmsId;
-        this.viewEmployeeData.batch = ele.batch;
-        this.viewEmployeeData.dateOfJoining = ele.dateOfJoining;
-        this.viewEmployeeData.dateOfRetirement = ele.dateOfRetirement;
-        this.viewEmployeeData.officeEmail = ele.officeEmail;
-        this.viewEmployeeData.payscale = ele.payscale;
-        this.viewEmployeeData.educationdetails = ele.degreeData;
-        this.viewEmployeeData.seniority = ele.seniority;
-        this.viewEmployeeData.imagePath = `${this.droAction.fileUrl}profileImages/${ele.imagePath?.replace('\\', '/')}`;
+        this.viewDroData.approvalStatus = ele.approvalStatus;
+        this.viewDroData.id = ele._id;
+        this.viewDroData.submittedBy = ele.submittedBy.loginAs;
+        this.viewDroData.approvedBy = ele.approvedBy?.loginAs;
+        this.viewDroData.fullName = ele.fullName;
+        this.viewDroData.caste = ele.caste;
+        this.viewDroData.mobileNo1 = ele.mobileNo1;
+        this.viewDroData.mobileNo2 = ele.mobileNo2;
+        this.viewDroData.mobileNo3 = ele.mobileNo3;
+        this.viewDroData.personalEmail = ele.personalEmail;
+        this.viewDroData.dateOfBirth = ele.dateOfBirth;
+        this.viewDroData.addressLine = ele.addressLine;
+        this.viewDroData.city = ele.city;
+        this.viewDroData.pincode = ele.pincode;
+        this.viewDroData.employeeId = ele.employeeId;
+        this.viewDroData.ifhrmsId = ele.ifhrmsId;
+        this.viewDroData.batch = ele.batch;
+        this.viewDroData.dateOfJoining = ele.dateOfJoining;
+        this.viewDroData.dateOfRetirement = ele.dateOfRetirement;
+        this.viewDroData.officeEmail = ele.officeEmail;
+        this.viewDroData.payscale = ele.payscale;
+        this.viewDroData.educationdetails = ele.degreeData;
+        this.viewDroData.seniority = ele.seniority;
+        this.viewDroData.imagePath = `${this.droAction.fileUrl}droProfileImages/${ele.imagePath?.replace('\\', '/')}`;
         // const binaryData = new Uint8Array(ele.photo.data);
         // this.base64ImageData = this.arrayBufferToBase64(binaryData);
         this.droAction.getDegree().subscribe((response:any)=>{
@@ -187,7 +188,7 @@ public employeeListData:any[]=[];
         this.droAction.getDesignations().subscribe((res:any)=>{
           res.results.forEach((item:any)=>{
             if(item._id == ele.toDesignationId){
-              this.viewEmployeeData.toDesignationId = item.designation_name;
+              this.viewDroData.toDesignationId = item.designation_name;
             }
           })
         })
@@ -195,7 +196,7 @@ public employeeListData:any[]=[];
         this.droAction.getDepartmentData().subscribe((res:any)=>{
           res.forEach((item:any)=>{
             if(item._id == ele.toDepartmentId){
-              this.viewEmployeeData.toDepartmentId = item.department_name;
+              this.viewDroData.toDepartmentId = item.department_name;
             }
           })
         })
@@ -203,10 +204,10 @@ public employeeListData:any[]=[];
         this.droAction.getData().subscribe((res:any)=>{
           res.forEach((data:any)=>{
             if(data.category_type == "gender" && data._id == ele.gender){
-              this.viewEmployeeData.gender = data.category_name;
+              this.viewDroData.gender = data.category_name;
             }
             if(data.category_type == "state" && data._id == ele.state){
-              this.viewEmployeeData.state = data.category_name;
+              this.viewDroData.state = data.category_name;
             }
             if (data.category_type == "state") {
               ele.degreeData.forEach((element:any)=>{
@@ -224,15 +225,15 @@ public employeeListData:any[]=[];
             }
   
             if(data.category_type == "class" && data._id == ele.community){
-              this.viewEmployeeData.community = data.category_name;
+              this.viewDroData.community = data.category_name;
             }
             if(data.category_type == "recruitment_type" && data._id == ele.recruitmentType){
-              this.viewEmployeeData.recruitmentType = data.category_name;
+              this.viewDroData.recruitmentType = data.category_name;
             }
             if(data.category_type == "service_status" && data._id == ele.serviceStatus){
-              this.viewEmployeeData.serviceStatus = data.category_name;
-              console.log(this.viewEmployeeData.serviceStatus);
-              if(this.viewEmployeeData.serviceStatus == "Serving"){
+              this.viewDroData.serviceStatus = data.category_name;
+              console.log(this.viewDroData.serviceStatus);
+              if(this.viewDroData.serviceStatus == "Serving"){
                 this.showPosting = true;
               }
               else{
@@ -240,28 +241,28 @@ public employeeListData:any[]=[];
               }
             }
             if(data.category_type == "religion" && data._id == ele.religion){
-              this.viewEmployeeData.religion = data.category_name;
+              this.viewDroData.religion = data.category_name;
             }
             if(data.category_type == "promotion_grade" && data._id == ele.promotionGrade){
-              this.viewEmployeeData.promotionGrade = data.category_name;
+              this.viewDroData.promotionGrade = data.category_name;
             }
             if(data.category_type == "posting_in" && data._id == ele.toPostingInCategoryCode){
-              this.viewEmployeeData.toPostingInCategoryCode = data.category_name;
+              this.viewDroData.toPostingInCategoryCode = data.category_name;
             }
             if(data.category_type == "post_type" && data._id == ele.postTypeCategoryCode){
-              this.viewEmployeeData.postTypeCategoryCode = data.category_name;
+              this.viewDroData.postTypeCategoryCode = data.category_name;
             }
             if(data.category_type == "location_change" && data._id == ele.locationChangeCategoryId){
-              this.viewEmployeeData.locationChangeCategoryId = data.category_name;
+              this.viewDroData.locationChangeCategoryId = data.category_name;
             }
           })
-          this.viewEmployeeData.languages = ele.languages;
-        this.viewEmployeeData.lastDateOfPromotion = ele.lastDateOfPromotion;
-        this.viewEmployeeData.deptAddress = ele.departmentId.address;
-        this.viewEmployeeData.deptFaxNumber = ele.departmentId.faxNumber;
-        this.viewEmployeeData.deptOfficialMobileNo = ele.departmentId.officialMobileNo;
-        this.viewEmployeeData.deptPhoneNumber = ele.departmentId.phoneNumber;
-        // this.viewEmployeeData.toDepartmentId = ele.departmentId.department_name;
+          this.viewDroData.languages = ele.languages;
+        this.viewDroData.lastDateOfPromotion = ele.lastDateOfPromotion;
+        this.viewDroData.deptAddress = ele.departmentId.address;
+        this.viewDroData.deptFaxNumber = ele.departmentId.faxNumber;
+        this.viewDroData.deptOfficialMobileNo = ele.departmentId.officialMobileNo;
+        this.viewDroData.deptPhoneNumber = ele.departmentId.phoneNumber;
+        // this.viewDroData.toDepartmentId = ele.departmentId.department_name;
         })
       });
     });
@@ -283,9 +284,26 @@ public employeeListData:any[]=[];
       })
      }
   }
+  
+  // exportToPDF() {
+  //       const data = document.getElementById('table-to-export');
+  //       if (data) {
+  //           html2canvas(data).then(canvas => {
+  //               const imgWidth = 208;
+  //               const pageHeight = 295;
+  //               const imgHeight = canvas.height * imgWidth / canvas.width;
+  //               const heightLeft = imgHeight;
+  //               const doc = new jsPDF('p', 'mm', 'a4');
+  //               let position = 0;
+
+  //               doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+  //               doc.save('table-data.pdf');
+  //           });
+  //       }
+  //   }
 }
 
-export class viewEmployeeData{
+export class viewDroData{
   id:string='';
   fullName:string='';
   gender:string='';
@@ -328,6 +346,12 @@ export class viewEmployeeData{
   toDesignationId:string='';
   toDepartmentId:string='';
   toPostingInCategoryCode:string='';
+  orderType:string='';
+  orderNo:string='';
+  orderFor:string='';
+  dateOfOrder:string='';
+  orderFile:string='';
+  remarks:string='';
 }
 export class education{
   courseLevel:string='';
@@ -344,5 +368,3 @@ export class education{
   courseCompletedYear:string='';
   courseCompletedDate:string='';
 }
-
-

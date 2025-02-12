@@ -15,10 +15,10 @@ export class LeaveTransferService {
   private roleDataSource = new BehaviorSubject<any[]>(this.getLocalRoleData());
   currentRoleData = this.roleDataSource.asObservable();
 
-        //  baseUrl = 'http://localhost:5500/api/';
-        //  fileUrl = 'http://localhost:5500/';
-        fileUrl = 'https://agaram.a2zweb.in/backend/';
-        baseUrl = 'https://agaram.a2zweb.in/v1/api/';
+         baseUrl = 'http://localhost:5500/api/';
+         fileUrl = 'http://localhost:5500/';
+        // fileUrl = 'https://agaram.a2zweb.in/backend/';
+        // baseUrl = 'https://agaram.a2zweb.in/v1/api/';
         private roleDataKey = 'roleData';
         private token: string='';
         
@@ -782,5 +782,25 @@ export class LeaveTransferService {
   formApproval(data:any){
     const headers = this.getHeaders();
     return this.http.put<any>(this.baseUrl+'updateFormsuploadApprovalStatus',data,{headers});
+  }
+  createDroProfile(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addDroProfile',data,{headers});
+  }
+  getDroList(){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+'getDroProfile',{headers});
+  }
+  getDroId(_id:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getDroProfile?_id=${_id}`,{headers});
+  }
+  addPreviousPosting(data:any){
+    const headers = this.getHeaders();
+    return this.http.post<any>(this.baseUrl+'addPreviousPosting',data,{headers});
+  }
+  getPreviousPostingList(){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+'getPreviousPosting',{headers});
   }
 }

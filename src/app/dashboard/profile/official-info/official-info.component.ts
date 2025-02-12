@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './official-info.component.css'
 })
 export class OfficialInfoComponent implements OnInit{
+  modalTitle: string = '';
+
   constructor(private dashboardService: LeaveTransferService, private datePipe: DatePipe, private cs:CommonService, private fb:FormBuilder) {
   }
   employeeProfileId:string='';
@@ -412,18 +414,92 @@ export class OfficialInfoComponent implements OnInit{
   }
   
   
-  onApply() {
-    this.formType = 'SAF Games Village';
-    this.hideModal('SAF');
-    this.showModal('safApplication');
+  onApply(formType: string) {
+    if (formType === 'SAF') {
+      this.formType = 'SAF Games Village';
+      this.modalTitle = 'Apply for SAF Games Village';
+      this.hideModal('SAF');
+      
+    } else if (formType === 'TransferPosting') {
+      this.formType = 'Transfer / Posting';
+      this.modalTitle = 'Apply for Transfer / Posting';
+      this.hideModal('transferposting');
+    }
+    else if (formType === 'Medical Reimbursement') {
+      this.formType = 'Medical Reimbursement';
+      this.modalTitle = 'Apply for Medical Reimbursement';
+      this.hideModal('medical');
+    } 
+    else if (formType === 'applyLeave') {
+      this.formType = 'Leave';
+      this.modalTitle = 'Apply for Leave';
+      this.hideModal('leave');
+    }
+    else if (formType === 'applyTraining') {
+      this.formType = 'Training';
+      this.modalTitle = 'Apply for Training';
+      this.hideModal('training');
+    }
+    else if (formType === 'applyForeignVisit') {
+      this.formType = 'Foreign Visit';
+      this.modalTitle = 'Apply for Foreign Visit';
+      this.hideModal('foriegnvisit');
+    }
+    else if (formType === 'applyLtc') {
+      this.formType = 'LTC';
+      this.modalTitle = 'Apply for LTC';
+      this.hideModal('ltc');
+    }
+    else if (formType === 'applyPrivateVisit') {
+      this.formType = 'Private Visit';
+      this.modalTitle = 'Apply for Private Visit';
+      this.hideModal('privatevisit');
+    }
+    else if (formType === 'applyImmovable') {
+      this.formType = 'Immovable';
+      this.modalTitle = 'Apply for Immovable';
+      this.hideModal('imasset');
+    }
+    else if (formType === 'applyMovable') {
+      this.formType = 'Movable';
+      this.modalTitle = 'Apply for Movable';
+      this.hideModal('massest');
+    }
+    else if (formType === 'applyEducation') {
+      this.formType = 'Education';
+      this.modalTitle = 'Apply for Education';
+      this.hideModal('education');
+    }
+    else if (formType === 'applyIntimation') {
+      this.formType = 'Intimation';
+      this.modalTitle = 'Apply for Intimation';
+      this.hideModal('intimation');
+    }
+    else if (formType === 'applyHba') {
+      this.formType = 'House Building Advance';
+      this.modalTitle = 'Apply for House Building Advance';
+      this.hideModal('hba');
+    }
+    else if (formType === 'applyOfficerTour') {
+      this.formType = 'OfficerTour';
+      this.modalTitle = 'Apply for Officer Tour';
+      this.hideModal('officerTour');
+    }
+    else if (formType === 'applyGpf') {
+      this.formType = 'GPF';
+      this.modalTitle = 'Apply for GPF';
+      this.hideModal('gpf');
+    }
+    else if (formType === 'applyId') {
+      this.formType = 'MHA ID Card';
+      this.modalTitle = 'Apply MHA ID Card';
+      this.hideModal('mha');
+    }
+    this.showModal('formApply');
+   
   }
 
-  applyMedical(){
-    this.formType = 'Medical Reimbursement';
-    this.hideModal('medical');
-    this.showModal('applyMedical');
-  }
-
+  
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
