@@ -94,7 +94,7 @@ export class CreatePostingComponent implements AfterViewInit {
       toDepartmentId: ['',Validators.required],
       toDesignationId: ['',Validators.required],
       fromDate: ['',Validators.required],
-      toDate: ['',Validators.required],
+      toDate: [''],
       district: ['',Validators.required]
     });
   }
@@ -113,60 +113,85 @@ export class CreatePostingComponent implements AfterViewInit {
   }
 
   
-  toGetDepartment(event: any) {
-    this.toDepartment = [];
+  // toGetDepartment(event: any) {
+  //   this.toDepartment = [];
+  //   this.previousPosting.getData().subscribe((res: any[]) => {
+  //     res.forEach((item) => {
+  //       if (event.target.value == item._id) {
+  //         this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
+  //           res.filter((data: any) => {
+  //             if (item.category_code == data.category_code) {
+  //               this.toDepartment.push({ label: data.department_name, value: data._id });
+  //             }
+  //           });
+  //         })
+  //       }
+  //     });
+  //   })
+  // }
+
+  // toGetDesignation(event: any) {
+  //   this.toDesignation = [];
+  //   this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
+  //     res.forEach((item) => {
+  //       if (event.target.value == item._id) {
+  //         this.previousPosting.getDesignations().subscribe((res: any) => {
+  //           res.results.filter((data: any) => {
+  //             if (item.category_code == data.category_code) {
+  //               this.toDesignation.push({ label: data.designation_name, value: data._id });
+  //               // this.designation = []; 
+  //             }
+  //           })
+  //         })
+  //       }
+  //     });
+  //   });
+  // }
+
+  toGetDepartment(event: any, index: number) {
+    const selectedPostingInId = event.target.value;
+    const departmentControl = this.previousPostingFormArray.controls[index].get('toDepartmentId');
+    departmentControl?.setValue('');
+    const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+    designationControl?.setValue('');
     this.previousPosting.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
-        if (event.target.value == item._id) {
-          this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
-            res.filter((data: any) => {
-              if (item.category_code == data.category_code) {
-                this.toDepartment.push({ label: data.department_name, value: data._id });
-              }
-            });
-          })
-        }
-      });
-    })
-  }
-
-
-  getDesignation(event: any) {
-    this.designation = [];
-    this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
-      res.forEach((item) => {
-        if (event.target.value == item._id) {
-          this.previousPosting.getDesignations().subscribe((res: any) => {
-            res.results.filter((data: any) => {
-              if (item.category_code == data.category_code) {
-                this.designation.push({ label: data.designation_name, value: data._id });
-                console.log(this.department);
-                // this.designation = [];
-              }
-            })
-          })
+        if (selectedPostingInId === item._id) {
+          this.previousPosting.getDepartmentData().subscribe((departmentData: any[]) => {
+            const departments = departmentData.filter((data: any) => data.category_code === item.category_code);
+              this.toDepartment[index] = departments.map((data) => ({
+              label: data.department_name, 
+              value: data._id
+            }));
+          });
         }
       });
     });
-  }
+}
 
-  toGetDesignation(event: any) {
-    this.toDesignation = [];
+toGetDesignation(event: any, index: number) {
+    const selectedDepartmentId = event.target.value;
+    const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+
+    // Clear the previous designation list
+    designationControl?.setValue(''); // Clear designation field if department changes
+
     this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
       res.forEach((item) => {
-        if (event.target.value == item._id) {
-          this.previousPosting.getDesignations().subscribe((res: any) => {
-            res.results.filter((data: any) => {
-              if (item.category_code == data.category_code) {
-                this.toDesignation.push({ label: data.designation_name, value: data._id });
-                // this.designation = []; 
-              }
-            })
-          })
+        if (selectedDepartmentId === item._id) {
+          this.previousPosting.getDesignations().subscribe((designationData: any) => {
+            const designations = designationData.results.filter((data: any) => data.category_code === item.category_code);
+            
+            // Set the designation options for this row
+            this.toDesignation[index] = designations.map((data:any) => ({
+              label: data.designation_name, 
+              value: data._id
+            }));
+          });
         }
       });
     });
-  }
+}
 
 
   onInput(event: any, field: string) {
@@ -177,8 +202,7 @@ export class CreatePostingComponent implements AfterViewInit {
         const name: string = item.fullName;
         const id: string = item.employeeId;
         const empProfileId: any = item._id;
-        this.empProfileId = empProfileId;
-        // console.log(name,id,empProfileId);
+        console.log(name,id,empProfileId);
         mergedOptions.push({ name, id, empProfileId });
       });
       if (field === 'fullName') {
@@ -202,7 +226,8 @@ export class CreatePostingComponent implements AfterViewInit {
   selectOption(option: any) {
     this.selectedOption = option.name;
     this.selectedEmpOption = option.id;
-
+    this.empProfileId = option.empProfileId;
+    console.log(option);
     this.previousPostingForm.get('fullName')?.setValue(this.selectedOption);
     this.previousPostingForm.get('empProfileId')?.setValue(this.selectedEmpOption);
     this.showDropdown = false;

@@ -29,11 +29,11 @@
         <tr *ngFor="let data of pagedData(); let i = index">
           <td>{{i + startIndex+ 1}}</td>
           <td>{{data.empProfileId.fullName}}</td>
-          <td>{{data.empProfileId.empProfileId}}</td>
+          <td>{{data.empProfileId.employeeId}}</td>
           <td>{{data.empProfileId.batch}}</td>
           <td class="text-center">
             <button type="button" class="btn btn-info p-2 mr-2" (click)="editPreviousPosting(data._id)" disabled>Edit</button>
-            <button type="button" class="btn btn-info p-2" style="font-size: 12px;" disabled data-toggle="modal" data-target="#viewPreviousPosting" (click)="viewPreviousPosting(data._id)">View</button>
+            <button type="button" class="btn btn-info p-2" style="font-size: 12px;" disabled  data-toggle="modal" data-target="#viewPreviousPosting" (click)="viewPreviousPosting(data._id)">View</button>
           </td>
         </tr>
       </ng-container>

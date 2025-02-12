@@ -56,12 +56,14 @@
                         <div *ngFor="let row of previousPostingFormArray.controls; let i = index" [formGroupName]="i">
 
                             <div class="col-md-12 card mt-2 pr-3 py-2 pl-2">
-                      
+                              <div *ngIf="i > 0">
+                                <button class="btn btn-danger float-right p-1 position-absolute" style="right:0px; top:0px;" (click)="removeRow(i)"><i class="mdi mdi-close"></i></button>
+                              </div>
                             <div class="col-md-3">
                               <div class="form-group row">
                                 <label class="col-sm-12 col-form-label">Posting In <span>*</span></label>
                                 <div class="col-sm-12">
-                                  <select class="form-control" formControlName="toPostingInCategoryCode" (change)="toGetDepartment($event)">
+                                  <select class="form-control" formControlName="toPostingInCategoryCode" (change)="toGetDepartment($event, i)">
                                     <option value="">Select</option>
                                     <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
                                   </select>
@@ -73,9 +75,9 @@
                               <div class="form-group row">
                                 <label class="col-sm-12 col-form-label">Department <span>*</span></label>
                                 <div class="col-sm-12">
-                                  <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event)">
+                                  <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event, i)">
                                     <option value="">Select</option>
-                                    <option *ngFor="let departmentData of toDepartment" [value]="departmentData.value">{{departmentData.label}}</option>
+                                    <option *ngFor="let departmentData of toDepartment[i]" [value]="departmentData.value">{{departmentData.label}}</option>
                                   </select>
                                 </div>
                               </div>
@@ -87,7 +89,7 @@
                                 <div class="col-sm-12">
                                   <select class="form-control" formControlName="toDesignationId">
                                     <option value="">Select</option>
-                                    <option *ngFor="let designationData of toDesignation" [value]="designationData.value">{{designationData.label}}</option>
+                                    <option *ngFor="let designationData of toDesignation[i]" [value]="designationData.value">{{designationData.label}}</option>
                                   </select>
                                 </div>
                               </div>
@@ -113,47 +115,22 @@
                       
                             <div class="col-md-3">
                               <div class="form-group row">
-                                <label class="col-sm-12 col-form-label">To Date <span>*</span></label>
+                                <label class="col-sm-12 col-form-label">To Date </label>
                                 <div class="col-sm-12">
                                   <input type="date" class="form-control" formControlName="toDate">
                                 </div>
                               </div>
                             </div>
                       
-                            <div *ngIf="i > 0">
-                              <button class="btn btn-danger" (click)="removeRow(i)">Delete</button>
-                            </div>
+                           
                       
                           </div>
                         </div>
                         </div>
                       </div>
-                      
-                      
-                      
-              
-                
-              </div>
+                     </div>
             </div>
-
-            <!-- <div class="col-md-4 pr-0">
-              <div class="card p-3 mt-0">
-                <h6 class="sub-title" style="font-size: 13px;"> <b>From</b> </h6>
-                <p>
-                  <span class="left">Posting In</span><span class="right">: <span *ngIf="ifuserlogin; else ep">{{userdata.postingIn}}</span><ng-template #ep><span>{{fromPostingIn}}</span></ng-template></span>
-                </p>                
-                <p><span class="left"> Department</span><span class="right"> : <span *ngIf="ifuserlogin; else ed">{{userdata.department}}</span><ng-template #ed><span>{{fromDepartment}}</span></ng-template></span> 
-                </p>
-                <p><span class="left"> Designation</span><span class="right">: <span *ngIf="ifuserlogin; else edes">{{userdata.designation}}</span><ng-template #edes><span>{{fromDesignation}}</span></ng-template></span>  </p>
-                <hr>
-                <h6 class="sub-title" style="font-size: 13px;"><b>Department Details</b> </h6>
-                <p><span class="left">Address : </span><p>{{this.deptAddress}}</p>
-                <p><span class="left">Phone</span><span class="right">:</span>{{this.deptPhoneNumber}}</p>
-                <p><span class="left">Mobile</span><span class="right">:</span>{{this.deptOfficialMobileNo}}</p>
-                <p><span class="left">Fax</span><span class="right">:</span>{{this.deptFaxNumber}}</p>
-              </div>
-            </div> -->
-          <div class="mt-3">
+          <div class="mt-3 ml-1">
             <button type="submit" class="btn btn-primary mr-2 mt-2 mb-2">Submit</button>
             <button type="reset" class="btn btn-light">Cancel</button>
         </div>
