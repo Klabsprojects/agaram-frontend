@@ -8,7 +8,7 @@ import { LeaveTransferService } from '../forms/forms.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements OnInit {
-  messageCount:number=5;
+  messageCount:number=0;
   showSubMenu = false;
   activeSubMenu: string | null = null;
   roleData:any[]=[];
@@ -28,6 +28,7 @@ export class SidebarComponent implements OnInit {
     });
     this.roleName = localStorage.getItem('loginAs');
     this.username = localStorage.getItem('username');
+    this.getMessageCount();
   }
   
   showMenu(menuName: string): boolean {
@@ -54,6 +55,12 @@ export class SidebarComponent implements OnInit {
   toggleSubMenu(section: string) {
     this.showSubMenu = true;
     this.activeSubMenu = section;
+  }
+
+  getMessageCount(){
+    this.menuService.uploadGet('getReadCount').subscribe((res:any)=>{
+      this.messageCount = res.results;
+    })
   }
 
 }

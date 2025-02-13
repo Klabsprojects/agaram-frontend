@@ -24,29 +24,17 @@
                     </thead>
                     <tbody>
                         <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
-                            <!-- <tr *ngFor="let data of pagedData(); let i = index">
-                                <td>{{i + startIndex +1}}</td>
-                                <td>{{data.date}}</td>
-                                <td>{{data.emailaddress}}</td>
-                                <td>{{data.subject}}</td>
+                            <tr *ngFor="let data of pagedData(); let i = index"
+                                [ngClass]="{ 'table-light': data.IsRead, 'table-warning': !data.IsRead }">
+                                <td>{{ i + startIndex + 1 }}</td>
+                                <td>{{ data.createdAt | date: 'shortDate' }}</td>
+                                <td>{{ data.EmailAddress }}</td>
+                                <td>{{ data.Subject }}</td>
                                 <td class="text-center" *ngIf="showEdit">
                                     <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;"
                                         (click)="view(data)" *ngIf="showView">View</button>
-                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;"
-                                        (click)="delete(data._id)" *ngIf="showEdit">Delete</button>
-                                </td>
-                            </tr> -->
-                            <tr *ngFor="let data of pagedData(); let i = index"
-                                [ngClass]="{ 'table-light': data.is_read, 'table-warning': !data.is_read }">
-                                <td>{{ i + startIndex + 1 }}</td>
-                                <td>{{ data.date | date: 'shortDate' }}</td>
-                                <td>{{ data.emailaddress }}</td>
-                                <td>{{ data.subject }}</td>
-                                <td class="text-center" *ngIf="showEdit">
-                                    <button type="button" class="btn btn-info p-2 mr-2" style="font-size: 12px;"
-                                        (click)="view(data,i)" *ngIf="showView">View</button>
-                                    <button type="button" class="btn btn-info p-2" style="font-size: 12px;"
-                                        (click)="delete(data._id)" *ngIf="showEdit">Delete</button>
+                                    <!-- <button type="button" class="btn btn-info p-2" style="font-size: 12px;"
+                                        (click)="delete(data._id)" *ngIf="showEdit">Delete</button> -->
                                 </td>
                             </tr>
 
@@ -95,8 +83,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h5 class="modal-title" id="viewForeignVisitLabel">{{ selectedEmail?.subject }}</h5>
-                    <small class="text-muted">{{ selectedEmail?.date | date: 'fullDate' }}</small>
+                    <h5 class="modal-title" id="viewForeignVisitLabel">{{ selectedEmail?.Subject }}</h5>
+                    <small class="text-muted">{{ selectedEmail?.createdAt | date: 'fullDate' }}</small>
                 </div>
                 <button type="button" class="close" (click)="hideModal()">
                     <span aria-hidden="true">&times;</span>
@@ -107,16 +95,16 @@
                 <div class="d-flex align-items-center mb-3">
                     <div class="avatar bg-primary text-white rounded-circle d-flex justify-content-center align-items-center"
                         style="width: 40px; height: 40px;">
-                        {{ selectedEmail?.fullname.charAt(0) }}
+                        {{ selectedEmail?.FullName.charAt(0) }}
                     </div>
                     <div class="ml-3">
-                        <strong>{{ selectedEmail?.fullname }}</strong>
-                        <small class="text-muted">&lt;{{ selectedEmail?.emailaddress }}&gt;</small>
+                        <strong>{{ selectedEmail?.FullName }}</strong>
+                        <small class="text-muted">&lt;{{ selectedEmail?.EmailAddress }}&gt;</small>
                     </div>
                 </div>
 
                 <div class="email-content">
-                    <p>{{ selectedEmail?.message }}</p>
+                    <p>{{ selectedEmail?.Message }}</p>
                 </div>
             </div>
 

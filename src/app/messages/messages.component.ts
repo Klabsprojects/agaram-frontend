@@ -16,56 +16,7 @@ export class MessagesComponent {
   editId: number | null = null; // Store the ID for editing
   selectedFile: File | null = null;
   filterText: any;
-  // tableData: any[] = [];
-  tableData = [
-    {
-      _id:1,
-      fullname: 'John Doe',
-      emailaddress: 'john.doe@example.com',
-      subject: 'Inquiry about services',
-      message: 'I would like to know more about your services.',
-      date: new Date('2024-02-01'),
-      is_read: false  // Unread
-    },
-    {
-      _id:2,
-      fullname: 'Jane Smith',
-      emailaddress: 'jane.smith@example.com',
-      subject: 'Feedback on product',
-      message: 'The product quality is excellent. Thank you!',
-      date: new Date('2024-02-05'),
-      is_read: false  // Read
-    },
-    {
-      _id:3,
-      fullname: 'Michael Johnson',
-      emailaddress: 'michael.johnson@example.com',
-      subject: 'Support request',
-      message: 'I am facing issues with logging into my account.',
-      date: new Date('2024-02-07'),
-      is_read: false  // Unread
-    },
-    {
-      _id:4,
-      fullname: 'Emily Brown',
-      emailaddress: 'emily.brown@example.com',
-      subject: 'Billing issue',
-      message: 'I was charged twice for my last purchase.',
-      date: new Date('2024-02-09'),
-      is_read: true  // Read
-    },
-    {
-      _id:5,
-      fullname: 'Chris Wilson',
-      emailaddress: 'chris.wilson@example.com',
-      subject: 'Request for information',
-      message: 'Can you provide more details on your pricing?',
-      date: new Date('2024-02-10'),
-      is_read: true  // Unread
-    }
-  ];
-  
-  
+  tableData: any[] = [];
   pageSize: number = 10; // Number of items per page
   pageSizeOptions: number[] = [1, 5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -83,7 +34,7 @@ export class MessagesComponent {
 
   ngOnInit(): void {
     this.url = this.foreignVisitService.fileUrl;
-    // this.getlist();
+    this.getlist();
     this.checkAccess();
     this.actrulesForm = this.fb.group({
       Question: ['', Validators.required],
@@ -113,7 +64,7 @@ export class MessagesComponent {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
-  public startIndex:any;
+  public startIndex: any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     this.startIndex = startIndex;
@@ -172,7 +123,7 @@ export class MessagesComponent {
     this.updateVisiblePages();
   }
   getlist() {
-    this.foreignVisitService.uploadGet('getfaq').subscribe((res: any) => {
+    this.foreignVisitService.uploadGet('getContactus').subscribe((res: any) => {
       console.log("resact get", res);
       if (res.status === 200) {
         this.tableData = res.results;
@@ -240,10 +191,17 @@ export class MessagesComponent {
   }
   selectedEmail: any = null;
 
-  view(data: any,i:any) { 
-      this.selectedEmail = data; // Store the selected email data
-      this.showModal();
-      this.tableData[i].is_read=true;
+  view(data: any) {
+    this.selectedEmail = data; // Store the selected email data
+    this.showModal();
+    if(data.IsRead === false){
+      this.tableData = this.tableData.map(item => 
+        item._id === data._id ? { ...item, IsRead: true } : item
+      );
+      this.foreignVisitService.updateMessageView('markAsRead',data._id).subscribe((res:any)=>{
+        // console.log("res",res);
+      })
+    }
   }
   hideModal() {
     const modalElement = document.getElementById('viewForeignVisit');
