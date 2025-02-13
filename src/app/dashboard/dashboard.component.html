@@ -480,13 +480,13 @@
             <div class="col-md-12 border-0"><i class="typcn typcn-mail" style="transform: rotate(0deg);"></i><label
                 class="pt-2 pl-2" style="width:90%;">{{employeeHistory.personalEmail}},
                 {{employeeHistory.officeEmail}}</label></div>
-            <div class="col-md-12 border-0" style="line-height: 1.9;"><i class="typcn typcn-location"
+            <div class="col-md-12 border-0" style="line-height: 1.9;"><i class="typcn typcn-location mr-2"
                 style="transform: rotate(0deg);"></i>
-              <label class="pt-2 pl-2">
+              <p class="pt-2 pl-4">
                 {{employeeHistory.addressLine}},{{employeeHistory.city}} <br>
                 {{employeeHistory.state}},
                 {{employeeHistory.pincode}}
-              </label>
+              </p>
             </div>
             <div class="col-md-12 border-0 my-2">
               <div class="col-md-4"><label> <b>DOB :</b> {{employeeHistory.dateOfBirth}}</label></div>
@@ -508,9 +508,57 @@
           <!-- <div class="col-md-6 profile-data p-0 border-0"><b>Qualification : </b></div> -->
           <h5 class="modal-title col-md-12 pl-0 pt-2 mb-2" *ngIf="hideHistory">Employee History</h5>
 
+          
 
           <div id="accordion" *ngIf="hideHistory">
-            <div class="card">
+            <div class="card mt-2">
+              <div class="card-header p-0" id="headingOne" style="background-color: #007bff;">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed p-2 w-100 text-left" data-toggle="collapse"
+                    data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="color: #fff;">
+                    Previous Posting <i class="mdi mdi-chevron-down float-right"></i>
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <div *ngIf="previousPostingData.length > 0; else noPreviousData">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Posting In</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let detail of previousPostingData; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ detail.postingIn }}</td>
+                            <td>{{ detail.department }}</td>
+                            <td>{{ detail.designation }}</td>
+                            <td>{{ detail.fromDate | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ detail.toDate | date: 'dd/MM/yyyy' }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <ng-template #noPreviousData>
+                    <div style="color: red;">No previous posting available.</div>
+                  </ng-template>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div id="accordion" *ngIf="hideHistory">
+            <div class="card mt-2">
               <div class="card-header p-0" id="headingTwo" style="background-color: #007bff;">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed p-2 w-100 text-left" data-toggle="collapse"
@@ -550,7 +598,6 @@
               </div>
             </div>
           </div>
-
 
 
 

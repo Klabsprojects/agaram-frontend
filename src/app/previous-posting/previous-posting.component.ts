@@ -144,7 +144,7 @@ public previousPostingData:any[]=[];
   }
 
   editPreviousPosting(data:any){
-    // this.router.navigate(['edit-officer'], { queryParams: { profile: data } })
+    this.router.navigate(['edit-previous-posting'], { queryParams: { profile: data } })
   }
 
   viewPreviousPosting(data:any){

@@ -415,31 +415,36 @@ export class OfficialInfoComponent implements OnInit{
   
   
   onApply(formType: string) {
-    if (formType === 'SAF') {
-      this.formType = 'SAF Games Village';
-      this.modalTitle = 'Apply for SAF Games Village';
-      this.hideModal('SAF');
-      
-    } else if (formType === 'TransferPosting') {
+     if (formType === 'TransferPosting') {
       this.formType = 'Transfer / Posting';
       this.modalTitle = 'Apply for Transfer / Posting';
       this.hideModal('transferposting');
-    }
-    else if (formType === 'Medical Reimbursement') {
-      this.formType = 'Medical Reimbursement';
-      this.modalTitle = 'Apply for Medical Reimbursement';
-      this.hideModal('medical');
-    } 
-    else if (formType === 'applyLeave') {
-      this.formType = 'Leave';
-      this.modalTitle = 'Apply for Leave';
-      this.hideModal('leave');
     }
     else if (formType === 'applyTraining') {
       this.formType = 'Training';
       this.modalTitle = 'Apply for Training';
       this.hideModal('training');
     }
+    else if (formType === 'promotion') {
+      this.formType = 'Promotion';
+      this.modalTitle = 'Apply for Promotion';
+      this.hideModal('promotion');
+    }
+    else if (formType === 'applyLeave') {
+      this.formType = 'Leave';
+      this.modalTitle = 'Apply for Leave';
+      this.hideModal('leave');
+    }
+    else if (formType === 'Medical Reimbursement') {
+      this.formType = 'Medical Reimbursement';
+      this.modalTitle = 'Apply for Medical Reimbursement';
+      this.hideModal('medical');
+    } 
+   else if (formType === 'SAF') {
+      this.formType = 'SAF Games Village';
+      this.modalTitle = 'Apply for SAF Games Village';
+      this.hideModal('SAF');
+    } 
     else if (formType === 'applyForeignVisit') {
       this.formType = 'Foreign Visit';
       this.modalTitle = 'Apply for Foreign Visit';
@@ -550,13 +555,7 @@ export class OfficialInfoComponent implements OnInit{
         response => {
           alert(response.message);
           console.log(response.message);
-  
-          // Hide modal based on formType
-          if (this.formType === 'SAF Games Village') {
-            this.hideModal('safApplication');  // Hide SAF application modal
-          } else if (this.formType === 'Medical Reimbursement') {
-            this.hideModal('applyMedical');  // Hide Medical application modal
-          }
+          this.hideModal('formApply'); 
         },
         error => {
           console.error('API Error:', error);

@@ -37,12 +37,47 @@ export class NotificationComponent implements OnInit{
         }
         this.notificationService.formApproval(formData).subscribe((res:any)=>{
         })
-      if(data.formType == 'SAF Games Village'){
-        this.router.navigate(['saf-village-application']);
+        const routeMap: { [key: string]: string } = {
+          'Transfer / Posting': 'create-transfer',
+          'Leave': 'apply-leave',
+          'Training':'create-training',
+          'Promotion':'create-promotion',
+          'SAF Games Village': 'saf-village-application',
+          'Medical Reimbursement': 'create-medical-reimbursement',
+          'Foreign Visit':'create-foreign-visit',
+          'LTC':'create-ltc',
+          'Private Visit':'create-private',
+          'Immovable':'create-immovable',
+          'Movable':'create-movable',
+          'Education':'create-education',
+          'Intimation':'create-intimation',
+          'House Building Advance':'create-hba',
+          'OfficerTour':'create-officers-tour',
+          'GPF':'create-gpf',
+          'MHA ID Card':'create-mha'
+        };
+        
+        const route = routeMap[data.formType];
+        if (route) {
+          this.router.navigate([route]);
+        }
+        
+    }
+
+    getStatus(data:any){
+      const value = data.target.value;
+      if(value!='All'){
+        this.notificationService.getNotificationStatus(value).subscribe((res:any)=>{
+          console.log(res);
+          this.notificationData = res.results;
+        })
       }
-      if(data.formType == 'Medical Reimbursement'){
-        this.router.navigate(['medical-reimbursement']);
+      else{
+        this.notificationService.getAppliedForms().subscribe((res:any)=>{
+          this.notificationData = res.results;
+        })
       }
+     
     }
   
    

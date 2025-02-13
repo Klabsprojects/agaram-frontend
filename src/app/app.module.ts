@@ -60,6 +60,7 @@ import { RetiredOfficersComponent } from './landing-page/components/home/retired
 import { RetiredOfficersDetailComponent } from './landing-page/components/home/retired-officers/retired-officers-detail/retired-officers-detail.component';
 import { NotificationModule } from './notification/notification.module';
 import { PreviousPostingModule } from './previous-posting/previous-posting.module';
+import { StatusModule } from './status/status.module';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { PreviousPostingModule } from './previous-posting/previous-posting.modul
     MasterCreationModule,
     NotificationModule,
     PreviousPostingModule,
+    StatusModule,
     RoleModule,
     UserModule,
     BrowserAnimationsModule

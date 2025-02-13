@@ -777,7 +777,7 @@ export class LeaveTransferService {
   }
   getAppliedForms(){
     const headers = this.getHeaders();
-    return this.http.get<any>(this.baseUrl+'getFormsUpload',{headers});
+    return this.http.get<any>(this.baseUrl+'getFormsupload',{headers});
   }
   formApproval(data:any){
     const headers = this.getHeaders();
@@ -803,4 +803,20 @@ export class LeaveTransferService {
     const headers = this.getHeaders();
     return this.http.get<any>(this.baseUrl+'getPreviousPosting',{headers});
   }
+  getPreviousPostingbyId(_id:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getPreviousPosting?_id=${_id}`,{headers});
+  }
+
+  getPreviousPostingbyDashboard(empProfileId:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getPreviousPosting?empProfileId=${empProfileId}`,{headers});
+  }
+
+  getNotificationStatus(data:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getFormsupload?approvalStatus=${data}`,{headers});
+  }
+ 
+
 }

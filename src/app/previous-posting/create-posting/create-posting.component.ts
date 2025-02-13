@@ -112,42 +112,6 @@ export class CreatePostingComponent implements AfterViewInit {
     }
   }
 
-  
-  // toGetDepartment(event: any) {
-  //   this.toDepartment = [];
-  //   this.previousPosting.getData().subscribe((res: any[]) => {
-  //     res.forEach((item) => {
-  //       if (event.target.value == item._id) {
-  //         this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
-  //           res.filter((data: any) => {
-  //             if (item.category_code == data.category_code) {
-  //               this.toDepartment.push({ label: data.department_name, value: data._id });
-  //             }
-  //           });
-  //         })
-  //       }
-  //     });
-  //   })
-  // }
-
-  // toGetDesignation(event: any) {
-  //   this.toDesignation = [];
-  //   this.previousPosting.getDepartmentData().subscribe((res: any[]) => {
-  //     res.forEach((item) => {
-  //       if (event.target.value == item._id) {
-  //         this.previousPosting.getDesignations().subscribe((res: any) => {
-  //           res.results.filter((data: any) => {
-  //             if (item.category_code == data.category_code) {
-  //               this.toDesignation.push({ label: data.designation_name, value: data._id });
-  //               // this.designation = []; 
-  //             }
-  //           })
-  //         })
-  //       }
-  //     });
-  //   });
-  // }
-
   toGetDepartment(event: any, index: number) {
     const selectedPostingInId = event.target.value;
     const departmentControl = this.previousPostingFormArray.controls[index].get('toDepartmentId');
@@ -273,7 +237,4 @@ toGetDesignation(event: any, index: number) {
       console.log(this.previousPostingForm.value);
     }
   }
-  
-  
-
 }

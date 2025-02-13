@@ -101,6 +101,13 @@
         </div>
       </li>
 
+      <!-- <li *ngIf="roleName=='Officer'"  class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['check-status']">
+          <i class="mdi mdi-checkbox-marked-circle-outline menu-icon" [class.active]="isActive('check-status')"></i>
+          <span class="menu-title" [class.active]="isActive('check-status')">Status</span>
+        </a>
+      </li> -->
+
   
       <li *ngIf="(showMenu('Officer Profile') || showMenu('Transfer / Posting') || showMenu('Promotion') || showMenu('Leave') || showMenu('Training'))&&roleName!='Officer'" class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#splaforms" aria-expanded="false" aria-controls="splaforms">

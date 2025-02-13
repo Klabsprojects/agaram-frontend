@@ -108,6 +108,8 @@ export class DashboardComponent implements OnInit {
   showDesignationDropdown = false;
   hideHistory = true;
   role: any;
+  previousPostingData:any[]=[];
+
   constructor(private fb: FormBuilder, private datePipe: DatePipe, private router: Router, private dashboardService: LeaveTransferService, private el: ElementRef, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -176,9 +178,31 @@ export class DashboardComponent implements OnInit {
     this.popupVisible = true;
     this.remainingIndices = [];
     this.firstIndex = '';
+    this.employeeHistory=new employeeHistory();
     this.dashboardService.getEmployeeHistory(data).subscribe((res: any) => {
       res.results.forEach((item: any) => {
-        console.log("item", item);
+        this.previousPostingData = [];
+        this.dashboardService.getPreviousPostingbyDashboard(data).subscribe((response: any) => {
+          response.results.forEach((items: any) => {
+            console.log(items.previousPostingList);
+        
+            items.previousPostingList.forEach((postingDataItem: any) => {
+              const postingIn = this.postingIn.find((data: any) => data.value === postingDataItem.toPostingInCategoryCode);
+              const department = this.department.find((data: any) => data.value === postingDataItem.toDepartmentId);
+              const designation = this.designation.find((data: any) => data.value === postingDataItem.toDesignationId);
+        
+              this.previousPostingData.push({
+                postingIn: postingIn ? postingIn.label : '',
+                department: department ? department.label : '',
+                designation: designation ? designation.label : '',
+                fromDate: postingDataItem.fromDate, // Ensure fromDate is included
+                toDate: postingDataItem.toDate // Ensure toDate is included
+              });
+            });
+          
+        
+          
+          
         if (item._id == data) {
           this.dashboardService.getData().subscribe((response: any) => {
             response.forEach((ele: any) => {
@@ -219,7 +243,6 @@ export class DashboardComponent implements OnInit {
                   department: department ? department.label : '',
                   designation: designation ? designation.label : ''
                 });
-                console.log(this.remainingIndices);
               }
             });
 
@@ -253,6 +276,8 @@ export class DashboardComponent implements OnInit {
           });
         }
       });
+      });
+    });
     });
   }
 

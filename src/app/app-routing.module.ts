@@ -77,6 +77,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'check-status',
+    loadChildren:()=>import('./status/status.module').then(m=>m.StatusModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path:'role',
     loadChildren:()=>import('./role/role.module').then(m=>m.RoleModule),
     canActivate: [AuthGuard]
