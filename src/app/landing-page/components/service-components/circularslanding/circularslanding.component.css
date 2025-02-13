@@ -13,3 +13,7 @@
 .table thead th{
     background-color: #fef4cd !important;
 }
+
+.grid-margin{
+    padding: 0;
+}
