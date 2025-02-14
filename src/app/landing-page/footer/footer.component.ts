@@ -46,9 +46,11 @@ export class FooterComponent {
   }
   getVisitors(){
     this.leaveTransferService.uploadGet('getLatestVisitor').subscribe((res:any)=>{
-      this.visitors = res.results.count;
-      this.updatedYear = res.results.visitUpdateDate.split("T")[0]
-      this.increaseVisitor();
+      if(res.results){
+        this.visitors = res.results.count
+        this.updatedYear = res.results.visitUpdateDate.split("T")[0]
+        this.increaseVisitor();
+      }
     })
   }
   increaseVisitor() {
