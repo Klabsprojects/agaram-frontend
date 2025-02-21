@@ -145,12 +145,105 @@ export class MasterCreationComponent implements OnInit {
   editPosting(id: any) {
     this.editing = true;
     this.editingId = id;
+
+    this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+      if (res.length > 0) {
+        const postingItem = res[0];
+
+        this.postingInForm.patchValue({
+          title: postingItem.category_name,
+          code: postingItem.category_code
+        });
+      }
+    });
   }
+
+  updatePosting() {
+    if (this.postingInForm.valid) {
+      const value={
+        category_name : this.postingInForm.get('title')?.value,
+        category_code : this.postingInForm.get('code')?.value,
+        category_type:"posting_in",
+      }
+      this.masterAction.updateCategories(this.editingId, value).subscribe(
+        (res: any) => {
+          console.log('Update Response:', res);
+          alert(res.message);
+          this.showPopup = false;
+          location.reload();
+          this.editing = false;
+          this.editingId = null;
+        },
+        (error) => {
+          console.error('Error updating category:', error);
+        }
+      );
+    }
+  }
+  
+
+  cancelEditing() {
+    this.editing = false;
+    this.editingId = null;
+  }
+
 
   viewDepartment(){
     this.masterAction.getDepartmentData().subscribe((res:any[]) => {
       this.department = res;
     });
+  }
+
+  editDepartment(id:any){
+    this.editing = true;
+    this.editingId = id;
+    this.masterAction.getDepartmentData().subscribe((dept:any)=>{
+          dept.forEach((ele:any)=>{
+            if(ele._id == id){
+              this.departmentForm.patchValue({
+                category_code: ele.category_code,
+                department_name: ele.department_name
+              });
+            }
+          })
+      })
+  }
+
+  updateDepartment(){
+      if (this.departmentForm.valid) {
+        console.log(this.editingId);
+        // this.masterAction.updateCategories(this.editingId, this.departmentForm.value).subscribe(
+        //   (res: any) => {
+        //     alert(res.message);
+        //     this.showPopup = false;
+        //     // location.reload();
+        //     this.editing = false;
+        //     this.editingId = null;
+        //   },
+        //   (error) => {
+        //     console.error('Error updating category:', error);
+        //   }
+        // );
+      }
+  }
+
+  editDesignation(id:any){
+    this.editing = true;
+    this.editingId = id;
+    this.masterAction.getDesignations().subscribe((designationItem:any)=>{
+          designationItem.results.forEach((ele:any)=>{
+            if(ele._id == id){
+              this.designationForm.patchValue({
+                category_code: ele.category_code,
+                designation_name: ele.designation_name
+              });
+            }
+          })
+      })
+  }
+
+  updateDesignation(){
+
   }
 
   viewDesignation(){
@@ -159,11 +252,54 @@ export class MasterCreationComponent implements OnInit {
       this.designation = res.results;
     });
   }
+
   viewPayscale(){
     this.masterAction.getData().subscribe((res)=>{
       this.payscale = res.filter((item:any) => item.category_type === "promotion_grade");
     })
   }  
+
+  editPayscale(id:any){
+    this.editing = true;
+    this.editingId = id;
+
+    this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+      if (res.length > 0) {
+        const payScaleItem = res[0];
+
+        this.payscaleForm.patchValue({
+          category_name: payScaleItem.category_name,
+          category_code: payScaleItem.category_code,
+          payscale:payScaleItem.payscale
+        });
+      }
+    });
+  }
+
+  updatePayscale(){
+      if (this.payscaleForm.valid) {
+        const value={
+          category_name : this.payscaleForm.get('category_name')?.value,
+          category_code : this.payscaleForm.get('category_code')?.value,
+          payscale:this.payscaleForm.get('payscale')?.value,
+          category_type:"promotion_grade",
+        }
+        this.masterAction.updateCategories(this.editingId, value).subscribe(
+          (res: any) => {
+            console.log('Update Response:', res);
+            alert(res.message);
+            this.showPopup = false;
+            location.reload();
+            this.editing = false;
+            this.editingId = null;
+          },
+          (error) => {
+            console.error('Error updating category:', error);
+          }
+        );
+      }
+    
+  }
 
   viewDistrict(){
     this.masterAction.getData().subscribe((res)=>{
@@ -177,6 +313,45 @@ export class MasterCreationComponent implements OnInit {
     })
   }
 
+  editCountry(id:any){
+    this.editing = true;
+    this.editingId = id;
+
+    this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+      if (res.length > 0) {
+        const countryItem = res[0];
+
+        this.countryForm.patchValue({
+          title: countryItem.category_name,
+          code: countryItem.category_code,
+        });
+      }
+    });
+  }
+
+  updateCountry(){
+    if (this.countryForm.valid) {
+      const value={
+        category_name : this.countryForm.get('title')?.value,
+        category_code : this.countryForm.get('code')?.value,
+        category_type:"country",
+      }
+      this.masterAction.updateCategories(this.editingId, value).subscribe(
+        (res: any) => {
+          alert(res.message);
+          this.showPopup = false;
+          location.reload();
+          this.editing = false;
+          this.editingId = null;
+        },
+        (error) => {
+          console.error('Error updating category:', error);
+        }
+      );
+    }
+  
+  }
+
   viewDegree(){
     this.masterAction.getDegree().subscribe((res:any)=>{
      this.degree = res.results;
@@ -184,16 +359,109 @@ export class MasterCreationComponent implements OnInit {
     })
   }
 
+  editDegree(id:any){
+    this.editing = true;
+    this.editingId = id;
+
+    this.masterAction.getDegree().subscribe((res: any) => {
+      res.results.forEach((ele:any)=>{
+        if(ele._id == id){
+          this.degreeForm.patchValue({
+            degree_name: ele.degree_name,
+          });
+        }
+      })
+    });
+  }
+
+  updateDegree(){
+
+  }
   viewOrderType(){
     this.masterAction.getData().subscribe((res)=>{
       this.orderType = res.filter((item:any) => item.category_type === "order_type");
     })
   }
 
+  editOrderType(id:any){
+    this.editing = true;
+    this.editingId = id;
+
+    this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+      if (res.length > 0) {
+        const orderTypeItem = res[0];
+        this.orderTypeForm.patchValue({
+          category_name: orderTypeItem.category_name,
+          category_code: orderTypeItem.category_code,
+        });
+      }
+    });
+  }
+
+  updateOrderType(){
+    if (this.orderTypeForm.valid) {
+      const value={
+        category_name : this.orderTypeForm.get('category_name')?.value,
+        category_code : this.orderTypeForm.get('category_code')?.value,
+        category_type:"order_type",
+      }
+      this.masterAction.updateCategories(this.editingId, value).subscribe(
+        (res: any) => {
+          console.log('Update Response:', res);
+          alert(res.message);
+          this.showPopup = false;
+          location.reload();
+          this.editing = false;
+          this.editingId = null;
+        },
+        (error) => {
+          console.error('Error updating category:', error);
+        }
+      );
+    }
+  }
   viewOrderFor(){
     this.masterAction.getData().subscribe((res)=>{
       this.orderFor = res.filter((item:any) => item.category_type === "order_for");
     })
+  }
+
+  editOrderFor(id:any){
+    this.editing = true;
+    this.editingId = id;
+
+    this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+      if (res.length > 0) {
+        const orderForItem = res[0];
+        this.orderForForm.patchValue({
+          category_name: orderForItem.category_name,
+          category_code: orderForItem.category_code,
+        });
+      }
+    });
+  }
+
+  updateOrderFor(){
+    if (this.orderForForm.valid) {
+      const value={
+        category_name : this.orderForForm.get('category_name')?.value,
+        category_code : this.orderForForm.get('category_code')?.value,
+        category_type:"order_for",
+      }
+      this.masterAction.updateCategories(this.editingId, value).subscribe(
+        (res: any) => {
+          console.log('Update Response:', res);
+          alert(res.message);
+          this.showPopup = false;
+          location.reload();
+          this.editing = false;
+          this.editingId = null;
+        },
+        (error) => {
+          console.error('Error updating category:', error);
+        }
+      );
+    }
   }
 
   cancel(){
@@ -368,8 +636,7 @@ export class MasterCreationComponent implements OnInit {
     }
   }  
 
-  onSubmit(){
+onSubmit(){
 
-  }
-
+}
 }

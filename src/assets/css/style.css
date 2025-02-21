@@ -19589,6 +19589,8 @@ code {
 .accordion .card .card-header * {
   font-weight: 400;
   font-size: 1rem;
+  background: #f4f2f2;
+  color: #000;
 }
 
 .accordion .card .card-header a {
@@ -19633,9 +19635,9 @@ code {
   line-height: 1.5;
 }
 
-.accordion .card .card-body i {
+/* .accordion .card .card-body i {
   font-size: 1.25rem;
-}
+} */
 
 .accordion.accordion-bordered {
   background: #ffffff;

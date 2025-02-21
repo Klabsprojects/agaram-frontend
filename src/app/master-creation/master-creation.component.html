@@ -303,41 +303,44 @@
         </button>
       </div>
       <div class="modal-body p-3">
+        <form [formGroup]="postingInForm">
           <table class="table table-bordered table-hover table-striped">
-              <thead>
-                <th>#</th>
-                <th>Posting In</th>
-                <th>Code</th>
-                <th>Action</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let postingData of postingin; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_name }}</td>
-                  <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_code }}</td>
-                  
-                  <td *ngIf="editing && editingId === postingData._id">
-                    <input  class="form-control" type="text" />
-                  </td>
-                  <td *ngIf="editing && editingId === postingData._id">
-                    <input  class="form-control" type="text" />
-                  </td>
-              
-                  <td class="text-center">
-                    <button *ngIf="!editing || editingId !== postingData._id" type="button" class="btn btn-info btn-sm btn-icon-text" 
+            <thead>
+              <th>#</th>
+              <th>Posting In</th>
+              <th>Code</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let postingData of postingin; let i = index">
+                <td>{{ i + 1 }}</td>
+                
+                <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_name }}</td>
+                <td *ngIf="!editing || editingId !== postingData._id">{{ postingData.category_code }}</td>
+                
+                <td *ngIf="editing && editingId === postingData._id">
+                  <input class="form-control" type="text" formControlName="title" />
+                </td>
+                <td *ngIf="editing && editingId === postingData._id">
+                  <input class="form-control" type="text" formControlName="code" />
+                </td>
+                
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== postingData._id" type="button" class="btn btn-info btn-sm btn-icon-text px-2 p-1" 
                     style="font-size: 13px;" (click)="editPosting(postingData._id)">Edit</button>
-              
-                    <button *ngIf="editing && editingId === postingData._id"  type="button" class="btn btn-primary mr-2 btn-sm btn-icon-text" 
-                    style="font-size: 13px;">Update</button>
-                    <button *ngIf="editing && editingId === postingData._id"  type="button" class="btn btn-light btn-sm btn-icon-text" 
-                    style="font-size: 13px;">Cancel</button>
-                  </td>
-                </tr>
-                <tr *ngIf="postingin.length === 0">
-                  <td colspan="3">No data available</td>
-                </tr>
-              </tbody>
-            </table>
+                
+                  <button *ngIf="editing && editingId === postingData._id" type="button" class="btn btn-primary mr-2 btn-sm btn-icon-text px-2 p-1" 
+                    style="font-size: 13px;" (click)="updatePosting()">Update</button>
+                  <button *ngIf="editing && editingId === postingData._id" type="button" class="btn btn-light btn-sm btn-icon-text px-2 p-1" 
+                    style="font-size: 13px;" (click)="cancelEditing()">Cancel</button>
+                </td>
+              </tr>
+              <tr *ngIf="postingin.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
@@ -379,14 +382,6 @@
           </div>
         </div>
 
-
-        <!-- <div class="form-group row">
-          <label class="col-sm-12 col-form-label">Department Code<span> * </span></label>
-          <div class="col-sm-12">
-            <input type="text" class="form-control" formControlName="departmentCode" 
-            [ngStyle]="{'border': (departmentSubmitted && departmentForm.get('departmentCode')?.invalid && departmentForm.get('departmentCode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
-          </div>
-        </div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
@@ -406,7 +401,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3" style="height:300px; overflow-y: scroll;">
+    <!-- <div class="modal-body p-3" style="height:300px; overflow-y: scroll;">
         <table class="table table-bordered table-hover table-striped">
             <thead>
               <th>#</th>
@@ -426,7 +421,72 @@
           </table>
           
      
+    </div> -->
+    
+    <div class="modal-body p-3" style="height: 300px; overflow-y: scroll;">
+      <form [formGroup]="departmentForm">
+        <table class="table table-bordered table-hover table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Posting In</th>
+              <th>Department</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let departmentData of department; let i = index">
+              <td>{{ i + 1 }}</td>
+              
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== departmentData._id">
+                {{ departmentData.category_code }}
+              </td>
+              <td *ngIf="!editing || editingId !== departmentData._id">
+                {{ departmentData.department_name }}
+              </td>
+              
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === departmentData._id">
+                <select class="form-control" formControlName="category_code"  
+                  [ngStyle]="{'border': (departmentSubmitted && departmentForm.get('category_code')?.invalid && departmentForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                    <option value="">Select</option>
+                    <option *ngFor="let postingData of postingin" [value]="postingData.value">{{postingData.label}}</option>
+                </select>
+              </td>
+              <td *ngIf="editing && editingId === departmentData._id">
+                <input class="form-control" type="text" formControlName="department_name" />
+              </td>
+              
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== departmentData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editDepartment(departmentData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === departmentData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateDepartment()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === departmentData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="department.length === 0">
+              <td colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
     </div>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -487,27 +547,70 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3" style="height: 300px; overflow-y: scroll;">
+    <form [formGroup]="designationForm">
+      <div class="modal-body p-3" style="height: 300px; overflow-y: scroll;">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th>#</th>
               <th>Posting In</th>
-              <th>Designation </th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let designationData of designation; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{designationData.category_code}}</td>
-                <td>{{designationData.designation_name}}</td>
-              </tr>
-              <tr *ngIf="designation.length === 0">
-                <td colspan="3">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Designation</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let designationData of designation; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== designationData._id">
+                {{ designationData.category_code }}
+              </td>
+              <td *ngIf="!editing || editingId !== designationData._id">
+                {{ designationData.designation_name }}
+              </td>
+    
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === designationData._id">
+                <select class="form-control" formControlName="category_code"
+                  [ngStyle]="{'border': (submitted && designationForm.get('category_code')?.invalid && designationForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                  <option value="">Select</option>
+                  <option *ngFor="let postingData of postingin" [value]="postingData.value">{{ postingData.label }}</option>
+                </select>
+              </td>
+              <td *ngIf="editing && editingId === designationData._id">
+                <input class="form-control" type="text" formControlName="designation_name" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== designationData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editDesignation(designationData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === designationData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateDesignation()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === designationData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="designation.length === 0">
+              <td colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -564,7 +667,7 @@
 </div>
 
 <div class="modal fade" id="viewPayscale" tabindex="-1" aria-labelledby="payscaleLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog1">
+<div class="modal-dialog modal-dialog1" style="max-width: 700px;">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="payscaleLabel">Payscale Details</h5>
@@ -572,29 +675,78 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3">
+    
+    <form [formGroup]="payscaleForm">
+      <div class="modal-body p-3">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th style="width: 10%;">#</th>
               <th>Promotion Grade</th>
               <th>Code</th>
               <th>Payscale</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let payscaleData of payscale; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{payscaleData.category_name}}</td>
-                <td>{{payscaleData.category_code}}</td>
-                <td>{{payscaleData.payscale}}</td>
-              </tr>
-              <tr *ngIf="payscale.length === 0">
-                <td colspan="4">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payscaleData of payscale; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== payscaleData._id">
+                {{ payscaleData.category_name }}
+              </td>
+              <td *ngIf="!editing || editingId !== payscaleData._id">
+                {{ payscaleData.category_code }}
+              </td>
+              <td *ngIf="!editing || editingId !== payscaleData._id">
+                {{ payscaleData.payscale }}
+              </td>
+    
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === payscaleData._id">
+                <input class="form-control" type="text" formControlName="category_name"
+                  [ngStyle]="{'border-bottom': (submitted && payscaleForm.get('category_name')?.invalid && payscaleForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+              <td *ngIf="editing && editingId === payscaleData._id">
+                <input class="form-control" type="text" formControlName="category_code"
+                  [ngStyle]="{'border-bottom': (submitted && payscaleForm.get('category_code')?.invalid && payscaleForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+              <td *ngIf="editing && editingId === payscaleData._id">
+                <input class="form-control" type="text" formControlName="payscale"
+                  [ngStyle]="{'border-bottom': (submitted && payscaleForm.get('payscale')?.invalid && payscaleForm.get('payscale')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== payscaleData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editPayscale(payscaleData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === payscaleData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updatePayscale()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === payscaleData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="payscale.length === 0">
+              <td colspan="5">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
+
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -729,27 +881,68 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3">
+    <form [formGroup]="countryForm">
+      <div class="modal-body p-3">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th style="width: 10%;">#</th>
               <th>Country Name</th>
               <th>Code</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let countryData of country; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{countryData.category_name}}</td>
-                <td>{{countryData.category_code}}</td>
-              </tr>
-              <tr *ngIf="country.length === 0">
-                <td colspan="3">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let countryData of country; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== countryData._id">
+                {{ countryData.category_name }}
+              </td>
+              <td *ngIf="!editing || editingId !== countryData._id">
+                {{ countryData.category_code }}
+              </td>
+    
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === countryData._id">
+                <input class="form-control" type="text" formControlName="title"
+                  [ngStyle]="{'border-bottom': (submitted && countryForm.get('title')?.invalid && countryForm.get('title')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+              <td *ngIf="editing && editingId === countryData._id">
+                <input class="form-control" type="text" formControlName="code"
+                  [ngStyle]="{'border-bottom': (submitted && countryForm.get('code')?.invalid && countryForm.get('code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== countryData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editCountry(countryData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === countryData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateCountry()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === countryData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="country.length === 0">
+              <td colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -806,25 +999,60 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3 degree-body">
+    <form [formGroup]="degreeForm">
+      <div class="modal-body p-3 degree-body">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th style="width: 10%;">#</th>
               <th>Degree</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let degreeData of degree; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{degreeData.degree_name}}</td>
-              </tr>
-              <tr *ngIf="degree.length === 0">
-                <td colspan="3">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let degreeData of degree; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== degreeData._id">
+                {{ degreeData.degree_name }}
+              </td>
+    
+              <!-- Editable Input Field -->
+              <td *ngIf="editing && editingId === degreeData._id">
+                <input class="form-control" type="text" formControlName="degree_name"
+                  [ngStyle]="{'border-bottom': (submitted && degreeForm.get('degree_name')?.invalid && degreeForm.get('degree_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== degreeData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editDegree(degreeData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === degreeData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateDegree()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === degreeData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="degree.length === 0">
+              <td colspan="3">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -880,27 +1108,68 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3">
+    <form [formGroup]="orderTypeForm">
+      <div class="modal-body p-3">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th style="width: 10%;">#</th>
               <th>Order Type</th>
               <th>Code</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let orderTypeData of orderType; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{orderTypeData.category_name}}</td>
-                <td>{{orderTypeData.category_code}}</td>
-              </tr>
-              <tr *ngIf="orderType.length === 0">
-                <td colspan="3">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let orderTypeData of orderType; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== orderTypeData._id">
+                {{ orderTypeData.category_name }}
+              </td>
+              <td *ngIf="!editing || editingId !== orderTypeData._id">
+                {{ orderTypeData.category_code }}
+              </td>
+    
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === orderTypeData._id">
+                <input class="form-control" type="text" formControlName="category_name"
+                  [ngStyle]="{'border-bottom': (submitted && orderTypeForm.get('category_name')?.invalid && orderTypeForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+              <td *ngIf="editing && editingId === orderTypeData._id">
+                <input class="form-control" type="text" formControlName="category_code"
+                  [ngStyle]="{'border-bottom': (submitted && orderTypeForm.get('category_code')?.invalid && orderTypeForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== orderTypeData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editOrderType(orderTypeData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === orderTypeData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateOrderType()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === orderTypeData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="orderType.length === 0">
+              <td colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>
@@ -958,27 +1227,68 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body p-3">
+    <form [formGroup]="orderForForm">
+      <div class="modal-body p-3">
         <table class="table table-bordered table-hover table-striped">
-            <thead>
+          <thead>
+            <tr>
               <th style="width: 10%;">#</th>
               <th>Order For</th>
               <th>Code</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let orderForData of orderFor; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{orderForData.category_name}}</td>
-                <td>{{orderForData.category_code}}</td>
-              </tr>
-              <tr *ngIf="orderFor.length === 0">
-                <td colspan="3">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          
-     
-    </div>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let orderForData of orderFor; let i = index">
+              <td>{{ i + 1 }}</td>
+    
+              <!-- Display Static Data -->
+              <td *ngIf="!editing || editingId !== orderForData._id">
+                {{ orderForData.category_name }}
+              </td>
+              <td *ngIf="!editing || editingId !== orderForData._id">
+                {{ orderForData.category_code }}
+              </td>
+    
+              <!-- Editable Input Fields -->
+              <td *ngIf="editing && editingId === orderForData._id">
+                <input class="form-control" type="text" formControlName="category_name"
+                  [ngStyle]="{'border-bottom': (submitted && orderForForm.get('category_name')?.invalid && orderForForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+              <td *ngIf="editing && editingId === orderForData._id">
+                <input class="form-control" type="text" formControlName="category_code"
+                  [ngStyle]="{'border-bottom': (submitted && orderForForm.get('category_code')?.invalid && orderForForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+              </td>
+    
+              <!-- Action Buttons -->
+              <td class="text-center">
+                <button *ngIf="!editing || editingId !== orderForData._id" type="button"
+                  class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="editOrderFor(orderForData._id)">
+                  Edit
+                </button>
+    
+                <button *ngIf="editing && editingId === orderForData._id" type="button"
+                  class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                  style="font-size: 13px;" (click)="updateOrderFor()">
+                  Update
+                </button>
+    
+                <button *ngIf="editing && editingId === orderForData._id" type="button"
+                  class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                  style="font-size: 13px;" (click)="cancelEditing()">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="orderFor.length === 0">
+              <td colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
     </div>

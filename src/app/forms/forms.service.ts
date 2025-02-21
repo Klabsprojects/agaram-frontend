@@ -51,7 +51,10 @@ export class LeaveTransferService {
       localStorage.clear();
 
     }
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/').then(() => {
+      location.replace('/');  
+    });
   }
   
   setSelectedItem(item: string) {
@@ -107,6 +110,11 @@ export class LeaveTransferService {
   getData():Observable<any>{
     const headers = this.getHeaders();
     return this.http.get<any[]>(this.baseUrl + 'getCategories', { headers });
+  }
+
+  getCategoriesById(id:any):Observable<any>{
+    const headers = this.getHeaders();
+    return this.http.get<any[]>(this.baseUrl + `getCategories?_id=${id}`, { headers });
   }
 
   getDepartmentData():Observable<any>{
@@ -787,6 +795,10 @@ export class LeaveTransferService {
     const headers = this.getHeaders();
     return this.http.post<any>(this.baseUrl+'addDroProfile',data,{headers});
   }
+  updateDroProfile(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updateDroProfile',data,{headers});
+  }
   getDroList(){
     const headers = this.getHeaders();
     return this.http.get<any>(this.baseUrl+'getDroProfile',{headers});
@@ -798,6 +810,10 @@ export class LeaveTransferService {
   addPreviousPosting(data:any){
     const headers = this.getHeaders();
     return this.http.post<any>(this.baseUrl+'addPreviousPosting',data,{headers});
+  }
+  updatePreviousPosting(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+'updatePreviousPosting',data,{headers});
   }
   getPreviousPostingList(){
     const headers = this.getHeaders();
@@ -822,5 +838,10 @@ export class LeaveTransferService {
   updateMessageView(url:any,id:any){
     const headers = this.getHeaders();
     return this.http.put<any>(this.baseUrl+url+'/'+id,{},{headers});
+  }
+
+  updateCategories(_id:any,data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+`updateCategory/${_id}`,data,{headers});
   }
 }

@@ -1,1 +1,637 @@
-<p>edit-dro-profile works!</p>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/droprofile">DRO Profile</a></li>
+    <li class="breadcrumb-item"><a><b>Edit DRO Profile</b></a></li>
+  </ul>
+  <div class="col-12 grid-margin">
+      <div class="card px-3 mt-0">
+        <div class="card-body">
+          <h4 class="card-title float-left w-100">Update DRO Profile<span>
+            <div class="col-md-1 float-right" style="max-width:12%;">
+            <img [src]="selectedImage" alt="Profile" class="profile-img">
+          </div></span></h4>
+          <div class="clearfix"></div>
+         
+          <form class="form-sample" [formGroup]="droForm" (ngSubmit)="onSubmit()">
+  
+            <div class="sub-title  float-left w-100 pl-0">Personal Details</div>
+           
+            
+            <div class="row mb-1 mt-2">
+              <div class="col-md-5">
+                <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Full Name</label>
+                       <div class="col-sm-12">
+                        <input type="text" class="form-control" name="fullName" formControlName="fullName"  
+                            [ngStyle]="{'border-bottom': (submitted && droForm.get('fullName')?.invalid && droForm.get('fullName')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Gender</label>
+                  <div class="col-sm-12">
+                      <select class="form-control" formControlName="gender">
+                        <option value="">Select</option>
+                        <option *ngFor="let genderData of gender" [value]="genderData.value">{{genderData.label}}</option>
+                    </select>
+                  
+                  </div>
+                </div>
+            </div>
+
+            
+  
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date of Birth </label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control pl-0" formControlName="dateOfBirth" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Home State </label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="state">
+                    <option value="">Select</option>
+                    <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-2">
+              <div class="form-group row">
+  
+                  <label class="col-sm-12 col-form-label">Seniority Number</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" name="seniority" formControlName="seniority" maxlength="10"  
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('seniority')?.invalid && droForm.get('seniority')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+              </div>
+            </div>
+  
+            </div>
+  
+            <div class="row mb-1 mt-2">
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Class </label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="community">
+                        <option value="">Select</option>
+                        <option *ngFor="let communityData of community" [value]="communityData.value">{{communityData.label}}</option>
+                      </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Religion</label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="religion">
+                        <option value="">Select</option>
+                        <option *ngFor="let  ReligionData of religion" [value]="ReligionData.value">{{ReligionData.label}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Caste </label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" formControlName="caste" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Mobile No 1 (Whatsapp) <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" name="mobileNo1" formControlName="mobileNo1" maxlength="10"
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('mobileNo1')?.invalid && droForm.get('mobileNo1')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+              </div>
+            </div>
+            </div>
+  
+  
+            <div class="row mb-1 mt-2">
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Mobile No 2</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" maxlength="10" name="mobileNo2" formControlName="mobileNo2" maxlength="10" />
+                  </div>
+              </div>
+            </div>
+  
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Landline Number</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" maxlength="20"  name="mobileNo3" formControlName="mobileNo3" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Email ID <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="email" class="form-control" formControlName="personalEmail"
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('personalEmail')?.invalid && droForm.get('personalEmail')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+            <div class="col-md-12 p-0 my-4">
+              <label class="col-form-label my-2">Qualification</label>
+              <div class="form-group row float-right">
+                <div class="col-sm-10">
+                  <button type="button" class="btn btn-success px-2 py-2" style="font-size: 13px;" (click)="addRow()">Add</button>
+                </div>
+              </div>
+  
+            <div class="table-responsive">
+              <div formArrayName="degreeData">
+                <div *ngFor="let row of degreeDetailsFormArray.controls; let i = index" [formGroupName]="i" class="card mb-3 mt-2">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12 mb-2 text-right" *ngIf="i !== 0">
+                        <button type="button" class="btn btn-danger p-2"  (click)="removeRow(i)">Delete</button>
+                        <!-- <i class="typcn typcn-trash trash" *ngIf="i !== 0" (click)="removeRow(i)"></i> -->
+                      </div>
+                      <div class="col-md-2 mb-2">
+                        <label><b>Course Level</b></label>
+                        <select class="form-control" formControlName="courseLevel"
+                          >
+                          <option value="">Select</option>
+                          <option value="UG">UG</option>
+                          <option value="PG">PG</option>
+                          <option value="Certificate Course">Certificate Course</option>
+                        </select>
+                      </div>
+  
+                      <div class="col-md-3 mb-2">
+                        <label><b>Degree</b></label>
+                        <select class="form-control" formControlName="degree"
+                          >
+                          <option value="">Select</option>
+                          <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
+                        </select>
+                      </div>
+              
+                      <div class="col-md-3 mb-2">
+                        <label><b>Specialisation</b></label>
+                        <input type="text" class="form-control" formControlName="specialisation">
+                      </div>
+              
+                      <div class="col-md-4 mb-2">
+                        <label><b>Institute Name</b></label>
+                        <input type="text" class="form-control" formControlName="instituteName">
+                      </div>
+              
+                      <div class="col-md-3 mt-2">
+                        <label><b>State</b></label>
+                        <select class="form-control" formControlName="locationState"
+                          >
+                          <option value="">Select</option>
+                          <option *ngFor="let stateData of state" [value]="stateData.value">{{stateData.label}}</option>
+                        </select>
+                      </div>
+              
+                      <div class="col-md-3 mt-2">
+                        <label><b>Country</b></label>
+                        <select class="form-control" formControlName="locationCountry"
+                          >
+                          <option value="">Select</option>
+                          <option *ngFor="let countryData of country" [value]="countryData.value">{{countryData.label}}</option>
+                        </select>
+                      </div>
+              
+                      <div class="col-md-2 mt-2">
+                        <label><b>Duration of Course</b></label>
+                        <select class="form-control" formControlName="durationOfCourse"
+                          >
+                          <option value="">Select</option>
+                          <option *ngFor="let courseDurationData of courseDuration" [value]="courseDurationData">{{courseDurationData}}</option>
+                        </select>
+                      </div>
+              
+                      <div class="col-md-2 mt-2">
+                        <label><b>Fund</b></label>
+                        <select class="form-control" formControlName="fund"
+                          >
+                          <option value="">Select</option>
+                          <option value="Self">Self</option>
+                          <option value="State Government">State Government</option>
+                          <option value="Central Government">Central Government</option>
+                          <option value="Organisation">Organisation</option>
+                          <option value="University">University</option>
+                          <option value="Others">Others</option>
+                        </select>
+                      </div>
+              
+                      <div class="col-md-2 mt-2">
+                        <label><b>Fee</b></label>
+                        <input type="number" class="form-control" formControlName="fees" (keydown)="onKeyDown($event)">
+                      </div>
+              
+                      <div class="col-md-3 mt-4">
+                        <label><b>Completed Date & Year</b></label>
+                        <input type="date" class="form-control date-input" formControlName="courseCompletedDate" [max]="hideFutureDate()" (change)="getCompletedYear(i)">
+                        <input type="number" class="form-control year-input" formControlName="courseCompletedYear" placeholder="YYYY">
+                      </div>
+              
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+            
+  
+            <div class="row mb-1 mt-2">
+              <div class="sub-title  float-left w-100 mb-2 pl-2">Residential Address</div>
+  
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Address Line </label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="addressLine" />
+                </div>
+              </div>
+            </div>
+            
+            
+  
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">City </label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="city" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Pincode </label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="pincode" maxlength="6"
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('pincode')?.invalid && droForm.get('pincode')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 px-0 imgup">
+            <label class="col-form-label px-0 float-left w-100">Photo </label>
+            <input type="file" class="form-control float-left w-auto" accept=".jpg, .jpeg, .png, .tiff,.tif, .pdf"
+              formControlName="imagePath" (change)="onFileSelected($event)" style="border: none;" />
+          </div>
+          <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="selectedImage && !base64String">
+            <img [src]="selectedImage" alt="Selected Image" class="img-fluid" />
+            <i class="mdi mdi-close p-1" style="color: white; background: red; position: absolute;"
+              (click)="removeImage()"></i>
+          </div>
+          <div class="col-md-2 image-preview mt-2 float-left position-relative" *ngIf="base64String">
+            <img [src]="base64String" alt="Selected Image" class="img-fluid" />
+            <i class="mdi mdi-close p-1" style="color: white; background: red; position: absolute;"
+              (click)="removeImage()"></i>
+          </div>
+  
+          
+  
+  
+        <div class="row mb-1 mt-3 float-left w-100">
+          <div class="sub-title  float-left w-100 pl-2">DRO Officer Details</div>
+  
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">DRO Officer ID </label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="employeeId"  maxlength="6" name="officerId"
+                  [ngStyle]="{'border-bottom': (submitted && droForm.get('employeeId')?.invalid && droForm.get('employeeId')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+               </div>
+             </div>
+          </div>
+  
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">IFHRMS ID </label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" formControlName="ifhrmsId"   />
+              </div>
+             </div>
+          </div>
+  
+          <div class="col-md-2">
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date of Joining </label>
+                  <div class="col-sm-12">
+                    <input type="date" class="form-control" name="dateOfJoining" formControlName="dateOfJoining" maxlength="10" (change)="getYear()"
+                      [ngStyle]="{'border-bottom': (submitted && droForm.get('dateOfJoining')?.invalid && droForm.get('dateOfJoining')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                  </div>
+            </div>
+        </div>
+   
+            <div class="col-md-2">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Date of Retirement</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control pl-0" formControlName="dateOfRetirement" />
+                  </div>
+                </div>
+            </div>
+            
+  
+            <div class="col-md-2">
+                <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Batch</label>
+                <div class="col-sm-12">
+                    <input type="text"  formControlName="batch" class="form-control"/>
+                </div>
+                </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Recruitment Type </label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="recruitmentType" 
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('recruitmentType')?.invalid && droForm.get('recruitmentType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let recruitmentData of recruitment" [value]="recruitmentData.value">{{recruitmentData.label}}</option>
+                      </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Official Mail ID </label>
+                <div class="col-sm-12">
+                    <input type="email" class="form-control" formControlName="officeEmail" />
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Service Status </label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="serviceStatus" 
+                    [ngStyle]="{'border-bottom': (submitted && droForm.get('serviceStatus')?.invalid && droForm.get('serviceStatus')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="">Select</option>
+                        <option *ngFor="let serviceStatusData of serviceData" [value]="serviceStatusData.value">{{serviceStatusData.label}}</option>
+                      </select>
+                </div>
+              </div>
+            </div>
+   
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Grade</label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="promotionGrade">
+                        <option value="">Select</option>
+                        <option *ngFor="let promotionGradeData of grade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
+                      </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Payscale</label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="payscale" >
+                       
+                </div>
+              </div>
+            </div>
+           
+            </div>
+  
+            <div class="row mb-1 mt-3 float-left w-100" *ngIf="showPosting">
+  
+              <div class="sub-title  float-left w-100 pl-2">Posting Details</div>
+              <div class="col-md-12">
+                <div class="col-md-3 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label"> Posting In</label>
+                    <div class="col-sm-12">
+                      <select class="form-control" formControlName="toPostingInCategoryCode" (change)="getDepartment($event)">
+                      <option value="">Select</option>
+                        <option *ngFor="let postingInData of postingIn" [value]="postingInData.value">{{postingInData.label}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-5 px-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label"> Department </label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="toDepartmentId" (change)="getDesignation($event)">
+                          <option value="">Select</option>
+                          <option *ngFor="let departmentData of department" [value]="departmentData.value">{{departmentData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-4">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Address </label>
+                    <div class="col-sm-12">
+                      <input type="text"  formControlName="deptAddress" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-3 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Phone </label>
+                    <div class="col-sm-12">
+                      <input type="text"  formControlName="deptPhoneNumber" class="form-control" (keydown)="onKeyDown($event)" maxlength="20" />
+                    </div>
+                  </div>
+                </div>
+      
+      
+                <div class="col-md-3 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Fax </label>
+                    <div class="col-sm-12">
+                      <input type="text"  formControlName="deptFaxNumber" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-3 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Official Mobile No </label>
+                    <div class="col-sm-12">
+                      <input type="text"  formControlName="deptOfficialMobileNo" maxlength="10" class="form-control" (keydown)="onKeyDown($event)"  />
+                    </div>
+                  </div>
+                </div> 
+      
+      
+                <div class="col-md-3 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label"> Designation </label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="toDesignationId">
+                            <option value="">Select</option>
+                            <option *ngFor="let designationData of designation" [value]="designationData.value">{{designationData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                  </div>
+      
+                  
+                <div class="col-md-2 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Post Type</label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="postTypeCategoryCode">
+                            <option value="">Select</option>
+                            <option *ngFor="let postTypeData of postType" [value]="postTypeData.value">{{postTypeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Location Change </label>
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="locationChangeCategoryId">
+                            <option value="">Select</option>
+                            <option *ngFor="let locationChangeData of locationChange" [value]="locationChangeData.value">{{locationChangeData.label}}</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-4 pl-0">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Language Known</label>
+                    <div class="col-sm-12">
+                      <input type="text"  formControlName="languages" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+      
+      
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Promotion Date</label>
+                    <div class="col-sm-12">
+                      <input type="date" class="form-control pl-0" formControlName="lastDateOfPromotion"
+                        [ngStyle]="{'border-bottom': (submitted && droForm.get('lastDateOfPromotion')?.invalid && droForm.get('lastDateOfPromotion')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
+            <div class="col-md-2">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order Type </label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="orderType">
+                        <option value="">Select</option>
+                        <option *ngFor="let orderTypeData of orderType" [value]="orderTypeData.value">{{orderTypeData.label}}</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group row">
+                  <label class="col-sm-12 col-form-label">Order No </label>
+                  <div class="col-sm-12">
+                    <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)">
+                  </div>
+                </div>
+              </div>
+            
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Order For </label>
+                <div class="col-sm-12">
+                  <select class="form-control" formControlName="orderFor">
+                    <option value="" selected>Select</option>
+                    <option *ngFor="let orderForData of orderFor" [value]="orderForData.value">
+                      {{ orderForData.label }}
+                    </option>
+                  </select>            
+                </div>
+              </div>
+            </div>
+
+
+                <div class="col-md-2">
+                    <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Date of Order </label>
+                    <div class="col-sm-12">
+                        <input type="date" class="form-control"  formControlName="dateOfOrder" />
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-form-label">Order File 
+                      <a href="{{orderFileUrl}}" target="_blank" class="btn btn-primary py-2 px-1 ml-2">View</a>
+                    </label>
+                    <div class="col-sm-12">
+                      <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onPdfFileSelected($event)">                  </div>
+                      <!-- <div *ngIf="droForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div> -->
+                      <div *ngIf="droForm.get('orderFile')?.errors?.['incorrectFileType']">Only PDF files are allowed</div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                      <label class="col-sm-12 col-form-label">Remarks</label>
+                      <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="remarks" />
+                      </div>
+                    </div>
+                  </div>
+  
+  
+
+              </div>
+            
+    </div>
+         
+            <div class="my-3 float-left w-100">
+          <button type="button" class="btn btn-light mr-3" (click)="goBack()">Back</button>
+          <button type="submit" class="btn btn-primary mr-2">Update</button>
+          
+        </div>
+        </form>
+        </div>
+      </div>
+    </div>

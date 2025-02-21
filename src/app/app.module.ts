@@ -61,6 +61,8 @@ import { RetiredOfficersDetailComponent } from './landing-page/components/home/r
 import { NotificationModule } from './notification/notification.module';
 import { PreviousPostingModule } from './previous-posting/previous-posting.module';
 import { StatusModule } from './status/status.module';
+import { LeaveCreditModule } from './leave-credit/leave-credit.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,8 @@ import { StatusModule } from './status/status.module';
     ActiveOfficersComponent,
     ActiveOfficersDetailComponent,
     RetiredOfficersComponent,
-    RetiredOfficersDetailComponent
+    RetiredOfficersDetailComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -125,6 +128,7 @@ import { StatusModule } from './status/status.module';
     MasterCreationModule,
     NotificationModule,
     PreviousPostingModule,
+    LeaveCreditModule,
     StatusModule,
     RoleModule,
     UserModule,

@@ -58,73 +58,112 @@ export class EditPostingComponent implements OnInit {
       });
     }
   }
-  
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.submittedBy = localStorage.getItem('loginId');
     }
-    this.id = this.routes.snapshot.queryParamMap.get('profile');
-    // this.previousPostingAction.getPreviousPostingbyId(this.id).subscribe((res: any) => {
-    //   res.results.forEach((data: any) => {
-    //     this.previousPostingForm.get('fullName')?.setValue(data.empProfileId.fullName);
-    //     this.previousPostingForm.get('empProfileId')?.setValue(data.empProfileId.employeeId);
-    //     this.previousPostingData = data.previousPostingList;
-    //     this.previousPostingAction.getDepartmentData().subscribe((response: any) => {
-          
-    //       this.toDepartment = response.map((items: any) => ({
-    //         label:items.department_name,value:items._id
-    //       }));
-    //       console.log(this.toDepartment);
-    //      if (data.toPostingInCategoryCode) {
-    //         this.previousPostingForm.get('toDepartmentId')?.setValue(data.department_name);
-    //       }
-    //     });
-    //     this.populatePreviousPostingData();
-    //   });
-    // });
+
     this.previousPostingForm = this.fb.group({
-      fullName: ['',Validators.required],
-      empProfileId: ['',Validators.required],
-      previousPostingList: this.fb.array([this.createRow()]), 
+      fullName: ['', Validators.required],
+      empProfileId: ['', Validators.required],
+      previousPostingList: this.fb.array([]),
       updateType: ['Previous'],
       submittedBy: [this.submittedBy]
     });
+
+    this.id = this.routes.snapshot.queryParamMap.get('profile');
+    if (this.id) {
+      this.loadPreviousPostingData(this.id);
+    }
+
     this.previousPostingAction.getData().subscribe((res: any[]) => {
       res.forEach((item) => {
-        if (item.category_type == "posting_in") {
+        if (item.category_type === "posting_in") {
           this.postingIn.push({ label: item.category_name, value: item._id });
         }
       });
-
     });
   }
 
-  populatePreviousPostingData() {
+  loadPreviousPostingData(id: string): void {
+    this.previousPostingAction.getPreviousPostingbyId(id).subscribe((res: any) => {
+      res.results.forEach((data: any) => {
+        this.empProfileId = data.empProfileId._id;
+        this.previousPostingForm.patchValue({
+          fullName: data.empProfileId.fullName,
+          empProfileId: data.empProfileId.employeeId
+        });
+
+        this.previousPostingData = data.previousPostingList;
+        this.populatePreviousPostingData();
+
+        this.previousPostingAction.getDepartmentData().subscribe((response: any) => {
+          // this.toDepartment = [];
+          response.forEach((deptItem: any) => {
+            this.toDepartment.push({ label: deptItem.department_name, value: deptItem._id });
+          });
+        
+          if (this.previousPostingData?.length > 0) {
+            this.previousPostingData.forEach((previousItem: any, index: number) => {
+              const matchedDepartment = this.toDepartment.find((ele: any) => ele.value === previousItem.toDepartmentId);
+              if (matchedDepartment) {
+                const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
+                if (formArray && formArray.at(index)) {
+                  formArray.at(index).get('toDepartmentId')?.setValue(matchedDepartment.value);
+                }
+              }
+            });
+          }
+        
+        });
+        this.previousPostingAction.getDesignations().subscribe((response: any) => {
+          // this.toDesignation = [];
+          response.results.forEach((desginationItem: any) => {
+            this.toDesignation.push({ label: desginationItem.designation_name, value: desginationItem._id });
+            console.log(this.toDesignation);
+          });
+        
+          if (this.previousPostingData?.length > 0) {
+            this.previousPostingData.forEach((previousItem: any, index: number) => {
+              const matchedDesignation = this.toDesignation.find((ele: any) => ele.value === previousItem.toDesignationId);
+              if (matchedDesignation) {
+                const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
+                if (formArray && formArray.at(index)) {
+                  formArray.at(index).get('toDesignationId')?.setValue(matchedDesignation.value);
+                }
+              }
+            });
+          }
+        
+        });
+        
+      });
+    });
+  }
+
+  populatePreviousPostingData(): void {
     const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
-    while (formArray.length) {
-      formArray.removeAt(0);
-    }
-    this.previousPostingData.forEach(postingItem => {
-     const fromDate =  this.datePipe.transform(postingItem.fromDate, 'yyyy-MM-dd');
-     const toDate =  this.datePipe.transform(postingItem.toDate, 'yyyy-MM-dd');
+    formArray.clear(); 
+    this.previousPostingData.forEach((postingItem, index) => {
+      const fromDate = this.datePipe.transform(postingItem.fromDate, 'yyyy-MM-dd');
+      const toDate = this.datePipe.transform(postingItem.toDate, 'yyyy-MM-dd');
+
       formArray.push(this.fb.group({
         toPostingInCategoryCode: [postingItem.toPostingInCategoryCode],
         toDepartmentId: [postingItem.toDepartmentId],
         toDesignationId: [postingItem.toDesignationId],
         fromDate: [fromDate],
         toDate: [toDate],
-        district: [postingItem.district],
+        district: [postingItem.district]
       }));
     });
   }
-
-
+ 
   get previousPostingFormArray(): FormArray {
     return this.previousPostingForm.get('previousPostingList') as FormArray;
   }
 
-  // Method to create a new row (form group)
   createRow(): FormGroup {
     return this.fb.group({
       toPostingInCategoryCode: ['',Validators.required],
@@ -241,6 +280,7 @@ toGetDesignation(event: any, index: number) {
       // Create the payload object in the required format
       const formValue = this.previousPostingForm.value;
       const payload = {
+        id:this.id,
         updateType: 'Previous',
         empProfileId: this.empProfileId, // Assuming empProfileId is part of the form
         previousPostingList: formValue.previousPostingList.map((row:any) => ({
@@ -251,18 +291,13 @@ toGetDesignation(event: any, index: number) {
           toDate: row.toDate,
           district: row.district
         })),
-        submittedBy: formValue.submittedBy // Assuming submittedBy is part of the form
+        submittedBy: formValue.submittedBy
       };
-  
-      // Log the payload for debugging
       console.log('Payload:', payload);
-  
-      // Now send the payload as a JSON object to the backend
-      this.previousPostingAction.addPreviousPosting(payload).subscribe(
+        this.previousPostingAction.updatePreviousPosting(payload).subscribe(
         (response: any) => {
           alert(response.message);
-          this.previousPostingForm.reset();
-          this.router.navigate(['previous-posting']);
+           this.router.navigate(['previous-posting']);
           console.log('API Response:', response);
         },
         error => {

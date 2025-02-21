@@ -463,17 +463,17 @@ droForm!: FormGroup;
       this.calculateRetirementDate();
       this.servingtype = serviceStatus;
       this.showPosting = true;
-      this.setDepartmentAndServing('yes', 'yes', ''); 
+      this.setDepartmentAndServing('yes', 'yes', 'Transfer / Posting'); 
     } else if (serviceStatus === '65f43649a4a01c1cbbd6c9d7') {
       this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = serviceStatus;
       this.showPosting = false;
-      this.setDepartmentAndServing('no', 'no', ''); 
+      this.setDepartmentAndServing('no', 'no', 'Transfer / Posting'); 
     } else if (serviceStatus === '') {
       this.droForm.get('dateOfRetirement')?.setValue('');
       this.servingtype = '65f43649a4a01c1cbbd6c9d6';
       this.showPosting = false;
-      this.setDepartmentAndServing('no', 'no', ''); 
+      this.setDepartmentAndServing('no', 'no', 'Transfer / Posting'); 
     }
   }
   
@@ -556,65 +556,146 @@ droForm!: FormGroup;
     });
   }
  
+  // onSubmit() {
+  //   this.submitted = true;
+    
+  //   if (this.droForm.valid) {
+  //     const formValue = this.droForm.value;
+  
+  //     console.log('droForm', formValue);
+  //     formValue.addedBy = 'DRO Profile';
+  //     formValue.submittedBy = this.submittedBy;
+  
+  //     // Check if degreeData exists, is an array, and has values
+  //     if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
+  //       formValue.degreeData.forEach((degree: any) => {
+  //         degree.addedBy = 'DRO Profile';
+  //       });
+  //     } else {
+  //       formValue.degreeData = []; // Set to empty array if no degreeData
+  //     }
+  
+  //     console.log("formValue.degreeData", formValue.degreeData);
+  
+  //     const formData = new FormData();
+      
+  //     // Append the non-file fields (except degreeData and submittedBy)
+  //     for (const key in formValue) {
+  //       if (formValue.hasOwnProperty(key) && key !== 'orderFile' && key !== 'imagePath' && key !== 'degreeData' && key !== 'submittedBy') {
+  //         formData.append(key, formValue[key] !== null && formValue[key] !== undefined ? formValue[key] : '');
+  //       }
+  //     }
+      
+  //     // Handle orderFile (append only if a file is selected)
+  //     if (this.selectedFile) {
+  //       formData.append('orderFile', this.selectedFile);
+  //     } else {
+  //       formData.append('orderFile', '');  // If no file, append empty value
+  //     }
+  
+  //     // Handle imagePath (append only if a file is selected)
+  //     const imagePathValue = this.droForm.get('imagePath')?.value;
+  //     if (imagePathValue instanceof File) {
+  //       formData.append('imagePath', imagePathValue);
+  //     } else {
+  //       formData.append('imagePath', '');  // If no file, append empty value
+  //     }
+  
+  //     // Append degreeData as JSON string if it's not empty
+  //     if (formValue.degreeData.length > 0) {
+  //       formData.append('degreeData', JSON.stringify(formValue.degreeData));
+  //     } else {
+  //       formData.append('degreeData', ''); // Append empty string if degreeData is empty
+  //     }
+  
+  //     // Append addedBy and submittedBy only once
+  //     formData.append('addedBy', 'DRO Profile');
+  //     formData.append('submittedBy', this.submittedBy);
+  
+  //     // Log form data entries for debugging (cast formData to any to use entries())
+  //     (formData as any).entries().forEach((pair: [string, FormDataEntryValue]) => {
+  //       console.log(pair[0], pair[1]);
+  //     });
+  
+  //     // Submit the form data
+  //     this.droAction.createDroProfile(formData).subscribe(
+  //       (response: any) => {
+  //         alert(response.message);
+  //         this.droForm.reset();
+  //         // this.router.navigate(['droprofile']);
+  //         console.log('API Response:', response);
+  //       },
+  //       error => {
+  //         console.error('API Error:', error);
+  //         alert(error.message);
+  //       }
+  //     );
+  //   } else {
+  //     console.log(this.droForm.value);
+  //   }
+  // }
+
   onSubmit() {
     this.submitted = true;
-    
+  
     if (this.droForm.valid) {
       const formValue = this.droForm.value;
+      // console.log('droForm', formValue);
   
-      console.log('droForm', formValue);
       formValue.addedBy = 'DRO Profile';
       formValue.submittedBy = this.submittedBy;
   
-      // Check if degreeData exists, is an array, and has values
+      // Ensure degreeData is valid
       if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
         formValue.degreeData.forEach((degree: any) => {
           degree.addedBy = 'DRO Profile';
         });
       } else {
-        formValue.degreeData = []; // Set to empty array if no degreeData
+        formValue.degreeData = [];
       }
   
-      console.log("formValue.degreeData", formValue.degreeData);
+     console.log("formValue.degreeData", formValue.degreeData);
   
       const formData = new FormData();
-      
-      // Append the non-file fields (except degreeData and submittedBy)
-      for (const key in formValue) {
-        if (formValue.hasOwnProperty(key) && key !== 'orderFile' && key !== 'imagePath' && key !== 'degreeData' && key !== 'submittedBy') {
-          formData.append(key, formValue[key] !== null && formValue[key] !== undefined ? formValue[key] : '');
+  
+      // Append only fields with valid values
+      Object.keys(formValue).forEach(key => {
+        if (
+          key !== 'orderFile' &&
+          key !== 'imagePath' &&
+          key !== 'degreeData' &&
+          key !== 'submittedBy' &&
+          formValue[key] !== null &&
+          formValue[key] !== undefined &&
+          formValue[key] !== ''
+        ) {
+          formData.append(key, formValue[key]);
         }
-      }
-      
+      });
+  
       // Handle orderFile (append only if a file is selected)
       if (this.selectedFile) {
         formData.append('orderFile', this.selectedFile);
-      } else {
-        formData.append('orderFile', '');  // If no file, append empty value
       }
   
       // Handle imagePath (append only if a file is selected)
       const imagePathValue = this.droForm.get('imagePath')?.value;
       if (imagePathValue instanceof File) {
         formData.append('imagePath', imagePathValue);
-      } else {
-        formData.append('imagePath', '');  // If no file, append empty value
       }
   
       // Append degreeData as JSON string if it's not empty
       if (formValue.degreeData.length > 0) {
         formData.append('degreeData', JSON.stringify(formValue.degreeData));
-      } else {
-        formData.append('degreeData', ''); // Append empty string if degreeData is empty
       }
   
-      // Append addedBy and submittedBy only once
-      formData.append('addedBy', 'DRO Profile');
-      formData.append('submittedBy', this.submittedBy);
+      // Append addedBy and submittedBy only if they have values
+      if (formValue.addedBy) formData.append('addedBy', formValue.addedBy);
+      if (formValue.submittedBy) formData.append('submittedBy', formValue.submittedBy);
   
-      // Log form data entries for debugging (cast formData to any to use entries())
+      // Log form data entries for debugging
       (formData as any).entries().forEach((pair: [string, FormDataEntryValue]) => {
-        console.log(pair[0], pair[1]);
+        // console.log(pair[0], pair[1]);
       });
   
       // Submit the form data
@@ -634,8 +715,4 @@ droForm!: FormGroup;
       console.log(this.droForm.value);
     }
   }
-  
-
 }
-
-

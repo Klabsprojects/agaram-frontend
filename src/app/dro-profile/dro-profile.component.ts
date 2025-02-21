@@ -172,6 +172,9 @@ export class DroProfileComponent implements OnInit{
         this.viewDroData.payscale = ele.payscale;
         this.viewDroData.educationdetails = ele.degreeData;
         this.viewDroData.seniority = ele.seniority;
+        this.viewDroData.orderNo = ele.orderNo;
+        this.viewDroData.dateOfOrder = ele.dateOfOrder;
+        this.viewDroData.remarks = ele.remarks;
         this.viewDroData.imagePath = `${this.droAction.fileUrl}droProfileImages/${ele.imagePath?.replace('\\', '/')}`;
         // const binaryData = new Uint8Array(ele.photo.data);
         // this.base64ImageData = this.arrayBufferToBase64(binaryData);
@@ -242,6 +245,12 @@ export class DroProfileComponent implements OnInit{
             }
             if(data.category_type == "religion" && data._id == ele.religion){
               this.viewDroData.religion = data.category_name;
+            }
+            if(data.category_type == "order_type" && data._id == ele.orderType){
+              this.viewDroData.orderType = data.category_name;
+            }
+            if(data.category_type == "order_for" && data._id == ele.orderFor){
+              this.viewDroData.orderFor = data.category_name;
             }
             if(data.category_type == "promotion_grade" && data._id == ele.promotionGrade){
               this.viewDroData.promotionGrade = data.category_name;

@@ -1,0 +1,131 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="typcn typcn-home"></i></a></li>
+    <li class="breadcrumb-item"><a routerLink="/leave-credit">Leave Credit</a></li>
+  </ul>
+  <div class="col-md-12">
+    <div class="card px-3 mt-0">
+      <div class="card-body">
+        <h4 class="card-title">Leave Credit Details</h4>
+        <table class="table table-bordered table-striped table-hover my-4 float-left">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Officer Details</th>
+                <th>CL</th>
+                <th>RH</th>
+                <th>EL</th>
+                <th>HPL</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="filteredEmployeeList.length > 0; else noRecords">
+                    <tr *ngFor="let data of pagedData(); let i = index">
+                      <td>{{i + startIndex+ 1}}</td>
+                      <td style="line-height: 1.9;"><b>{{data.employeeId}} - {{data.fullName}}</b> <br>{{data.toPostingInCategoryCode}}, {{data.toDepartmentId}}<br>{{data.toDesignationId}}</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-info p-2 mr-2" (click)="changeLeaveData(data._id,data.fullName)" data-toggle="modal" data-target="#changeLeaveDetails">Change</button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-template #noRecords>
+                    <tr>
+                      <td colspan="13" style="color: red;">No records found</td>
+                    </tr>
+                  </ng-template>
+            </tbody>
+          </table>
+          <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length > 0">
+            <div class="dropdown col-md-8">
+              <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Items Per Page: {{ pageSize }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+                <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+                  }}</a>
+              </div>
+            </div>
+            <div class="col-md-4" style="border: 0px;">
+              <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+                <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+              <ng-container *ngFor="let page of pages">
+                <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+                  (click)="goToPage(page)">{{ page }}</button>
+              </ng-container>
+              <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+                Next <i class="mdi mdi-chevron-double-right"></i> </button>
+          
+            </div>
+          </div>
+          
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="changeLeaveDetails" tabindex="-1" aria-labelledby="changeLeaveDetailsLabel" *ngIf="showPopup">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="changeLeaveDetailsLabel">Change Leave Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body pb-0">
+              <div class="col-md-12 p-0">
+                  <div class="col-md-12 px-0 mb-3 pl-2"><b>{{name}}</b></div>  
+                  
+                        <form class="form-sample" [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-12 col-form-label">Casual Leave </label>
+                                  <div class="col-sm-12">
+                                    <input type="text" class="form-control" formControlName="casualLeave"
+                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('casualLeave')?.invalid && leaveForm.get('casualLeave')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-12 col-form-label">Restrited Holiday </label>
+                                  <div class="col-sm-12">
+                                    <input type="text" class="form-control" formControlName="restrictedHoliday"
+                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('restrictedHoliday')?.invalid && leaveForm.get('restrictedHoliday')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-12 col-form-label">Earned Leave</label>
+                                  <div class="col-sm-12">
+                                    <input type="text" class="form-control" formControlName="earnedLeave"
+                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('earnedLeave')?.invalid && leaveForm.get('earnedLeave')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                  </div>
+                                </div>
+                              </div>    
+
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-sm-12 col-form-label">Half Pay Leave </label>
+                                  <div class="col-sm-12">
+                                    <input type="text" class="form-control" formControlName="restrictedHoliday"
+                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('restrictedHoliday')?.invalid && leaveForm.get('restrictedHoliday')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                  </div>
+                                </div>
+                              </div>
+                        </form>
+                </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success py-2 px-3">Submit</button>
+
+              <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>  

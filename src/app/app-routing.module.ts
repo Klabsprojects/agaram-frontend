@@ -97,6 +97,11 @@ const routes: Routes = [
     canActivate:[AuthGuard]
   },
   {
+    path:'leave-credit',
+    loadChildren:()=>import('./leave-credit/leave-credit.module').then(m=>m.LeaveCreditModule),
+    canActivate:[AuthGuard]
+  },
+  {
     path:'',
     redirectTo:'Landing',
     pathMatch:'full'

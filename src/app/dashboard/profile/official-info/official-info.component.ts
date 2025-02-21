@@ -11,16 +11,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class OfficialInfoComponent implements OnInit{
   modalTitle: string = '';
-
+  isLeaveAvailableOpen: boolean = true;
+isLeaveHistoryOpen: boolean = false;
   constructor(private dashboardService: LeaveTransferService, private datePipe: DatePipe, private cs:CommonService, private fb:FormBuilder) {
   }
   employeeProfileId:string='';
   ngOnInit(): void {
     this.login_id = localStorage.getItem('loginId')
     this.get_Id(this.login_id);
-    this.dashboardService.getData().subscribe((element: any[]) => {
-      this.catogories = element
-      // console.log("this.catogories", this.catogories)
+    this.dashboardService.getData().subscribe((element: any) => {
+      this.catogories = element;
+      element.forEach((item:any) => {
+      if (item.category_type == "posting_in") {
+        this.postingIn.push({ label: item.category_name, value: item._id });
+      }
+    });
     });
     this.dashboardService.getDepartmentData().subscribe((res: any) => {
       this.departmentData = res;
@@ -100,6 +105,7 @@ export class OfficialInfoComponent implements OnInit{
   uploadSafFile : any;
   submitted = false;
   formType = '';
+  previousPostingData:any[]=[];
   get_Id(login_id: any) {
     this.loading = true;
     this.dashboardService.getEmployeeAlone(login_id).subscribe((res: any) => {
@@ -183,13 +189,26 @@ export class OfficialInfoComponent implements OnInit{
     this.firstIndex = '';
     this.dashboardService.getEmployeeHistory(data).subscribe((res: any) => {
       this.userAvailable = res.results;
-      console.log(res.results);
-      // this.loading = false;
       res.results.forEach((item: any) => {
+        this.previousPostingData = [];
+        this.dashboardService.getPreviousPostingbyDashboard(data).subscribe((response: any) => {
+          response.results.forEach((items: any) => {
+            console.log("previous posting",items.previousPostingList);
+        
+            items.previousPostingList.forEach((postingDataItem: any) => {
+              const postingIn = this.postingIn.find((data: any) => data.value === postingDataItem.toPostingInCategoryCode);
+              const department = this.departmentData.find((data: any) => data._id === postingDataItem.toDepartmentId);
+              const designation = this.designationData.find((data: any) => data._id === postingDataItem.toDesignationId);
+              this.previousPostingData.push({
+                postingIn: postingIn ? postingIn.label : '',
+                department: department ? department.department_name : '',
+                designation: designation ? designation.designation_name : '',
+                fromDate: postingDataItem.fromDate, 
+                toDate: postingDataItem.toDate 
+              });
+            });
         if (item._id == data) {
           this.employeeProfileId = item._id;
-          console.log(item);
-          console.log(item._id);
           this.dashboardService.getData().subscribe((response: any) => {
             response.forEach((ele: any) => {
               if (ele.category_type == "state") {
@@ -200,11 +219,9 @@ export class OfficialInfoComponent implements OnInit{
             });
             item.employeeHistory.forEach((element: any, index: number) => {
 
-              // console.log("element",element)
               this.previousData.push({ 'postingIn': element.transferOrPostingEmployeesList.toPostingInCategoryCode, 'department': element.transferOrPostingEmployeesList.toDepartmentId, 'designation': element.transferOrPostingEmployeesList.toDesignationId })
               if (index === 0) {
                 this.firstIndex = element.transferOrPostingEmployeesList;
-                console.log("this.firstIndex", this.firstIndex)
                 
                 if (element.category_type == "posting_in") {
                   if (element._id == element.transferOrPostingEmployeesList.toPostingInCategoryCode) {
@@ -216,7 +233,6 @@ export class OfficialInfoComponent implements OnInit{
                     this.firstIndex.toDepartmentId = elem.label;
                   }
                 });
-                console.log("his.firstIndex.posting", this.firstIndex.toDepartmentId)
                 this.designation.forEach((elem: any) => {
                   if (elem.value == element.transferOrPostingEmployeesList.toDesignationId) {
                     this.firstIndex.toDesignationId = elem.label;
@@ -236,6 +252,8 @@ export class OfficialInfoComponent implements OnInit{
                 });
               }
             });
+
+            
 
             this.employeeHistory.fullName = item.fullName;
             this.employeeHistory.mobileNo1 = item.mobileNo1;
@@ -269,6 +287,8 @@ export class OfficialInfoComponent implements OnInit{
           });
         }
       });
+      });
+    });
     });
   }
 
@@ -344,7 +364,6 @@ export class OfficialInfoComponent implements OnInit{
       caste :data.caste,
       dob :data.dateOfBirth
     }
-    console.log('userData',userData)
     this.cs.setData(JSON.stringify(userData));
   }
 
@@ -529,7 +548,6 @@ export class OfficialInfoComponent implements OnInit{
   }
 
   applyFormSubmit() {
-    console.log(this.applyForm.value);
     if (this.applyForm.valid) {
       const formData = new FormData();
       const formValues = this.applyForm.value;
@@ -554,7 +572,6 @@ export class OfficialInfoComponent implements OnInit{
       this.dashboardService.applyForm(formData).subscribe(
         response => {
           alert(response.message);
-          console.log(response.message);
           this.hideModal('formApply'); 
         },
         error => {

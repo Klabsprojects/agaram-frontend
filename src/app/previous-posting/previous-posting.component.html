@@ -5,9 +5,9 @@
   <h5>Previous Posting List <button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()">Add New</button></h5>
   
   <div class="col-md-12 p-0">
-  <!-- <div class="col-md-3 px-0 mt-4 mb-0">
+  <div class="col-md-3 px-0 mt-4 mb-0">
     <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
-  </div> -->
+  </div>
   
   </div>
   
@@ -32,8 +32,8 @@
           <td>{{data.empProfileId.employeeId}}</td>
           <td>{{data.empProfileId.batch}}</td>
           <td class="text-center">
-            <button type="button" class="btn btn-info p-2 mr-2" (click)="editPreviousPosting(data._id)" disabled>Edit</button>
-            <button type="button" class="btn btn-info p-2" style="font-size: 12px;" disabled  data-toggle="modal" data-target="#viewPreviousPosting" (click)="viewPreviousPosting(data._id)">View</button>
+            <button type="button" class="btn btn-info p-2 mr-2" (click)="editPreviousPosting(data._id)">Edit</button>
+            <button type="button" class="btn btn-info p-2" style="font-size: 12px;"   data-toggle="modal" data-target="#viewPreviousPosting" (click)="viewPreviousPosting(data._id)">View</button>
           </td>
         </tr>
       </ng-container>
@@ -44,10 +44,79 @@
       </ng-template>
     </tbody>
   </table>
-  
+  <div class="pagination1 float-right text-right w-100" *ngIf="filteredEmployeeList.length >= 0">
+    <div class="dropdown col-md-9">
+      <button class="btn btn-secondary dropdown-toggle p-2" type="button" id="pageSizeDropdown"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Items Per Page: {{ pageSize }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="pageSizeDropdown">
+        <a class="dropdown-item" *ngFor="let option of pageSizeOptions" (click)="changePageSize(option)">{{ option
+          }}</a>
+      </div>
+    </div>
+    <div class="col-md-3" style="border: 0px;">
+      <button class="btn btn-light mr-1 p-2" [disabled]="currentPage === 1" (click)="prevPage()">
+        <i class="mdi mdi-chevron-double-left"></i> Previous </button>
+      <ng-container *ngFor="let page of pages">
+        <button class="btn btn-light ml-1 p-2" [ngClass]="{ 'active': currentPage === page }"
+          (click)="goToPage(page)">{{ page }}</button>
+      </ng-container>
+      <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Next <i class="mdi mdi-chevron-double-right"></i> </button>
   
     </div>
-    </div>
-    </div>
+  </div>
+</div>
+</div>
+</div>
   
-    
+<div class="modal fade" id="viewPreviousPosting" tabindex="-1" aria-labelledby="viewPreviousPostingLabel" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewPreviousPostingLabel">View Previous Posting</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+        <div class="col-md-12 p-0">
+            <div class="col-md-6 px-0 mb-3"><label class="w-100"><b>Name </b></label> <br> {{viewPreviousPostingData.fullName}}</div>  
+            <div class="col-md-6 px-0 mb-3"><label class="w-100"><b>Officer ID </b></label> <br>{{viewPreviousPostingData.empProfileId}}</div>  
+            
+              <h6 class="modal-title float-left w-100 mt-3">Posting Details </h6></div>  
+              <div class="table-responsive">
+                <table class="table existing mt-2">
+                  <thead>
+                    <tr>
+                      <th class="py-2"><label class="col-form-label pt-0">S.No</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">Posting In</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">Department</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">Designation</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">Address</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">From Date</label></th>
+                      <th class="py-2"><label class="col-form-label pt-0">To Date</label></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let tableData of viewPreviousPostingData.previousPostingList; let i = index">
+                    <tr>
+                      <td>{{i+1}}</td>
+                      <td>{{tableData.toPostingInCategoryCode}}</td>
+                      <td>{{tableData.toDepartmentId}}</td>
+                      <td>{{tableData.toDesignationId}}</td>
+                      <td>{{tableData.district}}</td>
+                      <td>{{tableData.fromDate | date:'dd/MM/yyyy'}}</td>
+                      <td>{{tableData.toDate | date:'dd/MM/yyyy' }}</td>
+                    </tr>
+                  </tbody>
+                  
+                </table>
+              </div>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>    

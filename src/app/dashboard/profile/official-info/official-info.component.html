@@ -15,6 +15,20 @@
       <div class="modal-body p-3" *ngIf="userAvailable.length>0; else usernotavailable">
         <div class="col-md-12">
           <div class="col-md-12">
+            <div class="col-md-3 p-2 mb-3" (click)="showModal('previousposting')">
+              <div class="card card-xs" style="display: block;">
+                <div class="col-md-12 p-0  mb-2">
+                  <div class="col-md-9 p-0">
+                    <h6>Previous Posting</h6>
+                  </div>
+                  <div class="col-md-3 p-0"> <img src="../../assets/images/previous.png" class="icon-img"></div>
+                </div>
+
+                <div class="col-md-12 float-left">
+                  <p>Total <br><span> ({{previousPostingData.length}})</span></p>
+                </div>
+              </div>
+            </div>
             <div class="col-md-3 p-2 mb-3" (click)="showModal('previousdetail')">
               <div class="card card-xs" style="display: block;">
                 <div class="col-md-12 p-0  mb-2">
@@ -281,6 +295,57 @@
 
           </div>
 
+          <div class="modal fade" id="previousposting" tabindex="-1" aria-labelledby="previouspostingLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="viewForeignVisitLabel">Previous Posting</h5>
+                  <button type="button" class="close" (click)="hideModal('previousposting')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <div *ngIf="previousPostingData.length > 0; else noPreviousPosting">
+                      <div class="table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>S.No</th>
+                              <th>Posting In</th>
+                              <th>Department</th>
+                              <th>Designation</th>
+                              <th>From Date</th>
+                              <th>To Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let detail of previousPostingData; let i = index">
+                              <td>{{ i + 1 }}</td>
+                              <td>{{ detail.postingIn }}</td>
+                              <td>{{ detail.department }}</td>
+                              <td>{{ detail.designation }}</td>
+                              <td>{{ detail.fromDate | date: 'dd/MM/yyyy' }}</td>
+                              <td>{{ detail.toDate | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <ng-template #noPreviousPosting>
+                      <div style="color: red;">No previous posting available.</div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3"
+                    (click)="hideModal('previousposting')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="modal fade" id="previousdetail" tabindex="-1" aria-labelledby="previousdetailLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-xl">
@@ -460,7 +525,7 @@
             </div>
           </div>
 
-          <div class="modal fade" id="leave" tabindex="-1" aria-labelledby="leaveLabel" aria-hidden="true">
+          <!-- <div class="modal fade" id="leave" tabindex="-1" aria-labelledby="leaveLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
@@ -525,8 +590,138 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
+          <div class="modal fade" id="leave" tabindex="-1" aria-labelledby="leaveLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Leave Details</h5>
+                  <button type="button" class="close" (click)="hideModal('leave')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+          
+                <div class="modal-body pb-0">
+                  <div class="card-body">
+                    <div class="accordion" id="leaveAccordion">
+
+                      <!-- Leave Available Section -->
+                      <div class="card m-0 mb-2">
+                        <div class="card-header p-0" id="leaveAvailableHeading">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left d-flex align-items-center" type="button" data-toggle="collapse"
+                              data-target="#leaveAvailable" aria-expanded="true" aria-controls="leaveAvailable"
+                              (click)="isLeaveAvailableOpen = !isLeaveAvailableOpen">
+                              Leave Available
+                              <i class="ml-auto mdi" [class.mdi-chevron-down]="!isLeaveAvailableOpen" [class.mdi-chevron-up]="isLeaveAvailableOpen"></i>
+                            </button>
+                          </h2>
+                        </div>
+                        <div id="leaveAvailable" class="collapse" aria-labelledby="leaveAvailableHeading" data-parent="#leaveAccordion">
+                          <div class="card-body">
+                              <table id="table-to-export" class="table table-bordered table-striped table-hover my-4 text-center">
+                                <thead>
+                                  <tr>
+                                    <th>Casual Leaves</th>
+                                    <th>Restricted Holiday</th>
+                                    <th>Earned Leave</th>
+                                    <th>Half Pay Leave</th>
+                                    <th>Total</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>8</td>
+                                    <td>5</td>
+                                    <td>3</td>
+                                    <td>18</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <!-- Leave History Section -->
+                      <div class="card m-0">
+                        <div class="card-header p-0" id="leaveHistoryHeading">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left d-flex align-items-center collapsed" type="button"
+                              data-toggle="collapse" data-target="#leaveHistory" aria-expanded="false" aria-controls="leaveHistory"
+                              (click)="isLeaveHistoryOpen = !isLeaveHistoryOpen">
+                              Leave History
+                              <i class="ml-auto mdi" [class.mdi-chevron-down]="!isLeaveHistoryOpen" [class.mdi-chevron-up]="isLeaveHistoryOpen"></i>
+                            </button>
+
+                          </h2>
+                        </div>
+                        <div id="leaveHistory" class="collapse" aria-labelledby="leaveHistoryHeading" data-parent="#leaveAccordion">
+                          <div class="card-body p-4">
+                            <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2" (click)="onApply('applyLeave')">Apply</button>
+                            <button class="float-right btn btn-info btn-sm mt-1 mb-1 ml-2 pt-1">
+                              <a href="#" download="" style="color: #fff;">Download Form&nbsp;<i class="mdi mdi-download"></i></a>
+                            </button>
+                            <button class="float-right btn btn-success btn-sm mt-1 mb-1" routerLink="/apply-leave"
+                              (click)="hideModal('leave')">Apply Leave</button>
+                    
+                            <div *ngIf="leaveTabledata.length > 0; else noPreviousDetails">
+                              <div class="table-responsive">
+                                <table id="table-to-export" class="table table-bordered table-striped table-hover my-4">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Name</th>
+                                      <th>Officer ID</th>
+                                      <th>Batch</th>
+                                      <th>Type of Leave</th>
+                                      <th>From Date</th>
+                                      <th>End Date</th>
+                                      <th>Foreign Visit / <br> DEFT Country </th>
+                                      <th>Submitted By </th>
+                                      <th>Approved By</th>
+                                      <th>Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let data of leaveTabledata; let i = index">
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ data.fullName }}</td>
+                                      <td>{{ data.employeeId }}</td>
+                                      <td>{{ data.employeeProfileId?.batch }}</td>
+                                      <td>{{ data.typeOfLeave }}</td>
+                                      <td>{{ data.fromDate | date: 'dd/MM/yyyy' }}</td>
+                                      <td>{{ data.endDate | date: 'dd/MM/yyyy' }}</td>
+                                      <td>{{ data.foreignVisitOrDeftCountry }}</td>
+                                      <td>{{ data.submittedBy?.username }} ({{ data.submittedBy?.loginAs }})</td>
+                                      <td><span *ngIf="data.approvalStatus">{{ data.approvedBy?.username }} ({{
+                                          data.approvedBy?.loginAs }})</span></td>
+                                      <td>{{ data.approvalStatus ? 'Approved' : 'Not Approved' }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <ng-template #noPreviousDetails>
+                              <div style="color: red;">No previous details available.</div>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </div>
+                    
+                  </div>
+                </div>
+          
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary py-2 px-3 mr-4" (click)="hideModal('leave')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div class="modal fade" id="training" tabindex="-1" aria-labelledby="trainingLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LeaveTransferService } from '../forms/forms.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-previous-posting',
@@ -8,10 +9,10 @@ import { LeaveTransferService } from '../forms/forms.service';
   styleUrl: './previous-posting.component.css'
 })
 export class PreviousPostingComponent implements OnInit{
-public previousPostingData:any[]=[];
+  previousPostingData:any[]=[];
   filterText: any;
   pageSize: number = 100; // Number of items per page
-  pageSizeOptions: number[] = [5, 10, 15, 20];
+  pageSizeOptions: number[] = [100, 200, 500, 1000];
   currentPage: number = 1; // Current page
   visiblePages: number[] = [];
   maxVisiblePages = 100;
@@ -19,7 +20,7 @@ public previousPostingData:any[]=[];
   showEdit:boolean = false;
   showApprove:boolean = false;
   showView:boolean=false;
-  viewEmployeeData = new viewEmployeeData();
+  viewPreviousPostingData = new viewPreviousPostingData();
   base64ImageData:string='';
   showPopup = true;
   showPosting = false;
@@ -31,35 +32,6 @@ public previousPostingData:any[]=[];
    const loginAs = localStorage.getItem('loginAs');
    this.previousPostingAction.getPreviousPostingList().subscribe((res: any) => {
     this.previousPostingData = res.results;
-    
-    // Fetch department data
-    this.previousPostingAction.getDepartmentData().subscribe((departmentItems: any[]) => {
-      const departmentMap = departmentItems.reduce((acc, item) => {
-        acc[item._id] = item.department_name;
-        return acc;
-      }, {});
-  
-      this.previousPostingData.forEach((posting) => {
-        posting.previousPostingList.forEach((postingItem:any) => {
-          postingItem.departmentName = departmentMap[postingItem.toDepartmentId];
-        });
-      });
-    });
-
-    this.previousPostingAction.getDesignations().subscribe((designationItems: any) => {
-      const designationMap = designationItems.results.reduce((acc:any, item:any) => {
-        acc[item._id] = item.designation_name;
-        return acc;
-      }, {});
-    
-      this.previousPostingData.forEach((posting) => {
-        posting.previousPostingList.forEach((postingItem: any) => {
-          // Use the map to find the designation name based on toDesignationId
-          postingItem.designationName = designationMap[postingItem.toDesignationId];
-        });
-      });
-    });
-    
   });
   
   }
@@ -82,7 +54,7 @@ public previousPostingData:any[]=[];
   public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.startIndex  = startIndex;
+    this.startIndex = startIndex;
     const endIndex = startIndex + this.pageSize;
     return this.filteredEmployeeList.slice(startIndex, endIndex);
   }
@@ -96,8 +68,7 @@ public previousPostingData:any[]=[];
     const endPage = Math.min(this.totalPages, startPage + pagesCount - 1);
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
-  
-  
+
   changePageSize(size: number) {
     this.pageSize = size;
     this.currentPage = 1;
@@ -137,7 +108,6 @@ public previousPostingData:any[]=[];
     this.currentPage = page;
     this.updateVisiblePages();
   }
-  
 
   handleFilterChange() {
     this.cdr.detectChanges();
@@ -148,218 +118,66 @@ public previousPostingData:any[]=[];
   }
 
   viewPreviousPosting(data:any){
-    // this.previousPostingAction.getEmployee(data).subscribe((res:any)=>{
-    //   res.results.forEach((ele:any)=>{
-    //     this.viewEmployeeData.approvalStatus = ele.approvalStatus;
-    //     this.viewEmployeeData.id = ele._id;
-    //     this.viewEmployeeData.submittedBy = ele.submittedBy.loginAs;
-    //     this.viewEmployeeData.approvedBy = ele.approvedBy?.loginAs;
-    //     this.viewEmployeeData.fullName = ele.fullName;
-    //     this.viewEmployeeData.caste = ele.caste;
-    //     this.viewEmployeeData.mobileNo1 = ele.mobileNo1;
-    //     this.viewEmployeeData.mobileNo2 = ele.mobileNo2;
-    //     this.viewEmployeeData.mobileNo3 = ele.mobileNo3;
-    //     this.viewEmployeeData.personalEmail = ele.personalEmail;
-    //     this.viewEmployeeData.dateOfBirth = ele.dateOfBirth;
-    //     this.viewEmployeeData.addressLine = ele.addressLine;
-    //     this.viewEmployeeData.city = ele.city;
-    //     this.viewEmployeeData.pincode = ele.pincode;
-    //     this.viewEmployeeData.employeeId = ele.employeeId;
-    //     this.viewEmployeeData.ifhrmsId = ele.ifhrmsId;
-    //     this.viewEmployeeData.batch = ele.batch;
-    //     this.viewEmployeeData.dateOfJoining = ele.dateOfJoining;
-    //     this.viewEmployeeData.dateOfRetirement = ele.dateOfRetirement;
-    //     this.viewEmployeeData.officeEmail = ele.officeEmail;
-    //     this.viewEmployeeData.payscale = ele.payscale;
-    //     this.viewEmployeeData.educationdetails = ele.degreeData;
-    //     this.viewEmployeeData.seniority = ele.seniority;
-    //     this.viewEmployeeData.imagePath = `${this.previousPostingAction.fileUrl}profileImages/${ele.imagePath?.replace('\\', '/')}`;
-    //     // const binaryData = new Uint8Array(ele.photo.data);
-    //     // this.base64ImageData = this.arrayBufferToBase64(binaryData);
-    //     this.previousPostingAction.getDegree().subscribe((response:any)=>{
-    //       response.results.forEach((degree:any)=>{
-    //         ele.degreeData.filter((deg:any)=>{
-    //           if(deg.degree == degree._id){
-    //             deg.degree = degree.degree_name;
-    //           }
-    //         });
-    //       })
-    //     });
+    this.previousPostingAction.getPreviousPostingbyId(data).subscribe((res:any)=>{
+      res.results.forEach((item:any)=>{
+        this.viewPreviousPostingData.fullName = item.empProfileId.fullName;
+        this.viewPreviousPostingData.empProfileId = item.empProfileId.employeeId;
+        this.viewPreviousPostingData.previousPostingList = item.previousPostingList;
 
-    //     this.previousPostingAction.getDesignations().subscribe((res:any)=>{
-    //       res.results.forEach((item:any)=>{
-    //         if(item._id == ele.toDesignationId){
-    //           this.viewEmployeeData.toDesignationId = item.designation_name;
-    //         }
-    //       })
-    //     })
+        this.viewPreviousPostingData.previousPostingList = res.results.flatMap((item: any) => item.previousPostingList);
 
-    //     this.previousPostingAction.getDepartmentData().subscribe((res:any)=>{
-    //       res.forEach((item:any)=>{
-    //         if(item._id == ele.toDepartmentId){
-    //           this.viewEmployeeData.toDepartmentId = item.department_name;
-    //         }
-    //       })
-    //     })
+      // Fetch Posting In Categories and map names
+      this.previousPostingAction.getData().subscribe((postingCategories: any[]) => {
+        const categoryMap = postingCategories.reduce((acc, item) => {
+          acc[item._id] = item.category_name;
+          return acc;
+        }, {});
+
+        this.viewPreviousPostingData.previousPostingList.forEach((tableItem: any) => {
+          tableItem.toPostingInCategoryCode = categoryMap[tableItem.toPostingInCategoryCode] || tableItem.toPostingInCategoryCode;
+        });
+      });
+
+      this.previousPostingAction.getDepartmentData().subscribe((department: any[]) => {
+        const departmentMap = department.reduce((acc, item) => {
+          acc[item._id] = item.department_name;
+          return acc;
+        }, {});
+
+        this.viewPreviousPostingData.previousPostingList.forEach((tableItem: any) => {
+          tableItem.toDepartmentId = departmentMap[tableItem.toDepartmentId] || tableItem.toDepartmentId;
+        });
+      });
+
+      this.previousPostingAction.getDesignations().subscribe((designation: any) => {
+        const designationMap = designation.results.reduce((acc:any, item:any) => {
+          acc[item._id] = item.designation_name;
+          return acc;
+        }, {});
+
+        this.viewPreviousPostingData.previousPostingList.forEach((tableItem: any) => {
+          tableItem.toDesignationId = designationMap[tableItem.toDesignationId] || tableItem.toDesignationId;
+        });
+      });
         
-    //     this.previousPostingAction.getData().subscribe((res:any)=>{
-    //       res.forEach((data:any)=>{
-    //         if(data.category_type == "gender" && data._id == ele.gender){
-    //           this.viewEmployeeData.gender = data.category_name;
-    //         }
-    //         if(data.category_type == "state" && data._id == ele.state){
-    //           this.viewEmployeeData.state = data.category_name;
-    //         }
-    //         if (data.category_type == "state") {
-    //           ele.degreeData.forEach((element:any)=>{
-    //             if(data._id == element.locationState){
-    //               element.locationStateName = data.category_name;
-    //             }              
-    //           });
-    //         }
-    //         if (data.category_type == "country") {
-    //           ele.degreeData.forEach((element:any)=>{
-    //             if(data._id == element.locationCountry){
-    //               element.locationCountryName = data.category_name;
-    //             }              
-    //           });
-    //         }
-  
-    //         if(data.category_type == "class" && data._id == ele.community){
-    //           this.viewEmployeeData.community = data.category_name;
-    //         }
-    //         if(data.category_type == "recruitment_type" && data._id == ele.recruitmentType){
-    //           this.viewEmployeeData.recruitmentType = data.category_name;
-    //         }
-    //         if(data.category_type == "service_status" && data._id == ele.serviceStatus){
-    //           this.viewEmployeeData.serviceStatus = data.category_name;
-    //           console.log(this.viewEmployeeData.serviceStatus);
-    //           if(this.viewEmployeeData.serviceStatus == "Serving"){
-    //             this.showPosting = true;
-    //           }
-    //           else{
-    //             this.showPosting = false;
-    //           }
-    //         }
-    //         if(data.category_type == "religion" && data._id == ele.religion){
-    //           this.viewEmployeeData.religion = data.category_name;
-    //         }
-    //         if(data.category_type == "promotion_grade" && data._id == ele.promotionGrade){
-    //           this.viewEmployeeData.promotionGrade = data.category_name;
-    //         }
-    //         if(data.category_type == "posting_in" && data._id == ele.toPostingInCategoryCode){
-    //           this.viewEmployeeData.toPostingInCategoryCode = data.category_name;
-    //         }
-    //         if(data.category_type == "post_type" && data._id == ele.postTypeCategoryCode){
-    //           this.viewEmployeeData.postTypeCategoryCode = data.category_name;
-    //         }
-    //         if(data.category_type == "location_change" && data._id == ele.locationChangeCategoryId){
-    //           this.viewEmployeeData.locationChangeCategoryId = data.category_name;
-    //         }
-    //       })
-    //       this.viewEmployeeData.languages = ele.languages;
-    //     this.viewEmployeeData.lastDateOfPromotion = ele.lastDateOfPromotion;
-    //     this.viewEmployeeData.deptAddress = ele.departmentId.address;
-    //     this.viewEmployeeData.deptFaxNumber = ele.departmentId.faxNumber;
-    //     this.viewEmployeeData.deptOfficialMobileNo = ele.departmentId.officialMobileNo;
-    //     this.viewEmployeeData.deptPhoneNumber = ele.departmentId.phoneNumber;
-    //     // this.viewEmployeeData.toDepartmentId = ele.departmentId.department_name;
-    //     })
-    //   });
-    // });
+      
+      });
+      
+    })
   }
-
-  approveOfficer(data:any){
-    console.log(data);
-    const confirmation = confirm("Are you sure want to approve this record?");
-    if(confirmation){
-     
-    const approve = {
-      approvedBy: localStorage.getItem('loginId'),
-      id: data.id,
-    }
-      this.previousPostingAction.updateProfileApprovalStatus(approve).subscribe((res:any)=>{
-        alert(res.message);
-        window.location.reload();
-        this.showPopup = false;
-      })
-     }
-  }
-  
-  // exportToPDF() {
-  //       const data = document.getElementById('table-to-export');
-  //       if (data) {
-  //           html2canvas(data).then(canvas => {
-  //               const imgWidth = 208;
-  //               const pageHeight = 295;
-  //               const imgHeight = canvas.height * imgWidth / canvas.width;
-  //               const heightLeft = imgHeight;
-  //               const doc = new jsPDF('p', 'mm', 'a4');
-  //               let position = 0;
-
-  //               doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-  //               doc.save('table-data.pdf');
-  //           });
-  //       }
-  //   }
 }
 
-export class viewEmployeeData{
+export class viewPreviousPostingData{
   id:string='';
   fullName:string='';
-  gender:string='';
-  dateOfBirth:string='';
-  state:string='';
-  community:string='';
-  religion:string='';
-  caste:string='';
-  mobileNo1:string='';
-  mobileNo2:string='';
-  mobileNo3:string='';
-  personalEmail:string='';
-  educationdetails:education[]=[];
-  addressLine:string='';
-  city:string='';
-  pincode:string='';
-  employeeId:string='';
-  ifhrmsId:string='';
-  dateOfJoining:string='';
-  dateOfRetirement:string='';
-  batch:string='';
-  recruitmentType:string='';
-  officeEmail:string='';
-  serviceStatus:string='';
-  promotionGrade:string='';
-  payscale:string='';
-  approvalStatus:boolean = false;
-  submittedBy:string='';
-  approvedBy:string='';
-  seniority: string ='';
-  imagePath:string='';
-  deptAddress:string='';
-  deptPhoneNumber:string='';
-  deptFaxNumber:string='';
-  deptOfficialMobileNo:string='';
-  languages:string='';
-  lastDateOfPromotion:string='';
-  locationChangeCategoryId:string='';
-  postTypeCategoryCode:string='';
-  toDesignationId:string='';
-  toDepartmentId:string='';
-  toPostingInCategoryCode:string='';
+  empProfileId:string='';
+  previousPostingList:previousPostingList[]=[];
 }
-export class education{
-  courseLevel:string='';
-  degree:string='';
-  specialisation:string='';
-  instituteName:string='';
-  locationState:string='';
-  locationStateName:string='';
-  locationCountry:string='';
-  locationCountryName:string='';
-  durationOfCourse:string='';
-  fund:string='';
-  fees:string='';
-  courseCompletedYear:string='';
-  courseCompletedDate:string='';
+export class previousPostingList{
+  toPostingInCategoryCode:string='';
+  toDepartmentId:string='';
+  toDesignationId:string='';
+  district:string='';
+  fromDate:string='';
+  toDate:string='';
 }

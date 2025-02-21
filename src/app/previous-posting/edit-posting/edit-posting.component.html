@@ -75,10 +75,17 @@
                               <div class="form-group row">
                                 <label class="col-sm-12 col-form-label">Department <span>*</span></label>
                                 <div class="col-sm-12">
-                                  <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event, i)">
+                                  <!-- <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event, i)">
                                     <option value="">Select</option>
                                     <option *ngFor="let departmentData of toDepartment[i]" [value]="departmentData.value">{{departmentData.label}}</option>
+                                  </select> -->
+                                  <select class="form-control" formControlName="toDepartmentId" (change)="toGetDesignation($event, i)">
+                                    <option value="">Select</option>
+                                    <option *ngFor="let departmentData of toDepartment" [value]="departmentData.value">
+                                      {{ departmentData.label }}
+                                    </option>
                                   </select>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -89,7 +96,7 @@
                                 <div class="col-sm-12">
                                   <select class="form-control" formControlName="toDesignationId">
                                     <option value="">Select</option>
-                                    <option *ngFor="let designationData of toDesignation[i]" [value]="designationData.value">{{designationData.label}}</option>
+                                    <option *ngFor="let designationData of toDesignation" [value]="designationData.value">{{designationData.label}}</option>
                                   </select>
                                 </div>
                               </div>
