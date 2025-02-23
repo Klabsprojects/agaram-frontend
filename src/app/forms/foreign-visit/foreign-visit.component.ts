@@ -37,6 +37,7 @@ export class ForeignVisitComponent implements OnInit {
       this.tableData = res.results;
       this.tableDataConst = structuredClone(this.tableData);
     });
+    this.getDesignation();
     this.checkAccess();
   }
 
@@ -380,14 +381,22 @@ export class ForeignVisitComponent implements OnInit {
             this.designation.push({ label: data.designation_name, value: data._id });
           });
           const matchingDesignation = this.designation.filter(item => item.value == res.results.empList.find((data:any) => data.toDesignationId)?.toDesignationId);
-          matchingDesignation.filter((item:any)=>{
-            this.designationId = item.value;
-            this.designationname = item.label;
-          });
+          // matchingDesignation.filter((item:any)=>{
+          //   this.designationId = item.value;
+          //   this.designationname = item.label;
+          // });
          
         });
       })
     })
+  }
+
+  getDesignation(){
+    this.foreignVisitService.getDesignations().subscribe((designationRes: any) => {
+      designationRes.results.filter((data: any) => {
+        this.designation.push({ label: data.designation_name, value: data._id });
+      });     
+    });
   }
 }
 

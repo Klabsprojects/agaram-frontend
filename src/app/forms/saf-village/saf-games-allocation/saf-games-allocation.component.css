@@ -6,3 +6,12 @@
 .modal-dialog1{
     max-width: 700px;
 }
+.btn-filter{
+    padding: 7px 14px;
+}
+.dropdown-menu{
+    padding: 10px 15px;
+}
+.close-icon{
+    cursor:pointer;
+}
