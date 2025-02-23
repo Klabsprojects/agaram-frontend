@@ -12,6 +12,7 @@ export class TransferPostingComponent implements OnInit {
  
   filterText : any;
   tableData:any[]=[];
+  tableDataConst:any[]=[];
   pageSize: number = 100; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1;
@@ -36,7 +37,6 @@ export class TransferPostingComponent implements OnInit {
     this.transferPostingService.getEmployeeUpdateList(loginId,loginAs).subscribe((res:any)=>{
       const filteredResults = res.results.filter((item: any) => item.updateType == "Transfer / Posting");
       this.tableData.push(...filteredResults);
-
         this.transferPostingService.getData().subscribe((item:any[])=>{
           const orderType = new Map(item.filter(data=>data.category_type == 'order_type').map(item => [item._id, item.category_name]));
           const orderFor = new Map(item.filter(data=>data.category_type == 'order_for').map(item => [item._id, item.category_name]));
@@ -44,6 +44,7 @@ export class TransferPostingComponent implements OnInit {
              data.orderTypeCategoryCode = orderType.get(data.orderTypeCategoryCode) || data.orderTypeCategoryCode;
              data.orderForCategoryCode = orderFor.get(data.orderForCategoryCode) || data.orderForCategoryCode;
           });
+          this.tableDataConst = structuredClone(this.tableData);
         });
     });
     this.checkAccess();
@@ -245,6 +246,46 @@ export class TransferPostingComponent implements OnInit {
         this.showPopup = false;
       })
      }
+  }
+  isDropdownOpen = false;
+  fromdate:any;
+  todate:any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+    this.fromdate = undefined;
+    this.todate = undefined;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+  filter(){
+    this.tableData = [];
+    if(this.fromdate&&this.todate){
+      this.transferPostingService.uploadGet(`getEmployeeUpdate?fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res:any)=>{
+        const filteredResults = res.results.filter((item: any) => item.updateType == "Transfer / Posting");
+        this.tableData.push(...filteredResults);
+          this.transferPostingService.getData().subscribe((item:any[])=>{
+            const orderType = new Map(item.filter(data=>data.category_type == 'order_type').map(item => [item._id, item.category_name]));
+            const orderFor = new Map(item.filter(data=>data.category_type == 'order_for').map(item => [item._id, item.category_name]));
+            this.tableData.forEach((data: any) => {
+               data.orderTypeCategoryCode = orderType.get(data.orderTypeCategoryCode) || data.orderTypeCategoryCode;
+               data.orderForCategoryCode = orderFor.get(data.orderForCategoryCode) || data.orderForCategoryCode;
+            });
+          });
+      })
+    }
+  }
+  clear(){
+    this.fromdate = undefined;
+    this.todate = undefined;
+  }
+  clearFilter(){
+    this.tableData = this.tableDataConst;
   }
 }
 

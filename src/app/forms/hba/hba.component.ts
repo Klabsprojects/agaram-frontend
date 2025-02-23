@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 export class HbaComponent implements OnInit {
   filterText : any;
       tableData:any[]=[];
+      tableDataConst: any[] = [];
       pageSize: number = 10; 
       pageSizeOptions: number[] = [5, 10, 15, 20];
       currentPage: number = 1; // Current page
@@ -33,6 +34,7 @@ export class HbaComponent implements OnInit {
        const loginAs = localStorage.getItem('loginAs');
         this.hbaService.getHba(loginId,loginAs).subscribe((res:any)=>{
           this.tableData = res.results;
+          this.tableDataConst = structuredClone(this.tableData);
         });
         this.checkAccess();
       }
@@ -201,6 +203,78 @@ export class HbaComponent implements OnInit {
             })
            })
         }
+        isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  dateoforder:any;
+  propertyType: any;
+  hbaAvailed:any;
+  typeofproperty:any;
+  minprice:any;
+  maxprice:any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.hbaAvailed = undefined;
+    this.typeofproperty = undefined;
+    this.minprice = undefined;
+    this.maxprice = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+
+    let params: any = { loginAs };
+  
+    if (this.fromdate && this.todate) {
+      params.fromdate = this.fromdate;
+      params.todate = this.todate;
+    }
+
+    if(this.hbaAvailed){
+      params.hbaAvailedFor = this.hbaAvailed;
+    }
+
+    if(this.typeofproperty){
+      params.typeOfProperty = this.typeofproperty;
+    }
+  
+    if (this.minprice && this.maxprice) {
+      params.minprice = this.minprice;
+      params.maxprice = this.maxprice;
+    }
+  
+    // Use URLSearchParams to encode values properly
+    const queryString = new URLSearchParams(params).toString();
+  
+    // API call with properly encoded URL
+    this.hbaService.uploadGet(`getHba?${queryString}`).subscribe((res: any) => {
+      this.createTable(res);
+    });
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.hbaAvailed = undefined;
+    this.typeofproperty = undefined;
+    this.minprice = undefined;
+    this.maxprice = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
+  }
   }
   
   export class viewHbaData{

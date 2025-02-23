@@ -5,11 +5,46 @@
           *ngIf="showAdd">Add New</button></h5>
 
 
-      <div class="col-md-12 p-0 mt-2">
+      <div class="col-md-12 p-0 mt-2 mb-4">
         <div class="col-md-3 px-0 mt-2 mb-0">
           <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
         </div>
         <app-shared></app-shared>
+      </div>
+      <div class="row">
+        <div class="col-md-3 d-flex align-items-center" style="gap: 1rem;">
+          <div class="dropdown" [class.show]="isDropdownOpen">
+            <button class="btn btn-primary dropdown-toggle btn-filter" type="button" id="dropdownMenuButton"
+              (click)="toggleDropdown($event)" aria-haspopup="true" aria-expanded="false">
+              Filter
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="{'show': isDropdownOpen}"
+              (click)="$event.stopPropagation()">
+              <div class="d-flex align-items-center justify-content-end">
+                <img src="assets/images/close.png" alt="close-icon" width="16" (click)="toggleDropdown($event)" class="close-icon">
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">From Date</label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" [(ngModel)]="fromdate" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">To Date</label>
+                <div class="col-sm-12">
+                  <input type="date" class="form-control" [(ngModel)]="todate" />
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-around">
+                <button class="btn btn-danger p-2" (click)="clear()">Clear</button><button class="btn btn-info p-2"
+                  (click)="filter();toggleDropdown($event)">Apply</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-filter" type="button" (click)="clearFilter()">
+            Remove Filter
+          </button>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -74,7 +109,7 @@
             </ng-container>
             <button class="btn btn-light  ml-1 p-2" [disabled]="currentPage === totalPages" (click)="nextPage()">
               Next <i class="mdi mdi-chevron-double-right"></i> </button>
-        
+
           </div>
         </div>
       </div>
@@ -97,13 +132,17 @@
         <div class="col-md-12 p-0">
           <h6 class="modal-title float-left w-100 mb-2">Order Information</h6>
           <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order Type </b></label>
-            <br>{{viewTransferPostingData.orderTypeCategoryCode}} </div>
+            <br>{{viewTransferPostingData.orderTypeCategoryCode}}
+          </div>
           <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order No </b></label>
-            <br>{{viewTransferPostingData.orderNumber}} </div>
+            <br>{{viewTransferPostingData.orderNumber}}
+          </div>
           <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Order For </b></label>
-            <br>{{viewTransferPostingData.orderForCategoryCode}} </div>
+            <br>{{viewTransferPostingData.orderForCategoryCode}}
+          </div>
           <div class="col-md-3 px-0 mb-2"><label class="w-100"><b>Date of Order </b></label>
-            <br>{{viewTransferPostingData.dateOfOrder | date:'dd/MM/YYYY'}}</div>
+            <br>{{viewTransferPostingData.dateOfOrder | date:'dd/MM/YYYY'}}
+          </div>
           <div class="col-md-3 px-0 mt-3"><label class="w-100"><b>Order File</b></label> <br>
             <a href="{{url}}{{viewTransferPostingData.orderFile}}" target="_blank" class="btn btn-primary py-2">View</a>
           </div>

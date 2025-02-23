@@ -11,6 +11,7 @@ export class IntimationComponent implements OnInit{
 
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -30,6 +31,7 @@ export class IntimationComponent implements OnInit{
    const loginAs = localStorage.getItem('loginAs');
     this.intimationService.getIntimation(loginId,loginAs).subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
     })
     this.url = this.intimationService.fileUrl;
     this.checkAccess();
@@ -181,6 +183,54 @@ export class IntimationComponent implements OnInit{
         this.showPopup = false;
       })
      }
+  }
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  dateoforder:any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.dateoforder = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.dateoforder) {
+      this.intimationService.uploadGet(`getIntimation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&dateoforder=${this.dateoforder}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.intimationService.uploadGet(`getIntimation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.dateoforder) {
+      this.intimationService.uploadGet(`getIntimation?loginAs=${loginAs}&dateoforder=${this.dateoforder}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.dateoforder = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 }
 

@@ -10,41 +10,50 @@ import { app } from '../../../../server';
   styleUrls: ['./leave.component.css']
 })
 export class LeaveComponent implements OnInit {
-  filterText : any;
-  tableData:any[]=[];
-  pageSize: number = 10; 
+  filterText: any;
+  tableData: any[] = [];
+  tableDataConst: any[] = [];
+  pageSize: number = 10;
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
   visiblePages: number[] = [];
   maxVisiblePages = 10;
-  leaveType:any;
+  leaveType: any;
   viewLeaveData = new viewLeaveData();
-  url='';
-  showAdd:boolean=false;
-  showView:boolean=false;
-  showEdit:boolean=false;
-  showApprove:boolean=false;
+  url = '';
+  showAdd: boolean = false;
+  showView: boolean = false;
+  showEdit: boolean = false;
+  showApprove: boolean = false;
   showPopup = true;
 
-  constructor(private router:Router,private leaveService:LeaveTransferService,private datePipe: DatePipe) { }
+  constructor(private router: Router, private leaveService: LeaveTransferService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-   this.url = this.leaveService.fileUrl;
-   const loginId = localStorage.getItem('loginId');
-   const loginAs = localStorage.getItem('loginAs');
-    this.leaveService.getLeave(loginId,loginAs).subscribe((res:any)=>{
+    this.url = this.leaveService.fileUrl;
+    const loginId = localStorage.getItem('loginId');
+    const loginAs = localStorage.getItem('loginAs');
+    this.leaveService.getLeave(loginId, loginAs).subscribe((res: any) => {
       this.tableData = res.results;
-  this.leaveService.getData().subscribe((res: any[]) => {
-  const typeMap = new Map(res.filter(item => item.category_type === "leave_type").map(item => [item._id, item.category_name]));
-  const countryMap = new Map(res.filter(item => item.category_type === "country").map(item => [item._id, item.category_name]));
-    this.tableData.forEach((data: any) => {
-    data.typeOfLeave = typeMap.get(data.typeOfLeave) || data.typeOfLeave;
-    data.foreignVisitOrDeftCountry = countryMap.get(data.foreignVisitOrDeftCountry) || data.foreignVisitOrDeftCountry;
-  });
-});
+      this.leaveService.getData().subscribe((res: any[]) => {
+        const typeMap = new Map(res.filter(item => item.category_type === "leave_type").map(item => [item._id, item.category_name]));
+        const countryMap = new Map(res.filter(item => item.category_type === "country").map(item => [item._id, item.category_name]));
+        this.tableData.forEach((data: any) => {
+          data.typeOfLeave = typeMap.get(data.typeOfLeave) || data.typeOfLeave;
+          data.foreignVisitOrDeftCountry = countryMap.get(data.foreignVisitOrDeftCountry) || data.foreignVisitOrDeftCountry;
+        });
+        this.tableDataConst = structuredClone(this.tableData);
+      });
 
     });
     this.checkAccess();
+    this.leaveService.getData().subscribe((res: any) => {
+      res.forEach((item: any) => {
+        if (item.category_type == "leave_type") {
+          this.leaveTypearray.push({ label: item.category_name, value: item._id });
+        }
+      })
+    })
   }
 
   checkAccess(): void {
@@ -67,7 +76,7 @@ export class LeaveComponent implements OnInit {
           value && value.toString().toLowerCase().includes(filterText)));
     }
   }
-  public startIndex:any;
+  public startIndex: any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     this.startIndex = startIndex;
@@ -77,15 +86,15 @@ export class LeaveComponent implements OnInit {
   get totalPages(): number {
     return Math.ceil(this.filteredEmployeeList.length / this.pageSize);
   }
-  
+
   get pages(): number[] {
     const pagesCount = Math.min(5, this.totalPages); // Display up to 5 pages
     const startPage = Math.max(1, this.currentPage - Math.floor(pagesCount / 2));
     const endPage = Math.min(this.totalPages, startPage + pagesCount - 1);
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
-  
-  
+
+
   changePageSize(size: number) {
     this.pageSize = size;
     this.currentPage = 1;
@@ -95,132 +104,191 @@ export class LeaveComponent implements OnInit {
     const maxVisiblePages = this.maxVisiblePages;
     const totalPages = this.totalPages;
     const currentPage = this.currentPage;
-    
+
     if (totalPages <= maxVisiblePages + 2) {
-      this.visiblePages = Array.from({length: totalPages}, (_, i) => i + 1);
+      this.visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
     } else {
       const rangeStart = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
       const rangeEnd = Math.min(totalPages, rangeStart + maxVisiblePages - 1);
-  
+
       if (rangeEnd === totalPages) {
-        this.visiblePages = Array.from({length: maxVisiblePages}, (_, i) => totalPages - maxVisiblePages + i + 1);
+        this.visiblePages = Array.from({ length: maxVisiblePages }, (_, i) => totalPages - maxVisiblePages + i + 1);
       } else {
-        this.visiblePages = Array.from({length: maxVisiblePages}, (_, i) => rangeStart + i);
+        this.visiblePages = Array.from({ length: maxVisiblePages }, (_, i) => rangeStart + i);
       }
     }
   }
-  
+
   // Call updateVisiblePages whenever the page changes
   nextPage() {
     this.currentPage++;
     this.updateVisiblePages();
   }
-  
+
   prevPage() {
     this.currentPage--;
     this.updateVisiblePages();
   }
-  
+
   goToPage(page: number) {
     this.currentPage = page;
     this.updateVisiblePages();
   }
- 
 
-  addNew(){
+
+  addNew() {
     this.router.navigate(['apply-leave']);
   }
 
-  editLeave(data:any){
+  editLeave(data: any) {
     const encodedData = btoa(JSON.stringify(data));
-    this.router.navigate(['edit-leave'],{queryParams:{id:encodedData}});
+    this.router.navigate(['edit-leave'], { queryParams: { id: encodedData } });
   }
 
-  viewLeave(data:any){
-    this.leaveService.getLeaveId(data).subscribe((res:any)=>{
-      res.results.forEach((data:any)=>{
-       this.leaveService.getData().subscribe((res: any[]) => {
-         res.forEach((item) => {
-           if(item.category_type == "order_type"){
-             if(item._id == data.orderType){
-               this.viewLeaveData.orderType = item.category_name;
-             }
-           }
-           if (item.category_type == "order_for") {
-             if(item._id == data.orderFor){
-               this.viewLeaveData.orderFor = item.category_name;
-             }          
-           }
-           if (item.category_type == "leave_type") {
-            if(item._id == data.typeOfLeave){
-              this.viewLeaveData.typeOfLeave = item.category_name;
-            }          
-          }
-          if (item.category_type == "country") {
-            if(item._id == data.foreignVisitOrDeftCountry){
-              this.viewLeaveData.foreignVisitOrDeftCountry = item.category_name;
-            }          
-          }
-         });
-       });
-       this.viewLeaveData.phone = "+91"+data.employeeProfileId.mobileNo1;
-       this.viewLeaveData.id = data._id;
-       this.viewLeaveData.approvalStatus = data.approvalStatus;
-       this.viewLeaveData.name = data.fullName;
-       this.viewLeaveData.employeeId = data.employeeId;
-       this.viewLeaveData.fromDate = data.fromDate;
-       this.viewLeaveData.endDate = data.endDate;
-       this.viewLeaveData.foreignVisitOrDeftCountry = data.foreignVisitOrDeftCountry;
-       this.viewLeaveData.typeOfLeave = data.typeOfLeave;
-       this.viewLeaveData.orderType = data.orderType;
-       this.viewLeaveData.orderNo = data.orderNo;
-       this.viewLeaveData.orderFor = data.orderFor;
-       this.viewLeaveData.dateOfOrder = data.dateOfOrder;
-       this.viewLeaveData.orderFile = data.orderFile;
-       this.viewLeaveData.remarks = data.remarks;
+  viewLeave(data: any) {
+    this.leaveService.getLeaveId(data).subscribe((res: any) => {
+      res.results.forEach((data: any) => {
+        this.leaveService.getData().subscribe((res: any[]) => {
+          res.forEach((item) => {
+            if (item.category_type == "order_type") {
+              if (item._id == data.orderType) {
+                this.viewLeaveData.orderType = item.category_name;
+              }
+            }
+            if (item.category_type == "order_for") {
+              if (item._id == data.orderFor) {
+                this.viewLeaveData.orderFor = item.category_name;
+              }
+            }
+            if (item.category_type == "leave_type") {
+              if (item._id == data.typeOfLeave) {
+                this.viewLeaveData.typeOfLeave = item.category_name;
+              }
+            }
+            if (item.category_type == "country") {
+              if (item._id == data.foreignVisitOrDeftCountry) {
+                this.viewLeaveData.foreignVisitOrDeftCountry = item.category_name;
+              }
+            }
+          });
+        });
+        this.viewLeaveData.phone = "+91" + data.employeeProfileId.mobileNo1;
+        this.viewLeaveData.id = data._id;
+        this.viewLeaveData.approvalStatus = data.approvalStatus;
+        this.viewLeaveData.name = data.fullName;
+        this.viewLeaveData.employeeId = data.employeeId;
+        this.viewLeaveData.fromDate = data.fromDate;
+        this.viewLeaveData.endDate = data.endDate;
+        this.viewLeaveData.foreignVisitOrDeftCountry = data.foreignVisitOrDeftCountry;
+        this.viewLeaveData.typeOfLeave = data.typeOfLeave;
+        this.viewLeaveData.orderType = data.orderType;
+        this.viewLeaveData.orderNo = data.orderNo;
+        this.viewLeaveData.orderFor = data.orderFor;
+        this.viewLeaveData.dateOfOrder = data.dateOfOrder;
+        this.viewLeaveData.orderFile = data.orderFile;
+        this.viewLeaveData.remarks = data.remarks;
       })
-     })
+    })
   }
 
-  approveLeave(data:any){
+  approveLeave(data: any) {
     const confirmation = confirm("Are you sure want to approve this record?");
-    if(confirmation){
+    if (confirmation) {
       const filePath = data.orderFile;
-    const fileName = filePath.split('\\').pop();
-  
-    const approve = {
-      approvedBy: localStorage.getItem('loginId'),
-      id: data.id,
-      phone: data.phone,
-      module: "Leave",
-      dateOfOrder: data.dateOfOrder.split('T')[0],
-      fileName: fileName
-    }
-      this.leaveService.approveLeave(approve).subscribe((res:any)=>{
+      const fileName = filePath.split('\\').pop();
+
+      const approve = {
+        approvedBy: localStorage.getItem('loginId'),
+        id: data.id,
+        phone: data.phone,
+        module: "Leave",
+        dateOfOrder: data.dateOfOrder.split('T')[0],
+        fileName: fileName
+      }
+      this.leaveService.approveLeave(approve).subscribe((res: any) => {
         alert(res.message);
         window.location.reload();
         this.showPopup = false;
       })
-     }
+    }
+  }
+
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  typeOfLeave: any;
+  leaveTypearray: any[] = [];
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfLeave = undefined;
+  }
+  filter() {
+    // updateType
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.typeOfLeave) {
+      this.leaveService.uploadGet(`getLeave?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&typeOfLeave=${this.typeOfLeave}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.leaveService.uploadGet(`getLeave?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.typeOfLeave) {
+      this.leaveService.uploadGet(`getLeave?loginAs=${loginAs}&typeOfLeave=${this.typeOfLeave}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+    this.leaveService.getData().subscribe((res: any[]) => {
+      const typeMap = new Map(res.filter(item => item.category_type === "leave_type").map(item => [item._id, item.category_name]));
+      const countryMap = new Map(res.filter(item => item.category_type === "country").map(item => [item._id, item.category_name]));
+      this.tableData.forEach((data: any) => {
+        data.typeOfLeave = typeMap.get(data.typeOfLeave) || data.typeOfLeave;
+        data.foreignVisitOrDeftCountry = countryMap.get(data.foreignVisitOrDeftCountry) || data.foreignVisitOrDeftCountry;
+      });
+    });
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfLeave = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 
 }
 
 
-export class viewLeaveData{
-  id:string='';
-  name:string='';
-  employeeId:string='';
-  fromDate:string='';
-  endDate:string='';
-  foreignVisitOrDeftCountry:string='';
-  typeOfLeave:string='';
-  orderType:string='';
-  orderNo:string='';
-  orderFor:string='';
-  dateOfOrder:string='';
-  orderFile:string='';
-  remarks:string='';
+export class viewLeaveData {
+  id: string = '';
+  name: string = '';
+  employeeId: string = '';
+  fromDate: string = '';
+  endDate: string = '';
+  foreignVisitOrDeftCountry: string = '';
+  typeOfLeave: string = '';
+  orderType: string = '';
+  orderNo: string = '';
+  orderFor: string = '';
+  dateOfOrder: string = '';
+  orderFile: string = '';
+  remarks: string = '';
   approvalStatus = false;
-  phone:string='';
+  phone: string = '';
 }

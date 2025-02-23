@@ -12,6 +12,7 @@ export class TrainingComponent implements OnInit {
 
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -42,9 +43,17 @@ export class TrainingComponent implements OnInit {
           data.typeOfTraining = typeTraining.get(data.typeOfTraining) || data.typeOfTraining;
           data.foreignVisitOrDeftCountry = country.get(data.foreignVisitOrDeftCountry) || data.foreignVisitOrDeftCountry;
         });
+        this.tableDataConst = structuredClone(this.tableData);
       })
     });
     this.checkAccess();
+    this.trainingService.getData().subscribe((res:any)=>{
+      res.forEach((item:any)=>{
+        if (item.category_type == "training_type") {
+          this.trainingTypearray.push({ label: item.category_name, value: item._id });
+        }
+      })
+    })
   }
 
 
@@ -205,6 +214,63 @@ export class TrainingComponent implements OnInit {
        this.showPopup = false;
     })
   }
+  }
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  typeOfTraining: any;
+  trainingTypearray: any[] = [];
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfTraining = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.typeOfTraining) {
+      this.trainingService.uploadGet(`getTraining?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&typeOfTraining=${this.typeOfTraining}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.trainingService.uploadGet(`getTraining?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.typeOfTraining) {
+      this.trainingService.uploadGet(`getTraining?loginAs=${loginAs}&typeOfTraining=${this.typeOfTraining}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+    this.trainingService.getData().subscribe((item:any[])=>{
+      const typeTraining = new Map(item.filter(data=>data.category_type == 'training_type').map(item => [item._id, item.category_name]));
+      const country = new Map(item.filter(data=>data.category_type == 'country').map(item => [item._id, item.category_name]));
+      this.tableData.forEach((data: any) => {
+        data.typeOfTraining = typeTraining.get(data.typeOfTraining) || data.typeOfTraining;
+        data.foreignVisitOrDeftCountry = country.get(data.foreignVisitOrDeftCountry) || data.foreignVisitOrDeftCountry;
+      });
+    })
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfTraining = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 }
 
