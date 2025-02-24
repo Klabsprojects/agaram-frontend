@@ -265,7 +265,6 @@ export class ForeignVisitComponent implements OnInit {
     this.departmentname = '';
     this.departmentId = undefined;
     this.selectedCountry = undefined;
-    this.designation = [];
     this.designationId = undefined;
     this.designationname = '';
   }
@@ -326,7 +325,6 @@ export class ForeignVisitComponent implements OnInit {
     this.departmentname = '';
     this.departmentId = undefined;
     this.selectedCountry = undefined;
-    this.designation = [];
     this.designationId = undefined;
     this.designationname = '';
   }
@@ -362,33 +360,33 @@ export class ForeignVisitComponent implements OnInit {
     const payload = {name:option.name};
     this.name = option.name;
     this.showDropdown = false;
-    this.foreignVisitService.employeeFilter(payload).subscribe((res:any)=>{
-      res.results.empList.forEach((item:any)=>{
-        this.foreignVisitService.getDepartmentData().subscribe((departmentRes: any) => {
-          departmentRes.filter((data: any) => {
-            this.department.push({ label: data.department_name, value: data._id });
-          });
-          const matchingDepartment = this.department.filter(item => item.value == res.results.empList.find((data:any) => data.toDepartmentId)?.toDepartmentId);
-         matchingDepartment.filter((item:any)=>{
-          this.departmentId = item.value;
-          this.departmentname = item.label;
-          });
+    // this.foreignVisitService.employeeFilter(payload).subscribe((res:any)=>{
+    //   res.results.empList.forEach((item:any)=>{
+    //     this.foreignVisitService.getDepartmentData().subscribe((departmentRes: any) => {
+    //       departmentRes.filter((data: any) => {
+    //         this.department.push({ label: data.department_name, value: data._id });
+    //       });
+    //       const matchingDepartment = this.department.filter(item => item.value == res.results.empList.find((data:any) => data.toDepartmentId)?.toDepartmentId);
+    //      matchingDepartment.filter((item:any)=>{
+    //       this.departmentId = item.value;
+    //       this.departmentname = item.label;
+    //       });
          
-        })
+    //     })
 
-        this.foreignVisitService.getDesignations().subscribe((designationRes: any) => {
-          designationRes.results.filter((data: any) => {
-            this.designation.push({ label: data.designation_name, value: data._id });
-          });
-          const matchingDesignation = this.designation.filter(item => item.value == res.results.empList.find((data:any) => data.toDesignationId)?.toDesignationId);
-          // matchingDesignation.filter((item:any)=>{
-          //   this.designationId = item.value;
-          //   this.designationname = item.label;
-          // });
+    //     this.foreignVisitService.getDesignations().subscribe((designationRes: any) => {
+    //       designationRes.results.filter((data: any) => {
+    //         this.designation.push({ label: data.designation_name, value: data._id });
+    //       });
+    //       const matchingDesignation = this.designation.filter(item => item.value == res.results.empList.find((data:any) => data.toDesignationId)?.toDesignationId);
+    //       matchingDesignation.filter((item:any)=>{
+    //         this.designationId = item.value;
+    //         this.designationname = item.label;
+    //       });
          
-        });
-      })
-    })
+    //     });
+    //   })
+    // })
   }
 
   getDesignation(){

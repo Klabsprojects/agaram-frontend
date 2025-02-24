@@ -250,7 +250,7 @@ export class PromotionComponent implements OnInit {
     const loginId = localStorage.getItem('loginId');
     const loginAs = localStorage.getItem('loginAs');
     if(this.fromdate && this.todate && this.promotionType){
-      this.promotionService.uploadGet(`getEmployeeUpdate?fromdate=${this.fromdate}&todate=${this.todate}&updateType=${this.promotionType}`).subscribe((res: any) => {
+      this.promotionService.uploadGet(`getEmployeeUpdate?fromdate=${this.fromdate}&todate=${this.todate}&updateType=Promotion&promotedGrade=${this.promotionType}`).subscribe((res: any) => {
         this.createTable(res);
       })
     }
@@ -260,7 +260,7 @@ export class PromotionComponent implements OnInit {
       })
     }
     else if(this.promotionType){
-      this.promotionService.uploadGet(`getEmployeeUpdate?updateType=${this.promotionType}`).subscribe((res: any) => {
+      this.promotionService.uploadGet(`getEmployeeUpdate?updateType=Promotion&promotedGrade=${this.promotionType}`).subscribe((res: any) => {
         this.createTable(res);
       })
     }
