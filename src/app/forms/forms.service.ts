@@ -849,4 +849,9 @@ export class LeaveTransferService {
     const headers = this.getHeaders();
     return this.http.put<any>(this.baseUrl+`updateDepartment`,data,{headers});
   }
+
+  updateLeaveCredit(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+`updateLeaveCredit`,data,{headers});
+  }
 }

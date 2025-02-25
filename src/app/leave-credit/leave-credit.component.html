@@ -6,6 +6,9 @@
     <div class="card px-3 mt-0">
       <div class="card-body">
         <h4 class="card-title">Leave Credit Details</h4>
+        <div class="col-md-3 px-0 mt-2 mb-0">
+          <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
+        </div>
         <table class="table table-bordered table-striped table-hover my-4 float-left">
             <thead>
               <tr>
@@ -23,12 +26,12 @@
                     <tr *ngFor="let data of pagedData(); let i = index">
                       <td>{{i + startIndex+ 1}}</td>
                       <td style="line-height: 1.9;"><b>{{data.employeeId}} - {{data.fullName}}</b> <br>{{data.toPostingInCategoryCode}}, {{data.toDepartmentId}}<br>{{data.toDesignationId}}</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
+                      <td>{{ data.leaveCredit[0]?.casualLeave || 0 }}</td>
+                      <td>{{ data.leaveCredit[0]?.restrictedHoliday || 0 }}</td>
+                      <td>{{ data.leaveCredit[0]?.earnedLeave || 0 }}</td>
+                      <td>{{ data.leaveCredit[0]?.halfPayLeave || 0 }}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-info p-2 mr-2" (click)="changeLeaveData(data._id,data.fullName)" data-toggle="modal" data-target="#changeLeaveDetails">Change</button>
+                        <button type="button" class="btn btn-info p-2 mr-2" (click)="changeLeaveData(data)" data-toggle="modal" data-target="#changeLeaveDetails">Change</button>
                       </td>
                     </tr>
                   </ng-container>
@@ -70,19 +73,23 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="changeLeaveDetailsLabel">Change Leave Details</h5>
+              <h5 class="modal-title w-100" id="changeLeaveDetailsLabel">Change Leave Details
+                <span class="float-right">(*) Required</span>
+              </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span>&times;</span>
               </button>
             </div>
+            
             <div class="modal-body pb-0">
+              <form class="form-sample" [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
               <div class="col-md-12 p-0">
                   <div class="col-md-12 px-0 mb-3 pl-2"><b>{{name}}</b></div>  
                   
-                        <form class="form-sample" [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+                        
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label class="col-sm-12 col-form-label">Casual Leave </label>
+                                  <label class="col-sm-12 col-form-label">Casual Leave <span>*</span></label>
                                   <div class="col-sm-12">
                                     <input type="text" class="form-control" formControlName="casualLeave"
                                       [ngStyle]="{'border-bottom': (submitted && leaveForm.get('casualLeave')?.invalid && leaveForm.get('casualLeave')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -92,7 +99,7 @@
 
                               <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label class="col-sm-12 col-form-label">Restrited Holiday </label>
+                                  <label class="col-sm-12 col-form-label">Restrited Holiday <span>*</span></label>
                                   <div class="col-sm-12">
                                     <input type="text" class="form-control" formControlName="restrictedHoliday"
                                       [ngStyle]="{'border-bottom': (submitted && leaveForm.get('restrictedHoliday')?.invalid && leaveForm.get('restrictedHoliday')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -102,7 +109,7 @@
 
                               <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label class="col-sm-12 col-form-label">Earned Leave</label>
+                                  <label class="col-sm-12 col-form-label">Earned Leave <span>*</span></label>
                                   <div class="col-sm-12">
                                     <input type="text" class="form-control" formControlName="earnedLeave"
                                       [ngStyle]="{'border-bottom': (submitted && leaveForm.get('earnedLeave')?.invalid && leaveForm.get('earnedLeave')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -112,20 +119,20 @@
 
                               <div class="col-md-6">
                                 <div class="form-group row">
-                                  <label class="col-sm-12 col-form-label">Half Pay Leave </label>
+                                  <label class="col-sm-12 col-form-label">Half Pay Leave <span>*</span></label>
                                   <div class="col-sm-12">
-                                    <input type="text" class="form-control" formControlName="restrictedHoliday"
-                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('restrictedHoliday')?.invalid && leaveForm.get('restrictedHoliday')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                                    <input type="text" class="form-control" formControlName="halfPayLeave"
+                                      [ngStyle]="{'border-bottom': (submitted && leaveForm.get('halfPayLeave')?.invalid && leaveForm.get('halfPayLeave')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
                                   </div>
                                 </div>
                               </div>
-                        </form>
-                </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success py-2 px-3">Submit</button>
-
-              <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
-            </div>
+                        
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-success py-2 px-3">Update</button>
+                  <button type="button" class="btn btn-secondary py-2 px-3" data-dismiss="modal">Close</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>  

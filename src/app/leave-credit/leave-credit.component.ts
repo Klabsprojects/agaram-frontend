@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaveTransferService } from '../forms/forms.service';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-leave-credit',
@@ -19,14 +19,15 @@ export class LeaveCreditComponent implements OnInit{
   visiblePages: number[] = [];
   maxVisiblePages = 100;
   name : string = '';
+  id:string='';
+  data:any;
 
-  constructor(private leaveCreditService:LeaveTransferService){
+  constructor(private leaveCreditService:LeaveTransferService,private fb:FormBuilder){
 
   }
   ngOnInit(): void {
     this.leaveCreditService.getActiveOfficers().subscribe((res: any) => {
        this.ServingEmplyee = res.results.empList;
-       console.log(this.ServingEmplyee);
        this.leaveCreditService.getData().subscribe((postingCategories: any[]) => {
         const categoryMap = postingCategories.reduce((acc, item) => {
           acc[item._id] = item.category_name;
@@ -61,6 +62,13 @@ export class LeaveCreditComponent implements OnInit{
       });
       
     });
+
+    this.leaveForm = this.fb.group({
+      casualLeave:['',Validators.required],
+      restrictedHoliday:['',Validators.required],
+      earnedLeave:['',Validators.required],
+      halfPayLeave:['',Validators.required]
+    })
   }
 
   get filteredEmployeeList() {
@@ -132,12 +140,69 @@ export class LeaveCreditComponent implements OnInit{
     this.updateVisiblePages();
   }
 
-  changeLeaveData(id:any,name:any){
-    this.name = name;
+  changeLeaveData(data: any) {
+    this.name = data.fullName;
+    this.data = data;
+    if (data.leaveCredit.length == 0) {
+        this.id = data._id;
+        this.leaveForm.get('casualLeave')?.setValue('0');
+            this.leaveForm.get('halfPayLeave')?.setValue('0');
+            this.leaveForm.get('restrictedHoliday')?.setValue('0');
+            this.leaveForm.get('earnedLeave')?.setValue('0');
+    } else {
+        const leaveCreditItem = data.leaveCredit.find((ele: any) => ele._id);
+        if (leaveCreditItem) {
+            this.id = leaveCreditItem._id;
+            this.leaveForm.get('casualLeave')?.setValue(leaveCreditItem.casualLeave);
+            this.leaveForm.get('halfPayLeave')?.setValue(leaveCreditItem.halfPayLeave);
+            this.leaveForm.get('restrictedHoliday')?.setValue(leaveCreditItem.restrictedHoliday);
+            this.leaveForm.get('earnedLeave')?.setValue(leaveCreditItem.earnedLeave);
+        }
+    }
     this.showPopup = true;
-  }
+}
 
-  onSubmit(){
+onSubmit() {
+  this.submitted = true;
+  console.log(this.leaveForm.valid, this.leaveForm.value);
 
+  if (this.leaveForm.valid) {
+      // Create a plain object to hold the form data
+      const formObject: any = {};
+
+      // Loop through the form controls and add each field to the object
+      Object.keys(this.leaveForm.value).forEach(key => {
+          const value = this.leaveForm.get(key)?.value;
+          if (value !== null && value !== undefined) {
+              formObject[key] = value;
+          }
+      });
+
+      // Conditionally append 'empProfileId' or 'id' based on your condition
+      if (this.data && this.data._id === this.id) {
+          formObject['empProfileId'] = this.id;  // Add empProfileId to object
+      } else {
+          formObject['id'] = this.id;  // Add id to object
+      }
+
+      // Now, formObject looks like this: {casualLeave: 6, restrictedHoliday: 6, earnedLeave: 6, halfPayLeave: 6, id: "67bdc129e34713368a0bc63f"}
+
+      console.log(formObject); // Log the object for debugging
+
+      // Send the plain object as part of the API call (use JSON.stringify to send as JSON)
+      this.leaveCreditService.updateLeaveCredit(formObject).subscribe(
+          (res: any) => {
+              console.log(res);
+              alert(res.message);
+              this.showPopup = false;
+              location.reload();
+          },
+          error => {
+              console.error('API Error:', error);
+          }
+      );
   }
+}
+
+
 }
