@@ -188,8 +188,7 @@
   
                       <div class="col-md-3 mb-2">
                         <label><b>Degree</b></label>
-                        <select class="form-control" formControlName="degree"
-                          >
+                        <select class="form-control" formControlName="degree">
                           <option value="">Select</option>
                           <option *ngFor="let degreeData of degree" [value]="degreeData.value">{{degreeData.label}}</option>
                         </select>

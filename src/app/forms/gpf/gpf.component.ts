@@ -49,6 +49,7 @@ export class GpfComponent implements OnInit{
   
     get filteredEmployeeList() {
       const filterText = (this.filterText || '').trim().toLowerCase();
+      console.log(this.tableData);
       if (filterText === '') {
         return this.tableData;
       } else {

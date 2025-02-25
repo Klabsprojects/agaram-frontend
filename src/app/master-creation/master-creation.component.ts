@@ -124,18 +124,6 @@ export class MasterCreationComponent implements OnInit {
     
   }
 
-  // openModal() {
-  //   this.ngZone.run(() => {
-  //     $('#viewDetails').modal('show');
-  //   });
-  // }
-  // openModal() {
-  //   $('#addMaster').modal('show');
-  // }
-  // openModal(){
-  //   $('#viewDet').modal('show');
-  // }
-
   viewPosting(){
     this.masterAction.getData().subscribe((res:any[]) => {
       this.postingin = res.filter(item => item.category_type === "posting_in");
@@ -181,12 +169,10 @@ export class MasterCreationComponent implements OnInit {
     }
   }
   
-
-  cancelEditing() {
+ cancelEditing() {
     this.editing = false;
     this.editingId = null;
   }
-
 
   viewDepartment(){
     this.masterAction.getDepartmentData().subscribe((res:any[]) => {
@@ -209,21 +195,24 @@ export class MasterCreationComponent implements OnInit {
       })
   }
 
-  updateDepartment(){
+  updateDepartment(id:any){
       if (this.departmentForm.valid) {
-        console.log(this.editingId);
-        // this.masterAction.updateCategories(this.editingId, this.departmentForm.value).subscribe(
-        //   (res: any) => {
-        //     alert(res.message);
-        //     this.showPopup = false;
-        //     // location.reload();
-        //     this.editing = false;
-        //     this.editingId = null;
-        //   },
-        //   (error) => {
-        //     console.error('Error updating category:', error);
-        //   }
-        // );
+        const formValue={
+          ...this.departmentForm.value,
+          id
+        }
+        this.masterAction.updateDepartment(formValue).subscribe(
+          (res: any) => {
+            alert(res.message);
+            this.showPopup = false;
+            location.reload();
+            this.editing = false;
+            this.editingId = null;
+          },
+          (error) => {
+            console.error('Error updating category:', error);
+          }
+        );
       }
   }
 
@@ -375,8 +364,8 @@ export class MasterCreationComponent implements OnInit {
   }
 
   updateDegree(){
-
   }
+
   viewOrderType(){
     this.masterAction.getData().subscribe((res)=>{
       this.orderType = res.filter((item:any) => item.category_type === "order_type");
@@ -420,6 +409,7 @@ export class MasterCreationComponent implements OnInit {
       );
     }
   }
+
   viewOrderFor(){
     this.masterAction.getData().subscribe((res)=>{
       this.orderFor = res.filter((item:any) => item.category_type === "order_for");
@@ -462,6 +452,12 @@ export class MasterCreationComponent implements OnInit {
         }
       );
     }
+  }
+
+  viewReligion(){
+  }
+
+  viewClass(){
   }
 
   cancel(){

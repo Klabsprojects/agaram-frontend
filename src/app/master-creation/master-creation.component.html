@@ -87,20 +87,10 @@
                 </td>
               </tr>
 
-              <tr>
-                <td>5.</td>
-                <td>District</td>
-                <td style="text-align: center;">
-                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDistrict" *ngIf="showAdd">
-                      Add  
-                    </button>
-                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDistrict()" data-toggle="modal" data-target="#viewDistrict" *ngIf="showView">
-                        View</button>
-                </td>
-              </tr>
+             
 
               <tr>
-                <td>6.</td>
+                <td>5.</td>
                 <td>Country</td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addCountry" *ngIf="showAdd">
@@ -111,8 +101,29 @@
                 </td>
               </tr>
 
+              <!-- <tr>
+                <td>5.</td>
+                <td>District</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDistrict" *ngIf="showAdd">
+                      Add  
+                    </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewDistrict()" data-toggle="modal" data-target="#viewDistrict" *ngIf="showView">
+                        View</button>
+                </td>
+              </tr> 
+
               <tr>
-                <td>7.</td>
+                <td>12.</td>
+                <td>Course Level</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addReligion" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewReligion()" data-toggle="modal" data-target="#viewReligion" *ngIf="showView">View</button>
+                </td>
+              </tr>-->  
+
+              <tr>
+                <td>6.</td>
                 <td>Degree</td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addDegree" *ngIf="showAdd">Add  </button>
@@ -121,7 +132,7 @@
               </tr>
 
               <tr>
-                <td>8.</td>
+                <td>7.</td>
                 <td>Order Type</td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addOrderType" *ngIf="showAdd">Add  </button>
@@ -130,13 +141,42 @@
               </tr>
 
               <tr>
-                <td>9.</td>
+                <td>8.</td>
                 <td>Order For</td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addOrderFor" *ngIf="showAdd">Add  </button>
                     <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewOrderFor()" data-toggle="modal" data-target="#viewOrderFor" *ngIf="showView">View</button>
                 </td>
               </tr> 
+
+             <!-- <tr>
+                <td>9.</td>
+                <td>Class</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addClass" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewClass()" data-toggle="modal" data-target="#viewClass" *ngIf="showView">View</button>
+                </td>
+              </tr> 
+
+              <tr>
+                <td>11.</td>
+                <td>Religion</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addReligion" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewReligion()" data-toggle="modal" data-target="#viewReligion" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>11.</td>
+                <td>Recruitment Type</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addReligion" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewReligion()" data-toggle="modal" data-target="#viewReligion" *ngIf="showView">View</button>
+                </td>
+              </tr>-->
+              
+              
               
               
             </tbody>
@@ -425,7 +465,7 @@
     
     <div class="modal-body p-3" style="height: 300px; overflow-y: scroll;">
       <form [formGroup]="departmentForm">
-        <table class="table table-bordered table-hover table-striped">
+          <table class="table table-bordered table-hover table-striped">
           <thead>
             <tr>
               <th>#</th>
@@ -468,7 +508,7 @@
     
                 <button *ngIf="editing && editingId === departmentData._id" type="button"
                   class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
-                  style="font-size: 13px;" (click)="updateDepartment()">
+                  style="font-size: 13px;" (click)="updateDepartment(departmentData._id)">
                   Update
                 </button>
     
@@ -484,6 +524,7 @@
             </tr>
           </tbody>
         </table>
+      
       </form>
     </div>
     

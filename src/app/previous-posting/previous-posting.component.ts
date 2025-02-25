@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
   styleUrl: './previous-posting.component.css'
 })
 export class PreviousPostingComponent implements OnInit{
-  previousPostingData:any[]=[];
+  public previousPostingData:any[]=[];
   filterText: any;
   pageSize: number = 100; // Number of items per page
   pageSizeOptions: number[] = [100, 200, 500, 1000];
@@ -46,11 +46,15 @@ export class PreviousPostingComponent implements OnInit{
     if (filterText === '') {
       return this.previousPostingData;
     } else {
-      return this.previousPostingData.filter(employee =>
-        Object.values(employee).some((value: any) =>
-          value && value.toString().toLowerCase().includes(filterText)));
+      return this.previousPostingData.filter(employee => {
+        if (employee.empProfileId && employee.empProfileId.fullName) {
+          return employee.empProfileId.fullName.toLowerCase().includes(filterText);
+        }
+        return false;
+      });
     }
   }
+  
   public startIndex:any;
   pagedData() {
     const startIndex = (this.currentPage - 1) * this.pageSize;

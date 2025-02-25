@@ -84,27 +84,67 @@ export class CreateRoleComponent implements OnInit{
     });
   }
   
-  onAllChange(index: number) {
-    const roleGroup = (this.roleForm.get('roles') as FormArray).at(index) as FormGroup;
-    const allChecked = roleGroup.get('allAccess')?.value;
-    Object.keys(roleGroup.controls).forEach(key => {
-      if (key !== 'menu' && key !== 'allAccess') {
-        roleGroup.get(key)?.setValue(allChecked);
-        this.readonly = true;
-      }
-      else{
-        this.readonly = false;
-      }
-    });
-  }
+  // onAllChange(index: number) {
+  //   const roleGroup = (this.roleForm.get('roles') as FormArray).at(index) as FormGroup;
+  //   const allChecked = roleGroup.get('allAccess')?.value;
+  //   Object.keys(roleGroup.controls).forEach(key => {
+  //     if (key !== 'menu' && key !== 'allAccess') {
+  //       roleGroup.get(key)?.setValue(allChecked);
+  //       this.readonly = true;
+  //       console.log("if");
+  //     }
+  //     else{
+  //       this.readonly = false;
+  //       console.log("else");
+  //     }
+  //   });
+  // }
+
+  // preventCheck(event: Event, index: number) {
+  //   const roleGroup = (this.roleForm.get('roles') as FormArray).at(index) as FormGroup;
+  //   if (roleGroup.get('all')?.value) {
+  //     event.preventDefault();
+  //   }
+  // }
 
   preventCheck(event: Event, index: number) {
     const roleGroup = (this.roleForm.get('roles') as FormArray).at(index) as FormGroup;
-    if (roleGroup.get('all')?.value) {
-      event.preventDefault();
+    const allAccessControl = roleGroup.get('allAccess');
+    if (allAccessControl?.value) {
+      const allChecked = Object.keys(roleGroup.controls).every(key => {
+        if (key !== 'menu' && key !== 'allAccess') {
+          return roleGroup.get(key)?.value === true; 
+        }
+        return true;
+      });
+  
+      if (!allChecked) {
+        allAccessControl?.setValue(false);
+        this.readonly = false;  
+      }
     }
   }
+  
 
+  onAllChange(index: number) {
+    const roleGroup = (this.roleForm.get('roles') as FormArray).at(index) as FormGroup;
+    const allChecked = roleGroup.get('allAccess')?.value;
+  
+    // If "All" is checked, mark all other checkboxes as checked
+    Object.keys(roleGroup.controls).forEach(key => {
+      if (key !== 'menu' && key !== 'allAccess') {
+        roleGroup.get(key)?.setValue(allChecked);
+        this.readonly = allChecked;  // Apply readonly based on "All" checkbox state
+      }
+    });
+    
+    // If "All" is unchecked, reset the readonly state and uncheck everything else
+    if (!allChecked) {
+      this.readonly = false;
+    }
+  }
+  
+  
   atLeastOneCheckboxCheckedValidator(): ValidatorFn {
     return (formArray: AbstractControl): { [key: string]: any } | null => {
       const atLeastOneChecked = (formArray as FormArray).controls.some(group => 

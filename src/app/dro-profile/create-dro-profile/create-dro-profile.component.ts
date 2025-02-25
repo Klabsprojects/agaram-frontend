@@ -703,7 +703,7 @@ droForm!: FormGroup;
         (response: any) => {
           alert(response.message);
           this.droForm.reset();
-          // this.router.navigate(['droprofile']);
+          this.router.navigate(['droprofile']);
           console.log('API Response:', response);
         },
         error => {

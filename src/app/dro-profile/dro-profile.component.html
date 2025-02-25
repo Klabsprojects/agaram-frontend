@@ -23,8 +23,8 @@
         <th>Batch</th>
         <th>Mobile</th>
         <th>Submitted By </th>
-        <th>Approved By</th>
-        <th>Status</th>
+        <!-- <th>Approved By</th>
+        <th>Status</th> -->
         <th>Action</th>
       </tr>
     </thead>
@@ -38,8 +38,8 @@
           <td>{{data.batch}}</td>
           <td>{{data.mobileNo1}}</td>
           <td>{{ data.submittedBy?.username}} ({{ data.submittedBy?.loginAs}}) </td>
-          <td><span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
-          <td>{{data.approvalStatus? 'Approved':'Not Approved'}}</td>
+          <!-- <td><span *ngIf="data.approvalStatus">{{data.approvedBy?.username}} ({{ data.approvedBy?.loginAs}})</span> </td>
+          <td>{{data.approvalStatus? 'Approved':'Not Approved'}}</td> -->
           <td style="text-align: center;">
             <button type="button" class="btn btn-info p-2 mr-2"   (click)="editDro(data._id)"> Edit</button>
             <button type="button" class="btn btn-info p-2" data-toggle="modal" data-target="#viewDro"  (click)="viewDro(data._id)"> View</button>
