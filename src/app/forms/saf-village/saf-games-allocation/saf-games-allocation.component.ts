@@ -12,6 +12,8 @@ export class SafGamesAllocationComponent implements OnInit{
 
   filterText :any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
+  block:any[]=[];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1;
@@ -36,6 +38,14 @@ export class SafGamesAllocationComponent implements OnInit{
     this.url = this.safService.fileUrl;
     this.safService.getSafAllocation().subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
+    });
+    this.safService.getBlock().subscribe((res:any)=>{
+      res.results.filter((item:any)=>{
+       if(item.allocationStatus == false){
+         this.block.push({label:item.FlatNumber,value:item._id});
+       }
+      })
     });
     this.checkAccess();
   }
@@ -198,6 +208,54 @@ export class SafGamesAllocationComponent implements OnInit{
         })
        })
     }
+    isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  blockId:any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.blockId = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.blockId) {
+      this.safService.uploadGet(`getSafAllocation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&blockId=${this.blockId}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.safService.uploadGet(`getSafAllocation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.blockId) {
+      this.safService.uploadGet(`getSafAllocation?loginAs=${loginAs}&blockId=${this.blockId}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.blockId = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
+  }
     
   }
 

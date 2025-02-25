@@ -11,6 +11,7 @@ export class EducationComponent implements OnInit{
 
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -33,6 +34,7 @@ export class EducationComponent implements OnInit{
       res.results.forEach((ele:any)=>{
         if(ele.employeeProfileId){
           this.tableData = res.results;
+          this.tableDataConst = structuredClone(this.tableData);
         }
       })
     });
@@ -206,6 +208,55 @@ export class EducationComponent implements OnInit{
         this.showPopup = false;
       })
      }
+  }
+
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  CourseLevel: any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.CourseLevel = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.CourseLevel) {
+      this.educationService.uploadGet(`getEducation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&typeOfLeave=${this.CourseLevel}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.educationService.uploadGet(`getEducation?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.CourseLevel) {
+      this.educationService.uploadGet(`getEducation?loginAs=${loginAs}&courseLevel=${this.CourseLevel}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.CourseLevel = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 
 }

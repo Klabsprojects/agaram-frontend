@@ -10,6 +10,7 @@ import { LeaveTransferService } from '../forms.service';
 export class PrivateVisitsComponent implements OnInit {
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1;
@@ -39,6 +40,7 @@ export class PrivateVisitsComponent implements OnInit {
    const loginAs = localStorage.getItem('loginAs');
     this.privateVisitService.getPrivateVisit(loginId,loginAs).subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
     });
     this.checkAccess();
   }
@@ -204,6 +206,55 @@ export class PrivateVisitsComponent implements OnInit {
         this.showPopup = false;
       })
      }
+  }
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  placeofvisit: any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.placeofvisit = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginId = localStorage.getItem('loginId');
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.placeofvisit) {
+      this.privateVisitService.uploadGet(`getPrivateForeignVisit?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&placeofvisit=${this.placeofvisit}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.privateVisitService.uploadGet(`getPrivateForeignVisit?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.placeofvisit) {
+      this.privateVisitService.uploadGet(`getPrivateForeignVisit?loginAs=${loginAs}&placeofvisit=${this.placeofvisit}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.placeofvisit = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 }
 

@@ -4,12 +4,51 @@
       <div class="card-body">
         <h5>Intimation<button type="button" class="btn btn-success btn-add float-right p-2" (click)="addNew()" *ngIf="showAdd">Add New</button></h5>
 
-        <div class="col-md-12 p-0 mt-2">
+        <div class="col-md-12 p-0 mt-2 mb-4">
           <div class="col-md-3 px-0 mt-2 mb-0">
             <input type="text" [(ngModel)]="filterText" class="form-control pl-2" placeholder="Search...">
           </div>
   
           <app-shared></app-shared>
+        </div>
+        <div class="row">
+          <div class="col-md-3 d-flex align-items-center" style="gap: 1rem;">
+            <div class="dropdown" [class.show]="isDropdownOpen">
+              <button class="btn btn-primary dropdown-toggle btn-filter" type="button" id="dropdownMenuButton"
+                (click)="toggleDropdown($event)" aria-haspopup="true" aria-expanded="false">
+                Filter
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="{'show': isDropdownOpen}"
+                (click)="$event.stopPropagation()" style="width: 330px;">
+                <div class="d-flex align-items-center justify-content-end">
+                  <img src="assets/images/close.png" alt="close-icon" width="16" (click)="toggleDropdown($event)" class="close-icon">
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label class="col-form-label">From Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="fromdate" />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="col-form-label">To Date</label>
+                    <input type="date" class="form-control" [(ngModel)]="todate"/>
+                  </div>
+                </div>
+                <!-- <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label class="col-form-label">Date of Order</label>
+                    <input type="date" class="form-control" [(ngModel)]="dateoforder"/>
+                  </div>
+                </div> -->
+                <div class="d-flex align-items-center justify-content-around">
+                  <button class="btn btn-danger p-2" (click)="clear()">Clear</button>
+                  <button class="btn btn-info p-2" (click)="toggleDropdown($event);filter()">Apply</button>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-filter" type="button" (click)="clearFilter()">
+              Remove Filter
+            </button>
+          </div>
         </div>
 
 <div class="table-responsive">

@@ -10,6 +10,7 @@ import { LeaveTransferService } from '../forms.service';
 export class MedicalReimbursementComponent implements OnInit {
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -31,6 +32,7 @@ export class MedicalReimbursementComponent implements OnInit {
    const loginAs = localStorage.getItem('loginAs');
     this.medicalService.getMedicalReimbursement(loginId,loginAs).subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
     });
     this.checkAccess();
   }
@@ -197,6 +199,96 @@ export class MedicalReimbursementComponent implements OnInit {
         this.showPopup = false;
       })
      }
+  }
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  selfOrFamily: any;
+  minPrice:any = 10000;
+  maxPrice:any = 3000000;
+  trainingTypearray: any[] = [];
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.selfOrFamily = undefined;
+    this.minPrice = undefined;
+    this.maxPrice = undefined;
+  }
+  // filter() {
+  //   this.tableData = [];
+  //   const loginAs = localStorage.getItem('loginAs');
+  //   if (this.fromdate && this.todate && this.selfOrFamily) {
+  //     this.medicalService.uploadGet(`getMedicalReimbursement?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&selfOrFamily=${this.selfOrFamily}`).subscribe((res: any) => {
+  //       this.createTable(res);
+  //     })
+  //   }
+  //   else if (this.fromdate && this.todate) {
+  //     this.medicalService.uploadGet(`getMedicalReimbursement?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+  //       this.createTable(res);
+  //     })
+  //   }
+  //   else if (this.selfOrFamily) {
+  //     this.medicalService.uploadGet(`getMedicalReimbursement?loginAs=${loginAs}&selfOrFamily=${this.selfOrFamily}`).subscribe((res: any) => {
+  //       this.createTable(res);
+  //     })
+  //   }
+  //   else if(this.minPrice && this.maxPrice){
+  //     this.medicalService.uploadGet(`getMedicalReimbursement?loginAs=${loginAs}&minPrice=${this.minPrice}&maxPrice=${this.maxPrice}`).subscribe((res: any) => {
+  //       this.createTable(res);
+  //     })
+  //   }
+  // }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+  
+    let params: any = { loginAs };
+  
+    if (this.fromdate && this.todate) {
+      params.fromdate = this.fromdate;
+      params.todate = this.todate;
+    }
+  
+    if (this.selfOrFamily) {
+      params.selfOrFamily = this.selfOrFamily;
+    }
+  
+    if (this.minPrice && this.maxPrice) {
+      params.minPrice = this.minPrice;
+      params.maxPrice = this.maxPrice;
+    }
+  
+    // Use URLSearchParams to encode values properly
+    const queryString = new URLSearchParams(params).toString();
+  
+    // API call with properly encoded URL
+    this.medicalService.uploadGet(`getMedicalReimbursement?${queryString}`).subscribe((res: any) => {
+      this.createTable(res);
+    });
+  }
+  
+  
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.selfOrFamily = undefined;
+    this.minPrice = undefined;
+    this.maxPrice = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
   }
 }
 

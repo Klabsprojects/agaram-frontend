@@ -10,6 +10,7 @@ import { LeaveTransferService } from '../forms.service';
 export class MovableComponent implements OnInit{
   filterText : any;
   tableData:any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; 
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; 
@@ -31,6 +32,7 @@ export class MovableComponent implements OnInit{
    const loginAs = localStorage.getItem('loginAs');
     this.movableService.getMovable(loginId,loginAs).subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
     });
     this.checkAccess();
   }
@@ -189,6 +191,54 @@ export class MovableComponent implements OnInit{
      }
   }
 
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  propertyType: any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.propertyType = undefined;
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    if (this.fromdate && this.todate && this.propertyType) {
+      this.movableService.uploadGet(`getMovable?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&typeOfMovableProperty=${this.propertyType}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.fromdate && this.todate) {
+      this.movableService.uploadGet(`getMovable?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+    else if (this.propertyType) {
+      this.movableService.uploadGet(`getMovable?loginAs=${loginAs}&typeOfMovableProperty=${this.propertyType}`).subscribe((res: any) => {
+        this.createTable(res);
+      })
+    }
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.propertyType = undefined;
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
+  }
 }
 
 export class viewMovableData{

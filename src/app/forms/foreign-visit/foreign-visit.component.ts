@@ -12,6 +12,7 @@ import { app } from '../../../../server';
 export class ForeignVisitComponent implements OnInit {
   filterText: any;
   tableData :any[]=[];
+  tableDataConst: any[] = [];
   pageSize: number = 10; // Number of items per page
   pageSizeOptions: number[] = [5, 10, 15, 20];
   currentPage: number = 1; // Current page
@@ -34,7 +35,9 @@ export class ForeignVisitComponent implements OnInit {
     const loginAs = localStorage.getItem('loginAs');
     this.foreignVisitService.getForeignVisit(loginId,loginAs).subscribe((res:any)=>{
       this.tableData = res.results;
+      this.tableDataConst = structuredClone(this.tableData);
     });
+    this.getDesignation();
     this.checkAccess();
   }
 
@@ -227,6 +230,171 @@ export class ForeignVisitComponent implements OnInit {
         this.showPopup = false;
       })
      }
+  }
+  isDropdownOpen = false;
+  fromdate: any;
+  todate: any;
+  typeOfTraining: any;
+  filteredOptions:any[]=[];
+  showDropdown:boolean=false;
+  department:any[]=[]
+  designation:any[]=[]
+  name:any=''
+  departmentname:any='';
+  departmentId:any;
+  designationname:any='';
+  designationId:any;
+  selectedCountry:any;
+
+  // Toggle the dropdown open/close state
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent event from bubbling and closing the dropdown
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Optional: Handle closing dropdown when clicking outside of it (if needed)
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfTraining = undefined;
+    this.department  = [];
+    this.name = '';
+    this.filteredOptions = [];
+    this.showDropdown = false;
+    this.departmentname = '';
+    this.departmentId = undefined;
+    this.selectedCountry = undefined;
+    this.designationId = undefined;
+    this.designationname = '';
+  }
+  filter() {
+    this.tableData = [];
+    const loginAs = localStorage.getItem('loginAs');
+    // if (this.fromdate && this.todate && this.typeOfTraining) {
+    //   this.foreignVisitService.uploadGet(`getLeave?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}&typeOfLeave=${this.typeOfTraining}`).subscribe((res: any) => {
+    //     this.createTable(res);
+    //   })
+    // }
+    // else if (this.fromdate && this.todate) {
+    //   this.foreignVisitService.uploadGet(`getLeave?loginAs=${loginAs}&fromdate=${this.fromdate}&todate=${this.todate}`).subscribe((res: any) => {
+    //     this.createTable(res);
+    //   })
+    // }
+    // else if (this.typeOfTraining) {
+    //   this.foreignVisitService.uploadGet(`getLeave?loginAs=${loginAs}&typeOfLeave=${this.typeOfTraining}`).subscribe((res: any) => {
+    //     this.createTable(res);
+    //   })
+    // }
+
+    let params: any = { loginAs };
+  
+    if (this.fromdate && this.todate) {
+      params.fromdate = this.fromdate;
+      params.todate = this.todate;
+    }
+
+    if (this.designationId){
+      params.designationId = this.designationId; 
+    }
+
+    if(this.selectedCountry){
+      params.proposedCountry = this.selectedCountry;
+    }
+
+  
+    // Use URLSearchParams to encode values properly
+    const queryString = new URLSearchParams(params).toString();
+  
+    // API call with properly encoded URL
+    this.foreignVisitService.uploadGet(`getVisit?${queryString}`).subscribe((res: any) => {
+      this.createTable(res);
+    });
+  }
+  createTable(res: any) {
+    this.tableData = res.results;
+  }
+  clear() {
+    this.fromdate = undefined;
+    this.todate = undefined;
+    this.typeOfTraining = undefined;
+    this.department  = [];
+    this.name = '';
+    this.filteredOptions = [];
+    this.showDropdown = false;
+    this.departmentname = '';
+    this.departmentId = undefined;
+    this.selectedCountry = undefined;
+    this.designationId = undefined;
+    this.designationname = '';
+  }
+  clearFilter() {
+    this.tableData = this.tableDataConst;
+  }
+  onInput(event: any, field: string) {
+    const inputValue = event.target.value.trim();
+    let mergedOptions: { name: string, id: string, empProfileId: any,mobileNo:string }[] = []; 
+    this.foreignVisitService.getEmployeeList().subscribe((res: any) => {
+      res.results.forEach((item: any) => {
+        const name: string = item.fullName;
+        const id: string = item.employeeId;
+        const mobileNo = item.mobileNo1;
+        const empProfileId: any = item._id;
+        mergedOptions.push({ name, id, empProfileId,mobileNo });
+      });
+      if (field === 'officerName' && mergedOptions) {
+        this.filteredOptions = mergedOptions.filter((option: { name: string, id: string }) =>
+          option.name && option.name.toLowerCase().includes(inputValue?.toLowerCase() || '')
+        );
+      }
+      
+      if (this.filteredOptions.length === 0) {
+        this.showDropdown = false;
+      } else {
+        this.showDropdown = true;
+      }
+    });
+  }
+
+  selectOption(option: any) {
+    const payload = {name:option.name};
+    this.name = option.name;
+    this.showDropdown = false;
+    // this.foreignVisitService.employeeFilter(payload).subscribe((res:any)=>{
+    //   res.results.empList.forEach((item:any)=>{
+    //     this.foreignVisitService.getDepartmentData().subscribe((departmentRes: any) => {
+    //       departmentRes.filter((data: any) => {
+    //         this.department.push({ label: data.department_name, value: data._id });
+    //       });
+    //       const matchingDepartment = this.department.filter(item => item.value == res.results.empList.find((data:any) => data.toDepartmentId)?.toDepartmentId);
+    //      matchingDepartment.filter((item:any)=>{
+    //       this.departmentId = item.value;
+    //       this.departmentname = item.label;
+    //       });
+         
+    //     })
+
+    //     this.foreignVisitService.getDesignations().subscribe((designationRes: any) => {
+    //       designationRes.results.filter((data: any) => {
+    //         this.designation.push({ label: data.designation_name, value: data._id });
+    //       });
+    //       const matchingDesignation = this.designation.filter(item => item.value == res.results.empList.find((data:any) => data.toDesignationId)?.toDesignationId);
+    //       matchingDesignation.filter((item:any)=>{
+    //         this.designationId = item.value;
+    //         this.designationname = item.label;
+    //       });
+         
+    //     });
+    //   })
+    // })
+  }
+
+  getDesignation(){
+    this.foreignVisitService.getDesignations().subscribe((designationRes: any) => {
+      designationRes.results.filter((data: any) => {
+        this.designation.push({ label: data.designation_name, value: data._id });
+      });     
+    });
   }
 }
 
