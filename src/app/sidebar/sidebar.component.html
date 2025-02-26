@@ -180,13 +180,7 @@
       </div>
     </li>
 
-    <li *ngIf="roleName=='Officer'"  class="nav-item" [routerLinkActive]="['active']">
-      <a class="nav-link" data-toggle="modal" data-target="#changePasswordModal">
-        <i class="mdi mdi-pencil-lock menu-icon" [class.active]="isActive('change-password')"></i>
-        <span class="menu-title" [class.active]="isActive('change-password')">Change Password</span>
-      </a>
-    </li>
-
+    
 
     <li *ngIf="showMenu('Master Creation')"  class="nav-item" [routerLinkActive]="['active']">
       <a class="nav-link" [routerLink]="['previous-posting']">
@@ -237,6 +231,14 @@
           <span class="menu-title" [class.active]="isActive('Messages')">Messages <span class="count" *ngIf="messageCount>0">{{messageCount}}</span></span>
         </a>
       </li>
+
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" data-toggle="modal" data-target="#changePasswordModal">
+          <i class="mdi mdi-pencil-lock menu-icon" [class.active]="isActive('change-password')"></i>
+          <span class="menu-title" [class.active]="isActive('change-password')">Change Password</span>
+        </a>
+      </li>
+  
   
       <li class="nav-item">
         <a class="nav-link" (click)="logout()">

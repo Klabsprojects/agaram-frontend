@@ -68,6 +68,7 @@ isLeaveHistoryOpen: boolean = false;
   designationData: any[] = [];
   postingIn: any[] = [];
   leaveTabledata: any[] = [];
+  leaveAvailableData:any[]=[];
   trainingTabledata: any[] = [];
   foriegnVisitdata: any[] = [];
   SAF_data: any[] = [];
@@ -184,16 +185,23 @@ isLeaveHistoryOpen: boolean = false;
     }
     return btoa(binary);
   }
+
+ 
+
   viewInfo(data: any) {
     this.remainingIndices = [];
     this.firstIndex = '';
     this.dashboardService.getEmployeeHistory(data).subscribe((res: any) => {
       this.userAvailable = res.results;
       res.results.forEach((item: any) => {
+          this.dashboardService.getLeaveCredit(data).subscribe((res:any)=>{
+            this.leaveAvailableData = res.results;
+          
+          })
+        
         this.previousPostingData = [];
         this.dashboardService.getPreviousPostingbyDashboard(data).subscribe((response: any) => {
           response.results.forEach((items: any) => {
-            console.log("previous posting",items.previousPostingList);
         
             items.previousPostingList.forEach((postingDataItem: any) => {
               const postingIn = this.postingIn.find((data: any) => data.value === postingDataItem.toPostingInCategoryCode);

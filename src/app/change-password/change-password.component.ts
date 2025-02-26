@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LeaveTransferService } from '../forms/forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -14,7 +16,7 @@ export class ChangePasswordComponent implements OnInit{
   showNewPassword = false;
   showConfirmPassword = false;
 
-  constructor(private fb:FormBuilder){}
+  constructor(private fb:FormBuilder,private passwordAction:LeaveTransferService,private router:Router){}
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -56,9 +58,35 @@ export class ChangePasswordComponent implements OnInit{
   
   onSubmit(){
     this.submitted = true;
+    console.log(localStorage.getItem('username'));
     console.log(this.passwordForm.value);
     if(this.passwordForm.valid){
+    const formData:any = {};
+    Object.keys(this.passwordForm.value).forEach(key => {
+      const value = this.passwordForm.get(key)?.value;
+      if (value !== null && value !== undefined) {
+          formData[key] = value;
+      }
+  });
+   
+      formData['username'] = localStorage.getItem('username');
       console.log(this.passwordForm.value);
+      this.passwordAction.changePassword(formData).subscribe(
+        (res: any) => {
+            console.log(res);
+            // alert(res.message);
+            // this.passwordAction.logout();
+            const confirmLogout = confirm("Password changed successfully. Do you want to log out?");
+            if (confirmLogout) {
+                this.passwordAction.logout();
+            }else{
+              location.reload();
+            }
+        },
+        error => {
+            console.error('API Error:', error);
+        }
+    );
     }
   }
 }

@@ -631,12 +631,17 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>8</td>
-                                    <td>5</td>
-                                    <td>3</td>
-                                    <td>18</td>
+                                  <tr *ngFor="let data of leaveAvailableData let i = index">
+                                    <td>{{data.casualLeave}}</td>
+                                    <td>{{data.restrictedHoliday}}</td>
+                                    <td>{{data.earnedLeave}}</td>
+                                    <td>{{data.halfPayLeave}}</td>
+                                    <td>{{ 
+                                      (data.casualLeave || 0) + 
+                                      (data.restrictedHoliday || 0) + 
+                                      (data.earnedLeave || 0) + 
+                                      (data.halfPayLeave || 0) 
+                                  }}</td>
                                   </tr>
                                 </tbody>
                               </table>

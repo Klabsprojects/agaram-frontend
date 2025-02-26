@@ -76,14 +76,8 @@ export class EditPostingComponent implements OnInit {
     if (this.id) {
       this.loadPreviousPostingData(this.id);
     }
-
-    this.previousPostingAction.getData().subscribe((res: any[]) => {
-      res.forEach((item) => {
-        if (item.category_type === "posting_in") {
-          this.postingIn.push({ label: item.category_name, value: item._id });
-        }
-      });
-    });
+    
+    
   }
 
   loadPreviousPostingData(id: string): void {
@@ -97,22 +91,38 @@ export class EditPostingComponent implements OnInit {
 
         this.previousPostingData = data.previousPostingList;
         this.populatePreviousPostingData();
-
+        console.log(this.previousPostingData);
         this.previousPostingAction.getDepartmentData().subscribe((response: any) => {
-          // this.toDepartment = [];
           response.forEach((deptItem: any) => {
             this.toDepartment.push({ label: deptItem.department_name, value: deptItem._id });
           });
         
           if (this.previousPostingData?.length > 0) {
+            
             this.previousPostingData.forEach((previousItem: any, index: number) => {
-              const matchedDepartment = this.toDepartment.find((ele: any) => ele.value === previousItem.toDepartmentId);
-              if (matchedDepartment) {
-                const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
-                if (formArray && formArray.at(index)) {
-                  formArray.at(index).get('toDepartmentId')?.setValue(matchedDepartment.value);
-                }
-              }
+              console.log(previousItem.toPostingInCategoryCode,index);
+              this.previousPostingAction.getData().subscribe((res: any[]) => {
+                res.forEach((item) => {
+                  if (item.category_type === "posting_in") {
+                    this.postingIn.push({ label: item.category_name, value: item._id });
+                  }
+                  
+                  const matchedDepartment = this.toDepartment.find((ele: any) => ele.value === previousItem.toDepartmentId);
+                  console.log(matchedDepartment);
+                  if(previousItem.toPostingInCategoryCode == item._id){
+                    
+                  }
+                  if (matchedDepartment) {
+                    const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
+                    if (formArray && formArray.at(index)) {
+                      formArray.at(index).get('toDepartmentId')?.setValue(matchedDepartment.value);
+                    }
+                  }
+                });
+              });
+
+
+             
             });
           }
         
@@ -121,7 +131,6 @@ export class EditPostingComponent implements OnInit {
           // this.toDesignation = [];
           response.results.forEach((desginationItem: any) => {
             this.toDesignation.push({ label: desginationItem.designation_name, value: desginationItem._id });
-            console.log(this.toDesignation);
           });
         
           if (this.previousPostingData?.length > 0) {

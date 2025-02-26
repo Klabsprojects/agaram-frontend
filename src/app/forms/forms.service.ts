@@ -263,7 +263,7 @@ export class LeaveTransferService {
 
   getEmployeeHistory(data:any){
     const headers = this.getHeaders();
-    return this.http.get<any>(`${this.baseUrl}/getEmployeeHistory?_id=${data}`,{headers});
+    return this.http.get<any>(`${this.baseUrl}getEmployeeHistory?_id=${data}`,{headers});
   }
 
   getEmployeeCurrentPosting(data:any){
@@ -503,6 +503,7 @@ export class LeaveTransferService {
     return this.http.get<any>(this.baseUrl+`getleave?employeeProfileid=${_id}`,{headers});
   }
 
+  
   getIndividualtwo(_id:string,type:string){
     const headers = this.getHeaders();
     return this.http.get<any>(this.baseUrl+`getEmployeeUpdate?employeeProfileId=${_id}&updateType=${type}`,{headers})
@@ -854,4 +855,14 @@ export class LeaveTransferService {
     const headers = this.getHeaders();
     return this.http.put<any>(this.baseUrl+`updateLeaveCredit`,data,{headers});
   }
+  getLeaveCredit(_id:any){
+    const headers = this.getHeaders();
+    return this.http.get<any>(this.baseUrl+`getLeaveCredit?empProfileId=${_id}`,{headers});
+  }
+
+  changePassword(data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+`updatePassword`,data,{headers});
+  }
+
 }
