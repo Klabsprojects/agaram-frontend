@@ -91,61 +91,75 @@ export class EditPostingComponent implements OnInit {
 
         this.previousPostingData = data.previousPostingList;
         this.populatePreviousPostingData();
-        console.log(this.previousPostingData);
-        this.previousPostingAction.getDepartmentData().subscribe((response: any) => {
-          response.forEach((deptItem: any) => {
-            this.toDepartment.push({ label: deptItem.department_name, value: deptItem._id });
-          });
+        // console.log(this.previousPostingData);
         
-          if (this.previousPostingData?.length > 0) {
-            
-            this.previousPostingData.forEach((previousItem: any, index: number) => {
-              console.log(previousItem.toPostingInCategoryCode,index);
-              this.previousPostingAction.getData().subscribe((res: any[]) => {
-                res.forEach((item) => {
-                  if (item.category_type === "posting_in") {
-                    this.postingIn.push({ label: item.category_name, value: item._id });
+       
+        if (this.previousPostingData?.length > 0) {
+          this.previousPostingData.forEach((previousItem: any, index: number) => {
+            this.previousPostingAction.getData().subscribe((res: any[]) => {
+              res.forEach((item) => {
+                if (item.category_type === "posting_in") {
+                  this.postingIn.push({ label: item.category_name, value: item._id });
+                }
+                if (previousItem.toPostingInCategoryCode == item._id) {
+                  this.previousPostingAction.getDepartmentData().subscribe((response: any) => {
+                    this.previousPostingData[index].toDepartment = []; 
+        
+                    response.forEach((deptItem: any) => {
+                      if (deptItem.category_code == item.category_code) {
+                        this.previousPostingData[index].toDepartment.push({
+                          label: deptItem.department_name,
+                          value: deptItem._id,
+                        });
+                      }
+                    });
+        
+                    // console.log(`Index ${index} - Department Data:`, this.previousPostingData[index].toDepartment);
+                  });
+                }
+              });
+            });
+          });
+        }
+       
+        this.previousPostingData.forEach((previousItem: any, index: number) => {
+          this.previousPostingAction.getData().subscribe((res: any[]) => {
+            res.forEach((item) => {
+              if (item.category_type === "posting_in") {
+                this.postingIn.push({ label: item.category_name, value: item._id });
+              }
+        
+              if (previousItem.toPostingInCategoryCode == item._id) {
+                this.previousPostingAction.getDesignations().subscribe((response: any) => {
+                  this.previousPostingData[index].toDesignation = []; 
+                  response.results.forEach((designationItem: any) => {
+                    if (designationItem.category_code == item.category_code) {
+                    this.previousPostingData[index].toDesignation.push({
+                      label: designationItem.designation_name,
+                      value: designationItem._id,
+                    });
                   }
-                  
-                  const matchedDepartment = this.toDepartment.find((ele: any) => ele.value === previousItem.toDepartmentId);
-                  console.log(matchedDepartment);
-                  if(previousItem.toPostingInCategoryCode == item._id){
-                    
-                  }
-                  if (matchedDepartment) {
+                  });
+        
+                  // Find and set the matched designation in the form
+                  const matchedDesignation = this.previousPostingData[index].toDesignation.find(
+                    (ele: any) => ele.value === previousItem.toDesignationId
+                  );
+        
+                  if (matchedDesignation) {
                     const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
                     if (formArray && formArray.at(index)) {
-                      formArray.at(index).get('toDepartmentId')?.setValue(matchedDepartment.value);
+                      formArray.at(index).get('toDesignationId')?.setValue(matchedDesignation.value);
                     }
                   }
+        
+                  // console.log(`Index ${index} - Designation Data:`, this.previousPostingData[index].toDesignation);
                 });
-              });
-
-
-             
-            });
-          }
-        
-        });
-        this.previousPostingAction.getDesignations().subscribe((response: any) => {
-          // this.toDesignation = [];
-          response.results.forEach((desginationItem: any) => {
-            this.toDesignation.push({ label: desginationItem.designation_name, value: desginationItem._id });
-          });
-        
-          if (this.previousPostingData?.length > 0) {
-            this.previousPostingData.forEach((previousItem: any, index: number) => {
-              const matchedDesignation = this.toDesignation.find((ele: any) => ele.value === previousItem.toDesignationId);
-              if (matchedDesignation) {
-                const formArray = this.previousPostingForm.get('previousPostingList') as FormArray;
-                if (formArray && formArray.at(index)) {
-                  formArray.at(index).get('toDesignationId')?.setValue(matchedDesignation.value);
-                }
               }
             });
-          }
-        
+          });
         });
+        
         
       });
     });
@@ -197,50 +211,105 @@ export class EditPostingComponent implements OnInit {
     }
   }
 
-  toGetDepartment(event: any, index: number) {
-    const selectedPostingInId = event.target.value;
-    const departmentControl = this.previousPostingFormArray.controls[index].get('toDepartmentId');
-    departmentControl?.setValue('');
-    const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
-    designationControl?.setValue('');
-    this.previousPostingAction.getData().subscribe((res: any[]) => {
-      res.forEach((item) => {
-        if (selectedPostingInId === item._id) {
-          this.previousPostingAction.getDepartmentData().subscribe((departmentData: any[]) => {
-            const departments = departmentData.filter((data: any) => data.category_code === item.category_code);
-              this.toDepartment[index] = departments.map((data) => ({
-              label: data.department_name, 
-              value: data._id
+//   toGetDepartment(event: any, index: number) {
+//     const selectedPostingInId = event.target.value;
+//     const departmentControl = this.previousPostingFormArray.controls[index].get('toDepartmentId');
+//     departmentControl?.setValue('');
+//     const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+//     designationControl?.setValue('');
+//     this.previousPostingAction.getData().subscribe((res: any[]) => {
+//       res.forEach((item) => {
+//         if (selectedPostingInId === item._id) {
+//           this.previousPostingAction.getDepartmentData().subscribe((departmentData: any[]) => {
+//             const departments = departmentData.filter((data: any) => data.category_code === item.category_code);
+//               this.toDepartment[index] = departments.map((data) => ({
+//               label: data.department_name, 
+//               value: data._id
+//             }));
+//             console.log(this.toDepartment[index]);
+//           });
+//         }
+//       });
+//     });
+// }
+toGetDepartment(event: any, index: number) {
+  const selectedPostingInId = event.target.value;
+  const departmentControl = this.previousPostingFormArray.controls[index].get('toDepartmentId');
+  departmentControl?.setValue('');
+  const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+  designationControl?.setValue('');
+  if (!this.previousPostingData[index]) {
+    this.previousPostingData[index] = {};
+  }
+
+  this.previousPostingAction.getData().subscribe((res: any[]) => {
+    res.forEach((item) => {
+      if (selectedPostingInId === item._id) {
+        this.previousPostingAction.getDepartmentData().subscribe((departmentData: any[]) => {
+          this.previousPostingData[index].toDepartment = departmentData
+            .filter((data: any) => data.category_code === item.category_code)
+            .map((data) => ({
+              label: data.department_name,
+              value: data._id,
             }));
-          });
-        }
-      });
+
+          console.log(`Index ${index} - Department Data:`, this.previousPostingData[index].toDepartment);
+        });
+      }
     });
+  });
 }
 
 toGetDesignation(event: any, index: number) {
-    const selectedDepartmentId = event.target.value;
-    const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+  const selectedDepartmentId = event.target.value;
+  const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
 
-    // Clear the previous designation list
-    designationControl?.setValue(''); // Clear designation field if department changes
+  designationControl?.setValue('');
+  if (!this.previousPostingData[index]) {
+    this.previousPostingData[index] = {};
+  }
 
-    this.previousPostingAction.getDepartmentData().subscribe((res: any[]) => {
-      res.forEach((item) => {
-        if (selectedDepartmentId === item._id) {
-          this.previousPostingAction.getDesignations().subscribe((designationData: any) => {
-            const designations = designationData.results.filter((data: any) => data.category_code === item.category_code);
-            
-            // Set the designation options for this row
-            this.toDesignation[index] = designations.map((data:any) => ({
-              label: data.designation_name, 
-              value: data._id
+  this.previousPostingAction.getDepartmentData().subscribe((res: any[]) => {
+    res.forEach((item) => {
+      if (selectedDepartmentId === item._id) {
+        this.previousPostingAction.getDesignations().subscribe((designationData: any) => {
+          this.previousPostingData[index].toDesignation = designationData.results
+            .filter((data: any) => data.category_code === item.category_code)
+            .map((data: any) => ({
+              label: data.designation_name,
+              value: data._id,
             }));
-          });
-        }
-      });
+        });
+      }
     });
+  });
 }
+
+
+
+// toGetDesignation(event: any, index: number) {
+//     const selectedDepartmentId = event.target.value;
+//     const designationControl = this.previousPostingFormArray.controls[index].get('toDesignationId');
+
+//     // Clear the previous designation list
+//     designationControl?.setValue(''); // Clear designation field if department changes
+
+//     this.previousPostingAction.getDepartmentData().subscribe((res: any[]) => {
+//       res.forEach((item) => {
+//         if (selectedDepartmentId === item._id) {
+//           this.previousPostingAction.getDesignations().subscribe((designationData: any) => {
+//             const designations = designationData.results.filter((data: any) => data.category_code === item.category_code);
+            
+//             // Set the designation options for this row
+//             this.toDesignation[index] = designations.map((data:any) => ({
+//               label: data.designation_name, 
+//               value: data._id
+//             }));
+//           });
+//         }
+//       });
+//     });
+// }
 
 
   onInput(event: any, field: string) {

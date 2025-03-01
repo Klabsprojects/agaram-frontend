@@ -15,10 +15,10 @@ export class LeaveTransferService {
   private roleDataSource = new BehaviorSubject<any[]>(this.getLocalRoleData());
   currentRoleData = this.roleDataSource.asObservable();
 
-        //  baseUrl = 'http://localhost:5500/api/';
-        //  fileUrl = 'http://localhost:5500/';
-        fileUrl = 'https://agaram.a2zweb.in/backend/';
-        baseUrl = 'https://agaram.a2zweb.in/v1/api/';
+         baseUrl = 'http://localhost:5500/api/';
+         fileUrl = 'http://localhost:5500/';
+        // fileUrl = 'https://agaram.a2zweb.in/backend/';
+        // baseUrl = 'https://agaram.a2zweb.in/v1/api/';
         private roleDataKey = 'roleData';
         private token: string='';
         
@@ -846,9 +846,14 @@ export class LeaveTransferService {
     return this.http.put<any>(this.baseUrl+`updateCategory/${_id}`,data,{headers});
   }
 
-  updateDepartment(data:any){
+  updateDepartment(id:any,data:any){
     const headers = this.getHeaders();
-    return this.http.put<any>(this.baseUrl+`updateDepartment`,data,{headers});
+    return this.http.put<any>(this.baseUrl+`updateDepartment?_id=${id}`,data,{headers});
+  }
+
+  updateDesignation(id:any,data:any){
+    const headers = this.getHeaders();
+    return this.http.put<any>(this.baseUrl+`updateDesignation?_id=${id}`,data,{headers});
   }
 
   updateLeaveCredit(data:any){

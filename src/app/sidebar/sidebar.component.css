@@ -8,11 +8,27 @@
 .sidebar .nav .nav-item.active > .nav-link .menu-title{
     color: #fff;
 }
-.sidebar{
+.sidebar {
     background-color: #115dbb;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ccc #115dbb; /* Firefox */
 }
+
+/* For Webkit-based browsers (Chrome, Edge, Safari) */
+.sidebar::-webkit-scrollbar {
+    width: 3px; /* Adjust the width */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Scroll thumb color */
+    border-radius: 3px; /* Rounded edges */
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: #115dbb; /* Track color */
+}
+
 .navbar .navbar-brand-wrapper{
     background-color: #115dbb;
 }
