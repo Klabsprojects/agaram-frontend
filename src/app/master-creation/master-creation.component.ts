@@ -29,6 +29,15 @@ export class MasterCreationComponent implements OnInit {
   leaveForm!:FormGroup;
   trainingForm!:FormGroup;
   foreignVisitForm!:FormGroup;
+  course_levelForm!:FormGroup;
+  ltcForm!:FormGroup;
+  immovableForm!:FormGroup;
+  movableForm!:FormGroup;
+  intimationForm!:FormGroup;
+  hba_availedForm!:FormGroup;
+  hba_typesForm!:FormGroup;
+  gpf_typeForm!:FormGroup;
+  purpose_of_gpfForm!:FormGroup;
   submitted:boolean = false;
   departmentSubmitted = false;
   postingin:any[]= [];
@@ -49,6 +58,15 @@ export class MasterCreationComponent implements OnInit {
   leave:any[]=[];
   training:any[]=[];
   foreignVisit:any[]=[];
+  course_level:any[]=[];
+  ltc:any[]=[];
+  immovable:any[]=[];
+  movable:any[]=[];
+  intimation:any[]=[];
+  hba_availed:any[]=[];
+  hba_types:any[]=[];
+  gpf_type:any[]=[];
+  purpose_of_gpf:any[]=[];
   showPopup = true;
   masterData:any[]=[];
   showAdd:boolean=false;
@@ -161,6 +179,51 @@ export class MasterCreationComponent implements OnInit {
     })
 
     this.foreignVisitForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.course_levelForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.ltcForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.immovableForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.movableForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.intimationForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.hba_availedForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.hba_typesForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.gpf_typeForm= this.fb.group({
+      category_name:['',Validators.required],
+      category_code:['',Validators.required]
+    })
+
+    this.purpose_of_gpfForm= this.fb.group({
       category_name:['',Validators.required],
       category_code:['',Validators.required]
     })
@@ -1090,7 +1153,548 @@ updateForeignVisit(){
   }
 }
 //Foreign Visit End
+//Course Level Start
+onCourseLevelSubmit(){
+  this.submitted = true;
+  if(this.course_levelForm.valid){
+    const value={
+      category_name : this.course_levelForm.get('category_name')?.value,
+      category_code : this.course_levelForm.get('category_code')?.value,
+      category_type:"course_level",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("Course Level Added Successfully");
+    })
+  }
+}
 
+viewCourseLevel(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.course_level = res.filter((item:any) => item.category_type === "course_level");
+  })
+}
+
+editCourseLevel(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const course_level_item = res[0];
+      this.course_levelForm.patchValue({
+        category_name: course_level_item.category_name,
+        category_code: course_level_item.category_code,
+      });
+    }
+  });
+}
+
+updateCourseLevel(){
+  if (this.ltcForm.valid) {
+    const value={
+      category_name : this.ltcForm.get('category_name')?.value,
+      category_code : this.ltcForm.get('category_code')?.value,
+      category_type:"course_level",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("Course Level Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+//Course Level End
+
+// ltc start
+onLtcSubmit(){
+  this.submitted = true;
+  if(this.ltcForm.valid){
+    const value={
+      category_name : this.ltcForm.get('category_name')?.value,
+      category_code : this.ltcForm.get('category_code')?.value,
+      category_type:"ltc_category",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("LTC Added Successfully");
+    })
+  }
+}
+
+viewLtc(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.ltc = res.filter((item:any) => item.category_type === "ltc_category");
+  })
+}
+
+editLtc(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const ltc_item = res[0];
+      this.ltcForm.patchValue({
+        category_name: ltc_item.category_name,
+        category_code: ltc_item.category_code,
+      });
+    }
+  });
+}
+
+updateLtc(){
+  if (this.ltcForm.valid) {
+    const value={
+      category_name : this.ltcForm.get('category_name')?.value,
+      category_code : this.ltcForm.get('category_code')?.value,
+      category_type:"ltc_category",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("LTC Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// ltc end
+
+
+
+
+// immovable start
+onimmovableSubmit(){
+  this.submitted = true;
+  if(this.immovableForm.valid){
+    const value={
+      category_name : this.immovableForm.get('category_name')?.value,
+      category_code : this.immovableForm.get('category_code')?.value,
+      category_type:"immovable_type",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("Immovable Added Successfully");
+    })
+  }
+}
+
+viewimmovable(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.immovable = res.filter((item:any) => item.category_type === "immovable_type");
+  })
+}
+
+editimmovable(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const immovable_item = res[0];
+      this.immovableForm.patchValue({
+        category_name: immovable_item.category_name,
+        category_code: immovable_item.category_code,
+      });
+    }
+  });
+}
+
+updateimmovable(){
+  if (this.immovableForm.valid) {
+    const value={
+      category_name : this.immovableForm.get('category_name')?.value,
+      category_code : this.immovableForm.get('category_code')?.value,
+      category_type:"immovable_type",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("immovable Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// immovable end
+
+// movable start
+onmovableSubmit(){
+  this.submitted = true;
+  if(this.movableForm.valid){
+    const value={
+      category_name : this.movableForm.get('category_name')?.value,
+      category_code : this.movableForm.get('category_code')?.value,
+      category_type:"movable_type",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("Movable Added Successfully");
+    })
+  }
+}
+
+viewmovable(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.movable = res.filter((item:any) => item.category_type === "movable_type");
+  })
+}
+
+editmovable(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const movable_type_item = res[0];
+      this.movableForm.patchValue({
+        category_name: movable_type_item.category_name,
+        category_code: movable_type_item.category_code,
+      });
+    }
+  });
+}
+
+updatemovable(){
+  if (this.movableForm.valid) {
+    const value={
+      category_name : this.movableForm.get('category_name')?.value,
+      category_code : this.movableForm.get('category_code')?.value,
+      category_type:"movable_type",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("Movable Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// movable end
+
+// intimation start
+onintimationSubmit(){
+  this.submitted = true;
+  if(this.intimationForm.valid){
+    const value={
+      category_name : this.intimationForm.get('category_name')?.value,
+      category_code : this.intimationForm.get('category_code')?.value,
+      category_type:"intimation_type",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("Intimation Added Successfully");
+    })
+  }
+}
+
+viewintimation(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.intimation = res.filter((item:any) => item.category_type === "intimation_type");
+  })
+}
+
+editintimation(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const intimation_item = res[0];
+      this.intimationForm.patchValue({
+        category_name: intimation_item.category_name,
+        category_code: intimation_item.category_code,
+      });
+    }
+  });
+}
+
+updateintimation(){
+  if (this.intimationForm.valid) {
+    const value={
+      category_name : this.intimationForm.get('category_name')?.value,
+      category_code : this.intimationForm.get('category_code')?.value,
+      category_type:"intimation_type",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("Intimation Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+//intimation end
+
+// hba availed start
+onhbaavailedSubmit(){
+  this.submitted = true;
+  if(this.hba_availedForm.valid){
+    const value={
+      category_name : this.hba_availedForm.get('category_name')?.value,
+      category_code : this.hba_availedForm.get('category_code')?.value,
+      category_type:"hba_availed_for",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("HBA availed Added Successfully");
+    })
+  }
+}
+
+viewhbaavailed(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.hba_availed = res.filter((item:any) => item.category_type === "hba_availed_for");
+  })
+}
+
+edithbaavailed(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const hba_availed_for_item = res[0];
+      this.hba_availedForm.patchValue({
+        category_name: hba_availed_for_item.category_name,
+        category_code: hba_availed_for_item.category_code,
+      });
+    }
+  });
+}
+
+updatehbaavailed(){
+  if (this.hba_availedForm.valid) {
+    const value={
+      category_name : this.hba_availedForm.get('category_name')?.value,
+      category_code : this.hba_availedForm.get('category_code')?.value,
+      category_type:"hba_availed_for",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("HBA availed Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// hba availed end
+
+// hba types start
+onhbtypesSubmit(){
+  this.submitted = true;
+  if(this.hba_typesForm.valid){
+    const value={
+      category_name : this.hba_typesForm.get('category_name')?.value,
+      category_code : this.hba_typesForm.get('category_code')?.value,
+      category_type:"hba_typeofproperty",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("HBA Types Added Successfully");
+    })
+  }
+}
+
+viewhbtypes(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.hba_types = res.filter((item:any) => item.category_type === "hba_typeofproperty");
+  })
+}
+
+edithbtypes(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const hba_types_item = res[0];
+      this.hba_typesForm.patchValue({
+        category_name: hba_types_item.category_name,
+        category_code: hba_types_item.category_code,
+      });
+    }
+  });
+}
+
+updatehbtypes(){
+  if (this.hba_typesForm.valid) {
+    const value={
+      category_name : this.hba_typesForm.get('category_name')?.value,
+      category_code : this.hba_typesForm.get('category_code')?.value,
+      category_type:"hba_typeofproperty",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("HBA Types Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// hba types end
+
+// gpf type start
+ongpftypeSubmit(){
+  this.submitted = true;
+  if(this.gpf_typeForm.valid){
+    const value={
+      category_name : this.gpf_typeForm.get('category_name')?.value,
+      category_code : this.gpf_typeForm.get('category_code')?.value,
+      category_type:"gpf_type",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("GPF Type Added Successfully");
+    })
+  }
+}
+
+viewgpftype(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.gpf_type = res.filter((item:any) => item.category_type === "gpf_type");
+  })
+}
+
+editgpftype(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const gpf_type_item = res[0];
+      this.gpf_typeForm.patchValue({
+        category_name: gpf_type_item.category_name,
+        category_code: gpf_type_item.category_code,
+      });
+    }
+  });
+}
+
+updategpftype(){
+  if (this.gpf_typeForm.valid) {
+    const value={
+      category_name : this.gpf_typeForm.get('category_name')?.value,
+      category_code : this.gpf_typeForm.get('category_code')?.value,
+      category_type:"gpf_type",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("GPF Type Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// gpf type end
+
+// purpose of gpf start
+ongpfpurposeSubmit(){
+  this.submitted = true;
+  if(this.purpose_of_gpfForm.valid){
+    const value={
+      category_name : this.purpose_of_gpfForm.get('category_name')?.value,
+      category_code : this.purpose_of_gpfForm.get('category_code')?.value,
+      category_type:"purpose_of_gpf",
+    }
+    this.masterAction.addMasterData(value).subscribe((res)=>{
+      this.showPopup = false;
+      location.reload();
+      alert("GPF Purpose Added Successfully");
+    })
+  }
+}
+
+viewgpfpurpose(){
+  this.masterAction.getData().subscribe((res)=>{
+    this.purpose_of_gpf = res.filter((item:any) => item.category_type === "purpose_of_gpf");
+  })
+}
+
+editgpfpurpose(id:any){
+  this.editing = true;
+  this.editingId = id;
+  this.masterAction.getCategoriesById(id).subscribe((res: any) => {
+    if (res.length > 0) {
+      const gpf_purpose_item = res[0];
+      this.purpose_of_gpfForm.patchValue({
+        category_name: gpf_purpose_item.category_name,
+        category_code: gpf_purpose_item.category_code,
+      });
+    }
+  });
+}
+
+updategpfpurpose(){
+  if (this.purpose_of_gpfForm.valid) {
+    const value={
+      category_name : this.purpose_of_gpfForm.get('category_name')?.value,
+      category_code : this.purpose_of_gpfForm.get('category_code')?.value,
+      category_type:"purpose_of_gpf",
+    }
+    this.masterAction.updateCategories(this.editingId, value).subscribe(
+      (res: any) => {
+        alert("GPF Purpose Updated Successfully!");
+        this.showPopup = false;
+        location.reload();
+        this.editing = false;
+        this.editingId = null;
+      },
+      (error) => {
+        console.error('Error updating category:', error);
+      }
+    );
+  }
+}
+// purpose of gpf end
 //Block
 viewBlock(){
 

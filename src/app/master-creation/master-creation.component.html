@@ -208,6 +208,87 @@
                 </td>
               </tr>
 
+              <tr>
+                <td>19.</td>
+                <td>Course Level</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addCourse" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewCourseLevel()" data-toggle="modal" data-target="#viewCourse" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>20.</td>
+                <td>Leave availed in LTC</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addLTC" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewLtc()" data-toggle="modal" data-target="#viewLTC" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>21.</td>
+                <td>Immovable </td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addImmovable" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewimmovable()" data-toggle="modal" data-target="#viewImmovable" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>22.</td>
+                <td>Movable </td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addMovable" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewmovable()" data-toggle="modal" data-target="#viewMovable" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>23.</td>
+                <td>Intimation</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addIntimation" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewintimation()" data-toggle="modal" data-target="#viewIntimation" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>24.</td>
+                <td>HBA Availed for TNHB</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addTNHB" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewhbaavailed()" data-toggle="modal" data-target="#viewTNHB" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>25.</td>
+                <td>Types of Property (HBA)</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addHBA" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewhbtypes()" data-toggle="modal" data-target="#viewHBA" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>26.</td>
+                <td>GPF Type</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addGPFType" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewgpftype()" data-toggle="modal" data-target="#viewGPFType" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>27.</td>
+                <td>Purpose of GPF Availed</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addGPFPurpose" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewgpfpurpose()" data-toggle="modal" data-target="#viewGPFPurpose" *ngIf="showView">View</button>
+                </td>
+              </tr>
+
             </tbody>
           </table>
       </div>
@@ -2340,6 +2421,340 @@
   </div>
 </div>
 
+<!-- addcourselevel -->
+<div class="modal fade" id="addCourse" tabindex="-1" aria-labelledby="addCourseLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add Course Level </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="course_levelForm" (ngSubmit)="onCourseLevelSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Course Name<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && course_levelForm.get('category_name')?.invalid && course_levelForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && course_levelForm.get('category_code')?.invalid && course_levelForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- addLTC -->
+<div class="modal fade" id="addLTC" tabindex="-1" aria-labelledby="addLTCLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add LTC </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="ltcForm" (ngSubmit)="onLtcSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">LTC Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && ltcForm.get('category_name')?.invalid && ltcForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && ltcForm.get('category_code')?.invalid && ltcForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- immovable -->
+<div class="modal fade" id="addImmovable" tabindex="-1" aria-labelledby="addImmovableLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add Immovable </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="immovableForm" (ngSubmit)="onimmovableSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Immovable Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && immovableForm.get('category_name')?.invalid && immovableForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && immovableForm.get('category_code')?.invalid && immovableForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- movable -->
+<div class="modal fade" id="addMovable" tabindex="-1" aria-labelledby="addMovableLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add Movable </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="movableForm" (ngSubmit)="onmovableSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Movable Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && movableForm.get('category_name')?.invalid && movableForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && movableForm.get('category_code')?.invalid && movableForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- intimation -->
+<div class="modal fade" id="addIntimation" tabindex="-1" aria-labelledby="addIntimationLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add Intimation </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="intimationForm" (ngSubmit)="onintimationSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Intimation Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && intimationForm.get('category_name')?.invalid && intimationForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && intimationForm.get('category_code')?.invalid && intimationForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- hba availed -->
+<div class="modal fade" id="addTNHB" tabindex="-1" aria-labelledby="TNHBLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add HBA Availed </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="hba_availedForm" (ngSubmit)="onhbaavailedSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">HBA Availed<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && hba_availedForm.get('category_name')?.invalid && hba_availedForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && hba_availedForm.get('category_code')?.invalid && hba_availedForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- hba types -->
+<div class="modal fade" id="addHBA" tabindex="-1" aria-labelledby="HBALabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add HBA Types </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="hba_typesForm" (ngSubmit)="onhbtypesSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">HBA Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && hba_typesForm.get('category_name')?.invalid && hba_typesForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && hba_typesForm.get('category_code')?.invalid && hba_typesForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- gpf type -->
+<div class="modal fade" id="addGPFType" tabindex="-1" aria-labelledby="GPFTypeLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add GPF Types </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="gpf_typeForm" (ngSubmit)="ongpftypeSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">GPF Type<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && gpf_typeForm.get('category_name')?.invalid && gpf_typeForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && gpf_typeForm.get('category_code')?.invalid && gpf_typeForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+<!-- purpose of gpf -->
+<div class="modal fade" id="addGPFPurpose" tabindex="-1" aria-labelledby="addGPFPurposeLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addForeignVisitLabel">Add Purpose of GPF </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="purpose_of_gpfForm" (ngSubmit)="ongpfpurposeSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">GPF Purpose<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && purpose_of_gpfForm.get('category_name')?.invalid && purpose_of_gpfForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && purpose_of_gpfForm.get('category_code')?.invalid && purpose_of_gpfForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="viewForeignVisit" tabindex="-1" aria-labelledby="viewForeignVisitLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog1">
     <div class="modal-content">
@@ -2536,3 +2951,707 @@
   </div>
 
 <!--Block End-->
+<!-- newcodebulk -->
+<!-- viewCourse -->
+<div class="modal fade" id="viewCourse" tabindex="-1" aria-labelledby="viewCourseLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">Course level Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="course_levelForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>Course Name</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let course_levelData of course_level; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== course_levelData._id">
+                  {{ course_levelData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== course_levelData._id">
+                  {{ course_levelData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === course_levelData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && course_levelForm.get('category_name')?.invalid && course_levelForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === course_levelData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && course_levelForm.get('category_code')?.invalid && course_levelForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== course_levelData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editCourseLevel(course_levelData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === course_levelData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updateCourseLevel()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === course_levelData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="course_level.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- viewLtc -->
+<div class="modal fade" id="viewLTC" tabindex="-1" aria-labelledby="viewLTCLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">LTC Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="ltcForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>LTC Type</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ltcData of ltc; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== ltcData._id">
+                  {{ ltcData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== ltcData._id">
+                  {{ ltcData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === ltcData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && ltcForm.get('category_name')?.invalid && ltcForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === ltcData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && ltcForm.get('category_code')?.invalid && ltcForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== ltcData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editLtc(ltcData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === ltcData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updateLtc()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === ltcData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="ltc.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- immovable -->
+<div class="modal fade" id="viewImmovable" tabindex="-1" aria-labelledby="viewImmovableLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">Immovable Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="immovableForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>Immovable</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let immovableData of immovable; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== immovableData._id">
+                  {{ immovableData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== immovableData._id">
+                  {{ immovableData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === immovableData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && immovableForm.get('category_name')?.invalid && immovableForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === immovableData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && immovableForm.get('category_code')?.invalid && immovableForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== immovableData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editimmovable(immovableData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === immovableData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updateimmovable()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === immovableData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="immovable.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- movable -->
+<div class="modal fade" id="viewMovable" tabindex="-1" aria-labelledby="viewMovableLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">Movable Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="movableForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>Movable</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let movableData of movable; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== movableData._id">
+                  {{ movableData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== movableData._id">
+                  {{ movableData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === movableData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('category_name')?.invalid && movableForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === movableData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && movableForm.get('category_code')?.invalid && movableForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== movableData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editmovable(movableData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === movableData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updatemovable()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === movableData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="movable.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- intimation -->
+<div class="modal fade" id="viewIntimation" tabindex="-1" aria-labelledby="viewIntimationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">Intimation Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="intimationForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>Intimation</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let intimationData of intimation; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== intimationData._id">
+                  {{ intimationData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== intimationData._id">
+                  {{ intimationData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === intimationData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && intimationForm.get('category_name')?.invalid && intimationForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === intimationData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && intimationForm.get('category_code')?.invalid && intimationForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== intimationData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editintimation(intimationData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === intimationData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updateintimation()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === intimationData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="intimation.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- hba availed -->
+<div class="modal fade" id="viewTNHB" tabindex="-1" aria-labelledby="viewTNHBLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">HBA Availed Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="hba_availedForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>HBA Availed</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hba_availedData of hba_availed; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== hba_availedData._id">
+                  {{ hba_availedData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== hba_availedData._id">
+                  {{ hba_availedData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === hba_availedData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && hba_availedForm.get('category_name')?.invalid && hba_availedForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === hba_availedData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && hba_availedForm.get('category_code')?.invalid && hba_availedForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== hba_availedData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="edithbaavailed(hba_availedData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === hba_availedData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updatehbaavailed()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === hba_availedData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="hba_availed.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- hba types -->
+<div class="modal fade" id="viewHBA" tabindex="-1" aria-labelledby="viewHBALabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">HBA Type Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="hba_typesForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>HBA Type</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hba_typesData of hba_types; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== hba_typesData._id">
+                  {{ hba_typesData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== hba_typesData._id">
+                  {{ hba_typesData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === hba_typesData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && hba_typesForm.get('category_name')?.invalid && hba_typesForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === hba_typesData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && hba_typesForm.get('category_code')?.invalid && hba_typesForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== hba_typesData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="edithbtypes(hba_typesData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === hba_typesData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updatehbtypes()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === hba_typesData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="hba_types.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- gpf type -->
+<div class="modal fade" id="viewGPFType" tabindex="-1" aria-labelledby="viewGPFTypeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">GPF Type Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="gpf_typeForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>GPF Type</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let gpf_typeData of gpf_type; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== gpf_typeData._id">
+                  {{ gpf_typeData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== gpf_typeData._id">
+                  {{ gpf_typeData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === gpf_typeData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && gpf_typeForm.get('category_name')?.invalid && gpf_typeForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === gpf_typeData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && gpf_typeForm.get('category_code')?.invalid && gpf_typeForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== gpf_typeData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editgpftype(gpf_typeData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === gpf_typeData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updategpftype()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === gpf_typeData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="gpf_type.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- purpose of gpf -->
+<div class="modal fade" id="viewGPFPurpose" tabindex="-1" aria-labelledby="viewGPFPurposeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCourselevelLabel">GPF Purpose Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="purpose_of_gpfForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>GPF Purpose</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let purpose_of_gpfData of purpose_of_gpf; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== purpose_of_gpfData._id">
+                  {{ purpose_of_gpfData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== purpose_of_gpfData._id">
+                  {{ purpose_of_gpfData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === purpose_of_gpfData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && purpose_of_gpfForm.get('category_name')?.invalid && purpose_of_gpfForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === purpose_of_gpfData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && purpose_of_gpfForm.get('category_code')?.invalid && purpose_of_gpfForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== purpose_of_gpfData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editgpftype(purpose_of_gpfData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === purpose_of_gpfData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updategpftype()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === purpose_of_gpfData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="purpose_of_gpf.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
