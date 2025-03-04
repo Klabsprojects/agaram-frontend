@@ -199,14 +199,14 @@
                 </td>
               </tr>
 
-              <!-- <tr>
+              <tr>
                 <td>18.</td>
                 <td>Block</td>
                 <td style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" data-toggle="modal" data-target="#addBlock" *ngIf="showAdd">Add  </button>
                     <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewBlock()" data-toggle="modal" data-target="#viewBlock" *ngIf="showView">View</button>
                 </td>
-              </tr> -->
+              </tr>
 
             </tbody>
           </table>
@@ -2418,3 +2418,121 @@
   </div>
   </div>
 <!--Foreign Visit End -->
+
+<!--Block Start-->
+<div class="modal fade" id="addBlock" tabindex="-1" aria-labelledby="addBlockLabel" aria-hidden="true" *ngIf="showPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBlockLabel">Add Block </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="foreignVisitForm" (ngSubmit)="onForeignVisitSubmit()">
+      <div class="modal-body overflow-hidden" style="height: auto !important;">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Fund<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_name" 
+            [ngStyle]="{'border': (submitted && foreignVisitForm.get('category_name')?.invalid && foreignVisitForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Code<span> * </span></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" formControlName="category_code" 
+            [ngStyle]="{'border': (submitted && foreignVisitForm.get('category_code')?.invalid && foreignVisitForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+          </div>
+        </div>
+        </div>
+        
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success p-2">Submit</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewForeignVisit" tabindex="-1" aria-labelledby="viewForeignVisitLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewForeignVisitLabel">Foreign Visit Fund Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="foreignVisitForm">
+        <div class="modal-body p-3">
+          <table class="table table-bordered table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 10%;">#</th>
+                <th>Foreign Visit Fund</th>
+                <th>Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let foreignVisitData of foreignVisit; let i = index">
+                <td>{{ i + 1 }}</td>
+      
+                <!-- Display Static Data -->
+                <td *ngIf="!editing || editingId !== foreignVisitData._id">
+                  {{ foreignVisitData.category_name }}
+                </td>
+                <td *ngIf="!editing || editingId !== foreignVisitData._id">
+                  {{ foreignVisitData.category_code }}
+                </td>
+      
+                <!-- Editable Input Fields -->
+                <td *ngIf="editing && editingId === foreignVisitData._id">
+                  <input class="form-control" type="text" formControlName="category_name"
+                    [ngStyle]="{'border-bottom': (submitted && foreignVisitForm.get('category_name')?.invalid && foreignVisitForm.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+                <td *ngIf="editing && editingId === foreignVisitData._id">
+                  <input class="form-control" type="text" formControlName="category_code"
+                    [ngStyle]="{'border-bottom': (submitted && foreignVisitForm.get('category_code')?.invalid && foreignVisitForm.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+                </td>
+      
+                <!-- Action Buttons -->
+                <td class="text-center">
+                  <button *ngIf="!editing || editingId !== foreignVisitData._id" type="button"
+                    class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="editForeignVisit(foreignVisitData._id)">
+                    Edit
+                  </button>
+      
+                  <button *ngIf="editing && editingId === foreignVisitData._id" type="button"
+                    class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                    style="font-size: 13px;" (click)="updateForeignVisit()">
+                    Update
+                  </button>
+      
+                  <button *ngIf="editing && editingId === foreignVisitData._id" type="button"
+                    class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                    style="font-size: 13px;" (click)="cancelEditing()">
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="foreignVisit.length === 0">
+                <td colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<!--Block End-->

@@ -194,6 +194,8 @@ export class MasterCreationComponent implements OnInit {
     });
   }
 
+  
+
   editPosting(id: any) {
     this.editing = true;
     this.editingId = id;
@@ -1088,6 +1090,11 @@ updateForeignVisit(){
   }
 }
 //Foreign Visit End
+
+//Block
+viewBlock(){
+
+}
 
 
   cancel(){
