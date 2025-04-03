@@ -217,10 +217,8 @@
                   <select class="form-control ml-2" formControlName="fundsSanctionedBy" 
                       [ngStyle]="{'border-bottom': (submitted && foreignForm.get('fundsSanctionedBy')?.invalid && foreignForm.get('fundsSanctionedBy')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                           <option value="">Select</option>
-                          <option value="State Government">State Government</option>
-                          <option value="Foregin Funds">Foregin Funds</option>
-                          <option value="Central Government">Central Government</option>
-                          <option value="Others">Others</option>
+                          <option *ngFor="let fundData of foreignVisitFund" [value]="fundData.value">{{fundData.label}}</option>
+
                     </select>
                 </div>
               </div>

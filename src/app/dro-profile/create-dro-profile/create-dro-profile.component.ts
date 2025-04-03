@@ -205,9 +205,11 @@ droForm!: FormGroup;
           this.droForm.get('deptOfficialMobileNo')?.setValue(item.officialMobileNo || '');
           this.droForm.get('deptPhoneNumber')?.setValue(item.phoneNumber || '');
           const isFilled = item.address || item.faxNumber || item.phoneNumber || item.officialMobileNo;
+          console.log(isFilled);
           this.droForm.get('department')?.setValue(isFilled ? 'No' : 'yes');
-          this.setValues = isFilled;
+          console.log(this.droForm.get('department')?.value);
 
+          this.setValues = isFilled;
         }
         this.designation = [];
       });
@@ -477,8 +479,6 @@ droForm!: FormGroup;
     }
   }
   
- 
-  
   setDepartmentAndServing(departmentValue: string, servingValue: string, updateTypeValue: string) {
     const departmentControl = this.droForm.get('department');
     const servingControl = this.droForm.get('serving');
@@ -497,10 +497,6 @@ droForm!: FormGroup;
     }
   }
   
-  
-  
-  
-
   hideFutureDate() {
     return new Date().toISOString().split('T')[0];
   }

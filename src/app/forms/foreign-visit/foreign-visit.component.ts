@@ -156,6 +156,12 @@ export class ForeignVisitComponent implements OnInit {
               this.viewForeignVisitData.orderFor = item.category_name;
             }          
           }
+          if (item.category_type == "foreign_visit_fund") {
+            console.log(item);
+            if(item._id == data.fundsSanctionedBy){
+              this.viewForeignVisitData.fundsSanctionedBy = item.category_name;
+            }          
+          }
           // if (item.category_type == "state") {
           //   data.degreeData.forEach((ele:any)=>{
           //     if(item._id == ele.locationState){

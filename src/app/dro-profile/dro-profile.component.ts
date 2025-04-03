@@ -160,7 +160,7 @@ export class DroProfileComponent implements OnInit{
         this.viewDroData.mobileNo3 = ele.mobileNo3;
         this.viewDroData.personalEmail = ele.personalEmail;
         this.viewDroData.dateOfBirth = ele.dateOfBirth;
-        this.viewDroData.addressLine = ele.addressLine;
+        this.viewDroData.addressLine = ele?.addressLine;
         this.viewDroData.city = ele.city;
         this.viewDroData.pincode = ele.pincode;
         this.viewDroData.employeeId = ele.employeeId;
@@ -267,10 +267,10 @@ export class DroProfileComponent implements OnInit{
           })
           this.viewDroData.languages = ele.languages;
         this.viewDroData.lastDateOfPromotion = ele.lastDateOfPromotion;
-        this.viewDroData.deptAddress = ele.departmentId.address;
-        this.viewDroData.deptFaxNumber = ele.departmentId.faxNumber;
-        this.viewDroData.deptOfficialMobileNo = ele.departmentId.officialMobileNo;
-        this.viewDroData.deptPhoneNumber = ele.departmentId.phoneNumber;
+        this.viewDroData.deptAddress = ele.departmentId?.address ?? '';
+        this.viewDroData.deptFaxNumber = ele.departmentId?.faxNumber ?? '';
+        this.viewDroData.deptOfficialMobileNo = ele.departmentId?.officialMobileNo ?? '';
+        this.viewDroData.deptPhoneNumber = ele.departmentId?.phoneNumber ?? '';
         // this.viewDroData.toDepartmentId = ele.departmentId.department_name;
         })
       });

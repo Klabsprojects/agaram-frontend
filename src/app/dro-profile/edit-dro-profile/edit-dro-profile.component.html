@@ -409,7 +409,7 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Grade</label>
                 <div class="col-sm-12">
-                    <select class="form-control" formControlName="promotionGrade">
+                    <select class="form-control" formControlName="promotionGrade" (change)="changeGrade($event)">
                         <option value="">Select</option>
                         <option *ngFor="let promotionGradeData of grade" [value]="promotionGradeData.value">{{promotionGradeData.label}}</option>
                       </select>

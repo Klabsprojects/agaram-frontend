@@ -14,6 +14,7 @@ export class EditForeignVisitComponent implements OnInit{
   country:any[]=[];
   orderType:any[]=[];
   orderFor:any[]=[];
+  foreignVisitFund:any[]=[];
   showDropdown = false;
   filteredOptions: any[] = [];
   selectedOption: any;
@@ -103,9 +104,9 @@ export class EditForeignVisitComponent implements OnInit{
       this.fcraUrl = this.url+data.fcraClearance;
       this.foreignForm.get('fundsSanctionedBy')?.setValue(data.fundsSanctionedBy);
       this.foreignForm.get('fundsSanctioned')?.setValue(data.fundsSanctioned);
-      this.foreignForm.get('orderTypeCategoryCode')?.setValue(data.orderTypeCategoryCode);
-      this.foreignForm.get('orderNumber')?.setValue(data.orderNumber);
-      this.foreignForm.get('orderForCategoryCode')?.setValue(data.orderForCategoryCode);
+      this.foreignForm.get('orderTypeCategoryCode')?.setValue(data.orderType);
+      this.foreignForm.get('orderNumber')?.setValue(data.orderNo);
+      this.foreignForm.get('orderForCategoryCode')?.setValue(data.orderFor);
       this.foreignForm.get('invitingAuthority')?.setValue(data.invitingAuthority);
       this.foreignForm.get('invitationEndorsed')?.setValue(data.invitationEndorsed);
 
@@ -135,6 +136,9 @@ export class EditForeignVisitComponent implements OnInit{
       }
       if (item.category_type == "order_for") {
         this.orderFor.push({ label: item.category_name, value: item._id });
+      }
+      if(item.category_type == "foreign_visit_fund"){
+        this.foreignVisitFund.push({ label: item.category_name, value: item._id });
       }
     });
   });

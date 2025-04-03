@@ -17,6 +17,7 @@ export class CreateForeignVisitComponent implements OnInit {
   country:any[]=[];
   orderType:any[]=[];
   orderFor:any[]=[];
+  foreignVisitFund:any[]=[];
   showDropdown = false;
   filteredOptions: any[] = [];
   selectedOption: any;
@@ -110,6 +111,9 @@ export class CreateForeignVisitComponent implements OnInit {
       }
       if (item.category_type == "order_for") {
         this.orderFor.push({ label: item.category_name, value: item._id });
+      }
+      if(item.category_type == "foreign_visit_fund"){
+        this.foreignVisitFund.push({ label: item.category_name, value: item._id });
       }
     });
   });

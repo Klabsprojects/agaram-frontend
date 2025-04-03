@@ -41,6 +41,7 @@ export class EditDroProfileComponent implements OnInit {
    selectedImage: string | ArrayBuffer | null = null;
    postingIn: any[] = [];
    postType: any[] = [];
+   payScale: any[] = [];
    locationChange:any[]=[];
    department: any[] = [];
    designation: any[] = [];
@@ -64,10 +65,10 @@ export class EditDroProfileComponent implements OnInit {
        dateOfBirth: [''],
        dateOfJoining: [''],
        dateOfRetirement: [''],
-       state: ['', Validators.required],
+       state: [''],
        batch: [''],
-       recruitmentType: ['', Validators.required],
-       serviceStatus: ['', Validators.required],
+       recruitmentType: [''],
+       serviceStatus: [''],
        religion: [''],
        community: [''],
        caste: [''],
@@ -75,10 +76,10 @@ export class EditDroProfileComponent implements OnInit {
        mobileNo1: [''],
        mobileNo2: [''],
        mobileNo3: [''],
-       addressLine: ['', Validators.required],
-       city: ['', Validators.required],
-       pincode: ['', Validators.required],
-       promotionGrade: ['', Validators.required],
+       addressLine: [''],
+       city: [''],
+       pincode: [''],
+       promotionGrade: [''],
        payscale: [''],
        officeEmail: [''],
        // photo:[this.base64String],
@@ -125,6 +126,7 @@ export class EditDroProfileComponent implements OnInit {
              break;
            case "promotion_grade":
              this.grade.push({ label: item.category_name, value: item._id });
+             this.payScale.push(item);
              break;
            case "religion":
              this.religion.push({ label: item.category_name, value: item._id });
@@ -223,13 +225,13 @@ export class EditDroProfileComponent implements OnInit {
          this.degreeData = data.degreeData;
          this.orderFileUrl = this.url+data.orderFile;
          this.url = this.officerAction.fileUrl;
-        // this.droForm.get('orderType')?.setValue(data.orderType);
-        // this.droForm.get('orderNo')?.setValue(data.orderNo);
-        // this.droForm.get('orderFor')?.setValue(data.orderFor);
-        // var dateOfOrder = new Date(data.dateOfOrder);
-        // data.dateOfOrder = dateOfOrder.toISOString().split('T')[0];
-        // this.droForm.get('dateOfOrder')?.setValue(data.dateOfOrder);
-        // this.droForm.get('remarks')?.setValue(data.remarks); 
+        this.droForm.get('orderType')?.setValue(data.orderType);
+        this.droForm.get('orderNo')?.setValue(data.orderNo);
+        this.droForm.get('orderFor')?.setValue(data.orderFor);
+        var dateOfOrder = new Date(data.dateOfOrder);
+        data.dateOfOrder = dateOfOrder.toISOString().split('T')[0];
+        this.droForm.get('dateOfOrder')?.setValue(data.dateOfOrder);
+        this.droForm.get('remarks')?.setValue(data.remarks); 
  
          this.populateDegreeForm();
          this.droForm.get('toPostingInCategoryCode')?.setValue(data.toPostingInCategoryCode);
@@ -278,6 +280,15 @@ export class EditDroProfileComponent implements OnInit {
  
     
    }
+
+   changeGrade(data: any) {
+    this.payScale.filter((item: any) => {
+      if (data.target.value == item._id) {
+        this.droForm.get('payscale')?.setValue(item.payscale);
+
+      }
+    });
+  }
  
  
    // arrayBufferToBase64(buffer: Uint8Array): string {
@@ -552,8 +563,8 @@ export class EditDroProfileComponent implements OnInit {
  
    addRow() {
      const newRow = this.fb.group({
-       courseLevel: ['', Validators.required],
-       degree: ['', Validators.required],
+       courseLevel: [''],
+       degree: [''],
        specialisation: [''],
        instituteName: [''],
        locationState: [''],
@@ -712,41 +723,115 @@ export class EditDroProfileComponent implements OnInit {
   //      }
   //    }
   //  }
+  // onSubmit() {
+  //   this.submitted = true;
+  //   const formValue = this.droForm.value;
+    
+  
+  //   if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
+  //     formValue.degreeData.forEach((degree: any) => {
+  //       degree.addedBy = 'DRO Profile'; // Add additional field
+  //     });
+  //   }
+  
+  //   const formData = new FormData();
+  //   Object.keys(formValue).forEach(key => {
+  //     const value = this.droForm.get(key)?.value;
+  
+  //     if (key === 'degreeData' && Array.isArray(formValue.degreeData) && formValue.degreeData.length > 0) {
+  //       formData.append('degreeData', JSON.stringify(formValue.degreeData));
+  //     }
+  //     else if (key === 'imagePath' && value instanceof File) {
+  //       formData.append(key, value); // Append file directly
+  //     }
+  //     else if (value !== null && value !== undefined) {
+  //       formData.append(key, value); // Only append non-null/undefined values
+  //     }
+  //   });
+  //   if (formValue.updatePost !== 'yes') {
+  //     formData.delete('updateId');
+  //   }
+  //   formData.append('id', this.id);
+  //   if (this.droForm.valid) {
+  //     this.officerAction.updateDroProfile(formData).subscribe(
+  //       (response: any) => {
+  //         alert(response.message);
+  //         this.router.navigate(['droprofile']);
+  //         console.log('API Response:', response);
+  //       },
+  //       error => {
+  //         console.error('API Error:', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.log('Form is invalid');
+      
+  //     // Collect invalid fields for display
+  //     const invalidFields = [];
+  
+  //     // Check invalid fields in the main form
+  //     for (const controlName in this.droForm.controls) {
+  //       if (this.droForm.controls[controlName].invalid) {
+  //         const label = this.getLabelText(controlName);
+  //         invalidFields.push(label); // Add label to the list of invalid fields
+  //       }
+  //     }
+  
+  //     // Check invalid fields in the degreeData form array
+  //     const degreeDataArray = this.droForm.get('degreeData') as FormArray;
+  //     if (degreeDataArray) {
+  //       degreeDataArray.controls.forEach((degreeGroup, index) => {
+  //         if (degreeGroup instanceof FormGroup) {
+  //           Object.keys(degreeGroup.controls).forEach((controlName) => {
+  //             const control = degreeGroup.get(controlName);
+  //             if (control?.invalid) {
+  //               const label = this.getLabelText(controlName);
+  //               invalidFields.push(`Degree ${index + 1} - ${label}`);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  
+  //     // Display a popup/alert if there are invalid fields
+  //     if (invalidFields.length > 0) {
+  //       alert(`The following fields are invalid: ${invalidFields.join(', ')}`);
+  //     }
+  //   }
+  // }
+
   onSubmit() {
     this.submitted = true;
     const formValue = this.droForm.value;
     
-    // Process degreeData if it exists and is an array
+    // Ensure degreeData has the additional field if it exists
     if (formValue.degreeData && Array.isArray(formValue.degreeData)) {
       formValue.degreeData.forEach((degree: any) => {
-        degree.addedBy = 'DRO Profile'; // Add additional field
+        degree.addedBy = 'DRO Profile';
       });
     }
   
     const formData = new FormData();
-    
-    // Loop through the form fields and append non-null/undefined fields to FormData
+  
+    // Append only non-empty, non-null, non-undefined fields
     Object.keys(formValue).forEach(key => {
       const value = this.droForm.get(key)?.value;
   
-      if (key === 'degreeData' && Array.isArray(formValue.degreeData) && formValue.degreeData.length > 0) {
-        formData.append('degreeData', JSON.stringify(formValue.degreeData));
-      }
-      else if (key === 'imagePath' && value instanceof File) {
+      if (key === 'degreeData' && Array.isArray(value) && value.length > 0) {
+        formData.append('degreeData', JSON.stringify(value)); // Convert to JSON and append
+      } else if (key === 'imagePath' && value instanceof File) {
         formData.append(key, value); // Append file directly
-      }
-      else if (value !== null && value !== undefined) {
-        formData.append(key, value); // Only append non-null/undefined values
+      } else if (value !== null && value !== undefined && value !== '') { 
+        formData.append(key, value); // Append only non-empty values
       }
     });
   
-    // Handle the 'updatePost' condition to delete 'updateId' if not 'yes'
     if (formValue.updatePost !== 'yes') {
       formData.delete('updateId');
     }
   
-    // Add 'id' to the form data
     formData.append('id', this.id);
+  
     if (this.droForm.valid) {
       this.officerAction.updateDroProfile(formData).subscribe(
         (response: any) => {
@@ -761,39 +846,36 @@ export class EditDroProfileComponent implements OnInit {
     } else {
       console.log('Form is invalid');
       
-      // Collect invalid fields for display
-      const invalidFields = [];
+      const invalidFields: string[] = [];
   
-      // Check invalid fields in the main form
-      for (const controlName in this.droForm.controls) {
+      // Find invalid fields in the main form
+      Object.keys(this.droForm.controls).forEach(controlName => {
         if (this.droForm.controls[controlName].invalid) {
-          const label = this.getLabelText(controlName);
-          invalidFields.push(label); // Add label to the list of invalid fields
+          invalidFields.push(this.getLabelText(controlName));
         }
-      }
+      });
   
-      // Check invalid fields in the degreeData form array
+      // Find invalid fields in the degreeData form array
       const degreeDataArray = this.droForm.get('degreeData') as FormArray;
       if (degreeDataArray) {
         degreeDataArray.controls.forEach((degreeGroup, index) => {
           if (degreeGroup instanceof FormGroup) {
-            Object.keys(degreeGroup.controls).forEach((controlName) => {
+            Object.keys(degreeGroup.controls).forEach(controlName => {
               const control = degreeGroup.get(controlName);
               if (control?.invalid) {
-                const label = this.getLabelText(controlName);
-                invalidFields.push(`Degree ${index + 1} - ${label}`);
+                invalidFields.push(`Degree ${index + 1} - ${this.getLabelText(controlName)}`);
               }
             });
           }
         });
       }
   
-      // Display a popup/alert if there are invalid fields
       if (invalidFields.length > 0) {
         alert(`The following fields are invalid: ${invalidFields.join(', ')}`);
       }
     }
   }
+  
   
  
    getLabelText(controlName: string): string {
