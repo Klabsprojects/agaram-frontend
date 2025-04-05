@@ -163,6 +163,13 @@ droForm!: FormGroup;
         }
       })
     })
+    this.viewCourseLevel()
+  }
+  course_level:any;
+  viewCourseLevel(){
+    this.droAction.getData().subscribe((res:any)=>{
+      this.course_level = res.filter((item:any) => item.category_type === "course_level");
+    })
   }
 
   getDepartment(event: any) {

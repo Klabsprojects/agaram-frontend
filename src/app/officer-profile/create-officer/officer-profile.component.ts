@@ -147,6 +147,7 @@ export class OfficerProfileComponent implements OnInit {
         }
       })
     })
+    this.viewCourseLevel();
   }
 
   getDepartment(event: any) {
@@ -163,6 +164,13 @@ export class OfficerProfileComponent implements OnInit {
           })
         }
       });
+    })
+  }
+  course_level:any;
+  viewCourseLevel(){
+    this.officerAction.getData().subscribe((res:any)=>{
+      this.course_level = res.filter((item:any) => item.category_type === "course_level");
+      console.log("course_level",this.course_level);
     })
   }
 

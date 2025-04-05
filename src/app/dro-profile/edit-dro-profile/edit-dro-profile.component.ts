@@ -278,8 +278,14 @@ export class EditDroProfileComponent implements OnInit {
        });
      })
  
-    
+    this.viewCourseLevel();
    }
+   course_level:any;
+  viewCourseLevel(){
+    this.officerAction.getData().subscribe((res:any)=>{
+      this.course_level = res.filter((item:any) => item.category_type === "course_level");
+    })
+  }
 
    changeGrade(data: any) {
     this.payScale.filter((item: any) => {

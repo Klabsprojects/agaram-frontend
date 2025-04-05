@@ -256,8 +256,7 @@ export class EditOfficerComponent implements OnInit {
         this.degree.push({ label: data.degree_name, value: data._id });
       });
     })
-
-   
+    this.viewCourseLevel();
   }
 
 
@@ -269,6 +268,13 @@ export class EditOfficerComponent implements OnInit {
   //   }
   //   return window.btoa(binary);
   // }
+  course_level:any;
+  viewCourseLevel(){
+    this.officerAction.getData().subscribe((res:any)=>{
+      this.course_level = res.filter((item:any) => item.category_type === "course_level");
+      console.log("course_level",this.course_level);
+    })
+  }
  
   onKeyDown(event: KeyboardEvent) {
     const key = event.key;

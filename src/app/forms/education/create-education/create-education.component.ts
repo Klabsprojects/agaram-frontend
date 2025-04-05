@@ -112,7 +112,13 @@ export class CreateEducationComponent implements OnInit{
       })
     });
 
-    
+    this.viewCourseLevel()
+  }
+  course_level:any;
+  viewCourseLevel(){
+    this.educationService.getData().subscribe((res:any)=>{
+      this.course_level = res.filter((item:any) => item.category_type === "course_level");
+    })
   }
 
   onInput(event: any, field: string) {
