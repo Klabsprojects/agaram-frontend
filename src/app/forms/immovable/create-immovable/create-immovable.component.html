@@ -52,10 +52,11 @@
                 <select class="form-control ml-2" formControlName="typeOfImmovableProperty" 
                     [ngStyle]="{'border-bottom': (submitted && immvovableForm.get('typeOfImmovableProperty')?.invalid && immvovableForm.get('typeOfImmovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option value="House">House</option>
+                        <option [value]="imv.category_name" *ngFor="let imv of immovable">{{imv.category_name}}</option>
+                        <!-- <option value="House">House</option>
                         <option value="Land">Land</option>
                         <option value="Flat">Flat</option>
-                        <option value="Plot">Plot</option>
+                        <option value="Plot">Plot</option> -->
                     </select>
                </div>
             </div>

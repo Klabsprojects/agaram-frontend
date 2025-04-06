@@ -38,6 +38,13 @@ export class ImmovableComponent implements OnInit {
       this.tableDataConst = structuredClone(this.tableData);
     });
     this.checkAccess();
+    this.viewimmovable();
+  }
+  immovable:any;
+  viewimmovable(){
+    this.immovableService.getData().subscribe((res:any)=>{
+      this.immovable = res.filter((item:any) => item.category_type === "immovable_type");
+    })
   }
 
   checkAccess(): void {
