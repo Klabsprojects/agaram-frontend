@@ -30,7 +30,8 @@ export class EditTourComponent {
   fromValue: any;
   toDateValue = true;
   leaveavailed: string[] = ['Casual Leave', 'Earned Leave'];
-  category: string[] = ['Home Town', 'Anywhere in India', 'Conversion of Home Town LTC'];
+  // category: string[] = ['Home Town', 'Anywhere in India', 'Conversion of Home Town LTC'];
+  category:any;
   selfOrFamily: string[] = ['Self', 'Family']
 
   ifuserlogin = false;
@@ -91,6 +92,13 @@ export class EditTourComponent {
         this.updateform();
       })
     }
+    this.viewLtc();
+  }
+  viewLtc(){
+    this.ltcService.getData().subscribe((res:any)=>{
+      this.category = res.filter((item:any) => item.category_type === "ltc_category");
+      console.log("category",this.category);
+    })
   }
 
   fromDateValue(data: any) {
