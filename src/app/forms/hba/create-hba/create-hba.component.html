@@ -47,7 +47,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Place of Property (State) <span>*</span></label>
+                <label class="col-sm-12 col-form-label">Place of Property (State) </label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="state" (change)="getState($event)"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('state')?.invalid && hbaForm.get('state')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -60,7 +60,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Place of Property (District)<span>*</span></label>
+                <label class="col-sm-12 col-form-label">Place of Property (District)</label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="district" 
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('district')?.invalid && hbaForm.get('district')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -73,7 +73,7 @@
 
             <div class="col-md-4">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">HBA Availed for TNHB <span>*</span></label>
+                <label class="col-sm-12 col-form-label">HBA Availed for TNHB </label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="hbaAvailedFor" 
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('hbaAvailedFor')?.invalid && hbaForm.get('hbaAvailedFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -85,7 +85,7 @@
             </div>
             <div class="col-md-2">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Type of Property  <span>*</span></label>
+                <label class="col-sm-12 col-form-label">Type of Property  </label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="typeOfProperty" 
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('typeOfProperty')?.invalid && hbaForm.get('typeOfProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -99,7 +99,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Date of Application <span>*</span></label>
+                <label class="col-sm-12 col-form-label">Date of Application </label>
                 <div class="col-sm-12">
                   <input type="date" class="form-control"  formControlName="dateOfApplication"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('dateOfApplication')?.invalid && hbaForm.get('dateOfApplication')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -110,7 +110,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label"> Total Cost of Property <span>*</span></label>
+                <label class="col-sm-12 col-form-label"> Total Cost of Property </label>
                 <div class="col-sm-12">
                   <input type="number" class="form-control"  formControlName="totalCostOfProperty" (keydown)="onKeyDown($event)"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('totalCostOfProperty')?.invalid && hbaForm.get('totalCostOfProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -121,7 +121,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label"> Any Exisiting Residence  <span>*</span></label>
+                <label class="col-sm-12 col-form-label"> Any Exisiting Residence  </label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="isExisingResidenceAvailable" (change)="getResidence($event)"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('isExisingResidenceAvailable')?.invalid && hbaForm.get('isExisingResidenceAvailable')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -136,7 +136,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">2B Relaxation <span>*</span></label>
+                <label class="col-sm-12 col-form-label">2B Relaxation </label>
                 <div class="col-sm-12">
                   <input type="text" class="form-control"  formControlName="twoBRelacation"  readonly/>
                   <!-- <select class="form-control" formControlName="twoBRelacation"
@@ -159,7 +159,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Total No. of Installment<span>*</span></label>
+                <label class="col-sm-12 col-form-label">Total No. of Installment</label>
                 <div class="col-sm-12">
                   <select
                   class="form-control"
@@ -187,7 +187,7 @@
 
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Total No. Recovery Months<span>*</span></label>
+                <label class="col-sm-12 col-form-label">Total No. Recovery Months</label>
                 <div class="col-sm-12">
                     <input type="text" class="form-control" formControlName="totalNumberOfRecoveryMonths"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('totalNumberOfRecoveryMonths')?.invalid && hbaForm.get('totalNumberOfRecoveryMonths')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -200,7 +200,7 @@
 
             <!-- <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Installment Number<span>*</span></label>
+                <label class="col-sm-12 col-form-label">Installment Number</label>
                 <div class="col-sm-12">
                     <input type="text" class="form-control" formControlName="installmentNumber"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('installmentNumber')?.invalid && hbaForm.get('installmentNumber')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -224,7 +224,7 @@
 
               <div class="col-md-2 pl-0">
                 <div class="form-group row">
-                  <label class="col-sm-12 col-form-label">Amount<span>*</span></label>
+                  <label class="col-sm-12 col-form-label">Amount</label>
                   <div class="col-sm-12">
                       <input type="number" class="form-control" formControlName="amount" (keydown)="onKeyDown($event)"
                       [ngStyle]="{'border-bottom': (submitted && hbaForm.get('amount')?.invalid && hbaForm.get('amount')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -234,7 +234,7 @@
 
               <div class="col-md-2 pl-0">
                 <div class="form-group row">
-                  <label class="col-sm-12 col-form-label">Installment Date<span>*</span></label>
+                  <label class="col-sm-12 col-form-label">Installment Date</label>
                   <div class="col-sm-12">
                       <input type="date" class="form-control" formControlName="installmentDate"
                       [ngStyle]="{'border-bottom': (submitted && hbaForm.get('installmentDate')?.invalid && hbaForm.get('installmentDate')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -299,7 +299,7 @@
             <div class="sub-title float-left w-100  mx-2 my-2">Order Info</div>
             <div class="col-md-2">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Order Type <span>*</span></label>
+                <label class="col-sm-12 col-form-label">Order Type </label>
                 <div class="col-sm-12">
                     <select class="form-control" formControlName="orderType" 
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('orderType')?.invalid && hbaForm.get('orderType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -311,7 +311,7 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group row">
-                  <label class="col-sm-12 col-form-label">Order No <span>*</span></label>
+                  <label class="col-sm-12 col-form-label">Order No </label>
                   <div class="col-sm-12">
                     <input type="text" maxlength="4" class="form-control" formControlName="orderNo" (keydown)="onKeyDown($event)"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('orderNo')?.invalid && hbaForm.get('orderNo')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -321,7 +321,7 @@
             
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Order For <span>*</span></label>
+                <label class="col-sm-12 col-form-label">Order For </label>
                 <div class="col-sm-12">
                   <select class="form-control" formControlName="orderFor"
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('orderFor')?.invalid && hbaForm.get('orderFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
@@ -337,7 +337,7 @@
 
                 <div class="col-md-2">
                     <div class="form-group row">
-                    <label class="col-sm-12 col-form-label">Date of Order <span>*</span></label>
+                    <label class="col-sm-12 col-form-label">Date of Order </label>
                     <div class="col-sm-12">
                         <input type="date" class="form-control"  formControlName="dateOfOrder"
                         [ngStyle]="{'border-bottom': (submitted && hbaForm.get('dateOfOrder')?.invalid && hbaForm.get('dateOfOrder')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
@@ -347,7 +347,7 @@
 
                 <div class="col-md-3">
                   <div class="form-group row">
-                    <label class="col-sm-12 col-form-label">Order File <span>*</span></label>
+                    <label class="col-sm-12 col-form-label">Order File </label>
                     <div class="col-sm-12">
                       <input type="file" class="form-control pl-0" accept=".pdf" formControlName="orderFile" style="border: none;" (change)="onFileSelected($event)"></div>
                       <div *ngIf="hbaForm.get('orderFile')?.errors?.['maxSize']" style="font-size: 13px; color: red;" class="pl-2">File size exceeds 5MB</div>
