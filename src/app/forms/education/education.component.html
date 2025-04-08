@@ -27,7 +27,7 @@
                 <div class="col-sm-12">
                   <label class="col-form-label">Course Level</label>
                   <select class="form-control" (click)="$event.stopPropagation()" [(ngModel)]="CourseLevel">
-                    <option [value]="course.category_name" *ngFor="let course of course_level">{{course.category_name}}</option>
+                    <option [value]="course._id" *ngFor="let course of course_level">{{course.category_name}}</option>
                     <!-- <option value="UG">UG</option>
                     <option value="PG">PG</option>
                     <option value="Certificate Course">Certified Course</option> -->

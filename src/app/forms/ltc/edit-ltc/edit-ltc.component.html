@@ -118,7 +118,7 @@
                   <select class="form-control" formControlName="category"
                   [ngStyle]="{'border-bottom': (submitted && ltcForm.get('category')?.invalid && ltcForm.get('category')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                       <option value="">Select</option>
-                      <option *ngFor="let categoryData of category" [value]="categoryData.category_name">{{categoryData.category_name}}</option>
+                      <option *ngFor="let categoryData of category" [value]="categoryData._id">{{categoryData.category_name}}</option>
                   </select>
               </div>
               </div>
