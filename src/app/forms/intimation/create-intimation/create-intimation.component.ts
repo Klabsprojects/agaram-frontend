@@ -24,7 +24,7 @@ export class CreateIntimationComponent implements OnInit{
   designationId:string = '';
   selectedOption:string = '';
   selectedFile:File | null = null;
-  intimationTypes = ['Job','Business','Gift','Loan','Honororium','Loyalty'];
+  intimationTypes:any = ['Job','Business','Gift','Loan','Honororium','Loyalty'];
   phone:string='';
   module:string='';
   submittedBy:any;
@@ -81,6 +81,13 @@ export class CreateIntimationComponent implements OnInit{
         }
       });
     });
+    this.viewintimation();
+  }
+
+  viewintimation(){
+    this.intimationService.getData().subscribe((res)=>{
+      this.intimationTypes = res.filter((item:any) => item.category_type === "intimation_type");
+    })
   }
 
   onInput(event: any, field: string) {

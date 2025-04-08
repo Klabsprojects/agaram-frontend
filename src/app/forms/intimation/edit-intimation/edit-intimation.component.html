@@ -74,7 +74,7 @@
                     <select class="form-control" formControlName="typeOfIntimation" 
                       [ngStyle]="{'border-bottom': (submitted && intimationForm.get('typeOfIntimation')?.invalid && intimationForm.get('typeOfIntimation')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                           <option value="">Select</option>
-                          <option *ngFor="let intimationType of intimationTypes" [value]="intimationType">{{intimationType}}</option>
+                          <option *ngFor="let intimationType of intimationTypes" [value]="intimationType._id">{{intimationType.category_name}}</option>
                       </select>
                 </div>
                </div>
