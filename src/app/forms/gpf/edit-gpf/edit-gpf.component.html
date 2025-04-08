@@ -88,7 +88,7 @@
                     <select class="form-control" formControlName="purpose" 
                     [ngStyle]="{'border-bottom': (submitted && gpfForm.get('purpose')?.invalid && gpfForm.get('purpose')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option *ngFor="let purposeData of purpose" [value]="purposeData">{{purposeData}}</option>
+                        <option *ngFor="let purposeData of purpose" [value]="purposeData._id">{{purposeData.category_name}}</option>
                     </select>  
                 </div>
               </div>

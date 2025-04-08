@@ -72,6 +72,7 @@ export class CreateGpfComponent implements OnInit{
     viewgpftype(){
       this.gpfService.getData().subscribe((res)=>{
         this.gpfType = res.filter((item:any) => item.category_type === "gpf_type");
+        this.purpose = res.filter((item:any) => item.category_type === "purpose_of_gpf");
       })
     }
   
