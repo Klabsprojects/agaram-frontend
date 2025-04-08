@@ -166,7 +166,14 @@
                     <option value="">Select</option>
                     <option *ngFor="let totalNumberOfInstallmentsData of totalNumberOfInstallments" [value]="totalNumberOfInstallmentsData">{{totalNumberOfInstallmentsData}}</option>
                 </select> -->
-                <select
+                <input type="text" class="form-control" formControlName="totalNumberOfInstallments" [ngStyle]="{
+                  'border-bottom': (submitted &&
+                    hbaForm.get('totalNumberOfInstallments')?.invalid &&
+                    hbaForm.get('totalNumberOfInstallments')?.errors?.['required'])
+                    ? '1px solid red'
+                    : '1px solid #ccc'
+                }">
+                <!-- <select
                 class="form-control"
                 formControlName="totalNumberOfInstallments"
                 [ngStyle]="{
@@ -184,7 +191,7 @@
                 >
                   {{ totalNumberOfInstallmentsData === 16 ? 'Final' : totalNumberOfInstallmentsData }}
                 </option>
-              </select>
+              </select> -->
               </div>
              </div>
           </div>

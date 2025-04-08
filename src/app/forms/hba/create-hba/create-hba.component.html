@@ -161,7 +161,14 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Total No. of Installment</label>
                 <div class="col-sm-12">
-                  <select
+                  <input type="text" class="form-control" formControlName="totalNumberOfInstallments" [ngStyle]="{
+                    'border-bottom': (submitted &&
+                      hbaForm.get('totalNumberOfInstallments')?.invalid &&
+                      hbaForm.get('totalNumberOfInstallments')?.errors?.['required'])
+                      ? '1px solid red'
+                      : '1px solid #ccc'
+                  }">
+                  <!-- <select
                   class="form-control"
                   formControlName="totalNumberOfInstallments"
                   [ngStyle]="{
@@ -179,7 +186,7 @@
                   >
                     {{ totalNumberOfInstallmentsData === 16 ? 'Final' : totalNumberOfInstallmentsData }}
                   </option>
-                </select>
+                </select> -->
                 
                 </div>
                </div>
