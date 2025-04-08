@@ -78,7 +78,7 @@
                   <select class="form-control" formControlName="hbaAvailedFor" 
                   [ngStyle]="{'border-bottom': (submitted && hbaForm.get('hbaAvailedFor')?.invalid && hbaForm.get('hbaAvailedFor')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                       <option value="">Select</option>
-                      <option *ngFor="let hbaAvailedData of hbaAvailed" [value]="hbaAvailedData">{{hbaAvailedData}}</option>
+                      <option *ngFor="let hbaAvailedData of hbaAvailed" [value]="hbaAvailedData._id">{{hbaAvailedData.category_name}}</option>
                   </select>
                 </div>
                </div>
