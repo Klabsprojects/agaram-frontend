@@ -53,7 +53,7 @@
                     <select class="form-control" formControlName="gpfType" (change)="getGpfType($event)"
                     [ngStyle]="{'border-bottom': (submitted && gpfForm.get('gpfType')?.invalid && gpfForm.get('gpfType')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option *ngFor="let gpfTypeData of gpfType" [value]="gpfTypeData">{{gpfTypeData}}</option>
+                        <option *ngFor="let gpfTypeData of gpfType" [value]="gpfTypeData._id">{{gpfTypeData.category_name}}</option>
                     </select>                  
                   </div>
                 </div>

@@ -31,7 +31,7 @@ export class EditGpfComponent implements OnInit{
    url:string='';
    orderFileUrl:string='';
    ifuserlogin = false;
-   gpfType:string[] = ['Temporary','Part Final','90 % Withdrawal'];
+   gpfType:any[] = ['Temporary','Part Final','90 % Withdrawal'];
     purpose:any[]=['MEDICAL','HIGHER EDUCATION','MARRIAGE','RELIGIOUS VOW','HOUSE CONSTRUCTION','90 % WITHDRAWAL'];
 
    constructor(private router:Router, private fb:FormBuilder,private route:ActivatedRoute,private gpfService:LeaveTransferService) { }
@@ -96,7 +96,13 @@ export class EditGpfComponent implements OnInit{
        }
      });
    });
+   this.viewgpftype();
  }
+ viewgpftype(){
+  this.gpfService.getData().subscribe((res)=>{
+    this.gpfType = res.filter((item:any) => item.category_type === "gpf_type");
+  })
+}
  
    getGpfType(data:any){
     if(data.target.value == "90 % Withdrawal"){

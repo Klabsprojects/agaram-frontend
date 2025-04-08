@@ -28,7 +28,7 @@ export class CreateGpfComponent implements OnInit{
     phone:string='';
     module:string='';
     submittedBy:any;
-    gpfType:string[] = ['Temporary','Part Final','90 % Withdrawal'];
+    gpfType:any[] = ['Temporary','Part Final','90 % Withdrawal'];
     purpose:any[]=['MEDICAL','HIGHER EDUCATION','MARRIAGE','RELIGIOUS VOW','HOUSE CONSTRUCTION','90 % WITHDRAWAL'];
   
     ifuserlogin = false;
@@ -66,6 +66,13 @@ export class CreateGpfComponent implements OnInit{
           }
         });
       });
+      this.viewgpftype();
+    }
+
+    viewgpftype(){
+      this.gpfService.getData().subscribe((res)=>{
+        this.gpfType = res.filter((item:any) => item.category_type === "gpf_type");
+      })
     }
   
    
