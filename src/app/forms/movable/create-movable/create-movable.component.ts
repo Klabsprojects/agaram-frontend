@@ -89,6 +89,7 @@ export class CreateMovableComponent {
         }
       });
     });
+    this.viewmovable();
   }
 
   onInput(event: any, field: string) {
@@ -112,6 +113,14 @@ export class CreateMovableComponent {
         this.showDropdown = true;
       }
     });
+  }
+  movable:any;
+  viewmovable(){
+    console.log("hi")
+    this.movableService.getData().subscribe((res)=>{
+      this.movable = res.filter((item:any) => item.category_type === "movable_type");
+      console.log("movable",this.movable);
+    })
   }
 
   selectOption(option: any) {

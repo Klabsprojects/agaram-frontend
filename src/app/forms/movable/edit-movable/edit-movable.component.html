@@ -48,11 +48,11 @@
            
             <div class="col-md-3">
               <div class="form-group row">
-                <label class="col-sm-12 col-form-label">Type of Immovable property<span> * </span></label>
+                <label class="col-sm-12 col-form-label">Type of Movable property<span> * </span></label>
                 <select class="form-control ml-2" formControlName="typeOfMovableProperty" 
                     [ngStyle]="{'border-bottom': (submitted && movableForm.get('typeOfMovableProperty')?.invalid && movableForm.get('typeOfMovableProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option [value]="imv._id" *ngFor="let imv of immovable">{{imv.category_name}}</option>
+                        <option [value]="mov._id" *ngFor="let mov of movable">{{mov.category_name}}</option>
                         <!-- <option value="House">House</option>
                         <option value="Land">Land</option>
                         <option value="Flat">Flat</option>

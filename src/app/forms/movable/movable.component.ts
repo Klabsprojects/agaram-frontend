@@ -35,6 +35,13 @@ export class MovableComponent implements OnInit{
       this.tableDataConst = structuredClone(this.tableData);
     });
     this.checkAccess();
+    this.viewmovable();
+  }
+  movable:any;
+  viewmovable(){
+    this.movableService.getData().subscribe((res)=>{
+      this.movable = res.filter((item:any) => item.category_type === "movable_type");
+    })
   }
 
   checkAccess(): void {

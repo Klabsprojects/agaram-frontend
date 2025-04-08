@@ -103,11 +103,18 @@ export class EditMovableComponent implements OnInit{
       });
     });
     this.viewimmovable();
+    this.viewmovable();
   }
   immovable:any;
   viewimmovable(){
     this.movableService.getData().subscribe((res:any)=>{
       this.immovable = res.filter((item:any) => item.category_type === "immovable_type");
+    })
+  }
+  movable:any;
+  viewmovable(){
+    this.movableService.getData().subscribe((res)=>{
+      this.movable = res.filter((item:any) => item.category_type === "movable_type");
     })
   }
 
