@@ -31,7 +31,7 @@ export class EditHbaComponent implements OnInit{
      State:any[]=[];
      district:any[]=[];
      hbaAvailed:string[]=['Nerkundram Phase - I' , 'Nerkundram Phase - II' , 'Other TNHB Projects / Private'];
-     typeOfProperty:string[]=['Ready Build','Construction'];
+     typeOfProperty:any[]=['Ready Build','Construction'];
      existingResidence:string[]=['yes','No'];
      totalNumberOfInstallments:any[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
      ifuserlogin = false;
@@ -187,7 +187,13 @@ export class EditHbaComponent implements OnInit{
            }
          });
        });
+       this.viewhbtypes();
      }
+     viewhbtypes(){
+      this.hbaService.getData().subscribe((res:any)=>{
+        this.typeOfProperty = res.filter((item:any) => item.category_type === "hba_typeofproperty");
+      })
+    }
 
     //  addInstallment(): void {
     //   const installmentGroup = this.fb.group({

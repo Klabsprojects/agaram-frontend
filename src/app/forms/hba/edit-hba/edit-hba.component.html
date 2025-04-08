@@ -90,7 +90,7 @@
                 <select class="form-control" formControlName="typeOfProperty" 
                 [ngStyle]="{'border-bottom': (submitted && hbaForm.get('typeOfProperty')?.invalid && hbaForm.get('typeOfProperty')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                     <option value="">Select</option>
-                    <option *ngFor="let typeOfPropertyData of typeOfProperty" [value]="typeOfPropertyData">{{typeOfPropertyData}}</option>
+                    <option *ngFor="let typeOfPropertyData of typeOfProperty" [value]="typeOfPropertyData._id">{{typeOfPropertyData.category_name}}</option>
                 </select>
               </div>
             </div>
