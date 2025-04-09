@@ -109,7 +109,7 @@
         <td>{{i + startIndex +1}}</td>
         <td>{{data.officerName}}</td>
         <td>{{data.designation}}</td>
-        <td>{{data.hbaAvailedFor}}</td>
+        <td>{{get_availedFor(data.hbaAvailedFor)}}</td>
         <td>{{data.totalCostOfProperty}}</td>
         <td>
           <!-- {{data.totalNumberOfInstallments}} -->
@@ -175,8 +175,8 @@
           <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Designation</b></label><br>{{viewHbaData.designation}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (State)</b></label><br>{{viewHbaData.state}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (District)</b></label><br>{{viewHbaData.district}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>HBA Availed for TNHB </b></label><br>{{viewHbaData.hbaAvailedFor}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Type of Property </b></label><br>{{viewHbaData.typeOfProperty}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>HBA Availed for TNHB </b></label><br>{{get_availedFor(viewHbaData.hbaAvailedFor)}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Type of Property </b></label><br>{{get_availedFor(viewHbaData.typeOfProperty)}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Application </b></label><br>{{viewHbaData.dateOfApplication | date:'dd/mm/yyyy'}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Total Cost of Property</b></label><br>{{viewHbaData.totalCostOfProperty}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Any Exisiting Residence</b></label><br>{{viewHbaData.isExisingResidenceAvailable}}</div>

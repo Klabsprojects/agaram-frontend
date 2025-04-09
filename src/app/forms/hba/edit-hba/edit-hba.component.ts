@@ -142,8 +142,8 @@ export class EditHbaComponent implements OnInit{
        data.dateOfOrder = dateOfOrder.toISOString().split('T')[0];
        this.hbaForm.get('dateOfOrder')?.setValue(data.dateOfOrder);
        this.orderFileUrl = this.url+data.orderFile;
-       this.employeeProfileId = data.employeeProfileId._id;
-         this.phone = "+91"+data.employeeProfileId.mobileNo1;
+       this.employeeProfileId = data.employeeProfileId?._id;
+         this.phone = "+91"+data.employeeProfileId?.mobileNo1;
          this.departmentId = data.departmentId;
          this.designationId = data.designationId;
       })
@@ -268,7 +268,7 @@ export class EditHbaComponent implements OnInit{
       console.log(totalAmount,this.totalCostOfProperty);
     
       // Check if the total amount exceeds the property cost
-      if (totalAmount > this.totalCostOfProperty) {
+      if (totalAmount > this.totalCostOfProperty && this.totalCostOfProperty) {
         alert(`The total payable amount cannot exceed the total cost of the property (${this.totalCostOfProperty}).`);
     
         // Reset the last entered value if it exceeds the limit

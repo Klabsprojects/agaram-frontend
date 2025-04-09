@@ -37,6 +37,17 @@ export class HbaComponent implements OnInit {
           this.tableDataConst = structuredClone(this.tableData);
         });
         this.checkAccess();
+        this.viewhbtypes();
+      }
+      genralcateg:any;
+      viewhbtypes(){
+        this.hbaService.getData().subscribe((res:any)=>{
+          this.genralcateg = res;
+        })
+      }
+      get_availedFor(id:any){
+        const category = this.genralcateg.find((cat:any) => cat._id === id);
+        return category ? category.category_name : null;
       }
     
       checkAccess(): void {
@@ -179,7 +190,7 @@ export class HbaComponent implements OnInit {
                 }
               })
              })
-             this.viewHbaData.phone = "+91"+data.employeeProfileId.mobileNo1;
+             this.viewHbaData.phone = "+91"+data.employeeProfileId?.mobileNo1;
              this.viewHbaData.id = data._id;
              this.viewHbaData.approvalStatus = data.approvalStatus;
              this.viewHbaData.officerName = data.officerName;
@@ -200,6 +211,7 @@ export class HbaComponent implements OnInit {
              this.viewHbaData.dateOfOrder = data.dateOfOrder;
              this.viewHbaData.orderFile = data.orderFile;
              this.viewHbaData.remarks = data.remarks;
+             console.log("viewHbaData",this.viewHbaData);
             })
            })
         }
