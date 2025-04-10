@@ -268,7 +268,7 @@ export class EditHbaComponent implements OnInit{
       console.log(totalAmount,this.totalCostOfProperty);
     
       // Check if the total amount exceeds the property cost
-      if (totalAmount > this.totalCostOfProperty && this.totalCostOfProperty) {
+      if (totalAmount > this.totalCostOfProperty) {
         alert(`The total payable amount cannot exceed the total cost of the property (${this.totalCostOfProperty}).`);
     
         // Reset the last entered value if it exceeds the limit
