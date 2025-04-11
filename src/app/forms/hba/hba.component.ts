@@ -151,6 +151,7 @@ export class HbaComponent implements OnInit {
       }
   
       viewHba(data:any){
+        this.installment = [];
           this.hbaService.getHbaId(data).subscribe((res:any)=>{
             res.results.forEach((data:any)=>{
               console.log(res.results);
