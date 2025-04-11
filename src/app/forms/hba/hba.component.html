@@ -173,8 +173,8 @@
           <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Department </b></label> <br>{{viewHbaData.department}}
           </div>
           <div class="col-md-4 px-0 mb-2"><label class="w-100"><b>Designation</b></label><br>{{viewHbaData.designation}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (State)</b></label><br>{{viewHbaData.state}}</div>
-          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (District)</b></label><br>{{viewHbaData.district}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (State)</b></label><br>{{get_availedFor(viewHbaData.state)}}</div>
+          <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Place of Property (District)</b></label><br>{{get_availedFor(viewHbaData.district)}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>HBA Availed for TNHB </b></label><br>{{get_availedFor(viewHbaData.hbaAvailedFor)}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Type of Property </b></label><br>{{get_availedFor(viewHbaData.typeOfProperty)}}</div>
           <div class="col-md-4 px-0 mt-3"><label class="w-100"><b>Date of Application </b></label><br>{{viewHbaData.dateOfApplication | date:'dd/mm/yyyy'}}</div>

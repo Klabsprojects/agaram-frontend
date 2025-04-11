@@ -176,21 +176,21 @@ export class HbaComponent implements OnInit {
                });
              });
 
-             this.hbaService.getState().subscribe((res:any)=>{
-              res.results.find((ele:any)=>{
-                if(ele._id == data.state){
-                  this.viewHbaData.state = ele.stateName;
-                }
-              })
-             })
+            //  this.hbaService.getState().subscribe((res:any)=>{
+            //   res.results.find((ele:any)=>{
+            //     if(ele._id == data.state){
+            //       this.viewHbaData.state = ele.stateName;
+            //     }
+            //   })
+            //  })
 
-             this.hbaService.getDistrict(data.state).subscribe((res:any)=>{
-              res.results.find((ele:any)=>{
-                if(ele._id == data.district){
-                  this.viewHbaData.district = ele.districtName;
-                }
-              })
-             })
+            //  this.hbaService.getDistrict(data.state).subscribe((res:any)=>{
+            //   res.results.find((ele:any)=>{
+            //     if(ele._id == data.district){
+            //       this.viewHbaData.district = ele.districtName;
+            //     }
+            //   })
+            //  })
              this.viewHbaData.phone = "+91"+data.employeeProfileId?.mobileNo1;
              this.viewHbaData.id = data._id;
              this.viewHbaData.approvalStatus = data.approvalStatus;
@@ -212,6 +212,8 @@ export class HbaComponent implements OnInit {
              this.viewHbaData.dateOfOrder = data.dateOfOrder;
              this.viewHbaData.orderFile = data.orderFile;
              this.viewHbaData.remarks = data.remarks;
+             this.viewHbaData.district = data.district;
+             this.viewHbaData.state = data.state;
              console.log("viewHbaData",this.viewHbaData);
             })
            })
