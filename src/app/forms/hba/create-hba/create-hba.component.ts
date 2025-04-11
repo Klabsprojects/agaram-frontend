@@ -64,9 +64,7 @@ export class CreateHbaComponent implements OnInit{
       this.submittedBy = localStorage.getItem('loginId');
     }
     this.hbaService.getState().subscribe((res:any)=>{
-      res.results.forEach((item:any)=>{
-        this.State.push({label:item.stateName,value:item._id});
-      })
+      this.State = res;
     })
     this.hbaForm = this.fb.group({
       officerName:['',Validators.required],
@@ -123,15 +121,10 @@ export class CreateHbaComponent implements OnInit{
     })
   }
 
-  getState(event:any){
-    this.district=[];
+  getDistrict(event:any){
     const id = event.target.value;
     this.hbaService.getDistrict(id).subscribe((res:any)=>{
-      res.results.forEach((item:any)=>{
-        if(id == item.stateId){
-          this.district.push({label:item.districtName,value:item._id})
-        }
-      })
+      this.district = res;
     })
   }
 

@@ -49,10 +49,10 @@
               <div class="form-group row">
                 <label class="col-sm-12 col-form-label">Place of Property (State) </label>
                 <div class="col-sm-12">
-                  <select class="form-control" formControlName="state" (change)="getState($event)"
+                  <select class="form-control" formControlName="state" (change)="getDistrict($event)"
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('state')?.invalid && hbaForm.get('state')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option *ngFor="let stateData of State" [value]="stateData.value">{{stateData.label}}</option>
+                        <option *ngFor="let stateData of State" [value]="stateData._id">{{stateData.category_name}}</option>
                     </select>
                    </div>
                </div>
@@ -65,7 +65,7 @@
                   <select class="form-control" formControlName="district" 
                     [ngStyle]="{'border-bottom': (submitted && hbaForm.get('district')?.invalid && hbaForm.get('district')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
                         <option value="">Select</option>
-                        <option *ngFor="let districtData of district" [value]="districtData.value">{{districtData.label}}</option>
+                        <option *ngFor="let districtData of district" [value]="districtData._id">{{districtData.category_name}}</option>
                     </select>
                 </div>
                </div>

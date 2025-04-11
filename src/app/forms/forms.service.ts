@@ -768,12 +768,14 @@ export class LeaveTransferService {
 
   getState():Observable<any>{
     const headers = this.getHeaders();
-    return this.http.get<any[]>(this.baseUrl + 'getState', { headers });
+    // return this.http.get<any[]>(this.baseUrl + 'getState', { headers });
+    return this.http.get<any[]>(this.baseUrl + `getCategories?category_type=state`,{headers});
   }
 
   getDistrict(stateId:any):Observable<any>{
     const headers = this.getHeaders();
-    return this.http.get<any[]>(this.baseUrl + `getDistrict?stateId=${stateId}`, { headers });
+    // return this.http.get<any[]>(this.baseUrl + `getDistrict?stateId=${stateId}`, { headers });
+    return this.http.get<any[]>(this.baseUrl+`getCategories?stateType=${stateId}`,{headers});
   }
 
   get_no_header(url:any){

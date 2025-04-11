@@ -74,13 +74,8 @@ export class EditHbaComponent implements OnInit{
          this.submittedBy = localStorage.getItem('loginId');
        }
        this.hbaService.getState().subscribe((res:any)=>{
-         res.results.forEach((item:any)=>{
-           this.State.push({label:item.stateName,value:item._id});
-         })
-       })
-
-       
-
+        this.State = res;
+      })
        const decodedId = this.route.snapshot.queryParamMap.get('id');
      if(decodedId){
        this.id = atob(decodedId);
@@ -107,19 +102,11 @@ export class EditHbaComponent implements OnInit{
           this.showTable = this.installment.length > 0; // Show table if there are any installments
           console.log(this.installment);
         }
-        
-        this.hbaService.getDistrict(data.state).subscribe((response: any) => {
-          this.district = response.results.map((items: any) => ({
-            label:items.districtName,value:items._id
-          }));
-         if (data.district) {
-            this.hbaForm.get('district')?.setValue(data.district);
-          }
-        });
         this.hbaForm.get('officerName')?.setValue(data.officerName);
         this.hbaForm.get('department')?.setValue(data.department);
         this.hbaForm.get('designation')?.setValue(data.designation);
         this.hbaForm.get('state')?.setValue(data.state);
+        this.getDistrict(data.state);
         this.hbaForm.get('district')?.setValue(data.district);
         this.hbaForm.get('hbaAvailedFor')?.setValue(data.hbaAvailedFor);
         this.hbaForm.get('typeOfProperty')?.setValue(data.typeOfProperty);
@@ -320,17 +307,18 @@ export class EditHbaComponent implements OnInit{
       });
     }
   
-     getState(event:any){
-       this.district=[];
-       const id = event.target.value;
-       this.hbaService.getDistrict(id).subscribe((res:any)=>{
-         res.results.forEach((item:any)=>{
-           if(id == item.stateId){
-             this.district.push({label:item.districtName,value:item._id})
-           }
-         })
-       })
-     }
+    getDistrict(event:any){
+      let id;
+      if(!event.target?.value){
+        id = event;
+      }
+      else{
+        id = event.target.value;
+      }
+      this.hbaService.getDistrict(id).subscribe((res:any)=>{
+        this.district = res;
+      })
+    }
    
      getResidence(data:any){
        this.hbaForm.get('twoBRelacation')?.setValue(data.target.value);
