@@ -45,7 +45,7 @@ export class EditHbaComponent implements OnInit{
      conductRulePermissionAttachment: string | null = null;
      installmentFileSelected : any;
      installmentId:any;
-     totalCostOfProperty:number=0;
+     totalHbaAvailed:number=0;
      alreadyPaidAmount:number=0;
    
      constructor(@Inject(PLATFORM_ID) private platformId: Object,private datePipe:DatePipe,private router:Router,private route:ActivatedRoute, private hbaService:LeaveTransferService,private fb:FormBuilder,private cs: CommonService){}
@@ -81,7 +81,7 @@ export class EditHbaComponent implements OnInit{
        this.id = atob(decodedId);
        this.id = this.id.replace(/^"|"$/g, '');
      }
-     
+    
      this.hbaService.getHbaId(this.id).subscribe((res:any)=>{
       res.results.forEach((data:any)=>{
         console.log(data.installments);
@@ -113,11 +113,11 @@ export class EditHbaComponent implements OnInit{
         var dateOfApplication = new Date(data.dateOfApplication);
         data.dateOfApplication= dateOfApplication.toISOString().split('T')[0];
         this.hbaForm.get('dateOfApplication')?.setValue(data.dateOfApplication);
-        this.totalCostOfProperty = data.totalCostOfProperty;
         this.hbaForm.get('totalCostOfProperty')?.setValue(data.totalCostOfProperty);
         this.hbaForm.get('isExisingResidenceAvailable')?.setValue(data.isExisingResidenceAvailable);
         this.hbaForm.get('twoBRelacation')?.setValue(data.twoBRelacation);
         this.hbaForm.get('totalHbaAvailed')?.setValue(data.totalHbaAvailed);
+        this.totalHbaAvailed = data.totalHbaAvailed;
         this.hbaForm.get('totalNumberOfInstallments')?.setValue(data.totalNumberOfInstallments);
         this.hbaForm.get('totalNumberOfRecoveryMonths')?.setValue(data.totalNumberOfRecoveryMonths);
         this.url = this.hbaService.fileUrl;
@@ -247,18 +247,17 @@ export class EditHbaComponent implements OnInit{
     
     validateInstallmentAmount(): void {
       const formArrayValues = this.installmentDetailsFormArray.value;
-      console.log(formArrayValues);
-      const totalAmount = formArrayValues.reduce((sum: number, installments: { amount: any; }) => {
-        return sum + (Number(installments.amount) || 0); // Ensure valid number
+      const totalAmount = formArrayValues.reduce((sum: number, installment: { amount: any }) => {
+        return sum + (Number(installment.amount) || 0);
       }, 0);
-
-      console.log(totalAmount,this.totalCostOfProperty);
     
-      // Check if the total amount exceeds the property cost
-      if (totalAmount > this.totalCostOfProperty) {
-        alert(`The total payable amount cannot exceed the total cost of the property (${this.totalCostOfProperty}).`);
+      // const balanceAmount = this.totalHbaAvailed - totalAmount;
+      // console.log("Balance:", balanceAmount);
     
-        // Reset the last entered value if it exceeds the limit
+      if (totalAmount > this.totalHbaAvailed) {
+        alert(`The total payable amount cannot exceed the total HBA availed amount (${this.totalHbaAvailed}).`);
+    
+        // Reset the last entered value
         const lastIndex = formArrayValues.length - 1;
         const lastControl = this.installmentDetailsFormArray.at(lastIndex).get('amount');
         lastControl?.setValue(0);
