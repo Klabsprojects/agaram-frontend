@@ -288,6 +288,22 @@
                     <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" (click)="viewgpfpurpose()" data-toggle="modal" data-target="#viewGPFPurpose" *ngIf="showView">View</button>
                 </td>
               </tr>
+              <tr>
+                <td>28.</td>
+                <td>State</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" *ngIf="showAdd" (click)="openAddModal('state')">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" *ngIf="showView" (click)="openViewModal('state')">View</button>
+                </td>
+              </tr>
+              <tr>
+                <td>29.</td>
+                <td>District</td>
+                <td style="text-align: center;">
+                    <button type="button" class="btn btn-success btn-sm btn-icon-text mr-1" style="font-size: 13px;" (click)="openAddModal('district')" *ngIf="showAdd">Add  </button>
+                    <button type="button" class="btn btn-info btn-sm btn-icon-text" style="font-size: 13px;" *ngIf="showView" (click)="openViewModal('district')">View</button>
+                </td>
+              </tr>
 
             </tbody>
           </table>
@@ -2754,6 +2770,10 @@
     </div>
   </div>
 </div>
+<!-- state start -->
+<app-add-master *ngIf="showAddStateModal" (closeModal)="handleAddModalClose($event)" [type]="type"/>
+<app-view-master *ngIf="showViewStateModal" (closeModal)="handleAddModalClose($event)" [type]="type"/>
+
 
 <div class="modal fade" id="viewForeignVisit" tabindex="-1" aria-labelledby="viewForeignVisitLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog1">

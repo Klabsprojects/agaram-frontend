@@ -1,0 +1,124 @@
+<div class="modal-backdrop" (click)="close()"></div>
+
+<div class="modal-content-wrapper modal-lg">
+  <div class="modal-header">
+    <h5 class="modal-title">{{title}} Details</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="modal-body p-3">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr>
+            <th style="width: 10%;">#</th>
+            <th>State</th>
+            <th *ngIf="type==='district'">{{title}}</th>
+            <th *ngIf="type==='state'">Code</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <!-- <tbody>
+          <tr *ngFor="let data of viewdata; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td [hidden]="editing && editingId === data._id">{{get_name(data.stateType) || data.category_name}}</td>
+            <td [hidden]="editing && editingId === data._id" *ngIf="type==='district'">
+              {{ data.category_name }}
+            </td>
+            <td [hidden]="editing && editingId === data._id">
+              {{ data.category_code }}
+            </td>
+
+            <td [hidden]="!(editing && editingId === data._id)">
+              {{editing}}inside
+              <input class="form-control" type="text" formControlName="state"
+                [ngStyle]="{'border-bottom': (submitted && form.get('state')?.invalid && form.get('state')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+            </td>
+            <td [hidden]="!(editing && editingId === data._id)">
+              <input class="form-control" type="text" formControlName="category_name"
+                [ngStyle]="{'border-bottom': (submitted && form.get('category_name')?.invalid && form.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+            </td>
+            <td [hidden]="!(editing && editingId === data._id)">
+              <input class="form-control" type="text" formControlName="category_code"
+                [ngStyle]="{'border-bottom': (submitted && form.get('category_code')?.invalid && form.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+            </td>
+
+            <td class="text-center">
+              <ng-container *ngIf="editing && editingId === data._id; else normalButtons">
+                <button type="button" class="btn btn-primary btn-sm px-2 p-1 mr-2"
+                  (click)="update()">Update</button>
+                <button type="button" class="btn btn-light btn-sm px-2 p-1"
+                  (click)="cancel()">Cancel</button>
+              </ng-container>
+              <ng-template #normalButtons>
+                <button type="button" class="btn btn-info btn-sm px-2 p-1"
+                  (click)="edit(data._id,data.stateType,data.category_name,data.category_code)">Edit</button>
+              </ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="viewdata.length === 0">
+            <td colspan="4">No data available</td>
+          </tr>
+        </tbody> -->
+        <tbody>
+          <tr *ngFor="let data of viewdata; let i = index">
+            <td>{{ i + 1 }}</td>
+  
+            <!-- Display Static Data -->
+            <td *ngIf="(!editing || editingId !== data._id) && type==='state'">{{ data.category_name }}</td>
+            <td *ngIf="(!editing || editingId !== data._id) && type==='district'">{{get_name(data.stateType)}}</td>
+            <td *ngIf="(!editing || editingId !== data._id) && type==='district'">{{ data.category_name }}</td>
+            <td *ngIf="(!editing || editingId !== data._id) && type==='state'">{{ data.category_code }}</td>
+  
+            <!-- Editable Input Fields -->
+            <td *ngIf="(editing && editingId === data._id)&&type==='district'">
+              <select class="form-control" id="" formControlName="state" [ngStyle]="{'border-bottom': (submitted && form.get('state')?.invalid && form.get('state')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}">
+                <option value="">Select</option>
+                <option *ngFor="let stateData of states" [value]="stateData._id">{{stateData.category_name}}</option>
+              </select>
+            </td>
+            <td *ngIf="editing && editingId === data._id">
+              <input class="form-control" type="text" formControlName="category_name"
+                [ngStyle]="{'border-bottom': (submitted && form.get('category_name')?.invalid && form.get('category_name')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+            </td>
+            <td *ngIf="(editing && editingId === data._id)&&type==='state'">
+              <input class="form-control" type="text" formControlName="category_code"
+                [ngStyle]="{'border-bottom': (submitted && form.get('category_code')?.invalid && form.get('category_code')?.errors?.['required']) ? '1px solid red' : '1px solid #ccc'}" />
+            </td>
+  
+            <!-- Action Buttons -->
+            <td class="text-center">
+              <button *ngIf="!editing || editingId !== data._id" type="button"
+                class="btn btn-info btn-sm btn-icon-text px-2 p-1"
+                style="font-size: 13px;" (click)="edit(data)">
+                Edit
+              </button>
+  
+              <button *ngIf="editing && editingId === data._id" type="button"
+                class="btn btn-primary btn-sm btn-icon-text px-2 p-1 mr-2"
+                style="font-size: 13px;" (click)="update()">
+                Update
+              </button>
+  
+              <button *ngIf="editing && editingId === data._id" type="button"
+                class="btn btn-light btn-sm btn-icon-text px-2 p-1"
+                style="font-size: 13px;" (click)="cancel()">
+                Cancel
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="viewdata.length === 0">
+            <td colspan="4">No data available</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary p-2" (click)="close()">Close</button>
+  </div>
+</div>

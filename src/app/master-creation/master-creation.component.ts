@@ -1844,7 +1844,27 @@ viewBlock(){
       })
     }
   }  
+  showAddStateModal = false;
+  showViewStateModal = false;
+  type:string=""
 
+  openAddModal(type:string) {
+  this.showAddStateModal = true;
+  this.type = type;
+  }
+  openViewModal(type:any){
+    this.type = type;
+     this.showViewStateModal = true;
+  }
+
+  handleAddModalClose(data: any) {
+    this.showAddStateModal = false;
+    this.showViewStateModal = false;
+    if (data) {
+      // handle submission
+      console.log('Form submitted:', data);
+    }
+  }
  
 
 onSubmit(){

@@ -1,0 +1,45 @@
+<div class="modal-backdrop" (click)="close()"></div>
+
+<div class="modal-content-wrapper">
+    <div class="modal-header">
+        <h5 class="modal-title">Add {{title}}</h5>
+        <button type="button" class="close" (click)="close()">
+            <span>&times;</span>
+        </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+            <div class="form-group row" *ngIf="type==='district'">
+                <label class="col-sm-12 col-form-label">State<span>*</span></label>
+                <div class="col-sm-12">
+                    <select class="form-control" formControlName="state"
+                        [ngStyle]="{'border': (submitted && form.get('state')?.invalid) ? '1px solid red' : '1px solid #ccc'}">
+                        <option value="{{state._id}}" *ngFor="let state of states">{{state.category_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-12 col-form-label">{{title}} <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="category_name"
+                        [ngStyle]="{'border': (submitted && form.get('category_name')?.invalid) ? '1px solid red' : '1px solid #ccc'}">
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="type!=='district'">
+                <label class="col-sm-12 col-form-label">Code <span>*</span></label>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control" formControlName="category_code"
+                        [ngStyle]="{'border': (submitted && form.get('category_code')?.invalid) ? '1px solid red' : '1px solid #ccc'}">
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
