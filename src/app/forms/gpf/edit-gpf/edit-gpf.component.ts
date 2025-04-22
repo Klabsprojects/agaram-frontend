@@ -60,12 +60,15 @@ export class EditGpfComponent implements OnInit{
       orderFile:[null,Validators.required],
       remarks:[''],
    });
+   this.viewgpftype();
+   this.viewPurposeType();
    this.gpfService.getGpfId(this.id).subscribe((res:any)=>{
      res.results.forEach((data:any)=>{
        this.gpfForm.get('officerName')?.setValue(data.officerName);
        this.gpfForm.get('department')?.setValue(data.department);
        this.gpfForm.get('designation')?.setValue(data.designation);
        this.gpfForm.get('gpfType')?.setValue(data.gpfType);
+       this.getGpfType({target:{value:data.gpfType}});
        this.gpfForm.get('availedAmount')?.setValue(data.availedAmount);
        this.gpfForm.get('purpose')?.setValue(data.purpose);
        this.gpfForm.get('remarks')?.setValue(data.remarks);
@@ -96,22 +99,38 @@ export class EditGpfComponent implements OnInit{
        }
      });
    });
-   this.viewgpftype();
  }
  viewgpftype(){
   this.gpfService.getData().subscribe((res)=>{
     this.gpfType = res.filter((item:any) => item.category_type === "gpf_type");
+  })
+}
+viewPurposeType(){
+  this.gpfService.getData().subscribe((res)=>{
     this.purpose = res.filter((item:any) => item.category_type === "purpose_of_gpf");
   })
 }
  
    getGpfType(data:any){
-    if(data.target.value == "90 % Withdrawal"){
-      this.purpose = ['90 % WITHDRAWAL'];
-    }
-    else{
-      this.purpose = ['MEDICAL','HIGHER EDUCATION','MARRIAGE','RELIGIOUS VOW','HOUSE CONSTRUCTION','90 % WITHDRAWAL'];
-    }
+    console.log("data",data.target.value);
+    let purpose_type;
+      for(let i=0;i<this.gpfType.length;i++){
+        if(this.gpfType[i]._id===data.target.value){
+          purpose_type = this.gpfType[i].category_name;
+        }
+      }
+      if(purpose_type==="90 % Withdrawal"){
+        let purpose;
+        for(let i=0;i<this.purpose.length;i++){
+          if(this.purpose[i].category_name==="90% WITHDRAWAL "){
+            purpose = this.purpose[i];
+          }
+        }
+        this.purpose = [purpose];
+      }
+      else{
+        this.viewPurposeType();
+      }
   }
  
    onInput(event: any, field: string) {

@@ -67,11 +67,16 @@ export class CreateGpfComponent implements OnInit{
         });
       });
       this.viewgpftype();
+      this.viewPurposeType();
     }
 
     viewgpftype(){
       this.gpfService.getData().subscribe((res)=>{
         this.gpfType = res.filter((item:any) => item.category_type === "gpf_type");
+      })
+    }
+    viewPurposeType(){
+      this.gpfService.getData().subscribe((res)=>{
         this.purpose = res.filter((item:any) => item.category_type === "purpose_of_gpf");
       })
     }
@@ -159,12 +164,23 @@ export class CreateGpfComponent implements OnInit{
     }
   
     getGpfType(data:any){
-      console.log(data.target.value);
-      if(data.target.value == "90 % Withdrawal"){
-        this.purpose = ['90 % WITHDRAWAL'];
+      let purpose_type;
+      for(let i=0;i<this.gpfType.length;i++){
+        if(this.gpfType[i]._id===data.target.value){
+          purpose_type = this.gpfType[i].category_name;
+        }
+      }
+      if(purpose_type==="90 % Withdrawal"){
+        let purpose;
+        for(let i=0;i<this.purpose.length;i++){
+          if(this.purpose[i].category_name==="90% WITHDRAWAL "){
+            purpose = this.purpose[i];
+          }
+        }
+        this.purpose = [purpose];
       }
       else{
-        this.purpose = ['MEDICAL','HIGHER EDUCATION','MARRIAGE','RELIGIOUS VOW','HOUSE CONSTRUCTION','90 % WITHDRAWAL'];
+        this.viewPurposeType();
       }
     }
   
